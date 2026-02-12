@@ -36,6 +36,10 @@ const ContactSection = () => {
               <Mail className="h-4 w-4 text-primary" />
               sales@cycentra.com
             </a>
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Phone className="h-4 w-4 text-primary" />
+              +XX XXXX XXXX
+            </div>
           </div>
 
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">

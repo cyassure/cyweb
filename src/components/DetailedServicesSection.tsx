@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import {
   Shield, Eye, FileCheck, UserCog, AlertTriangle, Briefcase,
-  Building2, Heart, Factory, Cpu, Landmark, Rocket
+  Building2, Heart, Factory, Cpu, Landmark, Rocket, Fish, Wrench,
+  Target, Globe, BookOpen, ClipboardCheck
 } from "lucide-react";
 
 const detailSections = [
@@ -23,29 +24,50 @@ const detailSections = [
     outcome: "You stay focused on business. We handle the battlefield.",
     icon: Shield,
   },
+  {
+    id: "pentest",
+    title: "Penetration Testing Services",
+    subtitle: "Security must be tested continuously.",
+    description: "We offer three testing modes: Automated (fast, scalable, cost-effective), Manual (expert-driven deep analysis), and Hybrid (best of automation + human creativity).",
+    items: ["Network penetration testing", "Web application testing", "Cloud security testing", "API security testing", "External exposure assessment"],
+    outcome: "Comprehensive coverage across all attack surfaces with flexible engagement models.",
+    icon: Target,
+  },
+  {
+    id: "grc",
+    title: "GRC & Compliance as a Service",
+    subtitle: "From policies to audit readiness, we simplify governance.",
+    description: "We help you align with standards such as ISO frameworks, SOC requirements, risk programs, and internal controls.",
+    items: ["Gap assessments", "Policy development", "Continuous compliance monitoring", "Audit support", "Risk program alignment"],
+    outcome: "Stay compliant without the complexity. We handle governance so you can focus on growth.",
+    icon: FileCheck,
+  },
+  {
+    id: "vciso",
+    title: "vCISO – Leadership Without the Overhead",
+    subtitle: "Executive-level security guidance without hiring a full-time CISO.",
+    description: "Your virtual CISO provides strategic leadership tailored to your organization's risk profile and business goals.",
+    items: ["Strategy & roadmap", "Risk management", "Board reporting", "Vendor evaluation", "Incident oversight"],
+    outcome: "C-level security expertise on demand, at a fraction of the cost.",
+    icon: UserCog,
+  },
+  {
+    id: "awareness",
+    title: "Security Awareness & Phishing",
+    subtitle: "Technology alone is not enough.",
+    description: "People are your strongest — and weakest — link. We help build a security-first culture across your organization.",
+    items: ["Phishing simulations", "Awareness programs", "Executive training", "Reporting & improvement metrics"],
+    outcome: "Turn your people from your biggest vulnerability into your strongest defense layer.",
+    icon: Fish,
+  },
 ];
 
-const additionalServices = [
-  {
-    icon: AlertTriangle,
-    title: "Penetration Testing",
-    desc: "Automated, manual, and hybrid modes across network, web, cloud, APIs, and external exposure.",
-  },
-  {
-    icon: FileCheck,
-    title: "GRC & Compliance",
-    desc: "Gap assessments, policy development, continuous compliance monitoring, and audit support.",
-  },
-  {
-    icon: UserCog,
-    title: "vCISO Services",
-    desc: "Strategy, roadmap, risk management, board reporting, vendor evaluation, and incident oversight.",
-  },
-  {
-    icon: Briefcase,
-    title: "Security Awareness",
-    desc: "Phishing simulations, awareness programs, executive training, and improvement metrics.",
-  },
+const professionalServices = [
+  { icon: Wrench, label: "Security architecture" },
+  { icon: Globe, label: "Cloud migrations" },
+  { icon: Cpu, label: "Tool optimization" },
+  { icon: AlertTriangle, label: "Incident readiness" },
+  { icon: BookOpen, label: "Custom integrations" },
 ];
 
 const industries = [
@@ -61,9 +83,9 @@ const DetailedServicesSection = () => {
   return (
     <section className="py-24">
       <div className="container mx-auto px-6">
-        {/* MDR & SOC detail blocks */}
+        {/* Detailed service blocks */}
         <div className="space-y-16">
-          {detailSections.map((section, i) => (
+          {detailSections.map((section) => (
             <motion.div
               key={section.id}
               initial={{ opacity: 0, y: 20 }}
@@ -95,30 +117,30 @@ const DetailedServicesSection = () => {
           ))}
         </div>
 
-        {/* Additional Services */}
+        {/* Professional & Advisory Services */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="mt-24"
         >
-          <p className="mb-3 text-center text-xs font-medium uppercase tracking-[0.2em] text-primary">More Services</p>
-          <h2 className="mb-12 text-center font-heading text-3xl font-bold text-foreground md:text-4xl">
+          <p className="mb-3 text-center text-xs font-medium uppercase tracking-[0.2em] text-primary">Professional & Advisory Services</p>
+          <h2 className="mb-4 text-center font-heading text-3xl font-bold text-foreground md:text-4xl">
             Think of us as your extended security team
           </h2>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {additionalServices.map((s, i) => (
+          <p className="mb-12 text-center text-muted-foreground">Beyond monitoring, we support your broader security journey.</p>
+          <div className="flex flex-wrap justify-center gap-4">
+            {professionalServices.map((s, i) => (
               <motion.div
-                key={s.title}
+                key={s.label}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
-                className="rounded-xl border border-border bg-card p-6 transition-all hover:border-primary/30"
+                className="flex items-center gap-3 rounded-xl border border-border bg-card px-6 py-4 transition-all hover:border-primary/30"
               >
-                <s.icon className="mb-3 h-7 w-7 text-primary" />
-                <h4 className="mb-2 font-heading text-base font-semibold text-foreground">{s.title}</h4>
-                <p className="text-sm text-muted-foreground">{s.desc}</p>
+                <s.icon className="h-5 w-5 text-primary" />
+                <span className="text-sm font-medium text-foreground">{s.label}</span>
               </motion.div>
             ))}
           </div>
