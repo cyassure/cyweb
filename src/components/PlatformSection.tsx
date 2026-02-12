@@ -2,6 +2,8 @@ import { motion } from "framer-motion";
 import {
   Shield, Monitor, Settings, FileCheck, Cloud, Target, Network, Globe, Bot
 } from "lucide-react";
+import logConvergence from "@/assets/log-convergence.jpg";
+import aiIntelligence from "@/assets/ai-intelligence.jpg";
 
 const capabilities = [
   { icon: Shield, label: "SIEM" },
@@ -36,6 +38,40 @@ const PlatformSection = () => {
           </p>
         </motion.div>
 
+        {/* Log convergence visual */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="relative mb-16 overflow-hidden rounded-2xl border border-border/50"
+        >
+          <img
+            src={logConvergence}
+            alt="Multiple log sources from servers, endpoints, cloud, and network converging into Cycentra's unified security platform"
+            className="w-full"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 p-8 text-center">
+            <p className="font-heading text-lg font-semibold text-foreground md:text-xl">
+              Logs from every source. Processed by one platform.
+            </p>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Firewalls · Endpoints · Cloud · Network · Identity — all unified.
+            </p>
+          </div>
+          {/* Animated data flow lines */}
+          {[0, 1, 2].map((i) => (
+            <motion.div
+              key={i}
+              className="absolute left-0 h-px w-full bg-gradient-to-r from-transparent via-primary/40 to-transparent"
+              style={{ top: `${30 + i * 20}%` }}
+              animate={{ x: ["-100%", "100%"] }}
+              transition={{ duration: 3 + i, repeat: Infinity, ease: "linear", delay: i * 0.5 }}
+            />
+          ))}
+        </motion.div>
+
         <div className="grid grid-cols-3 gap-3 sm:grid-cols-3 lg:grid-cols-9">
           {capabilities.map((c, i) => (
             <motion.div
@@ -52,7 +88,7 @@ const PlatformSection = () => {
           ))}
         </div>
 
-        {/* Embedded Intelligence */}
+        {/* Embedded Intelligence with AI image */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -67,13 +103,34 @@ const PlatformSection = () => {
               </p>
               <p className="text-sm text-primary font-medium">Need control? You can Bring Your Own AI/LLM.</p>
             </div>
-            <div className="grid grid-cols-2 gap-3">
-              {["Enrich alerts", "Automate investigations", "Summarize incidents", "Recommend actions"].map((item) => (
-                <div key={item} className="rounded-lg border border-border bg-card p-3 text-center text-sm text-foreground">
-                  {item}
-                </div>
-              ))}
+            <div className="relative">
+              <img
+                src={aiIntelligence}
+                alt="AI-powered threat intelligence with neural network processing security data, analyzing malware signatures and anomaly patterns"
+                className="rounded-xl border border-border/30 w-full"
+                loading="lazy"
+              />
+              {/* Pulsing glow overlay */}
+              <motion.div
+                className="absolute inset-0 rounded-xl border-2 border-primary/20"
+                animate={{ opacity: [0.3, 0.8, 0.3] }}
+                transition={{ duration: 3, repeat: Infinity }}
+              />
             </div>
+          </div>
+          <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-4">
+            {["Enrich alerts", "Automate investigations", "Summarize incidents", "Recommend actions"].map((item, i) => (
+              <motion.div
+                key={item}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="rounded-lg border border-border bg-card p-3 text-center text-sm text-foreground"
+              >
+                {item}
+              </motion.div>
+            ))}
           </div>
         </motion.div>
       </div>
