@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Play } from "lucide-react";
+import platformDashboard from "@/assets/platform-dashboard.jpg";
 
 const HeroSection = () => {
   return (
@@ -56,6 +57,30 @@ const HeroSection = () => {
             >
               Free Assessment →
             </a>
+          </div>
+        </motion.div>
+
+        {/* Dashboard preview image */}
+        <motion.div
+          initial={{ opacity: 0, y: 60, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 1, delay: 0.5 }}
+          className="mt-16 w-full max-w-5xl"
+        >
+          <div className="relative rounded-xl border border-border/50 bg-card/30 p-2 shadow-2xl backdrop-blur-sm">
+            <div className="absolute -inset-1 rounded-xl bg-gradient-to-r from-primary/20 via-accent/10 to-primary/20 blur-sm" />
+            <img
+              src={platformDashboard}
+              alt="Cycentra unified SIEM platform dashboard showing logs from firewalls, endpoints, cloud servers, and network devices converging into a single monitoring hub"
+              className="relative rounded-lg w-full"
+              loading="lazy"
+            />
+            {/* Animated scanning line */}
+            <motion.div
+              className="absolute left-2 right-2 top-2 h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent"
+              animate={{ y: [0, 400, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+            />
           </div>
         </motion.div>
 

@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
+import socOperations from "@/assets/soc-operations.jpg";
 
 const reasons = [
   "Open & flexible architecture",
@@ -33,6 +34,32 @@ const WhyCycentraSection = () => {
             <p className="mt-6 max-w-md text-muted-foreground">
               Whether you need a fully managed SOC, advanced MDR, compliance support, or your own customizable SIEM platform — we make security practical, scalable, and affordable.
             </p>
+
+            {/* SOC image */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+              className="relative mt-8 overflow-hidden rounded-xl border border-border/50"
+            >
+              <img
+                src={socOperations}
+                alt="Security Operations Center with multiple analyst screens showing real-time threat detection dashboards and network maps"
+                className="w-full"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
+              <p className="absolute bottom-4 left-4 right-4 text-center text-sm font-medium text-foreground">
+                24×7 SOC — Real analysts. Real defense.
+              </p>
+              {/* Animated pulse dot */}
+              <motion.div
+                className="absolute right-4 top-4 h-3 w-3 rounded-full bg-primary"
+                animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
+            </motion.div>
           </motion.div>
 
           <motion.div
