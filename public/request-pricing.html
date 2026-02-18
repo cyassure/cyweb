@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Request Pricing — Cycentra</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:        hsl(220, 25%, 6%);
+      --card:      hsl(220, 22%, 10%);
+      --border:    hsl(220, 15%, 18%);
+      --primary:   hsl(185, 85%, 50%);
+      --primary-fg:hsl(220, 25%, 6%);
+      --fg:        hsl(210, 20%, 92%);
+      --muted:     hsl(215, 15%, 55%);
+      --input-bg:  hsl(220, 18%, 14%);
+      --radius:    0.75rem;
+    }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: 'Inter', system-ui, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(hsl(220 15% 18% / 0.3) 1px, transparent 1px),
+        linear-gradient(90deg, hsl(220 15% 18% / 0.3) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .card {
+      position: relative;
+      z-index: 1;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2.5rem 2rem;
+      width: 100%;
+      max-width: 560px;
+      box-shadow: 0 4px 40px hsl(0 0% 0% / 0.4);
+    }
+    .badge {
+      display: inline-block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 0.75rem;
+    }
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+      color: var(--fg);
+    }
+    .subtitle {
+      color: var(--muted);
+      font-size: 0.875rem;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    .form-group { margin-bottom: 1.25rem; }
+    label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--muted);
+      margin-bottom: 0.4rem;
+      letter-spacing: 0.03em;
+    }
+    input, select, textarea {
+      width: 100%;
+      background: var(--input-bg);
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      color: var(--fg);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      padding: 0.65rem 0.875rem;
+      outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px hsl(185 85% 50% / 0.12);
+    }
+    select option { background: var(--card); }
+    textarea { resize: vertical; min-height: 90px; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    /* Package selector */
+    .packages {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.6rem;
+      margin-top: 0.4rem;
+    }
+    .pkg {
+      position: relative;
+    }
+    .pkg input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .pkg label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.2rem;
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      padding: 0.6rem 0.4rem;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      text-align: center;
+      margin: 0;
+      color: var(--fg);
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+    .pkg label span.price {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .pkg input[type="radio"]:checked + label {
+      border-color: var(--primary);
+      background: hsl(185 85% 50% / 0.08);
+    }
+    .pkg label:hover { border-color: hsl(185 85% 50% / 0.5); }
+    /* Checkboxes */
+    .checkbox-group { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.4rem; }
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.85rem;
+      color: var(--fg);
+      cursor: pointer;
+    }
+    .check-item input[type="checkbox"] {
+      width: 1rem;
+      height: 1rem;
+      flex-shrink: 0;
+      accent-color: var(--primary);
+      padding: 0;
+    }
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      margin-top: 1.5rem;
+      padding: 0.85rem 1.5rem;
+      background: var(--primary);
+      color: var(--primary-fg);
+      border: none;
+      border-radius: 0.5rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: filter 0.2s;
+    }
+    .btn:hover { filter: brightness(1.1); }
+    .back {
+      display: block;
+      text-align: center;
+      margin-top: 1.25rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .back:hover { color: var(--primary); }
+    @media (max-width: 500px) {
+      .row { grid-template-columns: 1fr; }
+      .packages { grid-template-columns: 1fr; }
+      .card { padding: 2rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <span class="badge">Cycentra</span>
+    <h1>Request Pricing</h1>
+    <p class="subtitle">Select the package that fits your environment and we'll send a tailored quote within one business day.</p>
+    <form
+      action="https://formsubmit.co/sales@cycentra.com"
+      method="POST"
+    >
+      <input type="hidden" name="_subject" value="New Pricing Request — Cycentra" />
+      <input type="hidden" name="_captcha" value="false" />
+      <input type="hidden" name="_template" value="table" />
+      <input type="hidden" name="_next" value="https://cycentra.com/thank-you.html" />
+      <div class="row">
+        <div class="form-group">
+          <label for="first_name">First Name *</label>
+          <input id="first_name" name="first_name" type="text" placeholder="Jan" required />
+        </div>
+        <div class="form-group">
+          <label for="last_name">Last Name *</label>
+          <input id="last_name" name="last_name" type="text" placeholder="de Vries" required />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Work Email *</label>
+        <input id="email" name="email" type="email" placeholder="jan@company.com" required />
+      </div>
+      <div class="form-group">
+        <label for="company">Company / Organisation *</label>
+        <input id="company" name="company" type="text" placeholder="Acme Security BV" required />
+      </div>
+      <div class="form-group">
+        <label>Platform Package *</label>
+        <div class="packages">
+          <div class="pkg">
+            <input type="radio" id="pkg1" name="platform_package" value="Up to 100 users — $100/mo" required />
+            <label for="pkg1">
+              <span class="price">$100</span>
+              /month
+              <small>≤ 100 users</small>
+            </label>
+          </div>
+          <div class="pkg">
+            <input type="radio" id="pkg2" name="platform_package" value="Up to 500 users — $250/mo" />
+            <label for="pkg2">
+              <span class="price">$250</span>
+              /month
+              <small>≤ 500 users</small>
+            </label>
+          </div>
+          <div class="pkg">
+            <input type="radio" id="pkg3" name="platform_package" value="Above 500 users — Custom" />
+            <label for="pkg3">
+              <span class="price">Custom</span>
+              pricing
+              <small>500+ users</small>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Add-ons needed (optional)</label>
+        <div class="checkbox-group">
+          <label class="check-item">
+            <input type="checkbox" name="addon_managed" value="Managed Operations Add-On" />
+            Managed Operations Add-On
+          </label>
+          <label class="check-item">
+            <input type="checkbox" name="addon_ps" value="Professional Services ($100/hr)" />
+            Professional Services ($100 / hr)
+          </label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="user_count">Approximate number of users</label>
+        <input id="user_count" name="user_count" type="number" min="1" placeholder="e.g. 250" />
+      </div>
+      <div class="form-group">
+        <label for="notes">Additional notes</label>
+        <textarea id="notes" name="notes" placeholder="Any specific requirements, compliance frameworks, or integration needs…"></textarea>
+      </div>
+      <button class="btn" type="submit">
+        Send Pricing Request
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </button>
+    </form>
+    <a class="back" href="https://cycentra.com">← Back to cycentra.com</a>
+  </div>
+</body>
+</html>
