@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
-import { Check } from "lucide-react";
-import socOperations from "@/assets/soc-operations.jpg";
+import { Check, Monitor, Activity, Users, Clock } from "lucide-react";
 
 const reasons = [
   "Open & flexible architecture",
@@ -9,6 +8,13 @@ const reasons = [
   "No vendor lock-in",
   "Faster deployment",
   "Built for SMEs → ready for enterprise scale",
+];
+
+const socStats = [
+  { icon: Clock, value: "24×7", label: "Monitoring" },
+  { icon: Users, value: "Tier 1–3", label: "Analysts" },
+  { icon: Activity, value: "<15 min", label: "Avg Response" },
+  { icon: Monitor, value: "100%", label: "Visibility" },
 ];
 
 const WhyCycentraSection = () => {
@@ -35,29 +41,43 @@ const WhyCycentraSection = () => {
               Whether you need a fully managed SOC, advanced MDR, compliance support, or your own customizable SIEM platform — we make security practical, scalable, and affordable.
             </p>
 
-            {/* SOC image */}
+            {/* Animated SOC stats panel */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
-              className="relative mt-8 overflow-hidden rounded-xl border border-border/50"
+              className="relative mt-8 rounded-xl border border-border bg-card p-6"
             >
-              <img
-                src={socOperations}
-                alt="Security Operations Center with multiple analyst screens showing real-time threat detection dashboards and network maps"
-                className="w-full"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
-              <p className="absolute bottom-4 left-4 right-4 text-center text-sm font-medium text-foreground">
-                24×7 SOC — Real analysts. Real defense.
-              </p>
-              {/* Animated pulse dot */}
+              <div className="mb-4 flex items-center gap-2">
+                <motion.div
+                  className="h-2.5 w-2.5 rounded-full bg-primary"
+                  animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                />
+                <span className="text-sm font-medium text-foreground">24×7 SOC — Real analysts. Real defense.</span>
+              </div>
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+                {socStats.map((stat, i) => (
+                  <motion.div
+                    key={stat.label}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.4 + i * 0.1 }}
+                    className="flex flex-col items-center gap-1 rounded-lg border border-border bg-secondary/30 p-3 text-center"
+                  >
+                    <stat.icon className="h-4 w-4 text-primary" />
+                    <span className="font-heading text-sm font-bold text-foreground">{stat.value}</span>
+                    <span className="text-[10px] text-muted-foreground">{stat.label}</span>
+                  </motion.div>
+                ))}
+              </div>
+              {/* Animated scan line */}
               <motion.div
-                className="absolute right-4 top-4 h-3 w-3 rounded-full bg-primary"
-                animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
+                className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent"
+                animate={{ top: ["20%", "90%", "20%"] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
               />
             </motion.div>
           </motion.div>

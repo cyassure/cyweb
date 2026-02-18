@@ -1,4 +1,4 @@
-import { Shield } from "lucide-react";
+import cycenraLogo from "@/assets/cycentra-logo.svg";
 
 const Footer = () => {
   return (
@@ -6,8 +6,7 @@ const Footer = () => {
       <div className="container mx-auto px-6">
         <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
           <div className="flex items-center gap-2">
-            <Shield className="h-5 w-5 text-primary" />
-            <span className="font-heading text-lg font-bold text-foreground">Cycentra</span>
+            <img src={cycenraLogo} alt="Cycentra" className="h-10 w-auto" />
           </div>
           <p className="text-sm text-muted-foreground">
             © {new Date().getFullYear()} Cycentra. All rights reserved. A SecuPulse initiative.
