@@ -5,9 +5,10 @@ import cycenraLogo from "@/assets/cycentra-logo.svg";
 
 const navLinks = [
   { label: "Services", href: "#services" },
+  { label: "Products", href: "#products" },
   { label: "Why Cycentra", href: "#why" },
-  { label: "Platform", href: "#platform" },
-  { label: "About", href: "#about" },
+  { label: "Compare", href: "#comparison" },
+  { label: "Free Scan", href: "#free-scan" },
   { label: "Pricing", href: "#pricing" },
   { label: "Contact", href: "#contact" },
 ];

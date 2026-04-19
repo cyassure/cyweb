@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Play, Shield, Activity, Lock, Server, Wifi, Database, AlertTriangle } from "lucide-react";
+import { ArrowRight, Play, Shield, Activity, Lock, Server, Wifi, Database, AlertTriangle, Brain, Zap } from "lucide-react";
 
 const logSources = [
   { icon: Server, label: "Servers" },
@@ -99,53 +99,89 @@ const HeroSection = () => {
                   ))}
                 </div>
 
-                {/* Animated flow lines */}
+                {/* Animated flow lines + dots following diagonal paths */}
                 <div className="relative flex-1 overflow-hidden">
                   <svg className="h-full w-full" viewBox="0 0 200 140" preserveAspectRatio="none">
-                    {[0, 1, 2, 3, 4].map((i) => (
-                      <motion.line
-                        key={i}
-                        x1="0"
-                        y1={14 + i * 28}
-                        x2="200"
-                        y2="70"
-                        stroke="hsl(var(--primary))"
-                        strokeWidth="0.8"
-                        strokeOpacity="0.4"
-                        strokeDasharray="4 4"
-                        initial={{ pathLength: 0, opacity: 0 }}
-                        animate={{ pathLength: 1, opacity: 0.6 }}
-                        transition={{ duration: 1.2, delay: 1 + i * 0.12 }}
-                      />
-                    ))}
+                    <defs>
+                      {[0, 1, 2, 3, 4].map((i) => (
+                        <path
+                          key={i}
+                          id={`flow-path-${i}`}
+                          d={`M0,${14 + i * 28} L200,70`}
+                          fill="none"
+                        />
+                      ))}
+                    </defs>
+
+                    {[0, 1, 2, 3, 4].map((i) => {
+                      const y1 = 14 + i * 28;
+                      return (
+                        <g key={i}>
+                          {/* Dashed diagonal line */}
+                          <motion.line
+                            x1="0" y1={y1} x2="200" y2="70"
+                            stroke="hsl(var(--primary))"
+                            strokeWidth="0.8"
+                            strokeOpacity="0.4"
+                            strokeDasharray="4 4"
+                            initial={{ pathLength: 0, opacity: 0 }}
+                            animate={{ pathLength: 1, opacity: 0.6 }}
+                            transition={{ duration: 1.2, delay: 1 + i * 0.12 }}
+                          />
+                          {/* Dot travelling along the exact diagonal via animateMotion */}
+                          <circle r="2.5" style={{ fill: "hsl(var(--primary))" }}>
+                            <animateMotion
+                              dur={`${2 + i * 0.3}s`}
+                              repeatCount="indefinite"
+                              begin={`${i * 0.5}s`}
+                            >
+                              <mpath href={`#flow-path-${i}`} />
+                            </animateMotion>
+                          </circle>
+                        </g>
+                      );
+                    })}
                   </svg>
-                  {/* Moving dots along lines */}
-                  {[0, 1, 2, 3, 4].map((i) => (
-                    <motion.div
-                      key={i}
-                      className="absolute h-1.5 w-1.5 rounded-full bg-primary"
-                      style={{ top: `${(14 + i * 28) / 1.4}%`, left: "0%" }}
-                      animate={{ left: ["0%", "100%"] }}
-                      transition={{ duration: 2 + i * 0.3, repeat: Infinity, delay: i * 0.4, ease: "linear" }}
-                    />
-                  ))}
                 </div>
 
-                {/* Central platform */}
+                {/* Central platform with AI layer */}
                 <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 1.5, duration: 0.5 }}
-                  className="relative flex flex-col items-center gap-2 rounded-xl border border-primary/40 bg-gradient-to-b from-primary/10 to-card p-6 shadow-[var(--glow-primary)]"
+                  className="relative flex flex-col items-center gap-2 rounded-xl border border-primary/40 bg-gradient-to-b from-primary/10 to-card p-5 shadow-[var(--glow-primary)]"
                 >
                   <motion.div
                     animate={{ scale: [1, 1.1, 1] }}
                     transition={{ duration: 2, repeat: Infinity }}
                   >
-                    <Shield className="h-10 w-10 text-primary" />
+                    <Shield className="h-8 w-8 text-primary" />
                   </motion.div>
                   <span className="text-xs font-bold text-foreground">CYCENTRA</span>
                   <span className="text-[10px] text-muted-foreground">Platform</span>
+
+                  {/* CyMind AI badge */}
+                  <div className="mt-1 flex items-center gap-1 rounded-full border border-violet-500/40 bg-violet-500/10 px-2 py-0.5">
+                    <motion.div
+                      animate={{ opacity: [1, 0.3, 1] }}
+                      transition={{ duration: 1.5, repeat: Infinity }}
+                    >
+                      <Brain className="h-3 w-3 text-violet-400" />
+                    </motion.div>
+                    <span className="text-[9px] font-semibold text-violet-400">CyMind AI</span>
+                  </div>
+
+                  {/* AI inference pulse rings */}
+                  {[1, 2, 3].map((ring) => (
+                    <motion.div
+                      key={ring}
+                      className="absolute rounded-xl border border-violet-400/20"
+                      style={{ inset: `-${ring * 6}px` }}
+                      animate={{ opacity: [0, 0.5, 0], scale: [0.95, 1.05, 0.95] }}
+                      transition={{ duration: 2.5, repeat: Infinity, delay: ring * 0.4 }}
+                    />
+                  ))}
+
                   <motion.div
                     className="absolute -inset-0.5 rounded-xl border border-primary/30"
                     animate={{ opacity: [0.3, 0.8, 0.3] }}
@@ -157,6 +193,7 @@ const HeroSection = () => {
                 <div className="flex flex-col gap-3">
                   {[
                     { icon: AlertTriangle, label: "Alerts" },
+                    { icon: Brain, label: "AI Triage" },
                     { icon: Activity, label: "Insights" },
                     { icon: Lock, label: "Response" },
                   ].map((item, i) => (
@@ -174,8 +211,16 @@ const HeroSection = () => {
                 </div>
               </div>
 
-              <div className="mt-6 flex justify-center gap-6 text-xs text-muted-foreground/60">
+              <div className="mt-6 flex flex-wrap justify-center gap-4 text-xs text-muted-foreground/60">
                 <span>24×7 Monitoring</span>
+                <span>·</span>
+                <motion.span
+                  className="text-violet-400/80"
+                  animate={{ opacity: [0.6, 1, 0.6] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  CyMind AI
+                </motion.span>
                 <span>·</span>
                 <span>AI Correlation</span>
                 <span>·</span>
