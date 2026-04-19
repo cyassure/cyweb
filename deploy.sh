@@ -11,7 +11,7 @@
 set -euo pipefail
 
 IMAGE="ghcr.io/cycentra/cycentra.com"
-CONTAINER="cycentra-web"
+CONTAINER="cycentra-site"
 PORT="8081"
 PAT="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"
 GH_USER="cycentra"
@@ -30,7 +30,7 @@ docker rm   "$CONTAINER" 2>/dev/null || true
 echo "-> Starting new container..."
 docker run -d \
   --name "$CONTAINER" \
-  --restart unless-stopped \
+  --restart always \
   -p "${PORT}:80" \
   "${IMAGE}:${TAG}"
 
