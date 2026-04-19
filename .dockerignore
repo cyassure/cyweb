@@ -1,0 +1,15 @@
+node_modules
+.git
+_backup
+git-push.sh
+git-pull.sh
+*.md
+.github
+.gitignore
+vitest.config.ts
+eslint.config.js
+tsconfig*.json
+postcss.config.js
+tailwind.config.ts
+components.json
+src
