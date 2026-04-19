@@ -12,7 +12,7 @@ set -euo pipefail
 
 IMAGE="ghcr.io/cycentra/cycentra.com"
 CONTAINER="cycentra-web"
-PORT="80"
+PORT="8081"
 PAT="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"
 GH_USER="cycentra"
 TAG="${1:-latest}"
