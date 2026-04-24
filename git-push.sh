@@ -18,7 +18,7 @@ set -euo pipefail
 cd "$(dirname "$0")"
 
 # ── Config ────────────────────────────────────────────────────────────────────
-RELEASE_NOTES="RELEASE_NOTES.md"
+RELEASE_NOTES="docs/RELEASE_NOTES.md"
 GH_REPO="cycentra/CYCENTRA.COM"
 BUMP_TYPE="${1:-patch}"
 
