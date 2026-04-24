@@ -98,7 +98,7 @@ while IFS= read -r line; do
   clean=$(echo "$line" \
     | sed -E 's/^(feat|fix|enhance|improve|update|add|remove|bump)[:(] *//' \
     | sed -E 's/\)$//' \
-    | xargs)
+    | sed -E 's/^[[:space:]]+|[[:space:]]+$//')
   [[ -z "$clean" ]] && continue
 
   if echo "$lower" | grep -qE '(feat|feature|add |new |introduc)'; then
