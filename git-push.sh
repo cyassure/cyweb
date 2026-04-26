@@ -171,6 +171,24 @@ git tag "$NEW_VER"
 git push origin main
 git push origin "$NEW_VER"
 
+# ── Create GitHub Release and attach installer assets ─────────────────────────
+if command -v gh &>/dev/null && gh auth status &>/dev/null 2>&1; then
+  echo "-> Publishing GitHub Release with installer assets..."
+  NOTES_BODY=$(awk "/^## ${NEW_VER}/,/^---/" "$RELEASE_NOTES" 2>/dev/null | head -60 || true)
+  ASSETS=()
+  [[ -f "cycentra.com-setup.sh" ]] && ASSETS+=("cycentra.com-setup.sh")
+  [[ -f "docker-maintenance.sh" ]] && ASSETS+=("docker-maintenance.sh")
+  gh release create "$NEW_VER" \
+    --repo "$GH_REPO" \
+    --title "CyCentra Website $NEW_VER" \
+    --notes "${NOTES_BODY:-Release $NEW_VER}" \
+    "${ASSETS[@]}" 2>/dev/null \
+    && echo "   Release assets uploaded: ${ASSETS[*]}" \
+    || echo "   Warning: GitHub Release creation failed (non-fatal)"
+else
+  echo "   gh CLI not available — skipping GitHub Release asset upload"
+fi
+
 echo ""
 echo "[OK] Release $NEW_VER pushed."
 echo "     GitHub Actions will build and publish:"
