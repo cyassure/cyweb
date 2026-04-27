@@ -6,3 +6,11 @@ services:
     restart: unless-stopped
     ports:
       - "127.0.0.1:8081:80"
+    environment:
+      # Token the cycentra360 backend sends on every /marketplace/ request.
+      # Must match MARKETPLACE_CATALOG_TOKEN in /opt/cycentra/.env on the
+      # cycentra360 server. Generate once:
+      #   python3 -c "import secrets; print(secrets.token_hex(32))"
+      - MARKETPLACE_CATALOG_TOKEN=${MARKETPLACE_CATALOG_TOKEN:-}
+      # Portal origin allowed by CORS — must match cy360.DOMAIN in production.
+      - FRONTEND_URL=${FRONTEND_URL:-https://cy360.cycentra.com}
