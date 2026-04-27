@@ -1,0 +1,30 @@
+server {
+    listen 80;
+    root /usr/share/nginx/html;
+    index index.html;
+
+    # ── Marketplace catalog — token-gated ─────────────────────────────────────
+    # Requests without the correct X-CyCentra-Token header get 403.
+    # Only the cycentra360 backend (server-to-server) knows this token.
+    # CORS is locked to the portal origin so browsers cannot even attempt a
+    # direct cross-origin fetch; token validation stops everything else.
+    location /marketplace/ {
+        if ($http_x_cycentra_token != "${MARKETPLACE_CATALOG_TOKEN}") {
+            return 403;
+        }
+        add_header Access-Control-Allow-Origin "${FRONTEND_URL}" always;
+        add_header Access-Control-Allow-Methods "GET, OPTIONS" always;
+        add_header Access-Control-Allow-Headers "X-CyCentra-Token" always;
+        add_header Cache-Control "no-store" always;
+    }
+
+    # ── SPA routing ────────────────────────────────────────────────────────────
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    # ── Security headers ───────────────────────────────────────────────────────
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+}
