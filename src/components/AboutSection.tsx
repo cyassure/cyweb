@@ -10,7 +10,7 @@ const pillars = [
 
 const locations = [
   { city: "Netherlands", role: "HQ & Origin", color: "text-primary" },
-  { city: "India", role: "Expansion Hub", color: "text-primary" },
+  { city: "United States", role: "Americas Operations", color: "text-primary" },
   { city: "Global", role: "Client Coverage", color: "text-primary" },
 ];
 
@@ -53,8 +53,8 @@ const AboutSection = () => {
             ))}
           </div>
           <p className="mt-6 text-center font-heading text-lg font-bold text-foreground">
-            Built in the Netherlands. Expanding in India.{" "}
-            <span className="text-gradient">Securing globally.</span>
+            Headquartered in the Netherlands.{" "}
+            <span className="text-gradient">Trusted globally.</span>
           </p>
         </motion.div>
 
@@ -66,10 +66,10 @@ const AboutSection = () => {
           >
             <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-primary">About Us</p>
             <h2 className="mb-6 font-heading text-3xl font-bold text-foreground md:text-4xl">
-              Proven European expertise, global reach
+              Enterprise-grade expertise, global reach
             </h2>
             <p className="mb-4 text-muted-foreground leading-relaxed">
-              Cycentra is the India expansion of SecuPulse, bringing proven European cybersecurity expertise to a global audience.
+              Cycentra is an independent cybersecurity company delivering enterprise-grade security solutions to organizations worldwide.
             </p>
             <p className="mb-6 text-muted-foreground leading-relaxed">
               Our team combines SOC analysts, threat hunters, compliance specialists, and security engineers who have built and operated real-world defense environments.

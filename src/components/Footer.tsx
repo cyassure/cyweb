@@ -9,7 +9,7 @@ const Footer = () => {
             <img src={cycenraLogo} alt="Cycentra" className="h-10 w-auto" />
           </div>
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Cycentra. All rights reserved. A SecuPulse initiative.
+            © {new Date().getFullYear()} Cycentra. All rights reserved.
           </p>
           <a
             href="mailto:sales@cycentra.com"

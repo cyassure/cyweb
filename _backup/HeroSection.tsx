@@ -28,7 +28,7 @@ const HeroSection = () => {
         >
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-secondary/50 px-4 py-1.5 text-xs text-muted-foreground">
             <span className="h-1.5 w-1.5 animate-pulse-glow rounded-full bg-primary" />
-            Built in the Netherlands · Expanding in India · Securing globally
+            Headquartered in the Netherlands · Operating Globally · Securing What Matters
           </div>
 
           <h1 className="mb-6 font-heading text-5xl font-bold leading-tight tracking-tight text-foreground md:text-7xl">
