@@ -6,6 +6,7 @@ import cycenraLogo from "@/assets/cycentra-logo.svg";
 const navLinks = [
   { label: "Services", href: "#services" },
   { label: "Products", href: "#products" },
+  { label: "CyMind AI", href: "#cymind" },
   { label: "Why Cycentra", href: "#why" },
   { label: "Compare", href: "#comparison" },
   { label: "Free Scan", href: "#free-scan" },

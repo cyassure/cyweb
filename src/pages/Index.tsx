@@ -3,6 +3,7 @@ import HeroSection from "@/components/HeroSection";
 import ServicesSection from "@/components/ServicesSection";
 import WhyCycentraSection from "@/components/WhyCycentraSection";
 import ProductsSection from "@/components/ProductsSection";
+import CyMindSection from "@/components/CyMindSection";
 import PlatformSection from "@/components/PlatformSection";
 import DetailedServicesSection from "@/components/DetailedServicesSection";
 import ComparisonSection from "@/components/ComparisonSection";
@@ -21,6 +22,7 @@ const Index = () => {
         <ServicesSection />
         <WhyCycentraSection />
         <ProductsSection />
+        <CyMindSection />
         <PlatformSection />
         <DetailedServicesSection />
         <ComparisonSection />
