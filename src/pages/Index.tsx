@@ -19,16 +19,16 @@ const Index = () => {
       <Navbar />
       <main>
         <HeroSection />
-        <ServicesSection />
         <WhyCycentraSection />
         <ProductsSection />
-        <CyMindSection />
         <PlatformSection />
+        <ServicesSection />
         <DetailedServicesSection />
+        <CyMindSection />
         <ComparisonSection />
-        <AboutSection />
         <FreeScanSection />
         <PricingSection />
+        <AboutSection />
         <ContactSection />
       </main>
       <Footer />

@@ -86,6 +86,33 @@ const CyMindSection = () => (
 
     <div className="container relative mx-auto px-6">
 
+      {/* ── Coming Soon banner ──────────────────────────────────────────────── */}
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="mb-10 flex justify-center"
+      >
+        <div className="flex items-center gap-3 rounded-2xl border border-violet-500/30 bg-gradient-to-r from-violet-500/10 via-violet-500/5 to-violet-500/10 px-6 py-3">
+          <motion.div
+            animate={{ scale: [1, 1.4, 1], opacity: [1, 0.5, 1] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+            className="h-2.5 w-2.5 rounded-full bg-violet-400 shadow-[0_0_8px_rgba(167,139,250,0.8)]"
+          />
+          <span className="text-sm font-semibold text-violet-300">Launching Soon</span>
+          <span className="hidden text-muted-foreground/50 sm:inline">·</span>
+          <span className="hidden text-sm text-muted-foreground sm:inline">
+            Join the early access waitlist and be first to deploy Private AI
+          </span>
+          <a
+            href="#contact"
+            className="ml-2 rounded-full border border-violet-500/40 bg-violet-500/20 px-3 py-1 text-xs font-bold text-violet-300 transition-all hover:bg-violet-500/30"
+          >
+            Join Waitlist →
+          </a>
+        </div>
+      </motion.div>
+
       {/* ── Header ─────────────────────────────────────────────────────────── */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}

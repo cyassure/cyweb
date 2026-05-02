@@ -1,53 +1,105 @@
 import { motion } from "framer-motion";
-import { Check, Star, Brain, Radar, ShieldCheck, Zap, ArrowRight } from "lucide-react";
+import { Check, Star, Brain, Radar, ShieldCheck, Zap, ArrowRight, Users, Shield, Building2 } from "lucide-react";
 
 const plans = [
   {
-    name: "Starter MDR",
-    price: "€199",
-    period: "/month",
-    target: "SME · up to 50 assets / users",
+    name: "Starter",
+    subtitle: "Self-Managed SOC",
+    price: "2.99",
+    period: "/user/month",
+    target: "For teams building their own SOC",
     highlight: false,
+    badge: null,
+    icon: Users,
+    iconColor: "text-blue-400",
+    modelBorder: "border-blue-500/30",
+    modelBg: "bg-blue-500/8",
+    modelLabel: "Fully Customer Managed",
+    modelDesc: "Full platform access with no managed service layer. Your team operates the tooling, triages alerts, and manages your own SOC workflow.",
+    flow: ["Alert Fires", "You Investigate", "You Respond"],
+    flowColors: ["bg-blue-500/10 border-blue-500/30 text-blue-300", "bg-blue-500/10 border-blue-500/30 text-blue-300", "bg-blue-500/10 border-blue-500/30 text-blue-300"],
     features: [
-      "Cy360 SOC dashboard",
-      "CySIEM up to 50 agents",
-      "CyASM Standard scans",
-      "CyMind AI (Ollama local)",
-      "Email support + NIS2 check",
-    ],
-    cta: "Get Started",
-  },
-  {
-    name: "Professional MDR",
-    price: "€499",
-    period: "/month",
-    target: "Mid-market · 50–500 assets / users",
-    highlight: true,
-    features: [
-      "Everything in Starter MDR",
-      "CyComp full compliance (NIS2, ISO 27001, DORA, GDPR/AVG)",
-      "CySOAR automation playbooks",
-      "CyIRIS incident management",
-      "CyMISP threat intel (MITRE / STIX/TAXII)",
-      "Business hours MDR",
+      "Cy360 SOC dashboard & portal",
+      "CySIEM — up to 250 agents (Wazuh-based)",
+      "CyASM attack surface scanning",
+      "CyMind AI (Ollama local LLM)",
+      "NIS2 readiness baseline check",
+      "Email support — business hours",
+      "Self-guided onboarding & documentation",
     ],
     cta: "Start Free Trial",
+    ctaHref: "/run-pilot.html",
   },
   {
-    name: "Enterprise MDR",
-    price: "€999",
-    period: "/month",
-    target: "Enterprise 500+ / MSSP white-label",
-    highlight: false,
+    name: "Professional",
+    subtitle: "MDR — Notify & Guide",
+    price: "5.99",
+    period: "/user/month",
+    target: "For teams who want expert oversight",
+    highlight: true,
+    badge: "Most Popular",
+    icon: Shield,
+    iconColor: "text-primary",
+    modelBorder: "border-primary/30",
+    modelBg: "bg-primary/8",
+    modelLabel: "Cycentra MDR Team — Notify Only",
+    modelDesc: "Cycentra SOC monitors 24×7 and investigates every alert. When a response action is needed, our team contacts you via phone, email, or Slack with clear guidance — you perform the changes.",
+    flow: ["Alert Fires", "Cycentra Investigates", "Cycentra Guides", "You Execute"],
+    flowColors: [
+      "bg-primary/10 border-primary/30 text-primary",
+      "bg-primary/10 border-primary/30 text-primary",
+      "bg-primary/10 border-primary/30 text-primary",
+      "bg-primary/10 border-primary/30 text-primary",
+    ],
     features: [
-      "Everything in Professional MDR",
-      "24/7 MDR service",
-      "CyMind custom LLM/RAG",
-      "Dedicated SOC analyst",
-      "MSSP white-label licensing",
-      "SLA 99.9%",
+      "Everything in Starter",
+      "24×7 SOC monitoring by Cycentra analysts",
+      "Every alert investigated — no triage burden on you",
+      "Response guidance via phone, email or Slack",
+      "You execute the agreed response actions",
+      "CyComp: NIS2 · ISO 27001 · DORA · GDPR/AVG",
+      "CySOAR automation playbooks",
+      "CyIRIS incident management & case ticketing",
+      "CyMISP threat intelligence (MITRE / STIX/TAXII)",
+    ],
+    cta: "Start Free Trial",
+    ctaHref: "/run-pilot.html",
+  },
+  {
+    name: "Enterprise",
+    subtitle: "Full SOC Ownership",
+    price: "7.99",
+    period: "/user/month",
+    target: "Full managed security operations",
+    highlight: false,
+    badge: null,
+    icon: Building2,
+    iconColor: "text-emerald-400",
+    modelBorder: "border-emerald-500/30",
+    modelBg: "bg-emerald-500/8",
+    modelLabel: "Cycentra Owns the Incident Lifecycle",
+    modelDesc: "Cycentra SOC fully owns detection, investigation, containment, and remediation on Cycentra-managed assets & endpoints — including regular proactive threat hunting to close gaps before attackers find them.",
+    flow: ["Alert Fires", "Cycentra Investigates", "Cycentra Acts", "Report to You"],
+    flowColors: [
+      "bg-emerald-500/10 border-emerald-500/30 text-emerald-300",
+      "bg-emerald-500/10 border-emerald-500/30 text-emerald-300",
+      "bg-emerald-500/10 border-emerald-500/30 text-emerald-300",
+      "bg-emerald-500/10 border-emerald-500/30 text-emerald-300",
+    ],
+    features: [
+      "Everything in Professional",
+      "Full incident lifecycle owned by Cycentra SOC",
+      "Cycentra performs response on managed assets",
+      "Scoped to Cycentra-managed endpoints",
+      "Regular proactive threat hunting sessions",
+      "Proactive security gap discovery & hardening",
+      "Dedicated SOC analyst — named contact",
+      "CyMind Custom LLM/RAG deployment",
+      "MSSP white-label licensing available",
+      "SLA 99.9% · Priority escalation path",
     ],
     cta: "Contact Sales",
+    ctaHref: "#contact",
   },
 ];
 
@@ -60,6 +112,7 @@ const standaloneModules = [
     iconCls: "text-violet-400",
     borderCls: "border-violet-500/30",
     bgCls: "bg-violet-500/5",
+    comingSoon: true,
   },
   {
     icon: Radar,
@@ -69,6 +122,7 @@ const standaloneModules = [
     iconCls: "text-orange-400",
     borderCls: "border-orange-500/30",
     bgCls: "bg-orange-500/5",
+    comingSoon: false,
   },
   {
     icon: ShieldCheck,
@@ -78,6 +132,7 @@ const standaloneModules = [
     iconCls: "text-emerald-400",
     borderCls: "border-emerald-500/30",
     bgCls: "bg-emerald-500/5",
+    comingSoon: false,
   },
   {
     icon: Zap,
@@ -87,14 +142,8 @@ const standaloneModules = [
     iconCls: "text-yellow-400",
     borderCls: "border-yellow-500/30",
     bgCls: "bg-yellow-500/5",
+    comingSoon: false,
   },
-];
-
-const addons = [
-  "Professional services: €2–10K / project",
-  "Compliance audits: €5–15K",
-  "MSSP white-label licensing",
-  "Training & certification bundles",
 ];
 
 const PricingSection = () => {
@@ -107,18 +156,37 @@ const PricingSection = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-16 text-center"
+          className="mb-6 text-center"
         >
-          <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-primary">MDR Pricing</p>
+          <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-primary">Transparent Pricing</p>
           <h2 className="mb-4 font-heading text-3xl font-bold text-foreground md:text-5xl">
-            Managed Detection &amp; Response Packages
+            Pay per user. Scale with confidence.
           </h2>
           <p className="mx-auto max-w-xl text-muted-foreground">
-            Enterprise-grade security at SME pricing. Deploy in under 30 minutes with no vendor lock-in.
+            Three service models — from self-managed to fully operated. Pick the level of support that fits your team today, and upgrade as you grow.
           </p>
         </motion.div>
 
-        {/* MDR Plan Cards */}
+        {/* Service model legend */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-14 flex flex-wrap justify-center gap-4"
+        >
+          {[
+            { color: "bg-blue-400",    label: "Starter — You manage everything" },
+            { color: "bg-primary",     label: "Professional — We investigate, you act" },
+            { color: "bg-emerald-400", label: "Enterprise — We own the full lifecycle" },
+          ].map((item) => (
+            <div key={item.label} className="flex items-center gap-2 text-xs text-muted-foreground">
+              <span className={`h-2 w-2 rounded-full ${item.color}`} />
+              {item.label}
+            </div>
+          ))}
+        </motion.div>
+
+        {/* Plan Cards */}
         <div className="mb-16 grid gap-6 md:grid-cols-3">
           {plans.map((plan, i) => (
             <motion.div
@@ -127,7 +195,7 @@ const PricingSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className={`relative rounded-2xl border p-8 transition-all ${
+              className={`relative flex flex-col rounded-2xl border p-8 transition-all ${
                 plan.highlight
                   ? "border-primary/50 bg-gradient-to-b from-primary/10 to-card shadow-[var(--glow-primary)]"
                   : "border-border bg-card hover:border-primary/30"
@@ -136,31 +204,65 @@ const PricingSection = () => {
               {plan.highlight && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2">
                   <span className="flex items-center gap-1 rounded-full bg-primary px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-primary-foreground">
-                    <Star className="h-3 w-3" /> Popular
+                    <Star className="h-3 w-3" /> {plan.badge}
                   </span>
                 </div>
               )}
 
-              <p className="mb-1 font-heading text-lg font-bold text-foreground">{plan.name}</p>
-              <p className="mb-4 text-xs text-muted-foreground">{plan.target}</p>
+              {/* Plan header */}
+              <div className="mb-5 flex items-start gap-3">
+                <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border ${plan.modelBorder} bg-card/60`}>
+                  <plan.icon className={`h-5 w-5 ${plan.iconColor}`} />
+                </div>
+                <div>
+                  <p className="font-heading text-lg font-bold text-foreground">{plan.name}</p>
+                  <p className={`text-xs font-semibold ${plan.iconColor}`}>{plan.subtitle}</p>
+                </div>
+              </div>
 
-              <div className="mb-6 flex items-baseline gap-1">
+              {/* Price */}
+              <div className="mb-5 flex items-baseline gap-1">
+                <span className="text-sm text-muted-foreground">€</span>
                 <span className="font-heading text-4xl font-bold text-foreground">{plan.price}</span>
                 <span className="text-sm text-muted-foreground">{plan.period}</span>
               </div>
 
-              <ul className="mb-8 space-y-2">
+              <p className="mb-5 text-xs text-muted-foreground">{plan.target}</p>
+
+              {/* Service model callout */}
+              <div className={`mb-5 rounded-xl border ${plan.modelBorder} p-4`}>
+                <p className={`mb-1.5 text-[10px] font-bold uppercase tracking-wider ${plan.iconColor}`}>
+                  How It Works
+                </p>
+                {/* Flow diagram */}
+                <div className="mb-3 flex flex-wrap items-center gap-1">
+                  {plan.flow.map((step, si) => (
+                    <span key={step} className="flex items-center gap-1">
+                      <span className={`rounded-md border px-2 py-0.5 text-[10px] font-medium ${plan.flowColors[si]}`}>
+                        {step}
+                      </span>
+                      {si < plan.flow.length - 1 && (
+                        <ArrowRight className={`h-3 w-3 ${plan.iconColor} opacity-60`} />
+                      )}
+                    </span>
+                  ))}
+                </div>
+                <p className="text-[11px] leading-relaxed text-muted-foreground">{plan.modelDesc}</p>
+              </div>
+
+              {/* Feature list */}
+              <ul className="mb-8 flex-1 space-y-2">
                 {plan.features.map((f) => (
                   <li key={f} className="flex items-start gap-2 text-sm text-muted-foreground">
-                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                    <Check className={`mt-0.5 h-4 w-4 shrink-0 ${plan.iconColor}`} />
                     {f}
                   </li>
                 ))}
               </ul>
 
               <a
-                href="#contact"
-                className={`block rounded-lg py-3 text-center text-sm font-semibold transition-all ${
+                href={plan.ctaHref}
+                className={`block rounded-lg py-3.5 text-center text-sm font-semibold transition-all ${
                   plan.highlight
                     ? "bg-primary text-primary-foreground hover:brightness-110"
                     : "border border-border bg-secondary text-foreground hover:border-primary/50"
@@ -199,8 +301,15 @@ const PricingSection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className={`group flex flex-col rounded-2xl border ${mod.borderCls} ${mod.bgCls} p-6 transition-all hover:shadow-[var(--glow-primary)]`}
+                className={`group relative flex flex-col rounded-2xl border ${mod.borderCls} ${mod.bgCls} p-6 transition-all hover:shadow-[var(--glow-primary)]`}
               >
+                {mod.comingSoon && (
+                  <div className="absolute -top-2.5 right-3">
+                    <span className="rounded-full border border-violet-500/40 bg-violet-500/20 px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-widest text-violet-300">
+                      Coming Soon
+                    </span>
+                  </div>
+                )}
                 <div className={`mb-4 flex h-11 w-11 items-center justify-center rounded-xl border ${mod.borderCls} bg-card/60`}>
                   <mod.icon className={`h-5 w-5 ${mod.iconCls}`} />
                 </div>
@@ -211,14 +320,14 @@ const PricingSection = () => {
                   href="#contact"
                   className={`inline-flex items-center gap-1 text-xs font-semibold ${mod.iconCls} transition-all hover:gap-2`}
                 >
-                  Contact for Pricing <ArrowRight className="h-3 w-3" />
+                  {mod.comingSoon ? "Join Waitlist" : "Contact for Pricing"} <ArrowRight className="h-3 w-3" />
                 </a>
               </motion.div>
             ))}
           </div>
         </motion.div>
 
-        {/* Additional services */}
+        {/* Bottom CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -232,7 +341,12 @@ const PricingSection = () => {
                 Need more? Add professional services or compliance audits to any plan.
               </p>
               <ul className="space-y-2">
-                {addons.map((line) => (
+                {[
+                  "Professional services: €2–10K / project",
+                  "Compliance audits: €5–15K",
+                  "MSSP white-label licensing",
+                  "Training & certification bundles",
+                ].map((line) => (
                   <li key={line} className="flex items-start gap-2 text-sm text-muted-foreground">
                     <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                     {line}
@@ -241,15 +355,15 @@ const PricingSection = () => {
               </ul>
             </div>
             <div className="flex flex-col justify-center">
-              <h3 className="mb-3 font-heading text-xl font-bold text-foreground">Deploy in &lt; 30 Minutes</h3>
+              <h3 className="mb-3 font-heading text-xl font-bold text-foreground">Live in under 30 minutes</h3>
               <p className="mb-4 text-sm text-muted-foreground">
-                All packages include guided onboarding. Our automated installer gets you live in under 30 minutes — no months-long implementations.
+                All plans include guided onboarding. Our automated installer gets you fully operational in under 30 minutes — no months-long implementations, no armies of consultants.
               </p>
               <a
-                href="#contact"
+                href="/book-consultation.html"
                 className="inline-block rounded-lg bg-primary px-6 py-3 text-center text-sm font-semibold text-primary-foreground transition-all hover:brightness-110"
               >
-                Talk to an Expert
+                Book a Consultation
               </a>
             </div>
           </div>

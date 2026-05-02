@@ -14,10 +14,10 @@ const ContactSection = () => {
         >
           <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-primary">Contact Us</p>
           <h2 className="mb-4 font-heading text-3xl font-bold text-foreground md:text-5xl">
-            Ready to move from signals to strength?
+            Your security operations start here.
           </h2>
           <p className="mb-10 text-muted-foreground">
-            Let's discuss how Cycentra can transform your security operations.
+            Talk to a real expert — no sales scripts, no obligation. We'll help you assess what you need and how to get there fast.
           </p>
 
           <div className="mb-10 flex flex-wrap justify-center gap-6">

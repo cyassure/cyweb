@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import {
   Shield, Eye, FileCheck, UserCog, AlertTriangle, Briefcase,
   Building2, Heart, Factory, Cpu, Landmark, Rocket, Fish, Wrench,
-  Target, Globe, BookOpen, ClipboardCheck
+  Target, Globe, BookOpen, ClipboardCheck, Cloud
 } from "lucide-react";
 
 const detailSections = [
@@ -50,6 +50,22 @@ const detailSections = [
     items: ["Strategy & roadmap", "Risk management", "Board reporting", "Vendor evaluation", "Incident oversight"],
     outcome: "C-level security expertise on demand, at a fraction of the cost.",
     icon: UserCog,
+  },
+  {
+    id: "cloud",
+    title: "Cloud Security",
+    subtitle: "Secure what you build and run in the cloud.",
+    description: "Whether you're on AWS, Azure, or GCP — or running a hybrid environment — Cycentra protects your cloud workloads, identities, and configurations continuously.",
+    items: [
+      "Cloud posture management (CSPM)",
+      "Misconfiguration detection & remediation",
+      "Cloud identity & access review (CIEM)",
+      "Container & Kubernetes security",
+      "Cloud-native threat detection",
+      "Compliance mapping for cloud workloads",
+    ],
+    outcome: "Full cloud visibility with continuous compliance — no blind spots, no sprawl.",
+    icon: Cloud,
   },
   {
     id: "awareness",

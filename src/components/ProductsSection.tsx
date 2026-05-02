@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Brain, ShieldCheck, Monitor, Radar, ArrowRight } from "lucide-react";
+import { Brain, ShieldCheck, Monitor, Radar, ArrowRight, Clock } from "lucide-react";
 
 const products = [
   {
@@ -7,6 +7,7 @@ const products = [
     icon: Brain,
     name: "CyMind",
     tagline: "AI Intelligence Engine",
+    comingSoon: true,
     color: "from-violet-500/20 to-primary/10",
     border: "border-violet-500/30",
     iconColor: "text-violet-400",
@@ -116,6 +117,15 @@ const ProductsSection = () => {
                 transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
               />
 
+              {/* Coming Soon ribbon */}
+              {product.comingSoon && (
+                <div className="absolute -top-3 right-4 z-10">
+                  <span className="flex items-center gap-1 rounded-full border border-violet-500/40 bg-violet-500/20 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-violet-300">
+                    <Clock className="h-3 w-3" /> Coming Soon
+                  </span>
+                </div>
+              )}
+
               <div className="mb-4 flex items-start gap-4">
                 <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border ${product.border} bg-card/50`}>
                   <product.icon className={`h-6 w-6 ${product.iconColor}`} />
@@ -137,12 +147,21 @@ const ProductsSection = () => {
                 ))}
               </ul>
 
-              <a
-                href="#contact"
-                className={`inline-flex items-center gap-1 text-xs font-semibold ${product.iconColor} transition-all hover:gap-2`}
-              >
-                Learn more <ArrowRight className="h-3 w-3" />
-              </a>
+              {product.comingSoon ? (
+                <a
+                  href="#contact"
+                  className={`inline-flex items-center gap-1 text-xs font-semibold ${product.iconColor} transition-all hover:gap-2`}
+                >
+                  Join the waitlist <ArrowRight className="h-3 w-3" />
+                </a>
+              ) : (
+                <a
+                  href="#contact"
+                  className={`inline-flex items-center gap-1 text-xs font-semibold ${product.iconColor} transition-all hover:gap-2`}
+                >
+                  Learn more <ArrowRight className="h-3 w-3" />
+                </a>
+              )}
             </motion.div>
           ))}
         </div>

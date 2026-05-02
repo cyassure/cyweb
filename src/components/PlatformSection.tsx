@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import {
   Shield, Monitor, Settings, FileCheck, Cloud, Target, Network, Globe, Bot,
-  Server, Wifi, Database, Cpu, Lock, AlertTriangle, ArrowRight, Zap
+  Server, Wifi, Database, Cpu, Lock, AlertTriangle, ArrowRight, Zap, Brain
 } from "lucide-react";
 
 const capabilities = [
@@ -119,15 +119,36 @@ const PlatformSection = () => {
               transition={{ delay: 0.6, type: "spring" }}
               className="relative flex shrink-0 flex-col items-center gap-3 rounded-2xl border border-primary/50 bg-gradient-to-b from-primary/15 to-card p-6 shadow-[var(--glow-primary)]"
             >
+              {/* Rotating outer ring */}
               <motion.div
                 animate={{ rotate: [0, 360] }}
                 transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                 className="absolute inset-0 rounded-2xl border border-primary/20"
               />
+              {/* Violet CyMind pulse rings */}
+              {[1, 2].map((ring) => (
+                <motion.div
+                  key={ring}
+                  className="absolute rounded-2xl border border-violet-400/20"
+                  style={{ inset: `-${ring * 7}px` }}
+                  animate={{ opacity: [0, 0.4, 0], scale: [0.96, 1.04, 0.96] }}
+                  transition={{ duration: 2.5, repeat: Infinity, delay: ring * 0.5 }}
+                />
+              ))}
               <Shield className="h-10 w-10 text-primary" />
               <div className="text-center">
                 <p className="font-heading text-xs font-bold text-foreground">CYCENTRA</p>
                 <p className="text-[10px] text-muted-foreground">Platform Core</p>
+              </div>
+              {/* CyMind AI badge */}
+              <div className="flex items-center gap-1 rounded-full border border-violet-500/40 bg-violet-500/10 px-2.5 py-1">
+                <motion.div
+                  animate={{ opacity: [1, 0.3, 1] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                >
+                  <Brain className="h-3 w-3 text-violet-400" />
+                </motion.div>
+                <span className="text-[9px] font-semibold text-violet-400">CyMind AI</span>
               </div>
               <div className="flex gap-1">
                 {[0, 1, 2].map((i) => (
@@ -192,7 +213,8 @@ const PlatformSection = () => {
           </div>
 
           <p className="mt-6 text-center text-xs text-muted-foreground">
-            Firewalls · Endpoints · Cloud · Network · Identity — all unified.
+            Firewalls · Endpoints · Cloud · Network · Identity — all unified.{" "}
+            <span className="text-violet-400/80">Powered by CyMind AI.</span>
           </p>
         </motion.div>
 
