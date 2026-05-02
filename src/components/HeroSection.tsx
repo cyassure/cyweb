@@ -76,7 +76,7 @@ const HeroSection = () => {
           className="mt-10 w-full max-w-3xl overflow-hidden rounded-2xl border border-border/50 bg-card/30 backdrop-blur-sm"
         >
           <div className="flex flex-col divide-y divide-border/40 sm:flex-row sm:divide-x sm:divide-y-0">
-            [
+            {[
               {
                 icon: Zap,
                 headline: "Live in under 30 minutes",
