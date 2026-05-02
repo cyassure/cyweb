@@ -108,19 +108,21 @@ const ProductsSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className={`group relative overflow-hidden rounded-2xl border ${product.border} bg-gradient-to-br ${product.color} p-8 transition-all hover:shadow-[var(--glow-primary)]`}
+              className={`group relative rounded-2xl border ${product.border} bg-gradient-to-br ${product.color} p-8 transition-all hover:shadow-[var(--glow-primary)]`}
             >
-              {/* Animated scan line on hover */}
-              <motion.div
-                className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent opacity-0 group-hover:opacity-100"
-                animate={{ top: ["0%", "100%"] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-              />
+              {/* Scan line clipped independently so Coming Soon badge can overflow */}
+              <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-2xl">
+                <motion.div
+                  className="absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent opacity-0 group-hover:opacity-100"
+                  animate={{ top: ["0%", "100%"] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                />
+              </div>
 
-              {/* Coming Soon ribbon */}
+              {/* Coming Soon ribbon — sits above the card border */}
               {product.comingSoon && (
                 <div className="absolute -top-3 right-4 z-10">
-                  <span className={`flex items-center gap-1 rounded-full border ${product.border} bg-card/90 px-3 py-1 text-[10px] font-bold uppercase tracking-widest ${product.iconColor}`}>
+                  <span className={`flex items-center gap-1 rounded-full border ${product.border} bg-card px-3 py-1 text-[10px] font-bold uppercase tracking-widest ${product.iconColor}`}>
                     <Clock className="h-3 w-3" /> Coming Soon
                   </span>
                 </div>
