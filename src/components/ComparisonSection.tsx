@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Check, X, Minus } from "lucide-react";
 
 const dimensions = [
-  { label: "Price / year", cycentra: "€6–36K", splunk: "€150K+", sentinel: "Variable (high)", mssp: "€50–120K" },
+  { label: "Price / year (MDR)", cycentra: "€2.4K–12K", splunk: "€150K+", sentinel: "Variable (high)", mssp: "€50–120K" },
   { label: "SIEM + ASM + Compliance + AI", cycentra: "Unified", splunk: "Separate tools", sentinel: "Partial", mssp: "Siloed" },
   { label: "On-premise AI (CyMind)", cycentra: true, splunk: "Add-on (cost)", sentinel: "Copilot+", mssp: false },
   { label: "Built-in Threat Intel (MISP)", cycentra: true, splunk: "Partner", sentinel: "Partner", mssp: false },

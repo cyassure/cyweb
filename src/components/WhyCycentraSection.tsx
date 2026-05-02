@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Check, Monitor, Activity, Users, Clock } from "lucide-react";
+import { Check, Monitor, Activity, Users, Clock, Zap, Layers, Target } from "lucide-react";
 
 const reasons = [
   "Open & flexible architecture",
@@ -40,6 +40,36 @@ const WhyCycentraSection = () => {
             <p className="mt-6 max-w-md text-muted-foreground">
               Whether you need a fully managed SOC, advanced MDR, compliance support, or your own customizable SIEM platform — we make security practical, scalable, and affordable.
             </p>
+
+            {/* Not selling monitoring callout */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="mt-8 rounded-xl border border-primary/20 bg-primary/5 p-6"
+            >
+              <p className="mb-4 font-heading text-sm font-bold text-foreground">
+                We're not selling "monitoring."
+              </p>
+              <div className="flex flex-col gap-3">
+                {[
+                  { icon: Zap,    title: "Speed",        desc: "Onboard in hours. Not a months-long implementation project." },
+                  { icon: Layers, title: "Simplicity",   desc: "Minimal integration effort — no armies of consultants required." },
+                  { icon: Target, title: "Intelligence",  desc: "Actionable signal, not a firehose of raw alerts." },
+                ].map((p) => (
+                  <div key={p.title} className="flex items-start gap-3">
+                    <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-primary/15">
+                      <p.icon className="h-3.5 w-3.5 text-primary" />
+                    </div>
+                    <div>
+                      <span className="text-sm font-semibold text-foreground">{p.title} — </span>
+                      <span className="text-sm text-muted-foreground">{p.desc}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
 
             {/* Animated SOC stats panel */}
             <motion.div

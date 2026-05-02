@@ -234,9 +234,9 @@
 </head>
 <body>
   <div class="card">
-    <span class="badge">Cycentra</span>
-    <h1>Request Pricing</h1>
-    <p class="subtitle">Select the package that fits your environment and we'll send a tailored quote within one business day.</p>
+    <span class="badge">Cycentra · MDR Pricing</span>
+    <h1>Request MDR Pricing</h1>
+    <p class="subtitle">Select the Managed Detection &amp; Response package that fits your environment and we'll send a tailored quote within one business day.</p>
 
     <form action="https://formsubmit.co/sales@cycentra.com" method="POST">
       <input type="hidden" name="_subject" value="New Pricing Request — Cycentra" />
@@ -266,32 +266,32 @@
       </div>
 
       <div class="form-group">
-        <label>Package *</label>
+        <label>MDR Package *</label>
         <div class="packages">
           <div class="pkg">
-            <input type="radio" id="pkg1" name="package" value="Starter — €499/mo (up to 50 assets/users)" required />
+            <input type="radio" id="pkg1" name="package" value="Starter MDR — €199/mo (up to 50 assets/users)" required />
             <label for="pkg1">
-              <span class="name">Starter</span>
-              <span class="price">€499</span>
+              <span class="name">Starter MDR</span>
+              <span class="price">€199</span>
               <span>/month</span>
               <small>≤ 50 assets / users</small>
             </label>
           </div>
           <div class="pkg popular">
-            <input type="radio" id="pkg2" name="package" value="Professional — €1,499/mo (50–500 assets/users)" />
+            <input type="radio" id="pkg2" name="package" value="Professional MDR — €499/mo (50–500 assets/users)" />
             <label for="pkg2">
               <span class="popular-badge">Popular</span>
-              <span class="name">Professional</span>
-              <span class="price">€1,499</span>
+              <span class="name">Professional MDR</span>
+              <span class="price">€499</span>
               <span>/month</span>
               <small>50–500 assets / users</small>
             </label>
           </div>
           <div class="pkg">
-            <input type="radio" id="pkg3" name="package" value="Enterprise — €2,999/mo (500+ / MSSP)" />
+            <input type="radio" id="pkg3" name="package" value="Enterprise MDR — €999/mo (500+ / MSSP)" />
             <label for="pkg3">
-              <span class="name">Enterprise</span>
-              <span class="price">€2,999</span>
+              <span class="name">Enterprise MDR</span>
+              <span class="price">€999</span>
               <span>/month</span>
               <small>500+ / MSSP</small>
             </label>
@@ -303,11 +303,15 @@
       </div>
 
       <div class="form-group">
-        <label>Add-ons (optional)</label>
+        <label>Add-ons &amp; Standalone Modules (optional)</label>
         <div class="checkbox-group">
           <label class="check-item">
-            <input type="checkbox" name="addon_mdr" value="24/7 MDR Service" />
-            24/7 MDR Service (Enterprise)
+            <input type="checkbox" name="addon_cymind" value="CyMind Private AI Platform (standalone)" />
+            CyMind — Private AI Platform (standalone deployment)
+          </label>
+          <label class="check-item">
+            <input type="checkbox" name="addon_cyasm" value="CyASM Attack Surface Management (standalone)" />
+            CyASM — Attack Surface Management (standalone)
           </label>
           <label class="check-item">
             <input type="checkbox" name="addon_compliance" value="Compliance Audit (€5–15K)" />

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Mail, MapPin, Phone, ArrowRight } from "lucide-react";
+import { Mail, MapPin, ArrowRight } from "lucide-react";
 
 const ContactSection = () => {
   return (
@@ -36,10 +36,6 @@ const ContactSection = () => {
               <Mail className="h-4 w-4 text-primary" />
               sales@cycentra.com
             </a>
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Phone className="h-4 w-4 text-primary" />
-              +31 70 2250 158
-            </div>
           </div>
 
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">

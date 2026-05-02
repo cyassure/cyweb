@@ -67,6 +67,40 @@ const HeroSection = () => {
           </div>
         </motion.div>
 
+        {/* ── Value proposition strip ──────────────────────────────── */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.1, duration: 0.7 }}
+          className="mt-10 w-full max-w-3xl overflow-hidden rounded-2xl border border-border/50 bg-card/30 backdrop-blur-sm"
+        >
+          <div className="flex flex-col divide-y divide-border/40 sm:flex-row sm:divide-x sm:divide-y-0">
+            {[
+              {
+                icon: Zap,
+                headline: "Hours, not months",
+                sub: "Deploy a production-ready SOC with AI-driven threat prioritization — onboarding measured in hours, not weeks.",
+              },
+              {
+                icon: Activity,
+                headline: "~70% less SOC noise",
+                sub: "Intelligent correlation and AI prioritization cut alert fatigue before it reaches your analysts. No heavy setup required.",
+              },
+              {
+                icon: Brain,
+                headline: "Intelligence, not alerts",
+                sub: "We're not selling monitoring. We deliver speed, simplicity, and actionable signal — every time.",
+              },
+            ].map((item) => (
+              <div key={item.headline} className="flex flex-1 flex-col gap-2 px-6 py-5 text-center sm:text-left">
+                <item.icon className="mx-auto h-5 w-5 text-primary sm:mx-0" />
+                <p className="font-heading text-sm font-bold text-foreground">{item.headline}</p>
+                <p className="text-[11px] leading-relaxed text-muted-foreground">{item.sub}</p>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
         {/* Animated log convergence diagram */}
         <motion.div
           initial={{ opacity: 0, y: 60, scale: 0.95 }}

@@ -9,9 +9,8 @@ const pillars = [
 ];
 
 const locations = [
-  { city: "Netherlands", role: "HQ & Origin", color: "text-primary" },
-  { city: "United States", role: "Americas Operations", color: "text-primary" },
-  { city: "Global", role: "Client Coverage", color: "text-primary" },
+  { city: "Netherlands", role: "HQ & Engineering", color: "text-primary" },
+  { city: "Global", role: "Worldwide Client Coverage", color: "text-primary" },
 ];
 
 const AboutSection = () => {
