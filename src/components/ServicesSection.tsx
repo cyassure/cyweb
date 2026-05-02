@@ -32,7 +32,7 @@ const services = [
     title: "SIEM / EDR / NDR",
     desc: "Unified detection across your entire environment — logs, endpoints, and network in one view.",
     bullets: [
-      "Wazuh-based SIEM with custom correlation rules",
+      "CySIEM with custom correlation rules & threat detection",
       "Endpoint detection, response & isolation",
       "Network traffic analysis & lateral movement detection",
     ],

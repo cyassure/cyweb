@@ -40,7 +40,6 @@
       pointer-events: none;
       z-index: 0;
     }
-    /* Glow */
     body::after {
       content: '';
       position: fixed;
@@ -67,7 +66,6 @@
       text-align: center;
       box-shadow: 0 4px 40px hsl(0 0% 0% / 0.4);
     }
-    /* Animated check icon */
     .icon-wrap {
       display: flex;
       align-items: center;
@@ -84,11 +82,7 @@
       0%, 100% { box-shadow: 0 0 0 0 hsl(185 85% 50% / 0.3); }
       50%       { box-shadow: 0 0 0 12px hsl(185 85% 50% / 0); }
     }
-    .icon-wrap svg {
-      width: 36px;
-      height: 36px;
-      stroke: var(--primary);
-    }
+    .icon-wrap svg { width: 36px; height: 36px; stroke: var(--primary); }
     .badge {
       display: inline-block;
       font-family: 'Space Grotesk', sans-serif;
@@ -139,14 +133,10 @@
       font-size: 0.85rem;
       color: var(--muted);
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: 0.5rem;
     }
-    .what-next li::before {
-      content: '→';
-      color: var(--primary);
-      font-size: 0.75rem;
-    }
+    .what-next li::before { content: '→'; color: var(--primary); font-size: 0.75rem; flex-shrink: 0; margin-top: 0.1rem; }
     .btn {
       display: inline-flex;
       align-items: center;
@@ -166,9 +156,13 @@
       width: 100%;
     }
     .btn:hover { filter: brightness(1.1); }
-    .back {
-      display: block;
+    .links {
       margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .back {
       font-size: 0.8rem;
       color: var(--muted);
       text-decoration: none;
@@ -187,17 +181,17 @@
     </div>
 
     <span class="badge">Cycentra</span>
-    <h1>Thank You!</h1>
+    <h1>Request Received</h1>
     <p class="subtitle">
-      Your request has been received. A Cycentra expert will reach out within <strong style="color: var(--fg);">one business day</strong>.
+      A Cycentra expert will reach out within <strong style="color: var(--fg);">one business day</strong> — no automated responses, a real person from our team.
     </p>
 
     <div class="what-next">
       <p>What happens next</p>
       <ul>
         <li>We review your request and match you with the right expert</li>
-        <li>You'll receive a confirmation email from sales@cycentra.com</li>
-        <li>We schedule a call or send a tailored proposal</li>
+        <li>You'll receive a confirmation from sales@cycentra.com</li>
+        <li>We schedule a call or send a tailored proposal within 24 hours</li>
       </ul>
     </div>
 
@@ -205,7 +199,10 @@
       Back to cycentra.com
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
     </a>
-    <a class="back" href="https://cycentra.com/#free-scan">Or start a free attack surface scan →</a>
+    <div class="links">
+      <a class="back" href="https://cy360.cycentra.com/guest-scan">Or try a free attack surface scan with CyASM →</a>
+      <a class="back" href="https://cycentra.com/#pricing">View pricing →</a>
+    </div>
   </div>
 </body>
 </html>

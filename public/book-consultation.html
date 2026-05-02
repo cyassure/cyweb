@@ -30,7 +30,6 @@
       justify-content: center;
       padding: 2rem 1rem;
     }
-    /* subtle grid bg */
     body::before {
       content: '';
       position: fixed;
@@ -50,7 +49,7 @@
       border-radius: var(--radius);
       padding: 2.5rem 2rem;
       width: 100%;
-      max-width: 560px;
+      max-width: 580px;
       box-shadow: 0 4px 40px hsl(0 0% 0% / 0.4);
     }
     .badge {
@@ -77,9 +76,7 @@
       margin-bottom: 2rem;
       line-height: 1.6;
     }
-    .form-group {
-      margin-bottom: 1.25rem;
-    }
+    .form-group { margin-bottom: 1.25rem; }
     label {
       display: block;
       font-size: 0.8rem;
@@ -108,6 +105,39 @@
     select option { background: var(--card); }
     textarea { resize: vertical; min-height: 100px; }
     .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    /* Interest checkboxes */
+    .interests {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      margin-top: 0.4rem;
+    }
+    .int-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.82rem;
+      color: var(--fg);
+      cursor: pointer;
+      background: var(--input-bg);
+      border: 1px solid var(--border);
+      border-radius: 0.4rem;
+      padding: 0.45rem 0.6rem;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .int-item:has(input:checked) {
+      border-color: hsl(185 85% 50% / 0.6);
+      background: hsl(185 85% 50% / 0.06);
+    }
+    .int-item input[type="checkbox"] {
+      width: 0.9rem;
+      height: 0.9rem;
+      flex-shrink: 0;
+      accent-color: var(--primary);
+      padding: 0;
+      border: none;
+    }
     .btn {
       display: flex;
       align-items: center;
@@ -140,6 +170,7 @@
     .back:hover { color: var(--primary); }
     @media (max-width: 500px) {
       .row { grid-template-columns: 1fr; }
+      .interests { grid-template-columns: 1fr; }
       .card { padding: 2rem 1.25rem; }
     }
   </style>
@@ -148,16 +179,14 @@
   <div class="card">
     <span class="badge">Cycentra</span>
     <h1>Book a Consultation</h1>
-    <p class="subtitle">Tell us about your environment. A Cycentra expert will reach out within one business day.</p>
-    <form
-      action="https://formsubmit.co/sales@cycentra.com"
-      method="POST"
-    >
-      <!-- FormSubmit config -->
+    <p class="subtitle">No sales scripts. Tell us about your environment and a Cycentra expert will reach out within one business day with practical, tailored advice.</p>
+
+    <form action="https://formsubmit.co/sales@cycentra.com" method="POST">
       <input type="hidden" name="_subject" value="New Consultation Request — Cycentra" />
       <input type="hidden" name="_captcha" value="false" />
       <input type="hidden" name="_template" value="table" />
       <input type="hidden" name="_next" value="https://cycentra.com/thank-you.html" />
+
       <div class="row">
         <div class="form-group">
           <label for="first_name">First Name *</label>
@@ -168,14 +197,17 @@
           <input id="last_name" name="last_name" type="text" placeholder="de Vries" required />
         </div>
       </div>
+
       <div class="form-group">
         <label for="email">Work Email *</label>
         <input id="email" name="email" type="email" placeholder="jan@company.com" required />
       </div>
+
       <div class="form-group">
         <label for="company">Company / Organisation *</label>
         <input id="company" name="company" type="text" placeholder="Acme Security BV" required />
       </div>
+
       <div class="row">
         <div class="form-group">
           <label for="role">Your Role</label>
@@ -185,6 +217,7 @@
             <option>SOC Manager</option>
             <option>Security Analyst</option>
             <option>IT Manager</option>
+            <option>Founder / CEO</option>
             <option>Other</option>
           </select>
         </div>
@@ -199,19 +232,37 @@
           </select>
         </div>
       </div>
+
       <div class="form-group">
-        <label for="challenge">What is your primary security challenge?</label>
-        <textarea id="challenge" name="challenge" placeholder="e.g. fragmented log sources, lack of detection coverage, compliance requirements…"></textarea>
+        <label>Area of interest (select all that apply)</label>
+        <div class="interests">
+          <label class="int-item"><input type="checkbox" name="interest_mdr" value="Managed Detection &amp; Response (MDR)" /> MDR / SOC as a Service</label>
+          <label class="int-item"><input type="checkbox" name="interest_siem" value="CySIEM / EDR / NDR" /> CySIEM / EDR / NDR</label>
+          <label class="int-item"><input type="checkbox" name="interest_asm" value="Attack Surface Monitoring (CyASM)" /> Attack Surface (CyASM)</label>
+          <label class="int-item"><input type="checkbox" name="interest_cloud" value="Cloud Security" /> Cloud Security</label>
+          <label class="int-item"><input type="checkbox" name="interest_compliance" value="GRC &amp; Compliance (CyComp)" /> GRC &amp; Compliance</label>
+          <label class="int-item"><input type="checkbox" name="interest_vciso" value="vCISO Services" /> vCISO Services</label>
+          <label class="int-item"><input type="checkbox" name="interest_pentest" value="Penetration Testing" /> Penetration Testing</label>
+          <label class="int-item"><input type="checkbox" name="interest_ai" value="CyMind Private AI Platform" /> CyMind Private AI</label>
+        </div>
       </div>
+
       <div class="form-group">
-        <label for="preferred_time">Preferred Meeting Time (optional)</label>
+        <label for="challenge">What is your primary security challenge? *</label>
+        <textarea id="challenge" name="challenge" placeholder="e.g. No visibility into endpoint activity, compliance deadline approaching, too many false positives from existing tooling…" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="preferred_time">Preferred meeting time (optional)</label>
         <input id="preferred_time" name="preferred_time" type="text" placeholder="e.g. Weekdays 10:00–12:00 CET" />
       </div>
+
       <button class="btn" type="submit">
-        Submit Request
+        Book Consultation
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
       </button>
     </form>
+
     <a class="back" href="https://cycentra.com">← Back to cycentra.com</a>
   </div>
 </body>

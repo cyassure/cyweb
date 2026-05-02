@@ -51,10 +51,10 @@ const products = [
       "Unified SOC dashboard giving real-time incident visibility across your entire environment. Integrates CySIEM, CyASM, CyIRIS, CySOAR, and CyMISP into a single command center with SAML/OIDC SSO.",
     highlights: [
       "Real-time incident view & alert triage",
-      "CySIEM (Wazuh) SIEM/EDR + SAML SSO",
+      "CySIEM — SIEM/EDR with SAML SSO",
       "LLM-powered incident narratives & ANALYST_SUMMARY",
-      "CyIRIS DFIR case management (OIDC SSO)",
-      "CySOAR Node-RED automation playbooks",
+      "CyIRIS incident case management (OIDC SSO)",
+      "CySOAR security automation playbooks",
     ],
   },
   {

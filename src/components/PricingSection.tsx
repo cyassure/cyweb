@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Check, Star, Brain, Radar, ShieldCheck, Zap, ArrowRight, Users, Shield, Building2 } from "lucide-react";
+import { Check, Star, Brain, Radar, ShieldCheck, Zap, ArrowRight, Users, Shield, Building2, Monitor } from "lucide-react";
 
 const plans = [
   {
@@ -20,7 +20,7 @@ const plans = [
     flowColors: ["bg-blue-500/10 border-blue-500/30 text-blue-300", "bg-blue-500/10 border-blue-500/30 text-blue-300", "bg-blue-500/10 border-blue-500/30 text-blue-300"],
     features: [
       "Cy360 SOC dashboard & portal",
-      "CySIEM — up to 250 agents (Wazuh-based)",
+      "CySIEM — up to 250 monitored agents",
       "CyASM attack surface scanning",
       "CyMind AI (Ollama local LLM)",
       "NIS2 readiness baseline check",
@@ -135,13 +135,13 @@ const standaloneModules = [
     comingSoon: true,
   },
   {
-    icon: Zap,
-    name: "CySOAR",
-    tagline: "Security Orchestration & Automation",
-    desc: "Node-RED playbook engine for automated incident response, enrichment, and remediation workflows.",
-    iconCls: "text-yellow-400",
-    borderCls: "border-yellow-500/30",
-    bgCls: "bg-yellow-500/5",
+    icon: Monitor,
+    name: "Cy360",
+    tagline: "SOC Command Center",
+    desc: "Unified SOC dashboard integrating CySIEM, CyASM, CyIRIS, and CySOAR into one command center with real-time incident visibility.",
+    iconCls: "text-primary",
+    borderCls: "border-primary/30",
+    bgCls: "bg-primary/5",
     comingSoon: false,
   },
 ];

@@ -150,7 +150,7 @@
       border: 1px solid var(--border);
       border-radius: 0.4rem;
       padding: 0.45rem 0.6rem;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s, background 0.2s;
     }
     .src-item:has(input:checked) {
       border-color: hsl(185 85% 50% / 0.6);
@@ -203,9 +203,10 @@
 </head>
 <body>
   <div class="card">
-    <span class="badge">Cycentra</span>
+    <span class="badge">Cycentra · Free Pilot</span>
     <h1>Run a Pilot</h1>
-    <p class="subtitle">Experience Cycentra in your own environment — no commitment required. We set it up, you see the results.</p>
+    <p class="subtitle">Experience Cy360 in your own environment — no commitment, no cost. We deploy it, you see real results within 30 days.</p>
+
     <div class="pilot-info">
       <div class="info-item">
         <span class="val">30 days</span>
@@ -216,18 +217,17 @@
         <span class="lbl">Free to start</span>
       </div>
       <div class="info-item">
-        <span class="val">Full stack</span>
-        <span class="lbl">Real environment</span>
+        <span class="val">&lt; 30 min</span>
+        <span class="lbl">To go live</span>
       </div>
     </div>
-    <form
-      action="https://formsubmit.co/sales@cycentra.com"
-      method="POST"
-    >
+
+    <form action="https://formsubmit.co/sales@cycentra.com" method="POST">
       <input type="hidden" name="_subject" value="New Pilot Request — Cycentra" />
       <input type="hidden" name="_captcha" value="false" />
       <input type="hidden" name="_template" value="table" />
       <input type="hidden" name="_next" value="https://cycentra.com/thank-you.html" />
+
       <div class="row">
         <div class="form-group">
           <label for="first_name">First Name *</label>
@@ -238,14 +238,17 @@
           <input id="last_name" name="last_name" type="text" placeholder="de Vries" required />
         </div>
       </div>
+
       <div class="form-group">
         <label for="email">Work Email *</label>
         <input id="email" name="email" type="email" placeholder="jan@company.com" required />
       </div>
+
       <div class="form-group">
         <label for="company">Company / Organisation *</label>
         <input id="company" name="company" type="text" placeholder="Acme Security BV" required />
       </div>
+
       <div class="row">
         <div class="form-group">
           <label for="role">Your Role</label>
@@ -255,49 +258,56 @@
             <option>SOC Manager</option>
             <option>Security Analyst</option>
             <option>IT Manager</option>
+            <option>Founder / CEO</option>
             <option>Other</option>
           </select>
         </div>
         <div class="form-group">
-          <label for="user_count">Approx. user count</label>
+          <label for="user_count">Approx. user / seat count</label>
           <input id="user_count" name="user_count" type="number" min="1" placeholder="e.g. 150" />
         </div>
       </div>
+
       <div class="form-group">
         <label>Log / data sources in your environment</label>
         <div class="sources">
           <label class="src-item"><input type="checkbox" name="source_firewall" value="Firewall logs" /> Firewall logs</label>
           <label class="src-item"><input type="checkbox" name="source_endpoint" value="Endpoint / EDR" /> Endpoint / EDR</label>
           <label class="src-item"><input type="checkbox" name="source_cloud" value="Cloud (AWS/Azure/GCP)" /> Cloud (AWS/Azure/GCP)</label>
-          <label class="src-item"><input type="checkbox" name="source_identity" value="Identity / AD" /> Identity / AD</label>
+          <label class="src-item"><input type="checkbox" name="source_identity" value="Identity / AD / Entra" /> Identity / AD / Entra</label>
           <label class="src-item"><input type="checkbox" name="source_email" value="Email gateway" /> Email gateway</label>
           <label class="src-item"><input type="checkbox" name="source_network" value="Network traffic" /> Network traffic</label>
           <label class="src-item"><input type="checkbox" name="source_syslog" value="Syslog / OS" /> Syslog / OS</label>
           <label class="src-item"><input type="checkbox" name="source_other" value="Other" /> Other</label>
         </div>
       </div>
+
       <div class="form-group">
         <label for="compliance">Compliance requirements (optional)</label>
         <select id="compliance" name="compliance">
           <option value="">None / not sure</option>
-          <option>ISO 27001</option>
           <option>NIS2</option>
+          <option>ISO 27001</option>
+          <option>DORA</option>
+          <option>GDPR / AVG</option>
           <option>SOC 2</option>
-          <option>GDPR</option>
           <option>HIPAA</option>
           <option>PCI-DSS</option>
           <option>Multiple / other</option>
         </select>
       </div>
+
       <div class="form-group">
-        <label for="goals">What do you want to prove during the pilot?</label>
-        <textarea id="goals" name="goals" placeholder="e.g. Detect lateral movement, reduce alert fatigue, consolidate 5 existing tools…"></textarea>
+        <label for="goals">What do you want to prove during the pilot? *</label>
+        <textarea id="goals" name="goals" placeholder="e.g. Detect lateral movement, reduce alert fatigue, consolidate existing tools, meet NIS2 visibility requirements…" required></textarea>
       </div>
+
       <button class="btn" type="submit">
         Start My Pilot
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
       </button>
     </form>
+
     <a class="back" href="https://cycentra.com">← Back to cycentra.com</a>
   </div>
 </body>
