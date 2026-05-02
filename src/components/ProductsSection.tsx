@@ -7,7 +7,6 @@ const products = [
     icon: Brain,
     name: "CyMind",
     tagline: "AI Intelligence Engine",
-    comingSoon: true,
     color: "from-violet-500/20 to-primary/10",
     border: "border-violet-500/30",
     iconColor: "text-violet-400",
@@ -26,6 +25,7 @@ const products = [
     icon: ShieldCheck,
     name: "CyComp",
     tagline: "Compliance & Governance",
+    comingSoon: true,
     color: "from-emerald-500/20 to-primary/10",
     border: "border-emerald-500/30",
     iconColor: "text-emerald-400",
@@ -120,7 +120,7 @@ const ProductsSection = () => {
               {/* Coming Soon ribbon */}
               {product.comingSoon && (
                 <div className="absolute -top-3 right-4 z-10">
-                  <span className="flex items-center gap-1 rounded-full border border-violet-500/40 bg-violet-500/20 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-violet-300">
+                  <span className={`flex items-center gap-1 rounded-full border ${product.border} bg-card/90 px-3 py-1 text-[10px] font-bold uppercase tracking-widest ${product.iconColor}`}>
                     <Clock className="h-3 w-3" /> Coming Soon
                   </span>
                 </div>

@@ -112,7 +112,7 @@ const standaloneModules = [
     iconCls: "text-violet-400",
     borderCls: "border-violet-500/30",
     bgCls: "bg-violet-500/5",
-    comingSoon: true,
+    comingSoon: false,
   },
   {
     icon: Radar,
@@ -132,7 +132,7 @@ const standaloneModules = [
     iconCls: "text-emerald-400",
     borderCls: "border-emerald-500/30",
     bgCls: "bg-emerald-500/5",
-    comingSoon: false,
+    comingSoon: true,
   },
   {
     icon: Zap,

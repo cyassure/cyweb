@@ -86,33 +86,6 @@ const CyMindSection = () => (
 
     <div className="container relative mx-auto px-6">
 
-      {/* ── Coming Soon banner ──────────────────────────────────────────────── */}
-      <motion.div
-        initial={{ opacity: 0, y: -10 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="mb-10 flex justify-center"
-      >
-        <div className="flex items-center gap-3 rounded-2xl border border-violet-500/30 bg-gradient-to-r from-violet-500/10 via-violet-500/5 to-violet-500/10 px-6 py-3">
-          <motion.div
-            animate={{ scale: [1, 1.4, 1], opacity: [1, 0.5, 1] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-            className="h-2.5 w-2.5 rounded-full bg-violet-400 shadow-[0_0_8px_rgba(167,139,250,0.8)]"
-          />
-          <span className="text-sm font-semibold text-violet-300">Launching Soon</span>
-          <span className="hidden text-muted-foreground/50 sm:inline">·</span>
-          <span className="hidden text-sm text-muted-foreground sm:inline">
-            Join the early access waitlist and be first to deploy Private AI
-          </span>
-          <a
-            href="#contact"
-            className="ml-2 rounded-full border border-violet-500/40 bg-violet-500/20 px-3 py-1 text-xs font-bold text-violet-300 transition-all hover:bg-violet-500/30"
-          >
-            Join Waitlist →
-          </a>
-        </div>
-      </motion.div>
-
       {/* ── Header ─────────────────────────────────────────────────────────── */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -352,16 +325,16 @@ const CyMindSection = () => (
           <Brain className="h-7 w-7 text-violet-400" />
         </div>
         <h3 className="mb-2 font-heading text-2xl font-bold text-foreground">
-          Ready to deploy Private AI?
+          Deploy Private AI today.
         </h3>
         <p className="mx-auto mb-8 max-w-lg text-muted-foreground">
-          Whether bundled with Cy360 or deployed as a standalone platform, CyMind brings enterprise-grade AI within your security perimeter. Talk to our team to explore the right deployment for your organization.
+          Whether bundled with Cy360 or deployed as a standalone platform, CyMind brings enterprise-grade AI within your security perimeter. Talk to our team to find the right deployment for your organisation.
         </p>
         <a
           href="#contact"
           className="inline-flex items-center gap-2 rounded-lg bg-violet-600 px-8 py-3.5 font-heading text-sm font-semibold text-white transition-all hover:brightness-110"
         >
-          Get CyMind Pricing
+          Get Started with CyMind
           <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
         </a>
       </motion.div>
