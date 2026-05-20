@@ -8,9 +8,13 @@ const Footer = () => {
           <div className="flex items-center gap-2">
             <img src={cycenraLogo} alt="Cycentra" className="h-10 w-auto" />
           </div>
-          <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Cycentra. All rights reserved.
-          </p>
+          <div className="flex flex-col items-center gap-1 text-center">
+            <p className="text-xs font-medium text-primary uppercase tracking-widest">Global HQ</p>
+            <p className="text-sm text-muted-foreground">Einsteinlaan 28, 2289 CC Rijswijk, The Netherlands</p>
+            <p className="text-sm text-muted-foreground">
+              © {new Date().getFullYear()} Cycentra. All rights reserved.
+            </p>
+          </div>
           <a
             href="mailto:sales@cycentra.com"
             className="text-sm text-muted-foreground transition-colors hover:text-primary"

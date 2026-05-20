@@ -9,7 +9,7 @@ const pillars = [
 ];
 
 const locations = [
-  { city: "Netherlands", role: "HQ & Engineering", color: "text-primary" },
+  { city: "Rijswijk, Netherlands", role: "Global HQ — Einsteinlaan 28, 2289 CC", color: "text-primary" },
   { city: "Global", role: "Worldwide Client Coverage", color: "text-primary" },
 ];
 
@@ -55,6 +55,32 @@ const AboutSection = () => {
             Headquartered in the Netherlands.{" "}
             <span className="text-gradient">Trusted globally.</span>
           </p>
+        </motion.div>
+
+        {/* HQ Building Aerial Photo */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.15 }}
+          className="relative mb-16 overflow-hidden rounded-2xl border border-primary/20"
+        >
+          <img
+            src="/hq-building.png"
+            alt="Aerial view of Cycentra Global HQ — Einsteinlaan 28, 2289 CC Rijswijk, Netherlands"
+            className="h-72 w-full object-cover md:h-96"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
+          <div className="absolute bottom-0 left-0 p-6">
+            <p className="mb-1 text-xs font-medium uppercase tracking-[0.2em] text-primary">Global HQ</p>
+            <p className="font-heading text-xl font-bold text-foreground">
+              Einsteinlaan 28, 2289 CC Rijswijk
+            </p>
+            <p className="text-sm text-muted-foreground">The Netherlands</p>
+          </div>
+          <div className="absolute right-4 top-4 rounded-full border border-primary/30 bg-background/60 px-3 py-1 backdrop-blur-sm">
+            <p className="text-xs font-medium text-primary">Aerial View</p>
+          </div>
         </motion.div>
 
         <div className="grid items-start gap-16 lg:grid-cols-2">

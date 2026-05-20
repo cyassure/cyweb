@@ -21,9 +21,13 @@ const ContactSection = () => {
           </p>
 
           <div className="mb-10 flex flex-wrap justify-center gap-6">
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <MapPin className="h-4 w-4 text-primary" />
-              Netherlands
+            <div className="flex flex-col items-center gap-1 text-sm text-muted-foreground">
+              <div className="flex items-center gap-2">
+                <MapPin className="h-4 w-4 text-primary" />
+                <span className="font-medium text-foreground">Global HQ</span>
+              </div>
+              <span className="text-xs text-muted-foreground">Einsteinlaan 28, 2289 CC Rijswijk</span>
+              <span className="text-xs text-muted-foreground">The Netherlands</span>
             </div>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <MapPin className="h-4 w-4 text-primary" />
