@@ -1,3 +1,11 @@
+## v1.0.39 -- 2026-05-21
+
+### New Features
+
+  - about): add front building photo and zoom out aerial view of Global HQ
+
+---
+
 ## v1.0.38 -- 2026-05-20
 
 ### Improvements
