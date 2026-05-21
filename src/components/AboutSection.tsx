@@ -57,29 +57,50 @@ const AboutSection = () => {
           </p>
         </motion.div>
 
-        {/* HQ Building Aerial Photo */}
+        {/* HQ Building Photos — Aerial + Front */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.15 }}
-          className="relative mb-16 overflow-hidden rounded-2xl border border-primary/20"
+          className="relative mb-16 rounded-2xl border border-primary/20 overflow-hidden"
         >
-          <img
-            src="/hq-building.png"
-            alt="Aerial view of Cycentra Global HQ — Einsteinlaan 28, 2289 CC Rijswijk, Netherlands"
-            className="h-72 w-full object-cover md:h-96"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
-          <div className="absolute bottom-0 left-0 p-6">
+          <div className="grid grid-cols-1 md:grid-cols-2">
+            {/* Left: Aerial view — slightly zoomed out */}
+            <div className="relative h-64 md:h-80 overflow-hidden bg-card">
+              <img
+                src="/hq-building.png"
+                alt="Aerial view of Cycentra Global HQ — Einsteinlaan 28, 2289 CC Rijswijk, Netherlands"
+                className="w-full h-full object-cover"
+                style={{ transform: "scale(0.88)", transformOrigin: "center center" }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+              <div className="absolute right-3 top-3 rounded-full border border-primary/30 bg-background/70 px-3 py-1 backdrop-blur-sm">
+                <p className="text-xs font-medium text-primary">Aerial View</p>
+              </div>
+            </div>
+
+            {/* Right: Front street view */}
+            <div className="relative h-64 md:h-80 overflow-hidden bg-card">
+              <img
+                src="/hq-building-front.jpg"
+                alt="Front view of Cycentra Global HQ building — Einsteinlaan 28, Rijswijk"
+                className="w-full h-full object-cover object-center"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+              <div className="absolute right-3 top-3 rounded-full border border-primary/30 bg-background/70 px-3 py-1 backdrop-blur-sm">
+                <p className="text-xs font-medium text-primary">Street View</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Address overlay spanning both images */}
+          <div className="absolute bottom-0 left-0 p-5">
             <p className="mb-1 text-xs font-medium uppercase tracking-[0.2em] text-primary">Global HQ</p>
-            <p className="font-heading text-xl font-bold text-foreground">
+            <p className="font-heading text-lg font-bold text-foreground">
               Einsteinlaan 28, 2289 CC Rijswijk
             </p>
             <p className="text-sm text-muted-foreground">The Netherlands</p>
-          </div>
-          <div className="absolute right-4 top-4 rounded-full border border-primary/30 bg-background/60 px-3 py-1 backdrop-blur-sm">
-            <p className="text-xs font-medium text-primary">Aerial View</p>
           </div>
         </motion.div>
 
