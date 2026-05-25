@@ -9,3 +9,7 @@ services:
     environment:
       # Portal origin allowed by CORS — must match cy360.DOMAIN in production.
       - FRONTEND_URL=${FRONTEND_URL:-https://cy360.cycentra.com}
+      # Pre-shared token required in X-CyCentra-Token header when fetching the
+      # marketplace catalog. Must match MARKETPLACE_CATALOG_TOKEN in each
+      # CyCentra 360 instance's .env. Leave empty to allow open access.
+      - MARKETPLACE_CATALOG_TOKEN=${MARKETPLACE_CATALOG_TOKEN:-}

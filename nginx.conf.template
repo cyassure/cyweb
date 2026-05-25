@@ -3,14 +3,35 @@ server {
     root /usr/share/nginx/html;
     index index.html;
 
-    # ── Marketplace catalog — open access ─────────────────────────────────────
-    # catalog.json contains public information only (integration names, icons,
-    # playbook descriptions). CORS is locked to the known portal origin to
-    # prevent direct browser cross-origin fetches; the actual catalog data is
-    # non-sensitive and served to all licensed cycentra360 instances.
+    # ── Marketplace catalog — token-gated ─────────────────────────────────────
+    # The CyCentra 360 backend fetches this server-side, sending X-CyCentra-Token
+    # for licensed-instance authentication. CORS is locked to the portal origin
+    # to prevent direct browser cross-origin access.
+    # When MARKETPLACE_CATALOG_TOKEN is empty (not configured), access is open
+    # for backwards compatibility.
     location /marketplace/ {
+        # CORS preflight — always permitted
+        if ($request_method = OPTIONS) {
+            add_header Access-Control-Allow-Origin "${FRONTEND_URL}";
+            add_header Access-Control-Allow-Methods "GET, OPTIONS";
+            add_header Access-Control-Allow-Headers "X-CyCentra-Token";
+            return 204;
+        }
+
+        # Double-if token gate (nginx pattern for compound AND without Lua).
+        # envsubst substitutes ${MARKETPLACE_CATALOG_TOKEN} at container start.
+        # If the env var is empty: $ct_required = "" → check is bypassed.
+        set $ct_required "${MARKETPLACE_CATALOG_TOKEN}";
+        set $ct_fail 0;
+        if ($ct_required != "") { set $ct_fail 1; }
+        if ($http_x_cycentra_token = "${MARKETPLACE_CATALOG_TOKEN}") { set $ct_fail 0; }
+        if ($ct_fail = 1) {
+            return 403;
+        }
+
         add_header Access-Control-Allow-Origin "${FRONTEND_URL}" always;
         add_header Access-Control-Allow-Methods "GET, OPTIONS" always;
+        add_header Access-Control-Allow-Headers "X-CyCentra-Token" always;
         add_header Cache-Control "no-store" always;
     }
 
