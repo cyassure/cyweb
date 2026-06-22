@@ -1,0 +1,27 @@
+# Local-dev override — runs marketplace-api standalone (no nginx image needed).
+# Use when you can't pull ghcr.io/cycentra/cycentra.com:latest locally.
+#
+# Usage:
+#   cd CyCentra.com
+#   docker compose -f docker-compose.local.yml up --build -d
+#
+# CyAdmin will reach it at:   http://host.docker.internal:5050
+# Cy360 catalog URL (local):  http://<your-mac-ip>:5050/marketplace/catalog.json
+#
+# For production (where nginx IS present), use docker-compose.yml instead.
+
+services:
+  marketplace-api:
+    build: ./marketplace-api
+    container_name: marketplace-api
+    restart: unless-stopped
+    ports:
+      - "5050:5050"        # exposed directly; in prod nginx proxies this
+    volumes:
+      - marketplace-data:/data
+    environment:
+      - MARKETPLACE_ADMIN_TOKEN=${MARKETPLACE_ADMIN_TOKEN:-}
+      - MARKETPLACE_CATALOG_TOKEN=${MARKETPLACE_CATALOG_TOKEN:-}
+
+volumes:
+  marketplace-data:

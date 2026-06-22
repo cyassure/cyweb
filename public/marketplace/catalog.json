@@ -277,6 +277,20 @@
       ],
       "config_type": "github",
       "added_at": "2026-05-03T00:00:00Z"
+    },
+    {
+      "id": "12345",
+      "name": "Test123",
+      "type": "integration",
+      "category": "",
+      "vendor": "Test123 Author",
+      "icon": "🔧",
+      "color": "#4d9eff",
+      "description": "A person in a suit\n\nAI-generated content may be incorrect.",
+      "modules_required": [],
+      "estimated_time": "",
+      "tags": [],
+      "added_at": "2026-06-22T16:47:08.956563Z"
     }
   ]
 }

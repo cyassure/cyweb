@@ -260,6 +260,34 @@ def submissions_reject(sub_id):
     return jsonify({"ok": True, "message": "Submission rejected."})
 
 
+# ── GET /marketplace/catalog.json — direct catalog fetch (used when nginx is absent) ──
+
+@app.route("/marketplace/catalog.json", methods=["GET"])
+def serve_catalog_json():
+    """Serve the live catalog.json directly.
+
+    In production nginx handles this from the shared volume.
+    This endpoint allows standalone operation (local dev, direct port access).
+    Token gate matches nginx behaviour: if MARKETPLACE_CATALOG_TOKEN is set,
+    request must include X-CyCentra-Token: <token>.
+    """
+    if CATALOG_TOKEN:
+        provided = request.headers.get("X-CyCentra-Token", "")
+        if provided != CATALOG_TOKEN:
+            return jsonify({"error": "Valid X-CyCentra-Token required"}), 403
+
+    catalog = _read_catalog()
+    resp = jsonify({
+        "version": catalog.get("version", "1.0"),
+        "updated": catalog.get("updated", ""),
+        "items":   catalog.get("items", []),
+    })
+    resp.headers["Cache-Control"] = "no-store"
+    resp.headers["Access-Control-Allow-Origin"]  = "*"
+    resp.headers["Access-Control-Allow-Headers"] = "X-CyCentra-Token"
+    return resp
+
+
 # ── Health ────────────────────────────────────────────────────────────────────
 
 @app.route("/marketplace/api/health", methods=["GET"])
