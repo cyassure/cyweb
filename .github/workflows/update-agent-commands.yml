@@ -1,0 +1,107 @@
+name: Update Agent Command Files
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - '.claude/commands/**'
+      - 'docs/WEEKLY_REVIEW.md'
+
+concurrency:
+  group: update-agent-commands
+  cancel-in-progress: true
+
+jobs:
+  update-commands:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install anthropic --quiet
+
+      - name: Detect changed files
+        run: git diff HEAD~1 HEAD --name-only > /tmp/changed_files.txt
+
+      - name: Ensure .claude/commands directory exists
+        run: mkdir -p .claude/commands
+
+      - name: Update agent command files
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          python3 - << 'PYEOF'
+          import os, subprocess, sys
+          from pathlib import Path
+
+          # CyCentra.com maps to g-cyra-web
+          WEB_PREFIXES = ["src/", "public/", "cycentra.com/src/", "nginx.conf", "Dockerfile", "docker-compose"]
+
+          changed = [l.strip() for l in Path("/tmp/changed_files.txt").read_text().splitlines() if l.strip()]
+          owned   = [f for f in changed if any(f.startswith(p) or f == p for p in WEB_PREFIXES)]
+
+          if not owned:
+              print("No g-cyra-web files changed — skipping")
+              sys.exit(0)
+
+          import anthropic
+          client = anthropic.Anthropic()
+
+          MAX_DIFF = 20_000
+          parts = []
+          for filepath in owned[:10]:
+              diff = subprocess.run(["git","diff","HEAD~1","HEAD","--",filepath],
+                                    capture_output=True, text=True).stdout[:MAX_DIFF]
+              if diff:
+                  parts.append(f"### git diff: {filepath}\n```diff\n{diff}\n```")
+          source_block = "\n".join(parts)
+
+          cmd_path = Path(".claude/commands/g-cyra-web.md")
+          current  = cmd_path.read_text() if cmd_path.exists() else ""
+
+          prompt = f"""You are maintaining the Claude Code custom slash command file for the g-cyra-web agent in the CyCentra.com marketing site repository.
+
+  Changed files: {owned}
+
+  Source changes:
+  {source_block}
+
+  Current command file:
+  {current}
+
+  Update the command file to reflect these changes. Only change sections that are factually outdated.
+  Preserve $ARGUMENTS at the end. Output ONLY the complete updated command file, no commentary."""
+
+          msg = client.messages.create(
+              model="claude-sonnet-4-6",
+              max_tokens=8096,
+              messages=[{"role":"user","content":prompt}],
+          )
+          updated = msg.content[0].text
+          if updated.strip() != current.strip():
+              cmd_path.write_text(updated)
+              print("g-cyra-web ✅ updated")
+          else:
+              print("g-cyra-web: no changes needed")
+          PYEOF
+
+      - name: Commit updated command files
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .claude/commands/
+          if git diff --staged --quiet; then
+            echo "No changes — skipping commit"
+          else
+            git commit -m "chore(agents): auto-sync g-cyra-web command file [skip ci]"
+            git push
+          fi

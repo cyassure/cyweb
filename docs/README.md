@@ -24,9 +24,9 @@ npm run build
 
 Two helper scripts handle all Git operations — no token management needed.
 
-### Pull latest from GitHub
+### Pull latest from GitHub / update server deployment
 ```bash
-./git-pull.sh
+./cycentra.com-setup.sh --update
 ```
 
 ### Push changes and create a new version tag

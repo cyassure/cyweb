@@ -1,3 +1,39 @@
+## v1.0.44 -- 2026-06-22
+
+### Bug Fixes
+
+  - **Marketplace Publish path** — The "Publish to cycentra.com" button in CyAdmin was writing to a
+    dead-end `CyCentra/cycentra.com/` directory instead of the git-tracked `CyCentra.com/` repo.
+    Published catalogs were silently discarded and never deployed. Fixed the Docker Compose volume
+    mount and the non-Docker default path in `app.py`.
+
+  - **`github` config_type missing from CyAdmin validation** — The `_VALID_CONFIG_TYPES` set in
+    `CyAdmin/app.py` did not include `"github"`, and the item-edit dropdown had no `github` option.
+    Editing the `github-audit` integration through CyAdmin would silently strip its `config_type`.
+    Both the validation set and the dropdown are now corrected.
+
+  - **`github` config_type missing from portal custom-item form** — The `CatalogItemFormModal`
+    config_type select in `MarketplacePage.jsx` had no `github` option. Custom items with GitHub
+    audit log integrations could not be created correctly from the portal. Option added.
+
+  - **Retry-causes-409 on partial submit failure** — In `CatalogItemFormModal`, after a successful
+    save but failed submit, retrying would POST to create a new item (causing a 409 duplicate-ID
+    conflict) because the form used the static `isEdit` flag instead of tracking the newly created
+    ID. Fixed by introducing `savedId` state that persists the server-assigned ID across retries so
+    subsequent attempts use PUT.
+
+### Improvements
+
+  - **Marketplace submission email notification** — When a CyCentra 360 server admin submits a
+    per-server custom item for cloud catalog review, a notification email is sent to
+    `MARKETPLACE_ADMIN_EMAIL` (default: `marketplace@cycentra.com`) with the item's ID, name,
+    type, description, submitter address, and server URL. Previously the submission was stored
+    silently with no notification, causing contributions to go unnoticed. Uses the existing
+    fire-and-forget SMTP path; silently skipped if SMTP is not configured. Override via
+    `MARKETPLACE_ADMIN_EMAIL` in `/opt/cycentra/.env`.
+
+---
+
 ## v1.0.43 -- 2026-06-12
 
 ### Improvements
