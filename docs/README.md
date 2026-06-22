@@ -101,12 +101,16 @@ server {
 }
 ```
 
-### Docker Compose (recommended for production)
+### Docker Compose (production — includes Marketplace API)
 
-Create a `docker-compose.yml` on your server:
+The production stack runs **two services** sharing a named volume so the live catalog is updated by marketplace-api and served instantly by nginx without any restart.
+
+`docker-compose.yml` on the server (`/root/cycentra.com/docker-compose.yml`):
 
 ```yaml
-version: "3.9"
+volumes:
+  marketplace-data:
+
 services:
   cycentra-web:
     image: ghcr.io/cycentra/cycentra.com:latest
@@ -114,23 +118,75 @@ services:
     restart: unless-stopped
     ports:
       - "127.0.0.1:8081:80"
+    volumes:
+      - marketplace-data:/usr/share/nginx/html/marketplace
+    environment:
+      - FRONTEND_URL=${FRONTEND_URL:-https://cy360.cycentra.com}
+      - MARKETPLACE_CATALOG_TOKEN=${MARKETPLACE_CATALOG_TOKEN:-}
+    depends_on:
+      - marketplace-api
+
+  marketplace-api:
+    build: ./marketplace-api
+    container_name: marketplace-api
+    restart: unless-stopped
+    volumes:
+      - marketplace-data:/data
+    environment:
+      - MARKETPLACE_ADMIN_TOKEN=${MARKETPLACE_ADMIN_TOKEN:-}
+      - MARKETPLACE_CATALOG_TOKEN=${MARKETPLACE_CATALOG_TOKEN:-}
+    expose:
+      - "5050"
+```
+
+`.env` on the server (`/root/cycentra.com/.env`):
+
+```
+FRONTEND_URL=https://cycentra.com
+MARKETPLACE_ADMIN_TOKEN=<shared secret known only to CyAdmin>
+MARKETPLACE_CATALOG_TOKEN=<pre-shared token for all Cy360 instances>
 ```
 
 ```bash
-# Start
-docker compose up -d
+# First-time start (builds marketplace-api image)
+cd /root/cycentra.com
+docker compose up --build -d
 
-# Update to latest version
-docker compose pull && docker compose up -d
+# After initial start: publish from CyAdmin to seed the live catalog
+# (open http://localhost:7070/marketplace and click "Publish to cycentra.com")
 ```
 
-### One-liner update on the server
+### Updating to a new cycentra.com image
+
+After `./git-push.sh` triggers a GitHub Actions build (~60 s), update the server:
 
 ```bash
-docker pull ghcr.io/cycentra/cycentra.com:latest && \
-docker stop cycentra-web && docker rm cycentra-web && \
-docker run -d --name cycentra-web --restart unless-stopped \
-  -p 80:80 ghcr.io/cycentra/cycentra.com:latest
+ssh -p 2026 root@204.168.193.23
+cd /root/cycentra.com
+docker compose pull          # downloads new ghcr.io/cycentra/cycentra.com:latest
+docker compose up -d         # recreates only cycentra-web; marketplace-api stays running
+```
+
+The `marketplace-data` volume is **not wiped** on image update — the live catalog persists.
+
+After updating: click "Publish to cycentra.com" in CyAdmin to ensure the live catalog is in sync with the working catalog.
+
+### Validate after any update
+
+```bash
+# Health (item count, pending submissions):
+curl https://cycentra.com/marketplace/api/health
+
+# Full catalog (requires MARKETPLACE_CATALOG_TOKEN header):
+curl -H "X-CyCentra-Token: <MARKETPLACE_CATALOG_TOKEN>" \
+  https://cycentra.com/marketplace/catalog.json
+
+# What image is running:
+ssh -p 2026 root@204.168.193.23 \
+  'docker inspect cycentra-web --format "Image: {{.Config.Image}}  Created: {{.Created}}"'
+
+# marketplace-api publish log:
+ssh -p 2026 root@204.168.193.23 'docker logs marketplace-api --tail=20'
 ```
 
 ---
