@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated": "2026-05-03",
+  "updated": "2026-06-22",
   "items": [
     {
       "id": "office365",
@@ -8,7 +8,7 @@
       "type": "integration",
       "category": "Cloud",
       "vendor": "Microsoft",
-      "icon": "\u2601\ufe0f",
+      "icon": "☁️",
       "color": "#0078d4",
       "description": "Configure the Wazuh Office 365 audit log integration. Ingest Exchange, SharePoint, Azure AD and General audit events directly into CySIEM for unified cloud visibility.",
       "modules_required": [
@@ -33,9 +33,9 @@
       "type": "integration",
       "category": "Cloud",
       "vendor": "Google",
-      "icon": "\ud83d\udd35",
+      "icon": "🔵",
       "color": "#4285f4",
-      "description": "Configure the Wazuh GCP Pub/Sub integration. Upload your Service Account JSON key to ingest Google Cloud audit logs \u2014 Admin Activity, Data Access, System Events \u2014 into CySIEM. Custom security rules are deployed automatically.",
+      "description": "Configure the Wazuh GCP Pub/Sub integration. Upload your Service Account JSON key to ingest Google Cloud audit logs — Admin Activity, Data Access, System Events — into CySIEM. Custom security rules are deployed automatically.",
       "modules_required": [
         "CySIEM"
       ],
@@ -58,9 +58,9 @@
       "type": "playbook",
       "category": "Incident Response",
       "vendor": "CyCentra",
-      "icon": "\ud83c\udfa3",
+      "icon": "🎣",
       "color": "#ff3b3b",
-      "description": "Auto-triage phishing emails. Extract IOCs, create a CyIRIS case, block sender domain in CySIEM, and notify the SOC team \u2014 all in under 60 seconds.",
+      "description": "Auto-triage phishing emails. Extract IOCs, create a CyIRIS case, block sender domain in CySIEM, and notify the SOC team — all in under 60 seconds.",
       "modules_required": [
         "CySOAR",
         "CyIRIS",
@@ -78,7 +78,7 @@
       ],
       "cysoar_flow": "phishing_response.py",
       "steps": [
-        "Email received \u2192 CySOAR webhook trigger",
+        "Email received → CySOAR webhook trigger",
         "Extract headers, links, attachments",
         "VirusTotal/URLScan enrichment",
         "Auto-create CyIRIS case",
@@ -93,7 +93,7 @@
       "type": "playbook",
       "category": "Active Response",
       "vendor": "CyCentra",
-      "icon": "\ud83d\udeab",
+      "icon": "🚫",
       "color": "#ff8c00",
       "description": "Instantly block a malicious IP across all agents via CySIEM active response. Triggered by alert level, CyIRIS case or manual override.",
       "modules_required": [
@@ -110,7 +110,7 @@
       ],
       "cysoar_flow": "block_ip.py",
       "steps": [
-        "Trigger: alert level \u226512 or manual",
+        "Trigger: alert level ≥12 or manual",
         "Validate IP is not on allowlist",
         "Execute active-response on all agents",
         "Log block to CyIRIS case",
@@ -124,7 +124,7 @@
       "type": "playbook",
       "category": "Threat Intelligence",
       "vendor": "CyCentra",
-      "icon": "\ud83d\udd0d",
+      "icon": "🔍",
       "color": "#4d9eff",
       "description": "Automatically enrich indicators of compromise from CySIEM alerts. Query VirusTotal, Shodan, and AbuseIPDB, then push enriched data to CyIRIS.",
       "modules_required": [
@@ -157,7 +157,7 @@
       "type": "playbook",
       "category": "Active Response",
       "vendor": "CyCentra",
-      "icon": "\ud83e\udda0",
+      "icon": "🦠",
       "color": "#b06eff",
       "description": "Isolate a compromised endpoint on detection. Quarantine the agent, take a memory snapshot, create a CyIRIS IR case, and alert the on-call analyst.",
       "modules_required": [
@@ -191,7 +191,7 @@
       "type": "playbook",
       "category": "Vulnerability Management",
       "vendor": "CyCentra",
-      "icon": "\ud83d\udccb",
+      "icon": "📋",
       "color": "#f5c518",
       "description": "Automatically create and assign remediation tickets for Critical and High CVEs discovered by CySIEM. Includes SLA tracking and escalation.",
       "modules_required": [
@@ -225,7 +225,7 @@
       "type": "playbook",
       "category": "Active Response",
       "vendor": "CyCentra",
-      "icon": "\ud83d\udd10",
+      "icon": "🔐",
       "color": "#00e5a0",
       "description": "Detect and respond to brute force login attempts. Temporarily block offending IPs, alert the user, and create an investigation case.",
       "modules_required": [
@@ -259,7 +259,7 @@
       "type": "integration",
       "category": "DevSecOps",
       "vendor": "GitHub",
-      "icon": "\ud83d\udc19",
+      "icon": "🐙",
       "color": "#6e40c9",
       "description": "Ingest GitHub organization audit logs into CySIEM via the Wazuh native GitHub module. Monitors member activity, repository events, authentication, OAuth app access, and admin actions across your GitHub organization.",
       "modules_required": [
