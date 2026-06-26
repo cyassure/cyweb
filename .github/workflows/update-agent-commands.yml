@@ -3,9 +3,12 @@ name: Update Agent Command Files
 on:
   push:
     branches: [main]
-    paths-ignore:
-      - '.claude/commands/**'
-      - 'docs/WEEKLY_REVIEW.md'
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'nginx.conf*'
+      - 'Dockerfile*'
+      - 'docker-compose*'
 
 concurrency:
   group: update-agent-commands
@@ -53,8 +56,13 @@ jobs:
               print("No g-cyra-web files changed — skipping")
               sys.exit(0)
 
+          api_key = os.environ.get("ANTHROPIC_API_KEY", "")
+          if not api_key:
+              print("ANTHROPIC_API_KEY not set — skipping Claude sync")
+              sys.exit(0)
+
           import anthropic
-          client = anthropic.Anthropic()
+          client = anthropic.Anthropic(api_key=api_key)
 
           MAX_DIFF = 20_000
           parts = []
