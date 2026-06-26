@@ -60,10 +60,10 @@
       "vendor": "CyCentra",
       "icon": "🎣",
       "color": "#ff3b3b",
-      "description": "Auto-triage phishing emails. Extract IOCs, create a CyIRIS case, block sender domain in CySIEM, and notify the SOC team — all in under 60 seconds.",
+      "description": "Auto-triage phishing emails. Extract IOCs, create a CyCases case, block sender domain in CySIEM, and notify the SOC team — all in under 60 seconds.",
       "modules_required": [
         "CySOAR",
-        "CyIRIS",
+        "CyCases",
         "CySIEM"
       ],
       "estimated_time": "~45 min to deploy",
@@ -81,7 +81,7 @@
         "Email received → CySOAR webhook trigger",
         "Extract headers, links, attachments",
         "VirusTotal/URLScan enrichment",
-        "Auto-create CyIRIS case",
+        "Auto-create CyCases case",
         "Block domain in CySIEM active response",
         "Alert SOC via Slack/Teams"
       ],
@@ -95,7 +95,7 @@
       "vendor": "CyCentra",
       "icon": "🚫",
       "color": "#ff8c00",
-      "description": "Instantly block a malicious IP across all agents via CySIEM active response. Triggered by alert level, CyIRIS case or manual override.",
+      "description": "Instantly block a malicious IP across all agents via CySIEM active response. Triggered by alert level, CyCases case or manual override.",
       "modules_required": [
         "CySOAR",
         "CySIEM"
@@ -113,7 +113,7 @@
         "Trigger: alert level ≥12 or manual",
         "Validate IP is not on allowlist",
         "Execute active-response on all agents",
-        "Log block to CyIRIS case",
+        "Log block to CyCases case",
         "Schedule unblock review in 24h"
       ],
       "added_at": "2026-04-27T00:00:00Z"
@@ -126,11 +126,11 @@
       "vendor": "CyCentra",
       "icon": "🔍",
       "color": "#4d9eff",
-      "description": "Automatically enrich indicators of compromise from CySIEM alerts. Query VirusTotal, Shodan, and AbuseIPDB, then push enriched data to CyIRIS.",
+      "description": "Automatically enrich indicators of compromise from CySIEM alerts. Query VirusTotal, Shodan, and AbuseIPDB, then push enriched data to CyCases.",
       "modules_required": [
         "CySOAR",
         "CySIEM",
-        "CyIRIS"
+        "CyCases"
       ],
       "estimated_time": "~30 min to deploy",
       "tags": [
@@ -146,7 +146,7 @@
         "Receive IOC from CySIEM alert",
         "Query VirusTotal, Shodan, AbuseIPDB",
         "Score severity based on response",
-        "Update CyIRIS case with enrichment",
+        "Update CyCases case with enrichment",
         "Set ticket priority based on score"
       ],
       "added_at": "2026-04-27T00:00:00Z"
@@ -159,11 +159,11 @@
       "vendor": "CyCentra",
       "icon": "🦠",
       "color": "#b06eff",
-      "description": "Isolate a compromised endpoint on detection. Quarantine the agent, take a memory snapshot, create a CyIRIS IR case, and alert the on-call analyst.",
+      "description": "Isolate a compromised endpoint on detection. Quarantine the agent, take a memory snapshot, create a CyCases IR case, and alert the on-call analyst.",
       "modules_required": [
         "CySOAR",
         "CySIEM",
-        "CyIRIS"
+        "CyCases"
       ],
       "estimated_time": "~60 min to deploy",
       "tags": [
@@ -180,7 +180,7 @@
         "CySOAR validates confidence threshold",
         "Isolate agent via Wazuh active response",
         "Trigger memory acquisition script",
-        "Create priority CyIRIS case with evidence",
+        "Create priority CyCases case with evidence",
         "Page on-call analyst"
       ],
       "added_at": "2026-04-27T00:00:00Z"
@@ -197,7 +197,7 @@
       "modules_required": [
         "CySOAR",
         "CySIEM",
-        "CyIRIS"
+        "CyCases"
       ],
       "estimated_time": "~45 min to deploy",
       "tags": [
@@ -212,8 +212,8 @@
       "steps": [
         "CySIEM CVE detection alert",
         "Filter: severity Critical or High",
-        "Deduplicate against open CyIRIS cases",
-        "Create CyIRIS case with CVE details",
+        "Deduplicate against open CyCases cases",
+        "Create CyCases case with CVE details",
         "Assign to asset owner",
         "Set SLA timer: Critical=24h, High=7d"
       ],
@@ -231,7 +231,7 @@
       "modules_required": [
         "CySOAR",
         "CySIEM",
-        "CyIRIS"
+        "CyCases"
       ],
       "estimated_time": "~30 min to deploy",
       "tags": [
@@ -248,7 +248,7 @@
         "Extract source IP and target account",
         "Block IP for 1 hour via active response",
         "Notify target user via email",
-        "Create CyIRIS case for investigation",
+        "Create CyCases case for investigation",
         "Auto-close if no further activity in 24h"
       ],
       "added_at": "2026-04-27T00:00:00Z"

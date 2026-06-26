@@ -1,3 +1,11 @@
+## v1.0.50 -- 2026-06-26
+
+### Improvements
+
+  - chore(docs): weekly architecture review 2026-06-18
+
+---
+
 ## v1.0.49 -- 2026-06-22
 
 ### Improvements
