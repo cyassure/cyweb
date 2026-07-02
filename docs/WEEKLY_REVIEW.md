@@ -1,38 +1,38 @@
 # CyCentra.com Weekly Review
 
-**Last reviewed:** 2026-06-25
-**Current version:** v1.0.49
-**Commits this week:** 7 (docs chore 2026-06-18; v1.0.44–v1.0.49 all on 2026-06-22)
+**Last reviewed:** 2026-07-02
+**Current version:** v1.0.55
+**Commits this week:** 7 (docs chore 2026-06-25; v1.0.50–v1.0.55 all on 2026-06-26)
 
 ## Summary
 
-Six releases landed this week (v1.0.44–v1.0.49), all on 2026-06-22. v1.0.44 was the substantive release: it fixed the Marketplace catalog publish path (broken Docker volume mount), added the missing `github` config_type to CyAdmin validation and the portal form, fixed a retry-causes-409 race on partial submit, and added email notification on catalog submission. The most significant structural change is that `marketplace-api/` — a Python Flask backend serving the catalog API — now exists in this repo. v1.0.45–v1.0.49 are logged as "Stability and performance improvements" with no code details. The React frontend (pages, components) is unchanged.
+Six releases landed this week (v1.0.50–v1.0.55), all on 2026-06-26. v1.0.50 was the only substantive change: minor content edits to `PricingSection.tsx` and `ProductsSection.tsx`, and a content refresh of `public/marketplace/catalog.json`. v1.0.53 trimmed four lines from `docker-publish.yml`. v1.0.54–v1.0.55 iterated and then deleted `update-agent-commands.yml`, resolving one prior drift item. The React frontend structure (pages, routing, component tree) is unchanged.
 
 ## Documentation Drift
 
-- **No CLAUDE.md** — still no top-level architecture document. This weekly review remains the only structured reference.
-- **`marketplace-api/` is undocumented** — a Python Flask service (`app.py`, `Dockerfile`, `requirements.txt`) was added to this repo with no corresponding docs entry. It serves `public/marketplace/catalog.json` and handles CyAdmin publish requests and catalog submissions. Its routes, environment variables (`MARKETPLACE_ADMIN_EMAIL`, SMTP config), and deployment model are undocumented.
-- **`docker-compose.yml` / `docker-compose.local.yml`** — Docker Compose files now orchestrate the React/nginx frontend and the `marketplace-api` backend together. Not previously documented.
-- **`nginx.conf.template`** — Nginx reverse-proxy config template present in the repo root; not documented.
-- **`.github/workflows/update-agent-commands.yml`** — new CI workflow alongside `docker-publish.yml`; purpose undocumented.
-- **`DetailedServicesSection.tsx`** — still not imported anywhere; likely dead code (carried forward from last review).
-- **`NavLink.tsx`** — still not imported anywhere; likely dead code (carried forward from last review).
-- **Static HTML files in `public/`** — `book-consultation.html`, `request-pricing.html`, `run-pilot.html`, `thank-you.html` still undocumented.
-- **`package.json` name field** — still set to `vite_react_shadcn_ts` (Vite template default).
+- **No CLAUDE.md** — no top-level architecture document exists. This weekly review remains the only structured reference.
+- **`marketplace-api/` is undocumented** — Python Flask service (`app.py`, `Dockerfile`, `requirements.txt`) in the repo root with no documentation. Serves `public/marketplace/catalog.json` and handles catalog submissions and CyAdmin publish requests. Routes, environment variables (`MARKETPLACE_ADMIN_EMAIL`, SMTP config), and deployment model are undocumented.
+- **`docker-compose.yml` / `docker-compose.local.yml`** — Docker Compose files orchestrating the React/nginx frontend and `marketplace-api` backend are undocumented.
+- **`nginx.conf.template`** — Nginx reverse-proxy config template in the repo root; undocumented.
+- **Root shell scripts** — `cycentra.com-setup.sh`, `docker-maintenance.sh`, `git-push.sh` present in the repo root; purpose and usage undocumented.
+- **`_backup/` directory** — exists in the repo root; contents and ownership undocumented.
+- **`DetailedServicesSection.tsx`** — defined but not imported anywhere; likely dead code.
+- **`NavLink.tsx`** — defined but not imported anywhere; likely dead code.
+- **Static HTML files in `public/`** — `book-consultation.html`, `request-pricing.html`, `run-pilot.html`, `thank-you.html` are undocumented standalone pages.
+- **`package.json` name field** — set to `vite_react_shadcn_ts` (Vite template default); not branded.
+- **`@tanstack/react-query`** — `QueryClient` instantiated in `App.tsx` but no data-fetching hooks found in the frontend; possibly unused bundle weight.
 
 ## New Since Last Review
 
-| Item | Type | Details |
+| Item | Change | Details |
 |---|---|---|
-| `marketplace-api/app.py` | New backend service | Python Flask app for Marketplace catalog API |
-| `marketplace-api/Dockerfile` | New infra | Containerises the Flask service |
-| `marketplace-api/requirements.txt` | New infra | Python dependencies for the Flask service |
-| `docker-compose.yml` | Updated infra | Now orchestrates frontend (nginx) + marketplace-api together |
-| `docker-compose.local.yml` | New infra | Local development variant of Docker Compose |
-| `nginx.conf.template` | New/updated infra | Nginx reverse-proxy config template |
-| `.github/workflows/update-agent-commands.yml` | New CI | Second GitHub Actions workflow (joins `docker-publish.yml`) |
-| `public/marketplace/catalog.json` | Updated asset | Catalog data updated (now served by marketplace-api) |
-| `docs/README.md` | Updated | Development setup instructions refreshed |
+| `src/components/PricingSection.tsx` | Modified | Minor content edits (4 lines ±) |
+| `src/components/ProductsSection.tsx` | Modified | Minor content edits (4 lines ±) |
+| `public/marketplace/catalog.json` | Modified | Catalog data refreshed |
+| `.github/workflows/docker-publish.yml` | Modified | 4 lines removed (cleanup) |
+| `.github/workflows/update-agent-commands.yml` | **Deleted** | Workflow removed in v1.0.55; resolves prior drift item |
+
+No structural changes to pages, routing, or component tree this week.
 
 ## Pages (authoritative from src/pages/)
 
@@ -57,7 +57,7 @@ Six releases landed this week (v1.0.44–v1.0.49), all on 2026-06-22. v1.0.44 wa
 | `ComparisonSection.tsx` | Competitive comparison |
 | `FreeScanSection.tsx` | Free scan CTA |
 | `PricingSection.tsx` | Pricing tiers |
-| `AboutSection.tsx` | About / Global HQ (includes `hq-building-front.jpg`, `hq-building.png`) |
+| `AboutSection.tsx` | About / Global HQ |
 | `ContactSection.tsx` | Contact form / CTA |
 | `Footer.tsx` | Site footer |
 
@@ -78,12 +78,11 @@ Six releases landed this week (v1.0.44–v1.0.49), all on 2026-06-22. v1.0.44 wa
 |---|---|---|
 | React | ^18.3.1 | UI framework |
 | react-router-dom | ^6.30.1 | Client-side routing |
-| @tanstack/react-query | ^5.83.0 | Server state (set up in App.tsx, not visibly used in frontend) |
+| @tanstack/react-query | ^5.83.0 | Server state (configured in App.tsx; no fetch hooks found in frontend) |
 | Radix UI | (full suite) | Accessible primitives for shadcn/ui |
 | framer-motion | ^12.34.0 | Animation library |
 | lucide-react | ^0.462.0 | Icon library |
-| react-hook-form | ^7.61.1 | Form state |
-| zod | ^3.25.76 | Schema validation |
+| react-hook-form + zod | ^7.61.1 / ^3.25.76 | Form state and schema validation |
 | recharts | ^2.15.4 | Charting |
 | sonner | ^1.7.4 | Toast notifications |
 | Tailwind CSS | ^3.4.17 | Styling (dev) |
@@ -94,10 +93,11 @@ Six releases landed this week (v1.0.44–v1.0.49), all on 2026-06-22. v1.0.44 wa
 
 ## Action Items
 
-1. **Document `marketplace-api/`** — add README or CLAUDE.md section covering routes, env vars (`MARKETPLACE_ADMIN_EMAIL`, SMTP config), and deployment model (Docker Compose service).
-2. **Create CLAUDE.md** — document overall repo structure now that it contains both a React frontend and a Python backend service.
-3. **Audit unused components** — determine whether `DetailedServicesSection.tsx` and `NavLink.tsx` should be deleted or integrated.
-4. **Document public HTML files** — `book-consultation.html`, `request-pricing.html`, `run-pilot.html`, `thank-you.html` and `marketplace/catalog.json` need ownership and purpose documented.
-5. **Rename `package.json` name** — change from `vite_react_shadcn_ts` to `cycentra.com` or a branded slug.
-6. **Verify @tanstack/react-query usage** — QueryClient is instantiated in App.tsx but no data-fetching hooks were found; remove if not used to reduce bundle size.
-7. **Document `.github/workflows/update-agent-commands.yml`** — clarify what this workflow does and when it runs.
+1. **Create CLAUDE.md** — document overall repo structure covering both the React/Vite frontend and the `marketplace-api` Python backend.
+2. **Document `marketplace-api/`** — add routes, environment variables (`MARKETPLACE_ADMIN_EMAIL`, SMTP config), and Docker Compose deployment model.
+3. **Document root scripts** — clarify purpose of `cycentra.com-setup.sh`, `docker-maintenance.sh`, and `git-push.sh`.
+4. **Audit `_backup/` directory** — determine if it should remain in the repo or be added to `.gitignore`.
+5. **Audit unused components** — decide whether `DetailedServicesSection.tsx` and `NavLink.tsx` should be deleted or integrated.
+6. **Document public HTML files** — `book-consultation.html`, `request-pricing.html`, `run-pilot.html`, `thank-you.html` need ownership and purpose documented.
+7. **Verify @tanstack/react-query usage** — remove if no data-fetching hooks exist in the frontend.
+8. **Rename `package.json` name field** — change from `vite_react_shadcn_ts` to a branded slug.
