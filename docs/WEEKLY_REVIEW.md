@@ -1,12 +1,12 @@
 # CyCentra.com Weekly Review
 
-**Last reviewed:** 2026-07-02
+**Last reviewed:** 2026-07-09
 **Current version:** v1.0.55
-**Commits this week:** 7 (docs chore 2026-06-25; v1.0.50–v1.0.55 all on 2026-06-26)
+**Commits this week:** 1 (docs chore 2026-07-02 — previous weekly review only)
 
 ## Summary
 
-Six releases landed this week (v1.0.50–v1.0.55), all on 2026-06-26. v1.0.50 was the only substantive change: minor content edits to `PricingSection.tsx` and `ProductsSection.tsx`, and a content refresh of `public/marketplace/catalog.json`. v1.0.53 trimmed four lines from `docker-publish.yml`. v1.0.54–v1.0.55 iterated and then deleted `update-agent-commands.yml`, resolving one prior drift item. The React frontend structure (pages, routing, component tree) is unchanged.
+No code changes landed this week. The sole commit since the 2026-07-02 review is the review document itself. The React frontend structure (pages, routing, component tree) is unchanged. All drift items from the prior review remain open.
 
 ## Documentation Drift
 
@@ -24,15 +24,7 @@ Six releases landed this week (v1.0.50–v1.0.55), all on 2026-06-26. v1.0.50 wa
 
 ## New Since Last Review
 
-| Item | Change | Details |
-|---|---|---|
-| `src/components/PricingSection.tsx` | Modified | Minor content edits (4 lines ±) |
-| `src/components/ProductsSection.tsx` | Modified | Minor content edits (4 lines ±) |
-| `public/marketplace/catalog.json` | Modified | Catalog data refreshed |
-| `.github/workflows/docker-publish.yml` | Modified | 4 lines removed (cleanup) |
-| `.github/workflows/update-agent-commands.yml` | **Deleted** | Workflow removed in v1.0.55; resolves prior drift item |
-
-No structural changes to pages, routing, or component tree this week.
+No structural changes this week.
 
 ## Pages (authoritative from src/pages/)
 
@@ -43,21 +35,21 @@ No structural changes to pages, routing, or component tree this week.
 
 ## Shared Components (authoritative from src/components/)
 
-### Section components (rendered by Index.tsx)
+### Section components (rendered by Index.tsx, in import order)
 
 | Component | Purpose |
 |---|---|
 | `Navbar.tsx` | Top navigation bar |
 | `HeroSection.tsx` | Above-the-fold hero |
+| `ServicesSection.tsx` | Services overview |
 | `WhyCycentraSection.tsx` | Value proposition section |
 | `ProductsSection.tsx` | Product family overview |
-| `PlatformSection.tsx` | Platform capabilities |
-| `ServicesSection.tsx` | Services overview |
 | `CyMindSection.tsx` | CyMind product/feature highlight |
+| `PlatformSection.tsx` | Platform capabilities |
 | `ComparisonSection.tsx` | Competitive comparison |
+| `AboutSection.tsx` | About / Global HQ |
 | `FreeScanSection.tsx` | Free scan CTA |
 | `PricingSection.tsx` | Pricing tiers |
-| `AboutSection.tsx` | About / Global HQ |
 | `ContactSection.tsx` | Contact form / CTA |
 | `Footer.tsx` | Site footer |
 
