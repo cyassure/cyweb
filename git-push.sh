@@ -17,10 +17,27 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
+# ── Guard: commit any uncommitted changes before release — never discard them ──
+# Committing dirty state first means a subsequent pull/rebase never has to touch
+# uncommitted work — it's already safely on a commit before we sync with origin.
+if ! git diff --quiet || ! git diff --cached --quiet; then
+  echo "-> Uncommitted changes found — auto-committing before release:"
+  git status --short
+  git add -A
+  git commit -m "chore: pre-release commit (auto-staged by git-push.sh)"
+  echo "   Pre-release commit done."
+fi
+
 # ── Config ────────────────────────────────────────────────────────────────────
 RELEASE_NOTES="docs/RELEASE_NOTES.md"
 GH_REPO="cycentra/CYCENTRA.COM"
 BUMP_TYPE="${1:-patch}"
+
+# ── Sync with remote before touching any files ───────────────────────────────
+# Prevents the "non-fast-forward" push rejection that happens when origin/main
+# has moved (another clone, a PR merge, a direct GitHub edit) since our last pull.
+echo "-> Syncing with remote main..."
+git pull --rebase origin main
 
 # ── Get latest release tag from GitHub ───────────────────────────────────────
 echo "-> Fetching latest release tag from GitHub..."
