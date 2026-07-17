@@ -22,8 +22,16 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Generated / temporary output
+*.log
+coverage/
+*.sqlite
+*.db
+
 # Environment secrets — NEVER commit these
 .env
 .env.*
 
 # Ignore docs folder
+docs/
