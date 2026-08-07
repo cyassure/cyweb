@@ -83,9 +83,11 @@ if [[ -z "$LATEST_VER" ]]; then
     | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -1 || true)
 fi
 
+BOOTSTRAP=false
 if [[ -z "$LATEST_VER" ]]; then
-  LATEST_VER="v1.0.0"
-  echo "   No existing tags found, starting at $LATEST_VER"
+  BOOTSTRAP=true
+  LATEST_VER="v0.0.0"
+  echo "   No existing tags found, starting fresh at $LATEST_VER"
 else
   LATEST_VER=$(echo "$LATEST_VER" | tr -d '[:space:]')
   echo "   Latest GitHub release: $LATEST_VER"
@@ -108,7 +110,11 @@ BUMP_VERSION() {
 # ── Find next available tag (skip any already on GitHub/local) ────────────────
 git "${AUTH_ARGS[@]}" fetch --tags > /dev/null 2>&1
 ALL_TAGS=$(git tag)
-NEXT_VER_NUM=$(BUMP_VERSION "$MAJ" "$MIN" "$PAT" "$BUMP_TYPE")
+if [[ "$BOOTSTRAP" == "true" ]]; then
+  NEXT_VER_NUM="$LATEST_VER_NUM"   # "0.0.0" itself -- first release, not a bump
+else
+  NEXT_VER_NUM=$(BUMP_VERSION "$MAJ" "$MIN" "$PAT" "$BUMP_TYPE")
+fi
 NEXT_VER="v$NEXT_VER_NUM"
 while echo "$ALL_TAGS" | grep -qx "$NEXT_VER"; do
   IFS=. read -r MAJ MIN PAT <<< "$NEXT_VER_NUM"
