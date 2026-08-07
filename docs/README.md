@@ -48,18 +48,18 @@ Each push automatically:
 
 The Docker image is published to GitHub Container Registry on every tagged release.
 
-**Image:** `ghcr.io/cycentra/cycentra.com`
+**Image:** `ghcr.io/cyassure/cycentra.com`
 
 ### Pull the latest image
 
 ```bash
-docker pull ghcr.io/cycentra/cycentra.com:latest
+docker pull ghcr.io/cyassure/cycentra.com:latest
 ```
 
 ### Pull a specific version
 
 ```bash
-docker pull ghcr.io/cycentra/cycentra.com:1.0.3
+docker pull ghcr.io/cyassure/cycentra.com:1.0.3
 ```
 
 ### Run on a server (port 80)
@@ -69,7 +69,7 @@ docker run -d \
   --name cycentra-web \
   --restart unless-stopped \
   -p 80:80 \
-  ghcr.io/cycentra/cycentra.com:latest
+  ghcr.io/cyassure/cycentra.com:latest
 ```
 
 ### Run behind a reverse proxy (recommended for HTTPS)
@@ -79,7 +79,7 @@ docker run -d \
   --name cycentra-web \
   --restart unless-stopped \
   -p 127.0.0.1:8081:80 \
-  ghcr.io/cycentra/cycentra.com:latest
+  ghcr.io/cyassure/cycentra.com:latest
 ```
 
 Then configure nginx:
@@ -113,7 +113,7 @@ volumes:
 
 services:
   cycentra-web:
-    image: ghcr.io/cycentra/cycentra.com:latest
+    image: ghcr.io/cyassure/cycentra.com:latest
     container_name: cycentra-web
     restart: unless-stopped
     ports:
@@ -163,7 +163,7 @@ After `./git-push.sh` triggers a GitHub Actions build (~60 s), update the server
 ```bash
 ssh -p 2026 root@204.168.193.23
 cd /root/cycentra.com
-docker compose pull          # downloads new ghcr.io/cycentra/cycentra.com:latest
+docker compose pull          # downloads new ghcr.io/cyassure/cycentra.com:latest
 docker compose up -d         # recreates only cycentra-web; marketplace-api stays running
 ```
 

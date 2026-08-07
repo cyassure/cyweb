@@ -1,5 +1,5 @@
 # Local-dev override — runs marketplace-api standalone (no nginx image needed).
-# Use when you can't pull ghcr.io/cycentra/cycentra.com:latest locally.
+# Use when you can't pull ghcr.io/cyassure/cycentra.com:latest locally.
 #
 # Usage:
 #   cd CyCentra.com

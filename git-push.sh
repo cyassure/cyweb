@@ -30,7 +30,7 @@ fi
 
 # ── Config ────────────────────────────────────────────────────────────────────
 RELEASE_NOTES="docs/RELEASE_NOTES.md"
-GH_REPO="cycentra/CYCENTRA.COM"
+GH_REPO="cyassure/CYCENTRA.COM"
 BUMP_TYPE="${1:-patch}"
 
 # ── Sync with remote before touching any files ───────────────────────────────
@@ -209,5 +209,5 @@ fi
 echo ""
 echo "[OK] Release $NEW_VER pushed."
 echo "     GitHub Actions will build and publish:"
-echo "     ghcr.io/cycentra/cycentra.com:${NEW_VER_NUM}"
-echo "     ghcr.io/cycentra/cycentra.com:latest"
+echo "     ghcr.io/cyassure/cycentra.com:${NEW_VER_NUM}"
+echo "     ghcr.io/cyassure/cycentra.com:latest"

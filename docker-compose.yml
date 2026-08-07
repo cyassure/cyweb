@@ -5,7 +5,7 @@ volumes:
 
 services:
   cycentra-web:
-    image: ghcr.io/cycentra/cycentra.com:latest
+    image: ghcr.io/cyassure/cycentra.com:latest
     container_name: cycentra-web
     restart: unless-stopped
     ports:

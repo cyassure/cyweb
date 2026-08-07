@@ -47,7 +47,7 @@ done
 # ── Constants ─────────────────────────────────────────────────────────────────
 _SCRIPT_VERSION="v1.0.0"
 DEPLOY_DIR="/opt/cycentra-web"
-GH_ORG="cycentra"
+GH_ORG="cyassure"
 IMAGE_BASE="ghcr.io/${GH_ORG}/cycentra.com"
 COMPOSE_FILE="${DEPLOY_DIR}/docker-compose.yml"
 CONTAINER_NAME="cycentra-web"
@@ -111,14 +111,14 @@ _GH_TOKEN="${GHCR_PAT:-${GH_TOKEN:-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}}"
 _DOWNLOADED=false
 
 if command -v gh &>/dev/null && gh auth status &>/dev/null 2>&1; then
-    gh release download --repo "cycentra/CYCENTRA.COM" \
+    gh release download --repo "cyassure/CYCENTRA.COM" \
         --pattern "cycentra.com-setup.sh" \
         --output "$_LATEST" --clobber 2>/dev/null && _DOWNLOADED=true || true
 elif command -v curl &>/dev/null; then
     _CURL_AUTH=()
     [[ -n "$_GH_TOKEN" ]] && _CURL_AUTH=(-H "Authorization: token $_GH_TOKEN")
     curl -sfL "${_CURL_AUTH[@]}" \
-        "https://github.com/cycentra/CYCENTRA.COM/releases/latest/download/cycentra.com-setup.sh" \
+        "https://github.com/cyassure/CYCENTRA.COM/releases/latest/download/cycentra.com-setup.sh" \
         -o "$_LATEST" 2>/dev/null && _DOWNLOADED=true || true
 fi
 
@@ -240,7 +240,7 @@ step_header "REGISTRY AUTHENTICATION"
 
 GHCR_PAT="${GHCR_PAT:-${GH_TOKEN:-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}}"
 if [[ -n "$GHCR_PAT" ]]; then
-    echo "$GHCR_PAT" | docker login ghcr.io -u "${GH_USER:-cycentra}" --password-stdin \
+    echo "$GHCR_PAT" | docker login ghcr.io -u "${GH_USER:-cyassure}" --password-stdin \
         && success "Logged in to GHCR" \
         || warn "GHCR login failed — will attempt pull without auth"
 else
