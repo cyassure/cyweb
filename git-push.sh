@@ -30,14 +30,33 @@ fi
 
 # ── Config ────────────────────────────────────────────────────────────────────
 RELEASE_NOTES="docs/RELEASE_NOTES.md"
-GH_REPO="cyassure/CYCENTRA.COM"
+GH_REPO="cyassure/cyweb"
+REMOTE_URL="https://github.com/cyassure/cyweb.git"
 BUMP_TYPE="${1:-patch}"
+
+# ── Point origin at the target repo ──────────────────────────────────────────
+CURRENT_REMOTE=$(git remote get-url origin 2>/dev/null || true)
+if [[ "$CURRENT_REMOTE" != "$REMOTE_URL" ]]; then
+  echo "-> Setting origin remote to $REMOTE_URL"
+  git remote set-url origin "$REMOTE_URL" 2>/dev/null || git remote add origin "$REMOTE_URL"
+fi
+
+# ── Push auth ─────────────────────────────────────────────────────────────────
+# This repo lives under the cyassure GitHub account, separate from whatever
+# account gh/git credentials are already set up for on this machine.
+# Export GH_TOKEN (a fine-grained PAT scoped to this repo) before running.
+
+AUTH_ARGS=(-c "core.pager=cat")
+if [[ -n "${GH_TOKEN:-}" ]]; then
+  AUTH_B64=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 | tr -d '\n')
+  AUTH_ARGS=(-c "http.https://github.com/.extraheader=AUTHORIZATION: basic $AUTH_B64")
+fi
 
 # ── Sync with remote before touching any files ───────────────────────────────
 # Prevents the "non-fast-forward" push rejection that happens when origin/main
 # has moved (another clone, a PR merge, a direct GitHub edit) since our last pull.
 echo "-> Syncing with remote main..."
-git pull --rebase origin main
+git "${AUTH_ARGS[@]}" pull --rebase origin main
 
 # ── Get latest release tag from GitHub ───────────────────────────────────────
 echo "-> Fetching latest release tag from GitHub..."
@@ -55,7 +74,7 @@ if [[ -z "$LATEST_VER" ]]; then
 fi
 
 if [[ -z "$LATEST_VER" ]]; then
-  git fetch --tags > /dev/null 2>&1
+  git "${AUTH_ARGS[@]}" fetch --tags > /dev/null 2>&1
   LATEST_VER=$(git tag --sort=-version:refname \
     | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -1 || true)
 fi
@@ -83,7 +102,7 @@ BUMP_VERSION() {
 }
 
 # ── Find next available tag (skip any already on GitHub/local) ────────────────
-git fetch --tags > /dev/null 2>&1
+git "${AUTH_ARGS[@]}" fetch --tags > /dev/null 2>&1
 ALL_TAGS=$(git tag)
 NEXT_VER_NUM=$(BUMP_VERSION "$MAJ" "$MIN" "$PAT" "$BUMP_TYPE")
 NEXT_VER="v$NEXT_VER_NUM"
@@ -185,8 +204,8 @@ fi
 
 echo "-> Tagging $NEW_VER and pushing..."
 git tag "$NEW_VER"
-git push origin main
-git push origin "$NEW_VER"
+git "${AUTH_ARGS[@]}" push origin main
+git "${AUTH_ARGS[@]}" push origin "$NEW_VER"
 
 # ── Create GitHub Release and attach installer assets ─────────────────────────
 if command -v gh &>/dev/null && gh auth status &>/dev/null 2>&1; then
