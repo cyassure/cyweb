@@ -1,21 +1,21 @@
 #!/usr/bin/env bash
 # ═══════════════════════════════════════════════════════════════════════════════
-# CyCentra — Marketing Website  Setup & Update Wizard  v1.0.0 — 2026-04-24
+# CyAssure — Marketing Website  Setup & Update Wizard  v1.0.0 — 2026-04-24
 #
 # FRESH INSTALL:
-#   bash cycentra-setup.sh
+#   bash cyassure-setup.sh
 #
 # UPDATE EXISTING SERVER (pull latest image, restart):
-#   bash cycentra-setup.sh --update
+#   bash cyassure-setup.sh --update
 #
 # UPGRADE TO SPECIFIC VERSION:
-#   bash cycentra-setup.sh --upgrade v1.1.0
+#   bash cyassure-setup.sh --upgrade v1.1.0
 #
 # WITH REGISTRY TOKEN (required for private GHCR):
-#   GHCR_PAT=ghp_... bash cycentra-setup.sh
+#   GHCR_PAT=ghp_... bash cyassure-setup.sh
 #
 # What this script does:
-#   fresh install  → installs Docker, creates /opt/cycentra-web, pulls image,
+#   fresh install  → installs Docker, creates /opt/cyassure-web, pulls image,
 #                    starts container on port 8081, health check
 #   --update       → pulls latest image, zero-downtime restart
 #   --upgrade vX   → pulls specific version tag, restarts
@@ -46,11 +46,11 @@ done
 
 # ── Constants ─────────────────────────────────────────────────────────────────
 _SCRIPT_VERSION="v1.0.0"
-DEPLOY_DIR="/opt/cycentra-web"
+DEPLOY_DIR="/opt/cyassure-web"
 GH_ORG="cyassure"
-IMAGE_BASE="ghcr.io/${GH_ORG}/cycentra.com"
+IMAGE_BASE="ghcr.io/${GH_ORG}/cyweb"
 COMPOSE_FILE="${DEPLOY_DIR}/docker-compose.yml"
-CONTAINER_NAME="cycentra-web"
+CONTAINER_NAME="cyassure-web"
 HTTP_PORT="${HTTP_PORT:-8081}"
 _SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" && pwd)"
 
@@ -72,7 +72,7 @@ trap '
     echo -e "\n${RED}${BOLD}  ✗ FATAL: Setup aborted during STEP ${step} \"${_LAST_STEP}\"${NC}"
     echo -e "  ${RED}  Failed command : ${BASH_COMMAND}${NC}"
     echo -e "  ${RED}  Exit code      : ${ec}  |  Line: ${BASH_LINENO[0]}${NC}"
-    echo -e "  ${DIM}  Fix the issue above, then re-run: bash cycentra-setup.sh${NC}"
+    echo -e "  ${DIM}  Fix the issue above, then re-run: bash cyassure-setup.sh${NC}"
     echo ""
 ' ERR
 
@@ -82,12 +82,12 @@ trap '
 # ── Banner ────────────────────────────────────────────────────────────────────
 [[ -t 1 ]] && clear; echo ""
 echo -e "${CYAN}${BOLD}"
-echo "  ██████╗██╗   ██╗ ██████╗███████╗███╗   ██╗████████╗██████╗  █████╗ "
-echo "  ██╔════╝╚██╗ ██╔╝██╔════╝██╔════╝████╗  ██║╚══██╔══╝██╔══██╗██╔══██╗"
-echo "  ██║      ╚████╔╝ ██║     █████╗  ██╔██╗ ██║   ██║   ██████╔╝███████║"
-echo "  ██║       ╚██╔╝  ██║     ██╔══╝  ██║╚██╗██║   ██║   ██╔══██╗██╔══██║"
-echo "  ╚██████╗   ██║   ╚██████╗███████╗██║ ╚████║   ██║   ██║  ██║██║  ██║"
-echo "   ╚═════╝   ╚═╝    ╚═════╝╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝"
+echo "   ██████╗██╗   ██╗ █████╗ ███████╗███████╗██╗   ██╗██████╗ ███████╗"
+echo "  ██╔════╝╚██╗ ██╔╝██╔══██╗██╔════╝██╔════╝██║   ██║██╔══██╗██╔════╝"
+echo "  ██║      ╚████╔╝ ███████║███████╗███████╗██║   ██║██████╔╝█████╗  "
+echo "  ██║       ╚██╔╝  ██╔══██║╚════██║╚════██║██║   ██║██╔══██╗██╔══╝  "
+echo "  ╚██████╗   ██║   ██║  ██║███████║███████║╚██████╔╝██║  ██║███████╗"
+echo "   ╚═════╝   ╚═╝   ╚═╝  ╚═╝╚══════╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝"
 echo -e "${NC}"
 echo -e "  ${BOLD}Marketing Website${NC}"
 echo -e "  ${DIM}Setup & Update Wizard — ${_SCRIPT_VERSION} — $(date -u +"%Y-%m-%d %H:%M UTC")${NC}"
@@ -101,24 +101,24 @@ esac
 divider; echo ""
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# SELF-UPDATE — download latest cycentra.com-setup.sh from GitHub Releases
+# SELF-UPDATE — download latest cyassure-setup.sh from GitHub Releases
 # Runs only in --update / --upgrade mode; re-execs itself if a newer version
 # is available so the rest of the script runs with the latest code.
 # ═══════════════════════════════════════════════════════════════════════════════
 _SELF_PATH="$(realpath "${BASH_SOURCE[0]:-$0}")"
 _LATEST=$(mktemp)
-_GH_TOKEN="${GHCR_PAT:-${GH_TOKEN:-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}}"
+_GH_TOKEN="${GHCR_PAT:-${GH_TOKEN:-}}"
 _DOWNLOADED=false
 
 if command -v gh &>/dev/null && gh auth status &>/dev/null 2>&1; then
-    gh release download --repo "cyassure/CYCENTRA.COM" \
-        --pattern "cycentra.com-setup.sh" \
+    gh release download --repo "cyassure/cyweb" \
+        --pattern "cyassure-setup.sh" \
         --output "$_LATEST" --clobber 2>/dev/null && _DOWNLOADED=true || true
 elif command -v curl &>/dev/null; then
     _CURL_AUTH=()
     [[ -n "$_GH_TOKEN" ]] && _CURL_AUTH=(-H "Authorization: token $_GH_TOKEN")
     curl -sfL "${_CURL_AUTH[@]}" \
-        "https://github.com/cyassure/CYCENTRA.COM/releases/latest/download/cycentra.com-setup.sh" \
+        "https://github.com/cyassure/cyweb/releases/latest/download/cyassure-setup.sh" \
         -o "$_LATEST" 2>/dev/null && _DOWNLOADED=true || true
 fi
 
@@ -127,7 +127,7 @@ if [[ "$_DOWNLOADED" == true && -s "$_LATEST" ]]; then
         cp "$_LATEST" "$_SELF_PATH"
         chmod 750 "$_SELF_PATH"
         rm -f "$_LATEST"
-        success "cycentra.com-setup.sh updated to latest version — re-executing..."
+        success "cyassure-setup.sh updated to latest version — re-executing..."
         exec bash "$_SELF_PATH" "$@"
     else
         success "Setup script is already at latest version"
@@ -210,7 +210,7 @@ fi
 
 # Self-copy
 _SELF="$(realpath "${BASH_SOURCE[0]:-$0}")"
-_SCRIPT_DEST="${DEPLOY_DIR}/cycentra.com-setup.sh"
+_SCRIPT_DEST="${DEPLOY_DIR}/cyassure-setup.sh"
 if [[ "$_SELF" != "$_SCRIPT_DEST" ]]; then
     cp "$_SELF" "$_SCRIPT_DEST"
     chmod 750  "$_SCRIPT_DEST"
@@ -230,15 +230,15 @@ fi
 if crontab -l 2>/dev/null | grep -q "docker-maintenance.sh"; then
     success "Docker maintenance cron already scheduled — skipping"
 else
-    mkdir -p /var/log/cycentra
-    (crontab -l 2>/dev/null; echo "0 2 */15 * * ${_MAINT_DEST} >> /var/log/cycentra/docker-maintenance.log 2>&1") | crontab -
+    mkdir -p /var/log/cyassure
+    (crontab -l 2>/dev/null; echo "0 2 */15 * * ${_MAINT_DEST} >> /var/log/cyassure/docker-maintenance.log 2>&1") | crontab -
     success "Cron scheduled: docker-maintenance.sh runs every 15 days at 02:00"
 fi
 
 # ── Step 4: GHCR authentication ───────────────────────────────────────────────
 step_header "REGISTRY AUTHENTICATION"
 
-GHCR_PAT="${GHCR_PAT:-${GH_TOKEN:-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}}"
+GHCR_PAT="${GHCR_PAT:-${GH_TOKEN:-}}"
 if [[ -n "$GHCR_PAT" ]]; then
     echo "$GHCR_PAT" | docker login ghcr.io -u "${GH_USER:-cyassure}" --password-stdin \
         && success "Logged in to GHCR" \
@@ -275,17 +275,17 @@ if [[ -f "$_ENV_FILE" ]]; then
 else
     # Write .env — only FRONTEND_URL is required at runtime.
     cat > "$_ENV_FILE" <<EOF
-# CyCentra website — runtime environment
-# Generated by cycentra.com-setup.sh on $(date -u +"%Y-%m-%d %H:%M UTC")
+# CyAssure website — runtime environment
+# Generated by cyassure-setup.sh on $(date -u +"%Y-%m-%d %H:%M UTC")
 
 # ── CORS origin ───────────────────────────────────────────────────────────────
-# Set to the exact URL of your cycentra360 portal (e.g. https://cy360.example.com)
-FRONTEND_URL=${FRONTEND_URL:-https://cy360.cycentra.com}
+# Set to the exact URL of your Cy360 portal (e.g. https://cy360.example.com)
+FRONTEND_URL=${FRONTEND_URL:-https://cy360.cyassure.eu}
 EOF
     chmod 600 "$_ENV_FILE"
     success ".env created at ${_ENV_FILE}"
     echo ""
-    echo -e "  ${DIM}Edit ${_ENV_FILE} to set FRONTEND_URL to your cycentra360 portal URL.${NC}"
+    echo -e "  ${DIM}Edit ${_ENV_FILE} to set FRONTEND_URL to your Cy360 portal URL.${NC}"
     echo ""
 fi
 
@@ -295,7 +295,7 @@ step_header "START WEBSITE"
 cd "${DEPLOY_DIR}"
 
 if [[ "$MODE" == "full" ]]; then
-    info "Starting CyCentra website ..."
+    info "Starting CyAssure website ..."
     # Stop any pre-existing container to avoid name conflict on re-runs
     docker compose down --remove-orphans 2>/dev/null || true
     docker compose up -d
@@ -323,7 +323,7 @@ done
 echo ""
 
 if [[ "$_healthy" == true ]]; then
-    success "CyCentra website is live — http://localhost:${HTTP_PORT}"
+    success "CyAssure website is live — http://localhost:${HTTP_PORT}"
 else
     warn "Health check timed out"
     warn "Check: docker compose -f ${COMPOSE_FILE} logs"
@@ -335,7 +335,7 @@ echo "${_INSTALLED_VER}" > "${DEPLOY_DIR}/version"
 
 # ── Final summary ─────────────────────────────────────────────────────────────
 echo ""; divider
-echo -e "  ${BOLD}${GREEN}  CyCentra website setup complete${NC}"
+echo -e "  ${BOLD}${GREEN}  CyAssure website setup complete${NC}"
 echo ""
 echo -e "  URL        : ${CYAN}http://$(curl -sf ifconfig.me 2>/dev/null || hostname -I | awk '{print $1}'):${HTTP_PORT}${NC}"
   echo -e "  Compose    : ${COMPOSE_FILE}"

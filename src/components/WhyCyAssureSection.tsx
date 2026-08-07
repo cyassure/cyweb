@@ -17,7 +17,7 @@ const socStats = [
   { icon: Monitor, value: "100%", label: "Visibility" },
 ];
 
-const WhyCycentraSection = () => {
+const WhyCyAssureSection = () => {
   return (
     <section id="why" className="relative py-24">
       {/* Background glow */}
@@ -30,7 +30,7 @@ const WhyCycentraSection = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-primary">Why Cycentra</p>
+            <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-primary">Why CyAssure</p>
             <h2 className="mb-6 font-heading text-3xl font-bold text-foreground md:text-5xl">
               We don't just collect logs.
             </h2>
@@ -140,4 +140,4 @@ const WhyCycentraSection = () => {
   );
 };
 
-export default WhyCycentraSection;
+export default WhyCyAssureSection;

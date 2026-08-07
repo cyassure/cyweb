@@ -214,7 +214,7 @@ const ServicesSection = () => {
           className="mt-16 rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/5 to-transparent p-8 text-center md:p-12"
         >
           <h3 className="mb-6 font-heading text-2xl font-bold text-foreground md:text-3xl">
-            Why Customers Switch to Cycentra
+            Why Customers Switch to CyAssure
           </h3>
           <div className="mb-8 flex flex-wrap justify-center gap-3">
             {["Open, not locked", "Smart, not noisy", "Fast, not slow", "Affordable, not overpriced", "Real expert support"].map((item) => (

@@ -1,6 +1,6 @@
 #!/bin/bash
 # ─────────────────────────────────────────────────────────────────────────────
-# CyCentra Website — Automated Push & Release Script
+# CyAssure Website — Automated Push & Release Script
 #
 # Usage:
 #   ./git-push.sh              # default: patch bump
@@ -222,11 +222,11 @@ if command -v gh &>/dev/null && gh auth status &>/dev/null 2>&1; then
   echo "-> Publishing GitHub Release with installer assets..."
   NOTES_BODY=$(awk "/^## ${NEW_VER}/,/^---/" "$RELEASE_NOTES" 2>/dev/null | head -60 || true)
   ASSETS=()
-  [[ -f "cycentra.com-setup.sh" ]] && ASSETS+=("cycentra.com-setup.sh")
+  [[ -f "cyassure-setup.sh" ]] && ASSETS+=("cyassure-setup.sh")
   [[ -f "docker-maintenance.sh" ]] && ASSETS+=("docker-maintenance.sh")
   gh release create "$NEW_VER" \
     --repo "$GH_REPO" \
-    --title "CyCentra Website $NEW_VER" \
+    --title "CyAssure Website $NEW_VER" \
     --notes "${NOTES_BODY:-Release $NEW_VER}" \
     "${ASSETS[@]}" 2>/dev/null \
     && echo "   Release assets uploaded: ${ASSETS[*]}" \
@@ -238,5 +238,5 @@ fi
 echo ""
 echo "[OK] Release $NEW_VER pushed."
 echo "     GitHub Actions will build and publish:"
-echo "     ghcr.io/cyassure/cycentra.com:${NEW_VER_NUM}"
-echo "     ghcr.io/cyassure/cycentra.com:latest"
+echo "     ghcr.io/cyassure/cyweb:${NEW_VER_NUM}"
+echo "     ghcr.io/cyassure/cyweb:latest"

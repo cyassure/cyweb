@@ -4,14 +4,14 @@ import { Check, X, Monitor, Brain } from "lucide-react";
 
 /* ── Cy360 table ───────────────────────────────────────────── */
 const cy360Rows = [
-  { label: "Price / year (MDR)", cycentra: "€2.4K–12K", splunk: "€150K+", sentinel: "Variable (high)", mssp: "€50–120K" },
-  { label: "SIEM + ASM + Compliance + AI", cycentra: "Unified", splunk: "Separate tools", sentinel: "Partial", mssp: "Siloed" },
-  { label: "On-premise AI (CyMind)", cycentra: true, splunk: "Add-on (cost)", sentinel: "Copilot+", mssp: false },
-  { label: "Built-in Threat Intel (MISP)", cycentra: true, splunk: "Partner", sentinel: "Partner", mssp: false },
-  { label: "MDR 24/7 included", cycentra: true, splunk: "Partner only", sentinel: "Partner only", mssp: true },
-  { label: "Open-source base (no lock-in)", cycentra: true, splunk: false, sentinel: false, mssp: "Varies" },
-  { label: "NIS2 / DORA templates built-in", cycentra: true, splunk: "Manual config", sentinel: "Partial", mssp: "Consulting fee" },
-  { label: "Deploy time", cycentra: "< 30 min", splunk: "Months", sentinel: "Weeks", mssp: "Weeks" },
+  { label: "Price / year (MDR)", cyassure: "€2.4K–12K", splunk: "€150K+", sentinel: "Variable (high)", mssp: "€50–120K" },
+  { label: "SIEM + ASM + Compliance + AI", cyassure: "Unified", splunk: "Separate tools", sentinel: "Partial", mssp: "Siloed" },
+  { label: "On-premise AI (CyMind)", cyassure: true, splunk: "Add-on (cost)", sentinel: "Copilot+", mssp: false },
+  { label: "Built-in Threat Intel (MISP)", cyassure: true, splunk: "Partner", sentinel: "Partner", mssp: false },
+  { label: "MDR 24/7 included", cyassure: true, splunk: "Partner only", sentinel: "Partner only", mssp: true },
+  { label: "Open-source base (no lock-in)", cyassure: true, splunk: false, sentinel: false, mssp: "Varies" },
+  { label: "NIS2 / DORA templates built-in", cyassure: true, splunk: "Manual config", sentinel: "Partial", mssp: "Consulting fee" },
+  { label: "Deploy time", cyassure: "< 30 min", splunk: "Months", sentinel: "Weeks", mssp: "Weeks" },
 ];
 
 /* ── CyMind table ──────────────────────────────────────────── */
@@ -64,7 +64,7 @@ const tabs = [
     glow: "bg-primary/5 border-primary/20",
     callout: (
       <>
-        <span className="font-semibold text-foreground">Only CyCentra</span> delivers SIEM + ASM + Compliance + CyMind AI + MISP Threat Intel in one platform with{" "}
+        <span className="font-semibold text-foreground">Only CyAssure</span> delivers SIEM + ASM + Compliance + CyMind AI + MISP Threat Intel in one platform with{" "}
         <span className="text-primary font-semibold">&lt; 30 min deployment at SME pricing.</span>
       </>
     ),
@@ -103,7 +103,7 @@ const ComparisonSection = () => {
         >
           <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-primary">Competitive Landscape</p>
           <h2 className="mb-4 font-heading text-3xl font-bold text-foreground md:text-5xl">
-            How CyCentra Compares
+            How CyAssure Compares
           </h2>
           <p className="mx-auto max-w-xl text-muted-foreground">
             The only platform combining SIEM + ASM + Compliance + Private AI + Threat Intel at SME pricing.
@@ -156,7 +156,7 @@ const ComparisonSection = () => {
                     <th className="pb-4 pr-6 text-left text-xs font-medium uppercase tracking-widest text-muted-foreground">Capability</th>
                     <th className="pb-4 px-4 text-center">
                       <span className="inline-flex flex-col items-center gap-1 rounded-lg border border-primary/40 bg-primary/10 px-4 py-2 text-xs font-bold uppercase tracking-wide text-primary">
-                        CyCentra
+                        CyAssure
                       </span>
                     </th>
                     <th className="pb-4 px-4 text-center text-xs font-medium text-muted-foreground">Splunk / IBM</th>
@@ -174,7 +174,7 @@ const ComparisonSection = () => {
                       className="border-t border-border/50"
                     >
                       <td className="py-3 pr-6 text-sm text-muted-foreground">{row.label}</td>
-                      <td className="py-3 px-4 text-center"><Cell value={row.cycentra} highlight /></td>
+                      <td className="py-3 px-4 text-center"><Cell value={row.cyassure} highlight /></td>
                       <td className="py-3 px-4 text-center"><Cell value={row.splunk} /></td>
                       <td className="py-3 px-4 text-center"><Cell value={row.sentinel} /></td>
                       <td className="py-3 px-4 text-center"><Cell value={row.mssp} /></td>

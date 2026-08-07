@@ -70,7 +70,7 @@ const AboutSection = () => {
             <div className="relative h-64 md:h-80 overflow-hidden bg-card">
               <img
                 src="/hq-building.png"
-                alt="Aerial view of Cycentra Global HQ — Einsteinlaan 28, 2289 CC Rijswijk, Netherlands"
+                alt="Aerial view of CyAssure Global HQ — Einsteinlaan 28, 2289 CC Rijswijk, Netherlands"
                 className="w-full h-full object-cover"
                 style={{ transform: "scale(0.88)", transformOrigin: "center center" }}
               />
@@ -84,7 +84,7 @@ const AboutSection = () => {
             <div className="relative h-64 md:h-80 overflow-hidden bg-card">
               <img
                 src="/hq-building-front.jpg"
-                alt="Front view of Cycentra Global HQ building — Einsteinlaan 28, Rijswijk"
+                alt="Front view of CyAssure Global HQ building — Einsteinlaan 28, Rijswijk"
                 className="w-full h-full object-cover object-center"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
@@ -115,7 +115,7 @@ const AboutSection = () => {
               Enterprise-grade expertise, global reach
             </h2>
             <p className="mb-4 text-muted-foreground leading-relaxed">
-              Cycentra is an independent cybersecurity company delivering enterprise-grade security solutions to organizations worldwide.
+              CyAssure is an independent cybersecurity company delivering enterprise-grade security solutions to organizations worldwide.
             </p>
             <p className="mb-6 text-muted-foreground leading-relaxed">
               Our team combines SOC analysts, threat hunters, compliance specialists, and security engineers who have built and operated real-world defense environments.
@@ -140,7 +140,7 @@ const AboutSection = () => {
               Security tools generate noise.
             </h3>
             <p className="mb-8 text-gradient font-heading text-2xl font-bold md:text-3xl">
-              Cycentra generates clarity.
+              CyAssure generates clarity.
             </p>
 
             <div className="grid grid-cols-2 gap-4">

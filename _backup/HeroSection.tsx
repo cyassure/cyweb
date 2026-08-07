@@ -37,7 +37,7 @@ const HeroSection = () => {
           </h1>
 
           <p className="mx-auto mb-4 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
-            Cycentra helps organizations transform raw security data into real, actionable defense.
+            CyAssure helps organizations transform raw security data into real, actionable defense.
           </p>
           <p className="mx-auto mb-10 max-w-2xl text-sm leading-relaxed text-muted-foreground/70 md:text-base">
             Enterprise-grade cybersecurity services, powered by open platforms, intelligent automation, and human expertise.
@@ -144,7 +144,7 @@ const HeroSection = () => {
                   >
                     <Shield className="h-10 w-10 text-primary" />
                   </motion.div>
-                  <span className="text-xs font-bold text-foreground">CYCENTRA</span>
+                  <span className="text-xs font-bold text-foreground">CYASSURE</span>
                   <span className="text-[10px] text-muted-foreground">Platform</span>
                   <motion.div
                     className="absolute -inset-0.5 rounded-xl border border-primary/30"

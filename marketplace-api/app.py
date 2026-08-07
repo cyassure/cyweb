@@ -1,5 +1,5 @@
 """
-marketplace-api — CyCentra.com Marketplace API Service
+marketplace-api — CyAssure Marketplace API Service
 =======================================================
 Companion service to the nginx static container. Shares a Docker volume
 so that catalog.json is updated live (no CI rebuild required).
@@ -12,7 +12,7 @@ Admin — requires Authorization: Bearer {MARKETPLACE_ADMIN_TOKEN}
   POST /marketplace/api/submissions/<id>/approve   Approve → add to live catalog
   POST /marketplace/api/submissions/<id>/reject    Reject with reason
 
-Cy360 — requires X-CyCentra-Token: {MARKETPLACE_CATALOG_TOKEN}
+Cy360 — requires X-CyAssure-Token: {MARKETPLACE_CATALOG_TOKEN}
   POST /marketplace/api/submissions                Submit a contribution for review
 
 Environment variables
@@ -91,7 +91,7 @@ def _check_admin():
 def _check_catalog_token():
     if not CATALOG_TOKEN:
         return None
-    if request.headers.get("X-CyCentra-Token", "") == CATALOG_TOKEN:
+    if request.headers.get("X-CyAssure-Token", "") == CATALOG_TOKEN:
         return None
     return jsonify({"error": "Valid marketplace token required"}), 403
 
@@ -129,7 +129,7 @@ def publish():
     log.info("PUBLISH  items=%d", len(items))
     return jsonify({
         "ok":      True,
-        "message": f"Published {len(items)} item(s) to cycentra.com catalog.",
+        "message": f"Published {len(items)} item(s) to cyassure.eu catalog.",
         "updated": catalog["updated"],
     })
 
@@ -166,7 +166,7 @@ def submissions_create():
         "type":             data.get("type"),
         "description":      (data.get("description") or "").strip(),
         "category":         (data.get("category") or "").strip(),
-        "vendor":           (data.get("vendor") or "CyCentra").strip(),
+        "vendor":           (data.get("vendor") or "CyAssure").strip(),
         "icon":             (data.get("icon") or "🔧").strip(),
         "color":            (data.get("color") or "#4d9eff").strip(),
         "tags":             [str(t).strip().lower() for t in (data.get("tags") or []) if str(t).strip()],
@@ -269,12 +269,12 @@ def serve_catalog_json():
     In production nginx handles this from the shared volume.
     This endpoint allows standalone operation (local dev, direct port access).
     Token gate matches nginx behaviour: if MARKETPLACE_CATALOG_TOKEN is set,
-    request must include X-CyCentra-Token: <token>.
+    request must include X-CyAssure-Token: <token>.
     """
     if CATALOG_TOKEN:
-        provided = request.headers.get("X-CyCentra-Token", "")
+        provided = request.headers.get("X-CyAssure-Token", "")
         if provided != CATALOG_TOKEN:
-            return jsonify({"error": "Valid X-CyCentra-Token required"}), 403
+            return jsonify({"error": "Valid X-CyAssure-Token required"}), 403
 
     catalog = _read_catalog()
     resp = jsonify({
@@ -284,7 +284,7 @@ def serve_catalog_json():
     })
     resp.headers["Cache-Control"] = "no-store"
     resp.headers["Access-Control-Allow-Origin"]  = "*"
-    resp.headers["Access-Control-Allow-Headers"] = "X-CyCentra-Token"
+    resp.headers["Access-Control-Allow-Headers"] = "X-CyAssure-Token"
     return resp
 
 

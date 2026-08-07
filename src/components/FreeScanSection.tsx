@@ -74,7 +74,7 @@ const FreeScanSection = () => {
               </ul>
 
               <a
-                href="https://cy360.cycentra.com/guest-scan"
+                href="https://cy360.cyassure.eu/guest-scan"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group inline-flex items-center gap-2 rounded-lg bg-primary px-7 py-3.5 font-heading text-sm font-semibold text-primary-foreground transition-all hover:brightness-110"

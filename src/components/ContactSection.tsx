@@ -34,11 +34,11 @@ const ContactSection = () => {
               Worldwide
             </div>
             <a
-              href="mailto:sales@cycentra.com"
+              href="mailto:sales@cyassure.eu"
               className="flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary"
             >
               <Mail className="h-4 w-4 text-primary" />
-              sales@cycentra.com
+              sales@cyassure.eu
             </a>
           </div>
 

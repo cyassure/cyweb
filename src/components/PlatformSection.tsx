@@ -37,7 +37,7 @@ const PlatformSection = () => {
           viewport={{ once: true }}
           className="mb-16 text-center"
         >
-          <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-primary">Cycentra Security Platform</p>
+          <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-primary">CyAssure Security Platform</p>
           <h2 className="mb-4 font-heading text-3xl font-bold text-foreground md:text-5xl">
             Open platforms, smart intelligence
           </h2>
@@ -137,7 +137,7 @@ const PlatformSection = () => {
               ))}
               <Shield className="h-10 w-10 text-primary" />
               <div className="text-center">
-                <p className="font-heading text-xs font-bold text-foreground">CYCENTRA</p>
+                <p className="font-heading text-xs font-bold text-foreground">CYASSURE</p>
                 <p className="text-[10px] text-muted-foreground">Platform Core</p>
               </div>
               {/* CyMind AI badge */}
@@ -245,7 +245,7 @@ const PlatformSection = () => {
             <div>
               <h3 className="mb-4 font-heading text-2xl font-bold text-foreground">Embedded Intelligence</h3>
               <p className="mb-4 text-muted-foreground">
-                Cycentra integrates custom Large Language Models (LLMs) to enrich alerts, automate investigations, summarize incidents, and recommend actions.
+                CyAssure integrates custom Large Language Models (LLMs) to enrich alerts, automate investigations, summarize incidents, and recommend actions.
               </p>
               <p className="text-sm text-primary font-medium">Need control? You can Bring Your Own AI/LLM.</p>
             </div>

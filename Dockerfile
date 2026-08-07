@@ -11,7 +11,7 @@ FROM nginx:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
 COPY --from=builder /app/public /usr/share/nginx/html
 # FRONTEND_URL controls the CORS origin for the /marketplace/ path.
-# MARKETPLACE_CATALOG_TOKEN gates catalog access to licensed CyCentra 360 instances.
+# MARKETPLACE_CATALOG_TOKEN gates catalog access to licensed Cy360 instances.
 COPY nginx.conf.template /etc/nginx/nginx.conf.template
 EXPOSE 80
 # envsubst injects FRONTEND_URL and MARKETPLACE_CATALOG_TOKEN before nginx starts.

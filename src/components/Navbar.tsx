@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import cycenraLogo from "@/assets/cycentra-logo.svg";
+import cyassureLogo from "@/assets/cyassure-logo.svg";
 
 const navLinks = [
   { label: "Services", href: "#services" },
   { label: "Products", href: "#products" },
   { label: "CyMind AI", href: "#cymind" },
-  { label: "Why Cycentra", href: "#why" },
+  { label: "Why CyAssure", href: "#why" },
   { label: "Compare", href: "#comparison" },
   { label: "Free Scan", href: "#free-scan" },
   { label: "Pricing", href: "#pricing" },
@@ -21,7 +21,7 @@ const Navbar = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
       <div className="container mx-auto flex items-center justify-between px-6 py-4">
         <a href="#" className="flex items-center gap-2">
-          <img src={cycenraLogo} alt="Cycentra" className="h-8 w-auto" />
+          <img src={cyassureLogo} alt="CyAssure" className="h-8 w-auto" />
         </a>
 
         <div className="hidden items-center gap-8 md:flex">

@@ -1,8 +1,8 @@
 # Local-dev override — runs marketplace-api standalone (no nginx image needed).
-# Use when you can't pull ghcr.io/cyassure/cycentra.com:latest locally.
+# Use when you can't pull ghcr.io/cyassure/cyweb:latest locally.
 #
 # Usage:
-#   cd CyCentra.com
+#   cd cyweb
 #   docker compose -f docker-compose.local.yml up --build -d
 #
 # CyAdmin will reach it at:   http://host.docker.internal:5050

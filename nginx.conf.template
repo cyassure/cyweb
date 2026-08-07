@@ -28,7 +28,7 @@ server {
         if ($request_method = OPTIONS) {
             add_header Access-Control-Allow-Origin "${FRONTEND_URL}";
             add_header Access-Control-Allow-Methods "GET, OPTIONS";
-            add_header Access-Control-Allow-Headers "X-CyCentra-Token";
+            add_header Access-Control-Allow-Headers "X-CyAssure-Token";
             return 204;
         }
 
@@ -38,14 +38,14 @@ server {
         set $ct_required "${MARKETPLACE_CATALOG_TOKEN}";
         set $ct_fail 0;
         if ($ct_required != "") { set $ct_fail 1; }
-        if ($http_x_cycentra_token = "${MARKETPLACE_CATALOG_TOKEN}") { set $ct_fail 0; }
+        if ($http_x_cyassure_token = "${MARKETPLACE_CATALOG_TOKEN}") { set $ct_fail 0; }
         if ($ct_fail = 1) {
             return 403;
         }
 
         add_header Access-Control-Allow-Origin  "${FRONTEND_URL}" always;
         add_header Access-Control-Allow-Methods "GET, OPTIONS"    always;
-        add_header Access-Control-Allow-Headers "X-CyCentra-Token" always;
+        add_header Access-Control-Allow-Headers "X-CyAssure-Token" always;
         add_header Cache-Control                "no-store"        always;
     }
 

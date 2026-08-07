@@ -11,7 +11,7 @@ const products = [
     border: "border-violet-500/30",
     iconColor: "text-violet-400",
     description:
-      "On-premise LLM/RAG platform powering the entire CyCentra stack. Role-aware AI chat assistant, threat enrichment, incident narratives, and DLP-scanned knowledge base — no data leaves your network.",
+      "On-premise LLM/RAG platform powering the entire CyAssure stack. Role-aware AI chat assistant, threat enrichment, incident narratives, and DLP-scanned knowledge base — no data leaves your network.",
     highlights: [
       "Multi-provider: Ollama · Claude · Gemini · DeepSeek · Groq · Azure",
       "RAG knowledge base with Qdrant vector search",

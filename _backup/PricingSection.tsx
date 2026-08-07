@@ -16,7 +16,7 @@ const PricingSection = () => {
             Self-Managed Platform Packages
           </h2>
           <p className="mx-auto max-w-xl text-muted-foreground">
-            Want the power of Cycentra but manage operations yourself? Perfect.
+            Want the power of CyAssure but manage operations yourself? Perfect.
           </p>
         </motion.div>
 

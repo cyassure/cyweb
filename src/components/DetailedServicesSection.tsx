@@ -10,7 +10,7 @@ const detailSections = [
     id: "mdr",
     title: "Managed Detection & Response",
     subtitle: "Cyber threats don't wait. Neither do we.",
-    description: "Cycentra MDR provides 24×7 monitoring, detection, investigation, and response across endpoints, networks, cloud, and identity systems.",
+    description: "CyAssure MDR provides 24×7 monitoring, detection, investigation, and response across endpoints, networks, cloud, and identity systems.",
     items: ["Continuous threat monitoring", "Behavioral analytics", "Threat hunting", "Incident validation", "Containment & remediation guidance", "Executive & technical reporting"],
     outcome: "Fewer false positives. Faster response. Reduced impact.",
     icon: Eye,
@@ -55,7 +55,7 @@ const detailSections = [
     id: "cloud",
     title: "Cloud Security",
     subtitle: "Secure what you build and run in the cloud.",
-    description: "Whether you're on AWS, Azure, or GCP — or running a hybrid environment — Cycentra protects your cloud workloads, identities, and configurations continuously.",
+    description: "Whether you're on AWS, Azure, or GCP — or running a hybrid environment — CyAssure protects your cloud workloads, identities, and configurations continuously.",
     items: [
       "Cloud posture management (CSPM)",
       "Misconfiguration detection & remediation",
@@ -191,7 +191,7 @@ const DetailedServicesSection = () => {
           className="mt-24 rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/5 to-transparent p-8 text-center md:p-12"
         >
           <h3 className="mb-6 font-heading text-2xl font-bold text-foreground md:text-3xl">
-            Why Customers Switch to Cycentra
+            Why Customers Switch to CyAssure
           </h3>
           <div className="flex flex-wrap justify-center gap-4">
             {["Open, not locked", "Smart, not noisy", "Fast, not slow", "Affordable, not overpriced", "Real expert support"].map((item) => (
