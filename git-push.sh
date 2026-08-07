@@ -55,8 +55,12 @@ fi
 # ── Sync with remote before touching any files ───────────────────────────────
 # Prevents the "non-fast-forward" push rejection that happens when origin/main
 # has moved (another clone, a PR merge, a direct GitHub edit) since our last pull.
-echo "-> Syncing with remote main..."
-git "${AUTH_ARGS[@]}" pull --rebase origin main
+if git "${AUTH_ARGS[@]}" ls-remote --exit-code --heads origin main > /dev/null 2>&1; then
+  echo "-> Syncing with remote main..."
+  git "${AUTH_ARGS[@]}" pull --rebase origin main
+else
+  echo "-> Remote 'main' branch not found yet (new/empty repo) — skipping rebase."
+fi
 
 # ── Get latest release tag from GitHub ───────────────────────────────────────
 echo "-> Fetching latest release tag from GitHub..."
