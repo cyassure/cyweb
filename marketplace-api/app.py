@@ -14,14 +14,42 @@ Admin — requires Authorization: Bearer {MARKETPLACE_ADMIN_TOKEN}
 
 Cy360 — requires X-CyAssure-Token: {MARKETPLACE_CATALOG_TOKEN}
   POST /marketplace/api/submissions                Submit a contribution for review
+  GET  /marketplace/catalog.json                   Fetch the catalog (see tiering note below)
 
 Environment variables
 ---------------------
-  MARKETPLACE_ADMIN_TOKEN    Secret known only to CyAdmin — gates publish + review
-  MARKETPLACE_CATALOG_TOKEN  Shared with all Cy360 instances — gates fetch + submit
-  DATA_DIR                   Shared volume path (default: /data)
+  MARKETPLACE_ADMIN_TOKEN         Secret known only to CyAdmin — gates publish + review
+  MARKETPLACE_CATALOG_TOKEN       Shared with all Cy360 instances — gates fetch + submit
+  MARKETPLACE_ENTERPRISE_PUBLIC_KEY  PEM public key — verifies the X-CyAssure-Entitlement-Token
+                                      header (see "Content tiering" below). Must be the exact
+                                      public-key counterpart of whichever private key the
+                                      operator's CyAdmin deployment actually signs licenses
+                                      with — NOT necessarily any specific value found in a
+                                      Cy360 checkout's source tree, since a dev/test keypair
+                                      and a production keypair are not interchangeable. If
+                                      unset, every Enterprise-tier item is redacted for every
+                                      request — fails closed, not open.
+  DATA_DIR                        Shared volume path (default: /data)
+
+Content tiering (2026-08-08)
+-----------------------------
+Every catalog item now carries a `tier` field ("community" or "enterprise",
+set by the admin in CyAdmin, defaults to "community"). Community items are
+returned in full to everyone. Enterprise items are always *visible* (name,
+description, category, icon, vendor, tags, modules_required, estimated_time)
+but `config_type`/`steps`/`cysoar_flow` — the fields actually needed to pull
+and configure the item — are stripped unless the requester proves Enterprise
+entitlement via the X-CyAssure-Entitlement-Token header. See
+_verify_entitlement_token()/_apply_tier_redaction() below for the mechanism.
+
+This is why GET /marketplace/catalog.json (this Flask route) is now the
+PRIMARY way Cy360 fetches the catalog, not a fallback as previously
+documented — redaction is per-request logic keyed off a header, and a
+static file served straight off the shared volume by nginx can never do
+that. See nginx.conf.template / docs/README.md for the routing change.
 """
 
+import base64
 import datetime
 import json
 import logging
@@ -30,6 +58,10 @@ import re
 from pathlib import Path
 
 from flask import Flask, jsonify, request
+
+from cryptography.exceptions import InvalidSignature
+from cryptography.hazmat.primitives import hashes, serialization
+from cryptography.hazmat.primitives.asymmetric import padding
 
 logging.basicConfig(
     level=logging.INFO,
@@ -47,6 +79,96 @@ ADMIN_TOKEN      = os.getenv("MARKETPLACE_ADMIN_TOKEN", "")
 CATALOG_TOKEN    = os.getenv("MARKETPLACE_CATALOG_TOKEN", "")
 
 _ID_RE = re.compile(r"^[a-z0-9][a-z0-9\-]{1,48}[a-z0-9]$")
+
+# ── Enterprise entitlement verification ────────────────────────────────────────
+# Wire format is owned by CyAdmin's licenses/cyassure360.py — do not change
+# independently. Token = "<payload_segment>.<signature_segment>", both
+# base64url (RFC 4648 §5, no padding). payload_segment decodes to
+# {"license_id","type":"enterprise","issued_at","expires_at"}. The signature
+# covers the payload_segment's raw STRING bytes, not the decoded JSON —
+# verify against exactly what was received on the wire, never re-serialize
+# first (a different key order or whitespace would break a signature that
+# was never computed over that re-serialized form).
+
+_ENTERPRISE_PUBLIC_KEY_PEM = os.getenv("MARKETPLACE_ENTERPRISE_PUBLIC_KEY", "")
+_ENTERPRISE_ONLY_FIELDS    = ("config_type", "steps", "cysoar_flow")
+
+_enterprise_pubkey = None
+if _ENTERPRISE_PUBLIC_KEY_PEM:
+    try:
+        _enterprise_pubkey = serialization.load_pem_public_key(_ENTERPRISE_PUBLIC_KEY_PEM.encode())
+    except Exception as exc:
+        log.error("MARKETPLACE_ENTERPRISE_PUBLIC_KEY is set but could not be parsed as a PEM "
+                  "public key — all Enterprise-tier catalog items will be redacted until this "
+                  "is fixed: %s", exc)
+else:
+    log.warning("MARKETPLACE_ENTERPRISE_PUBLIC_KEY is not set — every Enterprise-tier catalog "
+                "item will be redacted for every request until an operator sets it (see this "
+                "file's module docstring for what value belongs here).")
+
+
+def _b64url_decode(s: str) -> bytes:
+    pad = "=" * (-len(s) % 4)
+    return base64.urlsafe_b64decode(s + pad)
+
+
+def _verify_entitlement_token(token: str) -> dict | None:
+    """Returns the decoded {license_id, type, issued_at, expires_at} dict if
+    the token's signature verifies AND it has not expired — otherwise None.
+    A missing header, an unparseable token, a bad signature, and an expired
+    token are all treated identically (not entitled) — fail closed."""
+    if not token or not _enterprise_pubkey:
+        return None
+    parts = token.split(".")
+    if len(parts) != 2:
+        return None
+    payload_segment, signature_segment = parts
+    try:
+        signature = _b64url_decode(signature_segment)
+        _enterprise_pubkey.verify(
+            signature,
+            payload_segment.encode(),  # verify over the raw text bytes actually received —
+            padding.PKCS1v15(),        # matches `openssl dgst -sha256 -sign` (CyAdmin's signer),
+            hashes.SHA256(),           # which defaults to PKCS1v15 padding, not PSS
+        )
+        payload = json.loads(_b64url_decode(payload_segment))
+    except (InvalidSignature, ValueError, TypeError, KeyError):
+        return None
+    except Exception as exc:
+        log.warning("Entitlement token verification error: %s", exc)
+        return None
+
+    if payload.get("type") != "enterprise":
+        return None
+    expires_at = payload.get("expires_at")
+    if expires_at:
+        try:
+            if datetime.date.fromisoformat(expires_at) < datetime.date.today():
+                return None
+        except ValueError:
+            return None  # unparseable expiry — treat as not entitled, don't guess
+    return payload
+
+
+def _apply_tier_redaction(items: list, entitled: bool) -> list:
+    """Community items pass through untouched. Enterprise items are always
+    kept (never removed from the response — they must stay discoverable to
+    everyone) but lose the fields that let anyone actually install/configure
+    them unless the caller proved entitlement. `locked` is computed here so
+    the caller (Cy360) doesn't need to re-derive tier-vs-edition logic
+    itself from a bare tier string."""
+    out = []
+    for raw in items:
+        item = dict(raw)
+        item["tier"] = item.get("tier") if item.get("tier") in ("community", "enterprise") else "community"
+        if item["tier"] == "enterprise" and not entitled:
+            for field in _ENTERPRISE_ONLY_FIELDS:
+                item.pop(field, None)
+            item["locked"] = True
+        else:
+            item["locked"] = False
+        out.append(item)
+    return out
 
 
 # ── File helpers ──────────────────────────────────────────────────────────────
@@ -260,31 +382,42 @@ def submissions_reject(sub_id):
     return jsonify({"ok": True, "message": "Submission rejected."})
 
 
-# ── GET /marketplace/catalog.json — direct catalog fetch (used when nginx is absent) ──
+# ── GET /marketplace/catalog.json — the catalog fetch (see module docstring: this is ──
+# ── now the PRIMARY path, not a nginx-absent fallback, because tier redaction needs  ──
+# ── per-request logic a static file can never provide ──────────────────────────────────
 
 @app.route("/marketplace/catalog.json", methods=["GET"])
 def serve_catalog_json():
-    """Serve the live catalog.json directly.
+    """Serve the live catalog, per-request redacted for content tiering.
 
-    In production nginx handles this from the shared volume.
-    This endpoint allows standalone operation (local dev, direct port access).
     Token gate matches nginx behaviour: if MARKETPLACE_CATALOG_TOKEN is set,
-    request must include X-CyAssure-Token: <token>.
+    request must include X-CyAssure-Token: <token> — this proves "you're a
+    legitimate Cy360 instance allowed to read the catalog at all" and is
+    unrelated to Enterprise entitlement.
+
+    Separately, X-CyAssure-Entitlement-Token (optional) proves "this
+    specific instance is Enterprise-licensed" — see _verify_entitlement_token().
+    Community instances simply never send this header (no .lic file to read
+    it from), which is itself the "not entitled" signal; no special-casing
+    needed for that case.
     """
     if CATALOG_TOKEN:
         provided = request.headers.get("X-CyAssure-Token", "")
         if provided != CATALOG_TOKEN:
             return jsonify({"error": "Valid X-CyAssure-Token required"}), 403
 
+    entitlement = _verify_entitlement_token(request.headers.get("X-CyAssure-Entitlement-Token", ""))
     catalog = _read_catalog()
+    items = _apply_tier_redaction(catalog.get("items", []), entitled=entitlement is not None)
+
     resp = jsonify({
         "version": catalog.get("version", "1.0"),
         "updated": catalog.get("updated", ""),
-        "items":   catalog.get("items", []),
+        "items":   items,
     })
     resp.headers["Cache-Control"] = "no-store"
     resp.headers["Access-Control-Allow-Origin"]  = "*"
-    resp.headers["Access-Control-Allow-Headers"] = "X-CyAssure-Token"
+    resp.headers["Access-Control-Allow-Headers"] = "X-CyAssure-Token, X-CyAssure-Entitlement-Token"
     return resp
 
 

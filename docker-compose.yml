@@ -17,10 +17,6 @@ services:
     environment:
       # Portal origin allowed by CORS — must match cy360.DOMAIN in production.
       - FRONTEND_URL=${FRONTEND_URL:-https://cy360.cyassure.eu}
-      # Pre-shared token required in X-CyAssure-Token header when fetching the
-      # marketplace catalog. Must match MARKETPLACE_CATALOG_TOKEN in each
-      # Cy360 instance's .env. Leave empty to allow open access.
-      - MARKETPLACE_CATALOG_TOKEN=${MARKETPLACE_CATALOG_TOKEN:-}
     depends_on:
       - marketplace-api
 
@@ -34,7 +30,17 @@ services:
       # Secret known only to CyAdmin — gates publish and submission review.
       - MARKETPLACE_ADMIN_TOKEN=${MARKETPLACE_ADMIN_TOKEN:-}
       # Same token used by Cy360 instances to fetch catalog and submit contributions.
+      # Owned entirely by this service now (2026-08-08) — nginx used to duplicate
+      # this same check for the old static-file catalog path; that path is gone,
+      # /marketplace/ proxies here instead, so this is the only place it's checked.
       - MARKETPLACE_CATALOG_TOKEN=${MARKETPLACE_CATALOG_TOKEN:-}
-    # Not exposed publicly — nginx proxies /marketplace/api/ to this container.
+      # PEM public key — verifies the X-CyAssure-Entitlement-Token header on
+      # catalog fetches (content-tiering feature, 2026-08-08). Must be the exact
+      # public-key counterpart of whatever private key THIS deployment's CyAdmin
+      # actually signs licenses with — not a value to copy from a different
+      # environment's Cy360 checkout. If unset, every Enterprise-tier catalog
+      # item is redacted for every request (fails closed, not open).
+      - MARKETPLACE_ENTERPRISE_PUBLIC_KEY=${MARKETPLACE_ENTERPRISE_PUBLIC_KEY:-}
+    # Not exposed publicly — nginx proxies /marketplace/api/ and /marketplace/ to this container.
     expose:
       - "5050"

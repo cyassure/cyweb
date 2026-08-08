@@ -19,34 +19,36 @@ server {
         proxy_connect_timeout 5s;
     }
 
-    # ── Marketplace catalog — token-gated static file ─────────────────────────
-    # catalog.json is served from a shared Docker volume mounted at
-    # /usr/share/nginx/html/marketplace/ so it updates live when the API writes it.
-    # When MARKETPLACE_CATALOG_TOKEN is empty, access is open (backwards compat).
+    # ── Marketplace catalog — proxied to marketplace-api, NOT served statically ──
+    # Changed 2026-08-08 (content-tiering feature): catalog.json used to be served
+    # straight off a shared Docker volume for speed, with its own token-gate
+    # duplicated here in nginx. That stopped being viable once Enterprise-tier
+    # items need per-request redaction based on a second header
+    # (X-CyAssure-Entitlement-Token) — a static file has no way to do that, and
+    # duplicating both the catalog-token AND the new entitlement-token check in
+    # nginx config would mean two places to keep in sync with the signing logic
+    # in marketplace-api/app.py. So this now proxies to the Flask service, which
+    # owns both checks and the redaction logic as a single source of truth.
+    # Catalog fetches happen once per Marketplace page load, not a hot path —
+    # the extra hop is not a meaningful cost. OPTIONS preflight is still
+    # short-circuited here rather than proxied, since the Flask route only
+    # declares methods=["GET"] and would 405 an OPTIONS request.
     location /marketplace/ {
-        # CORS preflight — always permitted
         if ($request_method = OPTIONS) {
             add_header Access-Control-Allow-Origin "${FRONTEND_URL}";
             add_header Access-Control-Allow-Methods "GET, OPTIONS";
-            add_header Access-Control-Allow-Headers "X-CyAssure-Token";
+            add_header Access-Control-Allow-Headers "X-CyAssure-Token, X-CyAssure-Entitlement-Token";
             return 204;
         }
 
-        # Double-if token gate (nginx pattern for compound AND without Lua).
-        # envsubst substitutes ${MARKETPLACE_CATALOG_TOKEN} at container start.
-        # If the env var is empty: $ct_required = "" → check is bypassed.
-        set $ct_required "${MARKETPLACE_CATALOG_TOKEN}";
-        set $ct_fail 0;
-        if ($ct_required != "") { set $ct_fail 1; }
-        if ($http_x_cyassure_token = "${MARKETPLACE_CATALOG_TOKEN}") { set $ct_fail 0; }
-        if ($ct_fail = 1) {
-            return 403;
-        }
-
-        add_header Access-Control-Allow-Origin  "${FRONTEND_URL}" always;
-        add_header Access-Control-Allow-Methods "GET, OPTIONS"    always;
-        add_header Access-Control-Allow-Headers "X-CyAssure-Token" always;
-        add_header Cache-Control                "no-store"        always;
+        proxy_pass         http://marketplace_api;
+        proxy_set_header   Host            $host;
+        proxy_set_header   X-Real-IP       $remote_addr;
+        proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header   X-CyAssure-Token $http_x_cyassure_token;
+        proxy_set_header   X-CyAssure-Entitlement-Token $http_x_cyassure_entitlement_token;
+        proxy_read_timeout 10s;
+        proxy_connect_timeout 5s;
     }
 
     # ── SPA routing ────────────────────────────────────────────────────────────

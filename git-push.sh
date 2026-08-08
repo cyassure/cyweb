@@ -52,6 +52,7 @@ if [[ -z "${GH_TOKEN:-}" && -f "$TOKEN_FILE" ]]; then
   # shellcheck disable=SC1090
   source "$TOKEN_FILE"
 fi
+export GH_TOKEN
 
 AUTH_ARGS=(-c "core.pager=cat")
 if [[ -n "${GH_TOKEN:-}" ]]; then
