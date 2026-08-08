@@ -33,5 +33,10 @@ coverage/
 .env
 .env.*
 
+# Legacy package manager artifact — this project uses npm (see package-lock.json).
+# A committed bun.lockb makes Cloudflare Pages auto-detect bun and fail install.
+bun.lockb
+bun.lock
+
 # Ignore docs folder
 docs/
