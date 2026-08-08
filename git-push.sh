@@ -46,6 +46,13 @@ fi
 # account gh/git credentials are already set up for on this machine.
 # Export GH_TOKEN (a fine-grained PAT scoped to this repo) before running.
 
+# ── Shared token file (CyRepo/.secrets/, outside every repo's git tree) ────────
+TOKEN_FILE="/Users/deepakbhatnagar/Documents/CyRepo/.secrets/github_token.env"
+if [[ -z "${GH_TOKEN:-}" && -f "$TOKEN_FILE" ]]; then
+  # shellcheck disable=SC1090
+  source "$TOKEN_FILE"
+fi
+
 AUTH_ARGS=(-c "core.pager=cat")
 if [[ -n "${GH_TOKEN:-}" ]]; then
   AUTH_B64=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 | tr -d '\n')
