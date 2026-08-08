@@ -1,3 +1,11 @@
+## v1.0.66 -- 2026-08-08
+
+### Bug Fixes
+
+  - Cloudflare Workers deploy failure + CSS @import order warning
+
+---
+
 ## v1.0.65 -- 2026-08-08
 
 ### Bug Fixes
