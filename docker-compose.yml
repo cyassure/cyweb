@@ -1,8 +1,3 @@
-version: "3.9"
-
-volumes:
-  marketplace-data:   # shared between nginx and marketplace-api
-
 services:
   cyassure-web:
     image: ghcr.io/cyassure/cyweb:latest
@@ -10,37 +5,3 @@ services:
     restart: unless-stopped
     ports:
       - "127.0.0.1:8081:80"
-    volumes:
-      # Mount the shared volume over the baked-in marketplace directory so that
-      # catalog.json is served live from the volume rather than the image layer.
-      - marketplace-data:/usr/share/nginx/html/marketplace
-    environment:
-      # Portal origin allowed by CORS — must match cy360.DOMAIN in production.
-      - FRONTEND_URL=${FRONTEND_URL:-https://cy360.cyassure.eu}
-    depends_on:
-      - marketplace-api
-
-  marketplace-api:
-    build: ./marketplace-api
-    container_name: marketplace-api
-    restart: unless-stopped
-    volumes:
-      - marketplace-data:/data
-    environment:
-      # Secret known only to CyAdmin — gates publish and submission review.
-      - MARKETPLACE_ADMIN_TOKEN=${MARKETPLACE_ADMIN_TOKEN:-}
-      # Same token used by Cy360 instances to fetch catalog and submit contributions.
-      # Owned entirely by this service now (2026-08-08) — nginx used to duplicate
-      # this same check for the old static-file catalog path; that path is gone,
-      # /marketplace/ proxies here instead, so this is the only place it's checked.
-      - MARKETPLACE_CATALOG_TOKEN=${MARKETPLACE_CATALOG_TOKEN:-}
-      # PEM public key — verifies the X-CyAssure-Entitlement-Token header on
-      # catalog fetches (content-tiering feature, 2026-08-08). Must be the exact
-      # public-key counterpart of whatever private key THIS deployment's CyAdmin
-      # actually signs licenses with — not a value to copy from a different
-      # environment's Cy360 checkout. If unset, every Enterprise-tier catalog
-      # item is redacted for every request (fails closed, not open).
-      - MARKETPLACE_ENTERPRISE_PUBLIC_KEY=${MARKETPLACE_ENTERPRISE_PUBLIC_KEY:-}
-    # Not exposed publicly — nginx proxies /marketplace/api/ and /marketplace/ to this container.
-    expose:
-      - "5050"

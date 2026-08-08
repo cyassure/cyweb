@@ -10,17 +10,10 @@ RUN npm run build
 FROM nginx:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
 COPY --from=builder /app/public /usr/share/nginx/html
-# FRONTEND_URL controls the CORS origin for the /marketplace/ path.
-# MARKETPLACE_CATALOG_TOKEN / entitlement checks are no longer done in nginx
-# (2026-08-08, content-tiering feature) — /marketplace/ now proxies to
-# marketplace-api, which owns both the catalog-token gate and the new
-# Enterprise entitlement check as a single source of truth. See
-# nginx.conf.template's /marketplace/ location comment for why.
-COPY nginx.conf.template /etc/nginx/nginx.conf.template
+# Pure static site — no backend, no env-driven config. The marketplace
+# catalog service (marketplace-api) that used to run alongside this image
+# was retired 2026-08; that responsibility now lives in CyAdmin. See
+# docs/README.md for where the catalog moved to.
+COPY nginx.conf.template /etc/nginx/conf.d/default.conf
 EXPOSE 80
-# envsubst injects FRONTEND_URL before nginx starts.
-CMD ["/bin/sh", "-c", \
-  "envsubst '${FRONTEND_URL}' \
-     < /etc/nginx/nginx.conf.template \
-     > /etc/nginx/conf.d/default.conf \
-   && nginx -g 'daemon off;'"]
+CMD ["nginx", "-g", "daemon off;"]

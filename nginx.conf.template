@@ -1,55 +1,7 @@
-upstream marketplace_api {
-    server marketplace-api:5050;
-}
-
 server {
     listen 80;
     root /usr/share/nginx/html;
     index index.html;
-
-    # ── Marketplace API — proxied to companion Flask service ──────────────────
-    # Auth is handled inside the Flask service (admin token / catalog token).
-    # This location must come before /marketplace/ so nginx matches it first.
-    location /marketplace/api/ {
-        proxy_pass         http://marketplace_api;
-        proxy_set_header   Host            $host;
-        proxy_set_header   X-Real-IP       $remote_addr;
-        proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_read_timeout 10s;
-        proxy_connect_timeout 5s;
-    }
-
-    # ── Marketplace catalog — proxied to marketplace-api, NOT served statically ──
-    # Changed 2026-08-08 (content-tiering feature): catalog.json used to be served
-    # straight off a shared Docker volume for speed, with its own token-gate
-    # duplicated here in nginx. That stopped being viable once Enterprise-tier
-    # items need per-request redaction based on a second header
-    # (X-CyAssure-Entitlement-Token) — a static file has no way to do that, and
-    # duplicating both the catalog-token AND the new entitlement-token check in
-    # nginx config would mean two places to keep in sync with the signing logic
-    # in marketplace-api/app.py. So this now proxies to the Flask service, which
-    # owns both checks and the redaction logic as a single source of truth.
-    # Catalog fetches happen once per Marketplace page load, not a hot path —
-    # the extra hop is not a meaningful cost. OPTIONS preflight is still
-    # short-circuited here rather than proxied, since the Flask route only
-    # declares methods=["GET"] and would 405 an OPTIONS request.
-    location /marketplace/ {
-        if ($request_method = OPTIONS) {
-            add_header Access-Control-Allow-Origin "${FRONTEND_URL}";
-            add_header Access-Control-Allow-Methods "GET, OPTIONS";
-            add_header Access-Control-Allow-Headers "X-CyAssure-Token, X-CyAssure-Entitlement-Token";
-            return 204;
-        }
-
-        proxy_pass         http://marketplace_api;
-        proxy_set_header   Host            $host;
-        proxy_set_header   X-Real-IP       $remote_addr;
-        proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header   X-CyAssure-Token $http_x_cyassure_token;
-        proxy_set_header   X-CyAssure-Entitlement-Token $http_x_cyassure_entitlement_token;
-        proxy_read_timeout 10s;
-        proxy_connect_timeout 5s;
-    }
 
     # ── SPA routing ────────────────────────────────────────────────────────────
     location / {
