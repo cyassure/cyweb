@@ -1,3 +1,11 @@
+## v1.0.67 -- 2026-08-08
+
+### Improvements
+
+  - switch deploy target from Workers to Cloudflare Pages
+
+---
+
 ## v1.0.66 -- 2026-08-08
 
 ### Bug Fixes
