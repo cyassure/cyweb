@@ -1,3 +1,11 @@
+## v1.0.68 -- 2026-08-08
+
+### Improvements
+
+  - restore wrangler.jsonc — Cloudflare no longer offers classic Pages
+
+---
+
 ## v1.0.67 -- 2026-08-08
 
 ### Improvements
