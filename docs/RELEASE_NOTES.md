@@ -1,3 +1,11 @@
+## v1.0.65 -- 2026-08-08
+
+### Bug Fixes
+
+  - remove stale bun.lockb causing Cloudflare Pages build failures
+
+---
+
 ## v1.0.64 -- 2026-08-08
 
 ### Improvements
