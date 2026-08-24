@@ -1,19 +1,24 @@
 import { motion } from "framer-motion";
 import {
-  Shield, Monitor, Settings, FileCheck, Cloud, Target, Network, Globe, Bot,
-  Server, Wifi, Database, Cpu, Lock, AlertTriangle, ArrowRight, Zap, Brain
+  Shield, Monitor, FileCheck, Cloud, Network, Globe, Bot,
+  Server, Wifi, Database, Lock, AlertTriangle, ArrowRight, Zap, Brain,
+  Gauge, Search, Users, Bug, EyeOff, Boxes, Radar,
 } from "lucide-react";
 
 const capabilities = [
-  { icon: Shield, label: "SIEM" },
+  { icon: Globe, label: "ASM" },
+  { icon: Gauge, label: "Benchmarking" },
+  { icon: Search, label: "Threat Hunting" },
+  { icon: Users, label: "UEBA" },
+  { icon: Database, label: "SIEM" },
+  { icon: Bug, label: "Vuln Mgmt" },
   { icon: Monitor, label: "EDR" },
-  { icon: Settings, label: "Config Audit" },
-  { icon: FileCheck, label: "Compliance" },
-  { icon: Cloud, label: "Cloud Security" },
-  { icon: Target, label: "MITRE ATT&CK" },
-  { icon: Network, label: "NDR" },
-  { icon: Globe, label: "Attack Surface" },
-  { icon: Bot, label: "AI Agents" },
+  { icon: Lock, label: "AI Gateway" },
+  { icon: EyeOff, label: "Shadow AI" },
+  { icon: Boxes, label: "ITAM" },
+  { icon: Wifi, label: "IoT Scan" },
+  { icon: FileCheck, label: "GRC" },
+  { icon: Radar, label: "Threat Intel" },
 ];
 
 const logSources = [
@@ -218,7 +223,7 @@ const PlatformSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-3 gap-3 sm:grid-cols-3 lg:grid-cols-9">
+        <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 lg:grid-cols-7">
           {capabilities.map((c, i) => (
             <motion.div
               key={c.label}
