@@ -69,7 +69,7 @@ const EditionsComparisonSection = () => {
           </p>
           <p className="mx-auto mt-4 max-w-xl text-xs text-muted-foreground/70">
             Looking for our managed SOC service instead, where our analysts run it for you?{" "}
-            <a href="/#pricing" className="text-primary underline underline-offset-4">See managed service pricing →</a>
+            <Link to="/support" className="text-primary underline underline-offset-4">Talk to sales →</Link>
           </p>
         </motion.div>
 

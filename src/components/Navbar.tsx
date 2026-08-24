@@ -9,9 +9,6 @@ const navLinks = [
   { label: "Editions", href: "/editions" },
   { label: "Download", href: "/download" },
   { label: "Docs", href: "/docs" },
-  { label: "CyMind AI", href: "/#cymind" },
-  { label: "Compare", href: "/#comparison" },
-  { label: "Pricing", href: "/#pricing" },
   { label: "Support", href: "/support" },
 ];
 
