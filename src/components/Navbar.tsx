@@ -6,6 +6,7 @@ import cy360Icon from "@/assets/cy360-icon.png";
 
 const navLinks = [
   { label: "Products", href: "/#products" },
+  { label: "Services", href: "/#services" },
   { label: "Editions", href: "/editions" },
   { label: "Download", href: "/download" },
   { label: "Docs", href: "/docs" },
