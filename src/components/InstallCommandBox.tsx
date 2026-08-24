@@ -11,7 +11,15 @@ const InstallCommandBox = ({ version }: InstallCommandBoxProps) => {
   const [copied, setCopied] = useState(false);
 
   const versionFlag = version === "latest" ? "" : ` --version ${version}`;
-  const command = `curl -fsSL https://raw.githubusercontent.com/${INSTALLER_REPO}/main/install.sh | bash -s --${versionFlag}`;
+  // Download-then-run via process substitution, not `curl | bash`: piping the
+  // script straight into bash's stdin means the installer's own interactive
+  // prompts (base domain, environment type, TLS mode) also read from that
+  // same stdin — bash has already consumed it reading the script itself, so
+  // every prompt silently falls through to its default instead of pausing.
+  // `bash <(curl ...)` keeps the real terminal on stdin while still being a
+  // single copy-pasteable command. `sudo` is required — cyassure-setup.sh
+  // hard-exits if not run as root.
+  const command = `sudo bash <(curl -fsSL https://raw.githubusercontent.com/${INSTALLER_REPO}/main/install.sh)${versionFlag}`;
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(command);
