@@ -1,0 +1,48 @@
+import { useState } from "react";
+import { Copy, Check } from "lucide-react";
+
+interface InstallCommandBoxProps {
+  version: string;
+}
+
+const INSTALLER_REPO = "cyassure/get-cy360";
+
+const InstallCommandBox = ({ version }: InstallCommandBoxProps) => {
+  const [copied, setCopied] = useState(false);
+
+  const versionFlag = version === "latest" ? "" : ` --version ${version}`;
+  const command = `curl -fsSL https://raw.githubusercontent.com/${INSTALLER_REPO}/main/install.sh | bash -s --${versionFlag}`;
+
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(command);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <div className="rounded-xl border border-border bg-secondary/40 p-1.5">
+      <div className="flex items-center gap-3 rounded-lg bg-background/60 px-4 py-3.5">
+        <code className="flex-1 overflow-x-auto whitespace-pre text-xs text-foreground sm:text-sm">
+          {command}
+        </code>
+        <button
+          onClick={handleCopy}
+          className="flex shrink-0 items-center gap-1.5 rounded-md border border-border bg-card px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
+          aria-label="Copy install command"
+        >
+          {copied ? (
+            <>
+              <Check className="h-3.5 w-3.5 text-primary" /> Copied
+            </>
+          ) : (
+            <>
+              <Copy className="h-3.5 w-3.5" /> Copy
+            </>
+          )}
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default InstallCommandBox;

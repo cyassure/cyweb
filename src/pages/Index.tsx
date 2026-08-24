@@ -1,12 +1,13 @@
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
-import ServicesSection from "@/components/ServicesSection";
-import WhyCyAssureSection from "@/components/WhyCyAssureSection";
+import WhySection from "@/components/WhySection";
 import ProductsSection from "@/components/ProductsSection";
+import EditionsSummarySection from "@/components/EditionsSummarySection";
+import DownloadCTASection from "@/components/DownloadCTASection";
 import CyMindSection from "@/components/CyMindSection";
 import PlatformSection from "@/components/PlatformSection";
+import ServicesSection from "@/components/ServicesSection";
 import ComparisonSection from "@/components/ComparisonSection";
-import AboutSection from "@/components/AboutSection";
 import FreeScanSection from "@/components/FreeScanSection";
 import PricingSection from "@/components/PricingSection";
 import ContactSection from "@/components/ContactSection";
@@ -18,15 +19,16 @@ const Index = () => {
       <Navbar />
       <main>
         <HeroSection />
-        <WhyCyAssureSection />
+        <WhySection />
         <ProductsSection />
+        <EditionsSummarySection />
+        <DownloadCTASection />
+        <CyMindSection />
         <PlatformSection />
         <ServicesSection />
-        <CyMindSection />
         <ComparisonSection />
         <FreeScanSection />
         <PricingSection />
-        <AboutSection />
         <ContactSection />
       </main>
       <Footer />

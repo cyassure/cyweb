@@ -28,7 +28,7 @@ const plans = [
       "Self-guided onboarding & documentation",
     ],
     cta: "Start Free Trial",
-    ctaHref: "/run-pilot.html",
+    ctaHref: "#contact",
   },
   {
     name: "Professional",
@@ -63,7 +63,7 @@ const plans = [
       "CyMISP threat intelligence (MITRE / STIX/TAXII)",
     ],
     cta: "Start Free Trial",
-    ctaHref: "/run-pilot.html",
+    ctaHref: "#contact",
   },
   {
     name: "Enterprise",
@@ -158,12 +158,16 @@ const PricingSection = () => {
           viewport={{ once: true }}
           className="mb-6 text-center"
         >
-          <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-primary">Transparent Pricing</p>
+          <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-primary">Managed Service Pricing</p>
           <h2 className="mb-4 font-heading text-3xl font-bold text-foreground md:text-5xl">
             Pay per user. Scale with confidence.
           </h2>
           <p className="mx-auto max-w-xl text-muted-foreground">
-            Three service models — from self-managed to fully operated. Pick the level of support that fits your team today, and upgrade as you grow.
+            Three service models — from self-managed to fully operated by our SOC team. Pick the level of support that fits your team today, and upgrade as you grow.
+          </p>
+          <p className="mx-auto mt-3 max-w-xl text-xs text-muted-foreground/70">
+            Prefer to run the software yourself? See{" "}
+            <a href="/editions" className="text-primary underline underline-offset-4">Community & Enterprise self-hosted editions →</a>
           </p>
         </motion.div>
 
@@ -360,7 +364,7 @@ const PricingSection = () => {
                 All plans include guided onboarding. Our automated installer gets you fully operational in under 30 minutes — no months-long implementations, no armies of consultants.
               </p>
               <a
-                href="/book-consultation.html"
+                href="#contact"
                 className="inline-block rounded-lg bg-primary px-6 py-3 text-center text-sm font-semibold text-primary-foreground transition-all hover:brightness-110"
               >
                 Book a Consultation

@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { Mail, MapPin, ArrowRight } from "lucide-react";
+import { Mail, MapPin, ArrowRight, LifeBuoy } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const ContactSection = () => {
   return (
@@ -44,24 +45,19 @@ const ContactSection = () => {
 
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <a
-              href="/book-consultation.html"
+              href="mailto:sales@cyassure.eu"
               className="group flex items-center gap-2 rounded-lg bg-primary px-7 py-3.5 font-heading text-sm font-semibold text-primary-foreground transition-all hover:brightness-110"
             >
-              Book a Consultation
+              Talk to Sales
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </a>
-            <a
-              href="/request-pricing.html"
-              className="rounded-lg border border-border bg-secondary/50 px-7 py-3.5 font-heading text-sm font-semibold text-foreground transition-all hover:border-primary/50"
+            <Link
+              to="/support"
+              className="flex items-center gap-2 rounded-lg border border-border bg-secondary/50 px-7 py-3.5 font-heading text-sm font-semibold text-foreground transition-all hover:border-primary/50"
             >
-              Request Pricing
-            </a>
-            <a
-              href="/run-pilot.html"
-              className="text-sm text-muted-foreground underline decoration-primary/40 underline-offset-4 transition-colors hover:text-primary"
-            >
-              Run a Pilot →
-            </a>
+              <LifeBuoy className="h-4 w-4" />
+              Get Support
+            </Link>
           </div>
         </motion.div>
       </div>

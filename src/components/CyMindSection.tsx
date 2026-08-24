@@ -30,7 +30,6 @@ const deployModes = [
     features: [
       "AI-powered alert triage & correlation",
       "LLM threat enrichment & risk scoring",
-      "Automated incident narrative generation",
       "SOC analyst knowledge assistant",
     ],
     iconCls: "text-primary",
@@ -47,7 +46,6 @@ const deployModes = [
       "Native connectors: CRM, ERP, JIRA, HR systems",
       "RAG knowledge base from internal documents",
       "Department-level RBAC & seat-based licensing",
-      "Full audit trail for regulatory compliance",
     ],
     iconCls: "text-violet-400",
     borderCls: "border-violet-500/30",
@@ -292,23 +290,21 @@ const CyMindSection = () => (
             Governance Built In, Not Bolted On
           </h3>
         </div>
-        <div className="grid gap-5 md:grid-cols-2">
+        <div className="mx-auto grid max-w-3xl grid-cols-2 gap-3 sm:grid-cols-4">
           {govFeatures.map((feat, i) => (
             <motion.div
               key={feat.title}
               initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="flex gap-4 rounded-xl border border-border bg-card p-6"
+              transition={{ delay: i * 0.08 }}
+              title={feat.desc}
+              className="flex flex-col items-center gap-2 rounded-xl border border-border bg-card p-4 text-center"
             >
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-violet-500/30 bg-violet-500/10">
-                <feat.icon className="h-5 w-5 text-violet-400" />
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-violet-500/30 bg-violet-500/10">
+                <feat.icon className="h-4 w-4 text-violet-400" />
               </div>
-              <div>
-                <p className="mb-1.5 font-heading font-semibold text-foreground">{feat.title}</p>
-                <p className="text-sm leading-relaxed text-muted-foreground">{feat.desc}</p>
-              </div>
+              <p className="text-xs font-medium text-foreground">{feat.title}</p>
             </motion.div>
           ))}
         </div>

@@ -64,7 +64,7 @@ const tabs = [
     glow: "bg-primary/5 border-primary/20",
     callout: (
       <>
-        <span className="font-semibold text-foreground">Only CyAssure</span> delivers SIEM + ASM + Compliance + CyMind AI + MISP Threat Intel in one platform with{" "}
+        <span className="font-semibold text-foreground">Only Cy360</span> delivers SIEM + ASM + Compliance + CyMind AI + MISP Threat Intel in one platform with{" "}
         <span className="text-primary font-semibold">&lt; 30 min deployment at SME pricing.</span>
       </>
     ),
@@ -103,7 +103,7 @@ const ComparisonSection = () => {
         >
           <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-primary">Competitive Landscape</p>
           <h2 className="mb-4 font-heading text-3xl font-bold text-foreground md:text-5xl">
-            How CyAssure Compares
+            How Cy360 Compares
           </h2>
           <p className="mx-auto max-w-xl text-muted-foreground">
             The only platform combining SIEM + ASM + Compliance + Private AI + Threat Intel at SME pricing.
@@ -156,7 +156,7 @@ const ComparisonSection = () => {
                     <th className="pb-4 pr-6 text-left text-xs font-medium uppercase tracking-widest text-muted-foreground">Capability</th>
                     <th className="pb-4 px-4 text-center">
                       <span className="inline-flex flex-col items-center gap-1 rounded-lg border border-primary/40 bg-primary/10 px-4 py-2 text-xs font-bold uppercase tracking-wide text-primary">
-                        CyAssure
+                        Cy360
                       </span>
                     </th>
                     <th className="pb-4 px-4 text-center text-xs font-medium text-muted-foreground">Splunk / IBM</th>

@@ -11,13 +11,11 @@ const products = [
     border: "border-violet-500/30",
     iconColor: "text-violet-400",
     description:
-      "On-premise LLM/RAG platform powering the entire CyAssure stack. Role-aware AI chat assistant, threat enrichment, incident narratives, and DLP-scanned knowledge base — no data leaves your network.",
+      "On-premise LLM/RAG platform powering the entire Cy360 stack. Role-aware AI chat assistant, threat enrichment, incident narratives, and DLP-scanned knowledge base — no data leaves your network.",
     highlights: [
       "Multi-provider: Ollama · Claude · Gemini · DeepSeek · Groq · Azure",
       "RAG knowledge base with Qdrant vector search",
       "PII masking · Prompt injection detection · Output filtering",
-      "ASM enrichment — AI-structured risk-scored JSON",
-      "RBAC + seat-based licensing",
     ],
   },
   {
@@ -34,9 +32,7 @@ const products = [
     highlights: [
       "NIS2 · ISO 27001 · DORA · GDPR/AVG · Custom frameworks",
       "Automated scoring & gap analysis",
-      "AVG Art.30 processing register (GDPR)",
       "Policy document management & audit trail",
-      "Evidence collection & ticketing",
     ],
   },
   {
@@ -52,9 +48,7 @@ const products = [
     highlights: [
       "Real-time incident view & alert triage",
       "CySIEM — SIEM/EDR with SAML SSO",
-      "LLM-powered incident narratives & ANALYST_SUMMARY",
       "CyCases incident case management (built-in)",
-      "CySOAR security automation playbooks",
     ],
   },
   {
@@ -71,8 +65,6 @@ const products = [
       "DNS recon · Subdomain enum (crt.sh, VirusTotal, OTX)",
       "Web analysis: Nmap, service fingerprinting, JS secrets",
       "Dark web credential & IOC monitoring",
-      "Cloud infra detection & misconfiguration flags",
-      "Supply chain · Email security · OSINT · Social eng",
     ],
   },
 ];

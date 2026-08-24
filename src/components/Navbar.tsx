@@ -1,17 +1,18 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import cyassureLogo from "@/assets/cyassure-logo.svg";
+import { Link } from "react-router-dom";
+import cy360Icon from "@/assets/cy360-icon.png";
 
 const navLinks = [
-  { label: "Services", href: "#services" },
-  { label: "Products", href: "#products" },
-  { label: "CyMind AI", href: "#cymind" },
-  { label: "Why CyAssure", href: "#why" },
-  { label: "Compare", href: "#comparison" },
-  { label: "Free Scan", href: "#free-scan" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "Contact", href: "#contact" },
+  { label: "Products", href: "/#products" },
+  { label: "Editions", href: "/editions" },
+  { label: "Download", href: "/download" },
+  { label: "Docs", href: "/docs" },
+  { label: "CyMind AI", href: "/#cymind" },
+  { label: "Compare", href: "/#comparison" },
+  { label: "Pricing", href: "/#pricing" },
+  { label: "Support", href: "/support" },
 ];
 
 const Navbar = () => {
@@ -20,22 +21,35 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
       <div className="container mx-auto flex items-center justify-between px-6 py-4">
-        <a href="#" className="flex items-center gap-2">
-          <img src={cyassureLogo} alt="CyAssure" className="h-8 w-auto" />
-        </a>
+        <Link to="/" className="flex items-center gap-2">
+          <img src={cy360Icon} alt="" className="h-8 w-8" />
+          <span className="font-heading text-lg font-bold text-foreground">
+            Cy<span className="text-gradient">360</span>
+          </span>
+        </Link>
 
-        <div className="hidden items-center gap-8 md:flex">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-sm text-muted-foreground transition-colors hover:text-primary"
-            >
-              {link.label}
-            </a>
-          ))}
+        <div className="hidden items-center gap-7 md:flex">
+          {navLinks.map((link) =>
+            link.href.startsWith("/#") ? (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-sm text-muted-foreground transition-colors hover:text-primary"
+              >
+                {link.label}
+              </a>
+            ) : (
+              <Link
+                key={link.href}
+                to={link.href}
+                className="text-sm text-muted-foreground transition-colors hover:text-primary"
+              >
+                {link.label}
+              </Link>
+            )
+          )}
           <a
-            href="#contact"
+            href="/#contact"
             className="rounded-lg bg-primary px-5 py-2 text-sm font-medium text-primary-foreground transition-all hover:brightness-110"
           >
             Talk to an Expert
@@ -60,18 +74,29 @@ const Navbar = () => {
             className="border-t border-border/50 bg-background md:hidden"
           >
             <div className="flex flex-col gap-4 px-6 py-6">
-              {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  className="text-sm text-muted-foreground transition-colors hover:text-primary"
-                >
-                  {link.label}
-                </a>
-              ))}
+              {navLinks.map((link) =>
+                link.href.startsWith("/#") ? (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                  >
+                    {link.label}
+                  </a>
+                ) : (
+                  <Link
+                    key={link.href}
+                    to={link.href}
+                    onClick={() => setOpen(false)}
+                    className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                  >
+                    {link.label}
+                  </Link>
+                )
+              )}
               <a
-                href="#contact"
+                href="/#contact"
                 onClick={() => setOpen(false)}
                 className="mt-2 rounded-lg bg-primary px-5 py-2 text-center text-sm font-medium text-primary-foreground"
               >

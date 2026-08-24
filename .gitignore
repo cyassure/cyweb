@@ -38,5 +38,7 @@ coverage/
 bun.lockb
 bun.lock
 
-# Ignore docs folder
-docs/
+# Ignore top-level docs folder (internal notes) — but not src/content/docs,
+# which is real site content bundled into the built app.
+/docs/
+!src/content/docs/
