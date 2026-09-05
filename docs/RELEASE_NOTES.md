@@ -1,3 +1,22 @@
+## v1.0.75 -- 2026-09-05
+
+### New Features
+
+  - Rebrand to Cy360, add self-serve download/docs/editions/support, image-led hero
+
+### Bug Fixes
+
+  - install command now downloads-then-runs instead of curl | bash
+
+### Improvements
+
+  - Rework product grid: 13 named functions, animation-only, grouped layout
+  - Sharpen product grid: standard naming, tighter screenshots, animated visuals
+  - Trim Services to named offerings; expand Products into a full function grid
+  - Remove CyMind AI, Compare, and Pricing homepage sections
+
+---
+
 ## v1.0.74 -- 2026-08-09
 
 ### Improvements
