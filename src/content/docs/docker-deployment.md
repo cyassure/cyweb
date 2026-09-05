@@ -23,6 +23,14 @@ This guide covers running Cy360 with Docker: `docker-compose.yml` and `.env`. No
 
 **Local LLM (Ollama) for CyMind's AI Assistant** is optional and unset by default — CyMind can dispatch to a self-hosted Ollama instance instead of an external provider. Stand up Ollama yourself on its own hardware (LLM inference is GPU/RAM-hungry and deliberately never packed onto this stack's host), then point `OLLAMA_URL` at it in `.env`.
 
+**GeoIP enrichment (optional, off by default)** — SIEM alerts can show source/destination IP geolocation via MaxMind's GeoLite2 database. We don't ship a shared MaxMind key with the installer (deliberately — it's not something to embed in a public script), so this is a one-time, self-service step:
+
+1. Sign up for a free key at [maxmind.com/en/geolite2/signup](https://www.maxmind.com/en/geolite2/signup).
+2. On your server, set it in the app-state env file: `sed -i 's/^MAXMIND_KEY=.*/MAXMIND_KEY=<your key>/' /opt/cyassure/.env` (or add the line if it's not there yet).
+3. The installer refreshes the GeoLite2 database monthly via cron once a key is present. To pull it immediately rather than waiting: re-run `sudo bash cyassure-setup.sh --update`.
+
+Without a key, GeoIP enrichment is simply skipped — you'll see a one-line `MAXMIND_KEY not set` warning during install. That's expected, not an error; the rest of the platform is unaffected.
+
 ## 3. First-time setup
 
 ### Quick install (recommended, Ubuntu/Debian server)
@@ -88,6 +96,8 @@ You don't need a license to get started — with no license file present, the po
 | `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | Optional | Enables "Sign in with Google" |
 | `MICROSOFT_CLIENT_ID` / `MICROSOFT_CLIENT_SECRET` | Optional | Enables "Sign in with Microsoft" |
 | `SMTP_HOST` / `SMTP_PORT` / `SMTP_USER` / `SMTP_PASSWORD` | Optional | Enables outbound email alerting |
+
+`MAXMIND_KEY` (GeoIP enrichment) is the one exception to this table — it's read from `/opt/cyassure/.env`, not the project `.env` above, since the installer script downloads the GeoLite2 database directly to the host. See Section 2 for how to set it.
 
 ## 7. Running, stopping, checking health
 
