@@ -1,7 +1,8 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
 import * as z from "zod";
-import { Mail, Send } from "lucide-react";
+import { CheckCircle2, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -21,8 +22,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const SUPPORT_EMAIL = "support@cyassure.eu";
-
 const topics = [
   { value: "installation", label: "Installation / setup" },
   { value: "licensing", label: "Licensing / Enterprise" },
@@ -40,18 +39,44 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
+async function submitContact(values: FormValues): Promise<void> {
+  const topicLabel = topics.find((t) => t.value === values.topic)?.label ?? values.topic;
+  const res = await fetch("/api/contact", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "same-origin",
+    body: JSON.stringify({
+      name: values.name,
+      email: values.email,
+      topic: topicLabel,
+      message: values.message,
+      destination: values.topic === "sales" ? "sales" : "support",
+    }),
+  });
+  if (!res.ok) throw new Error(`contact submission returned ${res.status}`);
+}
+
 const SupportForm = () => {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: { name: "", email: "", topic: "", message: "" },
   });
 
-  const onSubmit = (values: FormValues) => {
-    const topicLabel = topics.find((t) => t.value === values.topic)?.label ?? values.topic;
-    const subject = `[Cy360 Support] ${topicLabel} — ${values.name}`;
-    const body = `From: ${values.name} <${values.email}>\nTopic: ${topicLabel}\n\n${values.message}`;
-    window.location.href = `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  };
+  const mutation = useMutation({ mutationFn: submitContact });
+
+  const onSubmit = (values: FormValues) => mutation.mutate(values);
+
+  if (mutation.isSuccess) {
+    return (
+      <div className="flex flex-col items-center gap-3 rounded-2xl border border-border bg-card p-10 text-center">
+        <CheckCircle2 className="h-8 w-8 text-primary" />
+        <p className="font-heading text-lg font-semibold text-foreground">Message sent</p>
+        <p className="max-w-sm text-sm text-muted-foreground">
+          Thanks — we'll get back to you at the email address you provided.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <Form {...form}>
@@ -124,13 +149,13 @@ const SupportForm = () => {
           )}
         />
 
-        <Button type="submit" className="w-full gap-2 sm:w-auto">
-          <Send className="h-4 w-4" /> Send via Email
+        <Button type="submit" className="w-full gap-2 sm:w-auto" disabled={mutation.isPending}>
+          <Send className="h-4 w-4" /> {mutation.isPending ? "Sending..." : "Send message"}
         </Button>
-        <p className="flex items-center gap-2 text-xs text-muted-foreground">
-          <Mail className="h-3.5 w-3.5" />
-          Opens your email client addressed to {SUPPORT_EMAIL} — nothing is sent from this page directly.
-        </p>
+
+        {mutation.isError && (
+          <p className="text-sm text-destructive">Something went wrong — please try again in a moment.</p>
+        )}
       </form>
     </Form>
   );

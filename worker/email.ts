@@ -3,6 +3,8 @@
 // Workers Paid plan, and this piggybacks on mail infrastructure already paid
 // for and already DKIM-authenticated, with zero DNS changes to the zone.
 
+import type { ContactInput } from "./validate";
+
 interface GraphTokenResponse {
   access_token: string;
   expires_in: number;
@@ -31,8 +33,42 @@ async function getGraphAccessToken(env: Env): Promise<string> {
   return data.access_token;
 }
 
-export async function sendVerificationEmail(env: Env, to: string, name: string, verifyUrl: string): Promise<void> {
+interface GraphSendOptions {
+  to: string;
+  subject: string;
+  html: string;
+  replyTo?: string;
+}
+
+async function graphSendMail(env: Env, options: GraphSendOptions): Promise<void> {
   const accessToken = await getGraphAccessToken(env);
+
+  const res = await fetch(
+    `https://graph.microsoft.com/v1.0/users/${encodeURIComponent(env.MS_GRAPH_SENDER)}/sendMail`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        message: {
+          subject: options.subject,
+          body: { contentType: "HTML", content: options.html },
+          toRecipients: [{ emailAddress: { address: options.to } }],
+          ...(options.replyTo ? { replyTo: [{ emailAddress: { address: options.replyTo } }] } : {}),
+        },
+        saveToSentItems: false,
+      }),
+    },
+  );
+
+  if (!res.ok) {
+    throw new Error(`graph sendMail failed: ${res.status} ${await res.text()}`);
+  }
+}
+
+export async function sendVerificationEmail(env: Env, to: string, name: string, verifyUrl: string): Promise<void> {
   const firstName = name.trim().split(/\s+/)[0] || "there";
 
   const html = `
@@ -51,28 +87,29 @@ export async function sendVerificationEmail(env: Env, to: string, name: string, 
     </div>
   `;
 
-  const res = await fetch(
-    `https://graph.microsoft.com/v1.0/users/${encodeURIComponent(env.MS_GRAPH_SENDER)}/sendMail`,
-    {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        message: {
-          subject: "Confirm your email to download Cy360",
-          body: { contentType: "HTML", content: html },
-          toRecipients: [{ emailAddress: { address: to } }],
-        },
-        saveToSentItems: false,
-      }),
-    },
-  );
+  await graphSendMail(env, { to, subject: "Confirm your email to download Cy360", html });
+}
 
-  if (!res.ok) {
-    throw new Error(`graph sendMail failed: ${res.status} ${await res.text()}`);
-  }
+export async function sendContactEmail(env: Env, input: ContactInput): Promise<void> {
+  const to = input.destination === "sales" ? "sales@cyassure.eu" : "support@cyassure.eu";
+  const subjectPrefix = input.destination === "sales" ? "[Website sales inquiry]" : "[Website support]";
+  const topicLine = input.topic ? `<p style="font-size:14px;"><strong>Topic:</strong> ${escapeHtml(input.topic)}</p>` : "";
+
+  const html = `
+    <div style="font-family:Inter,system-ui,sans-serif;max-width:560px;margin:0 auto;padding:24px;color:#111;">
+      <p style="font-size:13px;color:#666;">New message from the cyassure.eu website:</p>
+      <p style="font-size:14px;"><strong>${escapeHtml(input.name)}</strong> &lt;${escapeHtml(input.email)}&gt;</p>
+      ${topicLine}
+      <p style="white-space:pre-wrap;font-size:14px;line-height:1.5;">${escapeHtml(input.message)}</p>
+    </div>
+  `;
+
+  await graphSendMail(env, {
+    to,
+    subject: `${subjectPrefix} — ${input.name}`,
+    html,
+    replyTo: input.email,
+  });
 }
 
 function escapeHtml(value: string): string {

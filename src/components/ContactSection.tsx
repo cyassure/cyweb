@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
-import { Mail, MapPin, ArrowRight, LifeBuoy } from "lucide-react";
+import { Mail, MapPin, LifeBuoy } from "lucide-react";
 import { Link } from "react-router-dom";
+import SalesContactDialog from "@/components/SalesContactDialog";
 
 const ContactSection = () => {
   return (
@@ -44,13 +45,7 @@ const ContactSection = () => {
           </div>
 
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-            <a
-              href="mailto:sales@cyassure.eu"
-              className="group flex items-center gap-2 rounded-lg bg-primary px-7 py-3.5 font-heading text-sm font-semibold text-primary-foreground transition-all hover:brightness-110"
-            >
-              Talk to Sales
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </a>
+            <SalesContactDialog />
             <Link
               to="/support"
               className="flex items-center gap-2 rounded-lg border border-border bg-secondary/50 px-7 py-3.5 font-heading text-sm font-semibold text-foreground transition-all hover:border-primary/50"

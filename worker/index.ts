@@ -1,6 +1,6 @@
-import { registrationSchema } from "./validate";
+import { registrationSchema, contactSchema } from "./validate";
 import { upsertRegistration, getByVerifyToken, markVerified } from "./db";
-import { sendVerificationEmail } from "./email";
+import { sendVerificationEmail, sendContactEmail } from "./email";
 import { createSessionCookie, readSession } from "./session";
 
 function json(data: unknown, status = 200): Response {
@@ -45,6 +45,29 @@ async function handleRegister(request: Request, env: Env, url: URL): Promise<Res
   return json({ status: "pending" }, 202);
 }
 
+async function handleContact(request: Request, env: Env): Promise<Response> {
+  let body: unknown;
+  try {
+    body = await request.json();
+  } catch {
+    return json({ error: "invalid_json" }, 400);
+  }
+
+  const parsed = contactSchema.safeParse(body);
+  if (!parsed.success) {
+    return json({ error: "invalid_input", issues: parsed.error.flatten() }, 400);
+  }
+
+  try {
+    await sendContactEmail(env, parsed.data);
+  } catch (err) {
+    console.error("contact email failed", err);
+    return json({ error: "email_failed" }, 502);
+  }
+
+  return json({ status: "sent" }, 202);
+}
+
 async function handleVerify(env: Env, url: URL): Promise<Response> {
   const token = url.searchParams.get("token");
   if (!token) return redirect(`${url.origin}/download?verified=0`);
@@ -72,6 +95,9 @@ export default {
 
     if (url.pathname === "/api/register" && request.method === "POST") {
       return handleRegister(request, env, url);
+    }
+    if (url.pathname === "/api/contact" && request.method === "POST") {
+      return handleContact(request, env);
     }
     if (url.pathname === "/api/verify" && request.method === "GET") {
       return handleVerify(env, url);
