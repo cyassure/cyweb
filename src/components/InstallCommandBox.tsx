@@ -5,7 +5,7 @@ interface InstallCommandBoxProps {
   version: string;
 }
 
-const INSTALLER_REPO = "cyassure/get-cy360";
+const INSTALLER_REPO = "cyassure/cy360-install";
 
 const InstallCommandBox = ({ version }: InstallCommandBoxProps) => {
   const [copied, setCopied] = useState(false);

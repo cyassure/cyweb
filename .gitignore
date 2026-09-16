@@ -11,6 +11,7 @@ node_modules
 dist
 dist-ssr
 *.local
+.wrangler
 
 # Editor directories and files
 .vscode/*
@@ -32,6 +33,8 @@ coverage/
 # Environment secrets — NEVER commit these
 .env
 .env.*
+.dev.vars
+.dev.vars.*
 
 # Legacy package manager artifact — this project uses npm (see package-lock.json).
 # A committed bun.lockb makes Cloudflare Pages auto-detect bun and fail install.

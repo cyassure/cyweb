@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Container, Cpu, HardDrive, Network, ShieldCheck, ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Container, Cpu, HardDrive, Network, ShieldCheck, ArrowRight, MailCheck } from "lucide-react";
+import { Link, useSearchParams } from "react-router-dom";
+import { toast } from "sonner";
 import VersionPicker from "@/components/VersionPicker";
 import InstallCommandBox from "@/components/InstallCommandBox";
+import RegistrationForm from "@/components/RegistrationForm";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useDownloadSession } from "@/hooks/useDownloadSession";
 
 const prerequisites = [
   { icon: Container, label: "Docker Engine 24+", sub: "with the Compose plugin" },
@@ -14,6 +18,19 @@ const prerequisites = [
 
 const DownloadSection = () => {
   const [version, setVersion] = useState("latest");
+  const [pendingEmail, setPendingEmail] = useState<string | null>(null);
+  const [searchParams] = useSearchParams();
+  const { verified, isLoading } = useDownloadSession({ pollForVerification: pendingEmail !== null });
+
+  useEffect(() => {
+    if (searchParams.get("verified") === "1") {
+      toast.success("Email confirmed — you're all set.");
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (verified && pendingEmail) setPendingEmail(null);
+  }, [verified, pendingEmail]);
 
   return (
     <section className="relative py-16">
@@ -40,16 +57,44 @@ const DownloadSection = () => {
           viewport={{ once: true }}
           className="mb-6 rounded-2xl border border-border bg-card p-6 md:p-8"
         >
-          <p className="mb-3 text-xs font-medium uppercase tracking-wider text-muted-foreground">1. Choose a version</p>
-          <VersionPicker value={version} onChange={setVersion} />
+          {isLoading ? (
+            <div className="space-y-4">
+              <Skeleton className="h-4 w-40" />
+              <Skeleton className="h-10 w-full" />
+              <Skeleton className="h-10 w-full" />
+            </div>
+          ) : verified ? (
+            <>
+              <p className="mb-3 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                1. Choose a version
+              </p>
+              <VersionPicker value={version} onChange={setVersion} />
 
-          <p className="mb-3 mt-8 text-xs font-medium uppercase tracking-wider text-muted-foreground">
-            2. Run this on your server
-          </p>
-          <InstallCommandBox version={version} />
-          <p className="mt-3 text-xs text-muted-foreground/70">
-            This runs the same installer script published in our GitHub repo — read it before you run it.
-          </p>
+              <p className="mb-3 mt-8 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                2. Run this on your server
+              </p>
+              <InstallCommandBox version={version} />
+              <p className="mt-3 text-xs text-muted-foreground/70">
+                This runs the same installer script published in our GitHub repo — read it before you run it.
+              </p>
+            </>
+          ) : pendingEmail ? (
+            <div className="flex flex-col items-center gap-3 py-6 text-center">
+              <MailCheck className="h-8 w-8 text-primary" />
+              <p className="font-heading text-lg font-semibold text-foreground">Check your inbox</p>
+              <p className="max-w-sm text-sm text-muted-foreground">
+                We sent a confirmation link to <span className="text-foreground">{pendingEmail}</span>. Click
+                it to unlock the install command — this page will update automatically.
+              </p>
+            </div>
+          ) : (
+            <>
+              <p className="mb-4 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                Register to unlock the install command
+              </p>
+              <RegistrationForm onSubmitted={setPendingEmail} />
+            </>
+          )}
         </motion.div>
 
         <motion.div
