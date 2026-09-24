@@ -1,3 +1,15 @@
+## v1.0.76 -- 2026-09-24
+
+### New Features
+
+  - Gate /download behind registration, swap to cy360-install repo, add SaaS tab
+
+### Bug Fixes
+
+  - Fix Talk to Sales and support form to actually send email
+
+---
+
 ## v1.0.75 -- 2026-09-05
 
 ### New Features
