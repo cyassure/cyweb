@@ -1,3 +1,11 @@
+## v1.0.77 -- 2026-10-14
+
+### New Features
+
+  - Add Cy360 user documentation, architecture and troubleshooting guides
+
+---
+
 ## v1.0.76 -- 2026-09-24
 
 ### New Features
