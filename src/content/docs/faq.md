@@ -19,4 +19,4 @@ The installer supports pinning any released version, and upgrading later is a si
 It's published in a public, auditable GitHub repository — read it before you run it, the same way you would for any other one-line installer (Docker, Homebrew, and most infrastructure tools work the same way).
 
 **Something isn't working — where do I go?**
-Check the [Deployment Guide](/docs/docker-deployment)'s troubleshooting notes first, then reach out via [Support](/support).
+Check the [Troubleshooting](/docs/troubleshooting) guide first, then reach out via [Support](/support).

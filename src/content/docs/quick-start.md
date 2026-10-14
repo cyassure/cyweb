@@ -23,5 +23,8 @@ That's it — Community edition is free forever and covers the full core stack. 
 ## Where to go next
 
 - Full technical reference: [Deployment Guide](/docs/docker-deployment)
+- Find your way around the portal: [Portal Basics](/docs/portal-basics)
+- How Cy360 is built: [System Architecture & Design](/docs/architecture)
+- When something isn't working: [Troubleshooting](/docs/troubleshooting)
 - Compare what each edition includes: [Editions](/editions)
 - Something not working: [Support](/support)

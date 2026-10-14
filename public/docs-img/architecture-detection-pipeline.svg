@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 400" font-family="Inter, Segoe UI, Helvetica, Arial, sans-serif">
+  <title>Cy360 detection pipeline</title>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0L10 5L0 10z" fill="#8b98ab"/>
+    </marker>
+    <style>
+      .box{fill:#121821;stroke:#2b3646;stroke-width:1.5}
+      .core{fill:#0f2a30;stroke:#13d8ec;stroke-width:1.5}
+      .data{fill:#1a1830;stroke:#8b7cf6;stroke-width:1.5}
+      .out{fill:#122217;stroke:#3ecf8e;stroke-width:1.5}
+      .t{fill:#e6edf5;font-size:15px;font-weight:600}
+      .s{fill:#9aa7b8;font-size:12px}
+      .h{fill:#9aa7b8;font-size:11px;letter-spacing:1.5px;font-weight:600}
+      .l{stroke:#8b98ab;stroke-width:1.4;fill:none}
+    </style>
+  </defs>
+  <rect width="1000" height="400" rx="14" fill="#0b0e13"/>
+
+  <text class="h" x="30" y="34">1 · SOURCES</text>
+  <text class="h" x="270" y="34">2 · NORMALISE</text>
+  <text class="h" x="510" y="34">3 · CORRELATE, SCORE, ENRICH</text>
+  <text class="h" x="790" y="34">4 · ACT</text>
+
+  <rect class="box" x="30" y="50" width="200" height="230" rx="8"/>
+  <text class="t" x="46" y="78">CyEDR agents</text>
+  <text class="t" x="46" y="108">Marketplace connectors</text>
+  <text class="s" x="46" y="126">cloud · identity · firewall · SaaS</text>
+  <text class="t" x="46" y="156">Attack surface &amp; ITAM</text>
+  <text class="t" x="46" y="186">Cloud &amp; SaaS posture</text>
+  <text class="t" x="46" y="216">DLP / DSPM</text>
+  <text class="t" x="46" y="246">AI Security Gateway</text>
+
+  <rect class="core" x="270" y="90" width="200" height="150" rx="8"/>
+  <text class="t" x="286" y="118">Common alert format</text>
+  <text class="s" x="286" y="142">one envelope for every source</text>
+  <text class="s" x="286" y="168">identity resolution</text>
+  <text class="s" x="286" y="186">(CORP\jdoe = jdoe@corp.com)</text>
+  <text class="s" x="286" y="212">asset resolution (one record</text>
+  <text class="s" x="286" y="228">per machine / cloud resource)</text>
+
+  <rect class="core" x="510" y="50" width="240" height="230" rx="8"/>
+  <text class="t" x="526" y="78">Group into incidents</text>
+  <text class="s" x="526" y="96">by person · machine · resource</text>
+  <text class="t" x="526" y="126">Correlation &amp; hunting rules</text>
+  <text class="t" x="526" y="156">UEBA &amp; ML models</text>
+  <text class="t" x="526" y="186">Risk &amp; FP probability</text>
+  <text class="s" x="526" y="204">+ Detection Context (bounded)</text>
+  <text class="t" x="526" y="234">Enrichment</text>
+  <text class="s" x="526" y="252">MITRE · threat intel · AI · GRC</text>
+
+  <rect class="out" x="790" y="50" width="180" height="104" rx="8"/>
+  <text class="t" x="806" y="78">Security Incidents</text>
+  <text class="t" x="806" y="104">Security Hygiene</text>
+  <text class="s" x="806" y="130">two queues</text>
+  <rect class="out" x="790" y="170" width="180" height="110" rx="8"/>
+  <text class="t" x="806" y="198">Cases</text>
+  <text class="t" x="806" y="224">Response &amp; fixes</text>
+  <text class="t" x="806" y="250">AI agents · SOAR</text>
+
+  <path class="l" d="M230 165H266" marker-end="url(#a)"/>
+  <path class="l" d="M470 165H506" marker-end="url(#a)"/>
+  <path class="l" d="M750 102H786" marker-end="url(#a)"/>
+  <path class="l" d="M750 225H786" marker-end="url(#a)"/>
+
+  <rect class="data" x="270" y="320" width="700" height="56" rx="8"/>
+  <text class="t" x="290" y="344">Event bus → CyDataLake</text>
+  <text class="s" x="290" y="364">every raw event is kept and searchable (Investigations → Alerts), including events filtered out before becoming alerts</text>
+  <path class="l" d="M370 240V316" marker-end="url(#a)"/>
+</svg>

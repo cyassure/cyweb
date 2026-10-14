@@ -7,7 +7,7 @@ This guide covers running Cy360 with Docker: `docker-compose.yml` and `.env`. No
 ## 1. Before you start
 
 - **Docker Engine 24+ with the Compose plugin.** Check with `docker compose version` (the modern plugin, invoked as `docker compose`, not the old standalone `docker-compose`).
-- **Minimum recommended sizing:** 6 vCPU / 12 GB RAM / 60 GB disk for a small evaluation deployment. Scale up for higher alert/log volume — raw-log capture (CyDataLake) is on by default and disk usage grows with real event volume, not just idle baseline. Turn it off in **Settings → CyDataLake** (or `CYDATALAKE_ENABLED=false` in `.env`) if you'd rather stay at the smaller footprint.
+- **Minimum recommended sizing:** 6 vCPU / 12 GB RAM / 60 GB disk for a small evaluation deployment. Scale up for higher alert/log volume — raw-log capture (CyDataLake) is on by default and disk usage grows with real event volume, not just idle baseline. Turn it off in the first-login Setup Wizard's CyDataLake step (or with `CYDATALAKE_ENABLED=false` in `.env`) if you'd rather stay at the smaller footprint.
 - **Network:** only one port needs to be reachable from your network — `APP_PORT` (default `8080`). Everything else runs on an internal Docker network and is never exposed to the host.
 - **Internet access to `ghcr.io`** to pull images from the registry.
 - **`sudo` (root) access** if you use the installer script for host prep (Docker install, firewall, TLS). Evaluating locally (e.g. macOS/Docker Desktop)? Use **Manual install** below instead — it's root-free except for one-time directory creation.
@@ -19,7 +19,7 @@ This guide covers running Cy360 with Docker: `docker-compose.yml` and `.env`. No
 | `docker-compose.yml` | The stack definition — SIEM, correlation engine, backend, frontend, database, cache, plus CyDataLake's log-capture services |
 | `.env.example` | Copy to `.env` and fill in before first run |
 
-**CyDataLake (raw multi-vendor log capture)** is part of the default stack — every EDR, ASM, and SIEM-connector event is captured, including anything filtered out before it became a correlated alert. Query it under **CyDataLake** in the sidebar (admin/analyst roles only). Turn it off anytime from **Settings → CyDataLake** — captured history is preserved and comes back if you re-enable later.
+**CyDataLake (raw multi-vendor log capture)** is part of the default stack — every EDR, ASM, and SIEM-connector event is captured, including anything filtered out before it became a correlated alert. Query it under **Security Operations → Investigations → Alerts** (admin/analyst roles only). Turn it off from the Setup Wizard's CyDataLake step or with `CYDATALAKE_ENABLED=false` in `.env` — captured history is preserved and comes back if you re-enable later.
 
 **Local LLM (Ollama) for CyMind's AI Assistant** is optional and unset by default — CyMind can dispatch to a self-hosted Ollama instance instead of an external provider. Stand up Ollama yourself on its own hardware (LLM inference is GPU/RAM-hungry and deliberately never packed onto this stack's host), then point `OLLAMA_URL` at it in `.env`.
 
@@ -68,7 +68,7 @@ The app is reachable at `http://<this-host>:8080` (or whatever `APP_PORT` you se
 ## 4. First login
 
 - Go to `http://<host>:<APP_PORT>`.
-- **Default admin account:** `cyadmin@cyassure.com` / `Admin@123`. **Change this password immediately** (Settings → Users) — this credential is documented publicly, so leaving it unchanged on an internet-reachable instance is a real risk.
+- **Default admin account:** `cyadmin@cyassure.com` / `Admin@123`. **Change this password immediately** (Settings → Users & Roles) — this credential is documented publicly, so leaving it unchanged on an internet-reachable instance is a real risk.
 
 ## 5. Community vs. Enterprise — what changes at runtime
 
