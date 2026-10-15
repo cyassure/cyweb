@@ -1,3 +1,11 @@
+## v1.0.81 -- 2026-10-15
+
+### Improvements
+
+  - Let visitors choose recorded demo videos or a live demo
+
+---
+
 ## v1.0.80 -- 2026-10-15
 
 ### New Features
