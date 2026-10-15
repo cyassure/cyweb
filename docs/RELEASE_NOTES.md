@@ -1,3 +1,11 @@
+## v1.0.78 -- 2026-10-15
+
+### New Features
+
+  - Add Demos page with module videos streamed from R2
+
+---
+
 ## v1.0.77 -- 2026-10-14
 
 ### New Features
