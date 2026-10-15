@@ -69,7 +69,7 @@ Container logs from before an update are archived for 30 days under `/opt/cyassu
 | An incident was closed automatically and shouldn't have been | AI triage judge or FP auto-close | Reopen it (its audit trail shows why it closed); raise the threshold in Settings → FP Auto-Close if it happens often. |
 | No new alerts for 24 hours, and a "SIEM monitoring coverage" exposure incident | Agents or log sources stopped reporting | Check Integration Health and Fleet; the incident resolves when alerts flow again. |
 | Threat hunting always shows 0 matches | No entity crossed a rule's threshold, or rules failing | *Run Hunt Now* reports rules run, matches and failures. |
-| CyLogic (Sigma) tab empty | Rule corpus not loaded | Click **Refresh Corpus Now**; if still empty, update to the latest images. |
+| CyLogic tab empty | Rule corpus not loaded | Click **Refresh Corpus Now**; if still empty, update to the latest images. |
 
 ## Vulnerability Management
 

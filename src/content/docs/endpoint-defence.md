@@ -65,7 +65,7 @@ Detections also flow into Security Operations → Incidents, where they are corr
 
 | Category | What it controls |
 |---|---|
-| **Threat Prevention** | Real-time protection, behavioural AI, CyScan (YARA) scanning, ransomware rollback, sensitivity (Low / High / Aggressive), auto-quarantine |
+| **Threat Prevention** | Real-time protection, behavioural AI, CyScan malware scanning, ransomware rollback, sensitivity (Low / High / Aggressive), auto-quarantine |
 | **Device Control** | USB, removable media, Wi-Fi, Bluetooth, camera, microphone (block or read-only) |
 | **App Control** | Allow/block lists, publisher and hash rules, script-engine restrictions |
 | **Network Control** | Host firewall, DNS sinkhole of command-and-control domains, the EDL blocklist, forced proxy (for example to send AI traffic through the AI Security Gateway) |

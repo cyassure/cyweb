@@ -29,7 +29,7 @@ Every alert in an incident links straight to its raw record here. Endpoint opera
 
 **What is on the page.** Tiles for total rules, active findings, critical/high findings, new findings in the last 24 hours and rules firing; the **Hunt Rules** list with each rule's window and description; and the findings themselves. Findings become incidents tagged with the rule's ATT&CK tactics, so they appear on the kill-chain views.
 
-This page shows findings; it is not where you author endpoint rules. To create a custom detection for a specific threat, use [Detection Rules → CyScan](/docs/detection-rules-and-context#cyscan-yara-rules).
+This page shows findings; it is not where you author endpoint rules. To create a custom detection for a specific threat, use [Detection Rules → CyScan](/docs/detection-rules-and-context#cyscan).
 
 ## Identity Timeline
 

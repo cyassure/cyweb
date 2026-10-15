@@ -25,7 +25,7 @@ The page has four tabs: **Response Console**, **Command History**, **Interactive
 | Block Hash | Adds a file hash to the agent's local blocklist so it can no longer execute |
 | Quarantine File | Moves a file into the agent's quarantine vault |
 | Rollback | Reverses changes made by a detected threat, using the ransomware-rollback protection in the endpoint's policy |
-| Run Scan | Runs an on-demand malware scan with the CyScan (YARA) rules |
+| Run Scan | Runs an on-demand malware scan with the CyScan file-scanning rules |
 | Collect Forensics | Collects a forensic package from the endpoint |
 | Collect Sandbox Sample | Uploads a file from the endpoint for sandbox detonation |
 | Network Quarantine (NAC) | Asks your network access control system to quarantine the device (see Settings → Network Quarantine) |

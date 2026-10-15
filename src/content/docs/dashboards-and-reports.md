@@ -63,7 +63,7 @@ The Dashboard page holds five tabs.
 
 The red dashed line before stage 10 is the *lateral-movement line*: attacks stopped before it never spread.
 
-**Click a stage** to open its details underneath: the alerts tagged with that tactic, the attacks that reached it, which are still open, the detection rules mapped to the stage (Correlation, Sigma/CyLogic, Hunt and EDR rules) and the Cy360 capabilities that act there with their live state (Active, Shadow mode, Not configured, In Marketplace, Needs licence), each linking to its page.
+**Click a stage** to open its details underneath: the alerts tagged with that tactic, the attacks that reached it, which are still open, the detection rules mapped to the stage (Correlation, CyLogic, Hunt and EDR rules) and the Cy360 capabilities that act there with their live state (Active, Shadow mode, Not configured, In Marketplace, Needs licence), each linking to its page.
 
 **Why it matters.** It shows where in the kill chain you catch attackers and where you are blind, so you know which detections or integrations to add.
 

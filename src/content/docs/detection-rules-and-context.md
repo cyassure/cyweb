@@ -11,22 +11,22 @@ Changes on both pages take effect immediately — no restart and no waiting for 
 
 ![Security Operations → Detection Rules](/docs-img/detection-rules.jpg)
 
-### CyLogic (Sigma rules)
+### CyLogic
 
-**What it is.** Log-pattern rules in the open **Sigma** format: the bundled CyAssure rules, a large imported SigmaHQ corpus (thousands of rules covering Windows, Linux, cloud and SaaS audit logs), and your own custom rules.
+**What it is.** CyAssure's log-pattern detection rules: the bundled CyAssure rules, a large library of imported community rules (thousands of rules covering Windows, Linux, cloud and SaaS audit logs), and your own custom rules.
 
 **How to use it.**
 
 - Search by title, rule ID or ATT&CK technique and filter by source (*bundled*, *imported*, *custom*).
 - The table shows each rule's level, MITRE ATT&CK techniques, log source and source; use the **Enabled** toggle to switch a rule on or off.
 - **Refresh Corpus Now** re-reads the rule files on disk.
-- **+ New Custom Rule** opens an editor for your own Sigma rule.
+- **+ New Custom Rule** opens an editor for your own CyLogic rule.
 
-**Why it matters.** Sigma is the industry's shared detection language, so you can adopt community rules for new threats the day they are published.
+**Why it matters.** CyLogic uses a widely adopted rule format, so new community detections for emerging threats can be added the day they are published.
 
-### CyScan (YARA rules)
+### CyScan
 
-**What it is.** File-scanning rules used by the CyEDR agent's malware scan. The bundled CyAssure ruleset is shown read-only; add your own custom YARA rules for a specific threat (for example a zero-day's indicators). Custom rules are pushed to endpoints and used by **Run Scan** and the policy's CyScan setting.
+**What it is.** File-scanning rules used by the CyEDR agent's malware scan. The bundled CyAssure ruleset is shown read-only; add your own custom CyScan rules for a specific threat (for example a zero-day's indicators). Custom rules are pushed to endpoints and used by **Run Scan** and the policy's CyScan setting.
 
 ### Correlation
 
