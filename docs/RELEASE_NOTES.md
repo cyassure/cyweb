@@ -1,3 +1,11 @@
+## v1.0.80 -- 2026-10-15
+
+### New Features
+
+  - Add India office address alongside the Netherlands HQ
+
+---
+
 ## v1.0.79 -- 2026-10-15
 
 ### Improvements
