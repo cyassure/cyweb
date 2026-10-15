@@ -1,3 +1,11 @@
+## v1.0.82 -- 2026-10-15
+
+### Improvements
+
+  - Label offices by country and shorten the India address
+
+---
+
 ## v1.0.81 -- 2026-10-15
 
 ### Improvements
