@@ -8,6 +8,7 @@ import Editions from "./pages/Editions";
 import Download from "./pages/Download";
 import Docs from "./pages/Docs";
 import DocsArticle from "./pages/DocsArticle";
+import Demos from "./pages/Demos";
 import Support from "./pages/Support";
 import NotFound from "./pages/NotFound";
 
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/download" element={<Download />} />
           <Route path="/docs" element={<Docs />} />
           <Route path="/docs/:slug" element={<DocsArticle />} />
+          <Route path="/demos" element={<Demos />} />
           <Route path="/support" element={<Support />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

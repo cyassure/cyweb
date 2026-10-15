@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, PlayCircle } from "lucide-react";
 import { DOC_CATEGORIES, docsInCategory } from "@/lib/docs";
 
 const DocsIndexSection = () => {
@@ -22,6 +22,18 @@ const DocsIndexSection = () => {
             reference.
           </p>
         </motion.div>
+
+        <Link
+          to="/demos"
+          className="group mb-12 flex items-center gap-4 rounded-xl border border-primary/30 bg-primary/5 p-5 transition-all hover:border-primary/60"
+        >
+          <PlayCircle className="h-10 w-10 shrink-0 text-primary" />
+          <div className="flex-1">
+            <p className="font-heading text-base font-bold text-foreground">Prefer to watch? See the demo videos</p>
+            <p className="text-sm text-muted-foreground">A three-minute platform overview and a narrated walkthrough of every module.</p>
+          </div>
+          <ArrowRight className="h-5 w-5 text-primary transition-transform group-hover:translate-x-1" />
+        </Link>
 
         {DOC_CATEGORIES.map((cat) => (
           <div key={cat.name} className="mb-12">

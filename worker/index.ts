@@ -2,6 +2,7 @@ import { registrationSchema, contactSchema } from "./validate";
 import { upsertRegistration, getByVerifyToken, markVerified } from "./db";
 import { sendVerificationEmail, sendContactEmail } from "./email";
 import { createSessionCookie, readSession } from "./session";
+import { handleMedia } from "./media";
 
 function json(data: unknown, status = 200): Response {
   return new Response(JSON.stringify(data), {
@@ -93,6 +94,9 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
+    if (url.pathname.startsWith("/media/")) {
+      return handleMedia(request, env, url);
+    }
     if (url.pathname === "/api/register" && request.method === "POST") {
       return handleRegister(request, env, url);
     }

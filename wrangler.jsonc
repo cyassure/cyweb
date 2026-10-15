@@ -19,13 +19,23 @@
     "directory": "./dist",
     "not_found_handling": "single-page-application",
     "binding": "ASSETS",
-    "run_worker_first": ["/api/*"]
+    "run_worker_first": ["/api/*", "/media/*"]
   },
   "d1_databases": [
     {
       "binding": "DB",
       "database_name": "cyweb-registrations",
       "database_id": "23259db0-46c3-4fc4-a152-a7dfe7809b06"
+    }
+  ],
+  // Demo videos (too large for static assets' 25 MiB per-file limit) live in
+  // R2 and are streamed by worker/media.ts at /media/videos/<file>.mp4, with
+  // Range support so players can seek. Upload with:
+  //   npx wrangler r2 object put cyweb-videos/videos/<file>.mp4 --file <file> --content-type video/mp4 --remote
+  "r2_buckets": [
+    {
+      "binding": "VIDEOS",
+      "bucket_name": "cyweb-videos"
     }
   ]
   // Verification emails send via Microsoft Graph (existing M365 tenant),

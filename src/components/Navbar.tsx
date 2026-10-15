@@ -10,6 +10,7 @@ const navLinks = [
   { label: "Editions", href: "/editions" },
   { label: "Download", href: "/download" },
   { label: "Docs", href: "/docs" },
+  { label: "Demos", href: "/demos" },
   { label: "Support", href: "/support" },
 ];
 

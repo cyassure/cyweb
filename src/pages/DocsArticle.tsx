@@ -2,8 +2,9 @@ import { Children, ReactNode, isValidElement, useEffect } from "react";
 import { useParams, Link, Navigate, useLocation } from "react-router-dom";
 import ReactMarkdown, { Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, PlayCircle } from "lucide-react";
 import PageShell from "@/components/PageShell";
+import { demoForDoc, formatDuration } from "@/lib/demos";
 import { DOC_CATEGORIES, docs, docsInCategory, extractHeadings, getDocBySlug, slugifyHeading } from "@/lib/docs";
 
 // Plain text of a rendered heading, so its id matches extractHeadings()'s.
@@ -82,6 +83,7 @@ const DocsArticle = () => {
 
   if (!doc) return <Navigate to="/docs" replace />;
 
+  const demo = demoForDoc(doc.slug);
   const headings = extractHeadings(doc.content).filter((h) => h.level === 2);
   const idx = docs.findIndex((d) => d.slug === doc.slug);
   const prev = idx > 0 ? docs[idx - 1] : undefined;
@@ -113,6 +115,15 @@ const DocsArticle = () => {
                   <DocsNav current={doc.slug} />
                 </div>
               </details>
+
+              {demo && (
+                <Link
+                  to={`/demos?v=${demo.id}`}
+                  className="mb-6 inline-flex items-center gap-2 rounded-lg border border-primary/30 bg-primary/5 px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-primary/60"
+                >
+                  <PlayCircle className="h-4 w-4 text-primary" /> Watch the {demo.title} demo ({formatDuration(demo.duration)})
+                </Link>
+              )}
 
               <article className="prose prose-invert max-w-none prose-headings:font-heading prose-a:text-primary prose-table:text-sm prose-th:text-foreground prose-img:my-0 prose-code:before:content-none prose-code:after:content-none prose-code:rounded prose-code:bg-secondary/60 prose-code:px-1 prose-code:py-0.5 prose-code:font-normal [&_pre_code]:bg-transparent [&_pre_code]:p-0">
                 <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
