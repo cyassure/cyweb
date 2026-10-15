@@ -27,18 +27,16 @@ const ContactSection = () => {
             <div className="flex flex-col items-center gap-1 text-sm text-muted-foreground">
               <div className="flex items-center gap-2">
                 <MapPin className="h-4 w-4 text-primary" />
-                <span className="font-medium text-foreground">Global HQ</span>
+                <span className="font-medium text-foreground">Netherlands</span>
               </div>
               <span className="text-xs text-muted-foreground">Einsteinlaan 28, 2289 CC Rijswijk</span>
-              <span className="text-xs text-muted-foreground">The Netherlands</span>
             </div>
             <div className="flex flex-col items-center gap-1 text-sm text-muted-foreground">
               <div className="flex items-center gap-2">
                 <MapPin className="h-4 w-4 text-primary" />
-                <span className="font-medium text-foreground">India Office</span>
+                <span className="font-medium text-foreground">India</span>
               </div>
-              <span className="text-xs text-muted-foreground">CyAssure India, Plot Number 518, IMT Sector 1</span>
-              <span className="text-xs text-muted-foreground">Manesar, Gurgaon, Haryana 122052, India</span>
+              <span className="text-xs text-muted-foreground">518, Sector 1, Manesar, Gurgaon</span>
             </div>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <MapPin className="h-4 w-4 text-primary" />
