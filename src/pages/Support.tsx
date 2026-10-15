@@ -38,6 +38,9 @@ const Support = () => (
           <span className="flex items-center gap-2">
             <MapPin className="h-4 w-4 text-primary" /> Rijswijk, The Netherlands
           </span>
+          <span className="flex items-center gap-2">
+            <MapPin className="h-4 w-4 text-primary" /> Manesar, Gurgaon, India
+          </span>
         </div>
       </div>
     </section>

@@ -35,6 +35,8 @@ const Footer = () => {
           <div className="flex flex-col items-center gap-1 text-center">
             <p className="text-xs font-medium text-primary uppercase tracking-widest">Global HQ</p>
             <p className="text-sm text-muted-foreground">Einsteinlaan 28, 2289 CC Rijswijk, The Netherlands</p>
+            <p className="mt-2 text-xs font-medium text-primary uppercase tracking-widest">India Office</p>
+            <p className="text-sm text-muted-foreground">CyAssure India, Plot Number 518, IMT Sector 1, Manesar, Gurgaon, Haryana 122052, India</p>
             <p className="text-sm text-muted-foreground">
               © {new Date().getFullYear()} Cy360 by CyAssure. All rights reserved.
             </p>

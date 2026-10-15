@@ -68,7 +68,7 @@ const WhySection = () => {
               <span className="text-sm font-medium text-foreground">24×7 SOC — Real analysts. Real defense.</span>
             </div>
             <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
-              <MapPin className="h-3.5 w-3.5 text-primary" /> Rijswijk, Netherlands · Global coverage
+              <MapPin className="h-3.5 w-3.5 text-primary" /> Rijswijk, Netherlands · Gurgaon, India · Global coverage
             </span>
           </div>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
