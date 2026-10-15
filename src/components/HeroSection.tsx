@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Play, Lock, Zap, Activity, Brain } from "lucide-react";
 import dashboardScreenshot from "@/assets/screenshots/attack-posture.jpg";
+import DemoRequestDialog from "@/components/DemoRequestDialog";
 
 const stats = [
   { icon: Zap, value: "<30 min", label: "To fully operational" },
@@ -42,13 +43,17 @@ const HeroSection = () => {
               Talk to an Expert
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </a>
-            <a
-              href="#contact"
-              className="flex items-center gap-2 rounded-lg border border-border bg-secondary/50 px-6 py-3 font-heading text-sm font-semibold text-foreground transition-all hover:border-primary/50 hover:bg-secondary"
-            >
-              <Play className="h-4 w-4 text-primary" />
-              Request a Demo
-            </a>
+            <DemoRequestDialog
+              trigger={
+                <button
+                  type="button"
+                  className="flex items-center gap-2 rounded-lg border border-border bg-secondary/50 px-6 py-3 font-heading text-sm font-semibold text-foreground transition-all hover:border-primary/50 hover:bg-secondary"
+                >
+                  <Play className="h-4 w-4 text-primary" />
+                  Request a Demo
+                </button>
+              }
+            />
           </div>
         </motion.div>
 

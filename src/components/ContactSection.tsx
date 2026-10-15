@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
-import { Mail, MapPin, LifeBuoy } from "lucide-react";
+import { Mail, MapPin, LifeBuoy, Play } from "lucide-react";
 import { Link } from "react-router-dom";
 import SalesContactDialog from "@/components/SalesContactDialog";
+import DemoRequestDialog from "@/components/DemoRequestDialog";
 
 const ContactSection = () => {
   return (
@@ -54,6 +55,17 @@ const ContactSection = () => {
 
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <SalesContactDialog />
+            <DemoRequestDialog
+              trigger={
+                <button
+                  type="button"
+                  className="flex items-center gap-2 rounded-lg border border-border bg-secondary/50 px-7 py-3.5 font-heading text-sm font-semibold text-foreground transition-all hover:border-primary/50"
+                >
+                  <Play className="h-4 w-4 text-primary" />
+                  Request a Demo
+                </button>
+              }
+            />
             <Link
               to="/support"
               className="flex items-center gap-2 rounded-lg border border-border bg-secondary/50 px-7 py-3.5 font-heading text-sm font-semibold text-foreground transition-all hover:border-primary/50"

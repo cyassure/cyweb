@@ -1,7 +1,8 @@
 import { useEffect, useRef } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { BookOpen, Clock, Play } from "lucide-react";
+import { BookOpen, CalendarClock, Clock, Play } from "lucide-react";
 import PageShell from "@/components/PageShell";
+import DemoRequestDialog from "@/components/DemoRequestDialog";
 import { demos, demoUrl, formatDuration, getDemo } from "@/lib/demos";
 
 const Demos = () => {
@@ -99,6 +100,27 @@ const Demos = () => {
                 </button>
               );
             })}
+          </div>
+
+          <div className="mt-12 flex flex-col items-center gap-4 rounded-xl border border-border bg-card p-6 text-center sm:flex-row sm:text-left">
+            <CalendarClock className="h-10 w-10 shrink-0 text-primary" />
+            <div className="flex-1">
+              <p className="font-heading text-base font-bold text-foreground">Prefer a live walkthrough?</p>
+              <p className="text-sm text-muted-foreground">
+                Book a guided demo with a CyAssure expert, focused on your environment and your questions.
+              </p>
+            </div>
+            <DemoRequestDialog
+              startWithLive
+              trigger={
+                <button
+                  type="button"
+                  className="rounded-lg bg-primary px-6 py-3 font-heading text-sm font-semibold text-primary-foreground transition-all hover:brightness-110"
+                >
+                  Book a live demo
+                </button>
+              }
+            />
           </div>
         </div>
       </section>
