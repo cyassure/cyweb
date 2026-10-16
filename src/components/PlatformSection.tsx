@@ -284,7 +284,7 @@ const PlatformSection = () => {
                 Cy360 integrates custom Large Language Models (LLMs) to enrich alerts, automate investigations, summarize incidents, and recommend actions.
               </p>
               <p className="mb-4 text-muted-foreground">
-                Underneath, machine-learning models classify false positives, spot DGA domains, obfuscated commands, beaconing and novel behaviour, and baseline every user and host — measured per model, and improved through opt-in federated learning.
+                Machine-learning models cut false positives and catch novel threats.
               </p>
               <p className="text-sm text-primary font-medium">Need control? You can Bring Your Own AI/LLM.</p>
             </div>

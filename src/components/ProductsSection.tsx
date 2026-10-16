@@ -3,7 +3,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
   ShieldAlert, Bot, Bug, Radar, Boxes, CloudCog, Database, Laptop,
-  BrainCircuit, ShieldCheck, Check, LucideIcon,
+  BrainCircuit, ShieldCheck, LucideIcon, Layers, Brain, Search, Users, Fingerprint,
+  FlaskConical, FolderKanban, Zap, Wrench, Ban, Workflow, Gauge, ListChecks, FileCheck,
+  Globe, AlertTriangle, ScanEye, Activity, Network, EyeOff, Cloud, Package, Container,
+  Lock, Share2, FileLock2, ScanSearch, DatabaseZap, KeyRound, Monitor, SlidersHorizontal,
+  Download, Sparkles, Scale, ClipboardList, TrendingUp, FileText, BookOpen, PlayCircle,
 } from "lucide-react";
 import type { ComponentType } from "react";
 import {
@@ -13,6 +17,7 @@ import {
 import attackPosture from "@/assets/screenshots/attack-posture.jpg";
 
 interface Capability {
+  icon: LucideIcon;
   name: string;
   desc: string;
   tag?: string;
@@ -28,6 +33,9 @@ interface Domain {
   intro: string;
   capabilities: Capability[];
   screen: ComponentType;
+  // /docs/<docSlug> and /demos?v=<demoId> — the detail lives there, not here.
+  docSlug: string;
+  demoId: string;
 }
 
 const domains: Domain[] = [
@@ -37,51 +45,55 @@ const domains: Domain[] = [
     label: "Security Operations",
     color: "#ff3b3b",
     headline: "From raw events to a handful of real incidents",
-    intro: "Every EDR, attack-surface, cloud and connector event lands in one data lake. The correlation engine groups related signals into investigable incidents and suppresses the noise with ML — so analysts work cases, not alert walls.",
+    intro: "One data lake, correlated incidents and ML that cuts the noise.",
     capabilities: [
-      { name: "SIEM & Data Lake", desc: "Multi-vendor ingestion (AWS, Azure, GCP, M365, Palo Alto, SentinelOne, Splunk, QRadar…) into a queryable raw event lake." },
-      { name: "Correlated Incidents", desc: "Sigma and correlation rules, false-positive classifier, risk scoring and MITRE ATT&CK mapping on every incident." },
-      { name: "Threat Hunting", desc: "Hypothesis-driven search across historical telemetry — pivot on an indicator and confirm whether a technique was ever used." },
-      { name: "Behavior Analysis (UEBA)", desc: "Per-user and per-service baselines catch impossible travel, odd login times and atypical data access." },
-      { name: "Identity Timeline", desc: "Active Directory and Entra ID activity for any user, stitched into one chronological view." },
-      { name: "Sandbox Analysis", desc: "Detonate a file, URL or hash straight from an incident or case, with CyTIM threat-intel enrichment." },
-      { name: "Machine Learning Detection", desc: "False-positive classifier, DGA-domain and obfuscated-command models, network beaconing, semantic novelty scoring and zero-shot MITRE matching — with real precision/recall tracked per model in the Model Center." },
-      { name: "Federated Learning", desc: "Opt in to share model weights — never raw events — so small deployments start from a global baseline that improves with the fleet." },
+      { icon: Database, name: "SIEM & Data Lake", desc: "Multi-vendor log ingestion" },
+      { icon: Layers, name: "Correlated Incidents", desc: "Risk-scored, MITRE-mapped" },
+      { icon: Brain, name: "ML Detection", desc: "Noise reduction & novel threats" },
+      { icon: Search, name: "Threat Hunting", desc: "Search historical telemetry" },
+      { icon: Users, name: "UEBA", desc: "User & host baselines" },
+      { icon: Fingerprint, name: "Identity Timeline", desc: "AD & Entra ID activity" },
+      { icon: FlaskConical, name: "Sandbox", desc: "Detonate files & URLs" },
     ],
     screen: SecOpsScreen,
+    docSlug: "incidents-and-posture",
+    demoId: "11-security-operations",
   },
   {
     id: "response",
     icon: Bot,
     label: "Response & AI Agents",
     color: "#b06eff",
-    headline: "Respond, remediate and close the case — with a human in the loop",
-    intro: "Automation Agents are SOC-analyst personas that triage, investigate and resolve. Response actions, self-remediation and EDL blocklists turn a verdict into containment, while every incident is tracked as a case through to closure.",
+    headline: "Respond, remediate and close the case",
+    intro: "AI agents and analysts act together — with approval where it matters.",
     capabilities: [
-      { name: "Case Management", desc: "Incidents become cases with evidence, timelines, assignees (people or AI agents), SLA watchdog and a full audit trail." },
-      { name: "Response Actions", desc: "Isolate or network-quarantine hosts, kill or throttle processes, quarantine files, block hashes, disable accounts, revoke sessions and collect forensics — each with history and rollback." },
-      { name: "Self-Remediation", desc: "Cy360 proposes the fix for a vulnerability, hardening failure or anomaly; the agent backs up, applies, verifies and restores automatically if it fails — signed, canary-first, with one-click rollback." },
-      { name: "EDL Blocklists", desc: "Curate IP, domain and hash blocklists, enforce them on CyEDR agents and publish them as External Dynamic List feeds for your perimeter firewalls — per-tenant token and IP allowlist." },
-      { name: "AI Agents & Autonomy Tiers", desc: "Triage, hunting and remediation personas powered by CyMind — you decide what an agent may do alone and what needs an analyst's sign-off." },
-      { name: "SOAR Playbooks", desc: "CySOAR from the Marketplace, pre-loaded with phishing, brute-force and IOC-enrichment use cases, with case-gated auto-dispatch." },
+      { icon: FolderKanban, name: "Case Management", desc: "Evidence, owners, SLAs" },
+      { icon: Zap, name: "Response Actions", desc: "Isolate, kill, quarantine, block" },
+      { icon: Wrench, name: "Self-Remediation", desc: "Fix, verify, auto-rollback" },
+      { icon: Ban, name: "EDL Blocklists", desc: "Feeds for your firewalls" },
+      { icon: Bot, name: "AI SOC Agents", desc: "Triage, hunt, remediate" },
+      { icon: Workflow, name: "SOAR Playbooks", desc: "Automated use cases" },
     ],
     screen: ResponseScreen,
+    docSlug: "response-and-remediation",
+    demoId: "12-remediation-options",
   },
   {
     id: "vuln",
     icon: Bug,
     label: "Vulnerability Management",
     color: "#ff5c8a",
-    headline: "One prioritised queue for every vulnerability you have",
-    intro: "Findings from CyEDR and agentless inventory, external attack-surface scans and Marketplace vulnerability sources merge into a single queue — ranked by what is actually being exploited, not just by CVSS.",
+    headline: "One prioritised queue for every vulnerability",
+    intro: "Ranked by what is actually exploited, not just CVSS.",
     capabilities: [
-      { name: "Risk-based Priority", desc: "CVSS, EPSS and CISA KEV combined with asset exposure and criticality decide what to fix first." },
-      { name: "Unified Findings", desc: "Internal and external findings de-duplicated per asset, with first-seen dates and affected software." },
-      { name: "Remediation Plan", desc: "Group fixes into owner-ready work with SLAs per severity and breach tracking." },
-      { name: "Exceptions Register", desc: "Accepted risks, mitigations and false positives — each with a reason and review date that reopens it. Audit-ready for ISO 27001 A.8.8, NIS2 and PCI." },
-      { name: "Sources & Policy", desc: "Choose scanners and data sources, schedules and SLA policy per tenant." },
+      { icon: Gauge, name: "Risk-based Priority", desc: "CVSS, EPSS & CISA KEV" },
+      { icon: Layers, name: "Unified Findings", desc: "Internal + external, de-duplicated" },
+      { icon: ListChecks, name: "Remediation Plan", desc: "Owners & SLAs" },
+      { icon: FileCheck, name: "Exceptions", desc: "Audit-ready risk acceptance" },
     ],
     screen: VulnScreen,
+    docSlug: "vulnerability-management",
+    demoId: "01-vulnerability-management",
   },
   {
     id: "asm",
@@ -89,14 +101,13 @@ const domains: Domain[] = [
     label: "Attack Surface",
     color: "#ff8c00",
     headline: "See your organisation the way an attacker does",
-    intro: "Continuous external attack-surface management built around the CTEM cycle: scope, discover, inventory, prioritise, monitor and validate — with exposures flowing straight into Vulnerability Management.",
+    intro: "Continuous external discovery and exposure monitoring.",
     capabilities: [
-      { name: "Discovery", desc: "Expand seeds — domains, CIDRs, ASNs, organisation names — into related assets via certificate and routing intelligence." },
-      { name: "Exposures", desc: "Fix order and score drivers across DNS, TLS, open ports, exposed admin portals (Fortinet, Citrix, Ivanti…) and subdomain takeover." },
-      { name: "Digital Risk", desc: "Lookalike domains, code leaks, breached credentials, dark-web mentions and exposed people." },
-      { name: "Changes", desc: "A change log of your external surface — new hosts, ports and certificates the moment they appear." },
-      { name: "Scans", desc: "Nuclei and optional OpenVAS deep scans, only against domains you have verified you own." },
-      { name: "Security Benchmarking", desc: "Posture score over time and against industry baselines." },
+      { icon: Globe, name: "Discovery", desc: "Domains, IPs, certificates" },
+      { icon: AlertTriangle, name: "Exposures", desc: "Ports, TLS, admin portals" },
+      { icon: ScanEye, name: "Digital Risk", desc: "Lookalikes, leaks, dark web" },
+      { icon: Activity, name: "Change Tracking", desc: "New hosts as they appear" },
+      { icon: Gauge, name: "Benchmarking", desc: "Score vs. industry" },
     ],
     screen: () => (
       <ScreenshotScreen
@@ -106,6 +117,8 @@ const domains: Domain[] = [
         page="Overview"
       />
     ),
+    docSlug: "attack-surface",
+    demoId: "02-attack-surface",
   },
   {
     id: "itam",
@@ -113,14 +126,16 @@ const domains: Domain[] = [
     label: "Asset Management",
     color: "#f5c518",
     headline: "Every asset, and which ones nobody is watching",
-    intro: "One unified inventory of IT, IoT/OT and cloud assets — correlated with EDR and SIEM coverage, so the gaps are obvious. Build it from subnet scans, cloud APIs or your CMDB.",
+    intro: "IT, IoT/OT and cloud assets in one inventory.",
     capabilities: [
-      { name: "Network Assets", desc: "Laptops, servers, printers, cameras and industrial controllers fingerprinted on your network — including IoT/OT that agents can't reach." },
-      { name: "Coverage Gaps", desc: "See at a glance which assets have an EDR agent, which feed the SIEM and which are invisible to both." },
-      { name: "Cloud Inventory", desc: "AWS, Azure and GCP resources pulled from your own accounts with read-only credentials." },
-      { name: "Software Inventory", desc: "Installed software per asset, matched to CVEs for Vulnerability Management." },
+      { icon: Network, name: "Network Assets", desc: "Including IoT / OT" },
+      { icon: EyeOff, name: "Coverage Gaps", desc: "No EDR, no SIEM" },
+      { icon: Cloud, name: "Cloud Inventory", desc: "AWS, Azure, GCP" },
+      { icon: Package, name: "Software Inventory", desc: "Matched to CVEs" },
     ],
     screen: ItamScreen,
+    docSlug: "asset-management",
+    demoId: "03-asset-management",
   },
   {
     id: "cloud-saas",
@@ -128,15 +143,16 @@ const domains: Domain[] = [
     label: "Cloud & SaaS Security",
     color: "#38bdf8",
     headline: "Close the public doors in your cloud and SaaS",
-    intro: "Cloud Security Posture Management (CSPM) reads the real configuration of your own cloud accounts, and SaaS exposure scanning finds files shared too widely — read-only and metadata-only, with findings raised as incidents.",
+    intro: "Read-only posture checks across cloud accounts and SaaS suites.",
     capabilities: [
-      { name: "Cloud Posture (CSPM)", desc: "Public buckets, open security groups and NSGs, internet-wide database firewalls, public snapshots and images across AWS, Azure and GCP." },
-      { name: "Kubernetes Posture", desc: "Managed cluster checks for EKS and AKS alongside the rest of your cloud estate." },
-      { name: "Data Protection Checks", desc: "Unencrypted storage, databases and volumes, missing customer-managed keys, weak TLS and logging gaps — shared with DSPM." },
-      { name: "SaaS Security", desc: "Files shared publicly, to external domains or to personal accounts in Microsoft 365, Google Workspace, Box and Dropbox." },
-      { name: "Cloud Inventory", desc: "Every posture finding tied to its resource in your AWS, Azure and GCP inventory, pulled with read-only credentials." },
+      { icon: CloudCog, name: "CSPM", desc: "AWS, Azure, GCP misconfigurations" },
+      { icon: Container, name: "Kubernetes Posture", desc: "EKS & AKS" },
+      { icon: Lock, name: "Data Protection Checks", desc: "Encryption, TLS, logging" },
+      { icon: Share2, name: "SaaS Security", desc: "Over-shared files in M365, Google…" },
     ],
     screen: CloudSaasScreen,
+    docSlug: "cloud-and-saas-security",
+    demoId: "04-cloud-saas-security",
   },
   {
     id: "data",
@@ -144,15 +160,17 @@ const domains: Domain[] = [
     label: "Data Security & DSPM",
     color: "#2dd4bf",
     headline: "Know where sensitive data lives — and stop it leaving",
-    intro: "Data Protection (DLP) covers every exit: endpoints, web uploads, AI prompts and Microsoft Purview. DSPM maps where sensitive data sits across cloud, SaaS and databases, who can read it, and how to fix it.",
+    intro: "DLP on every exit, DSPM for every data store.",
     capabilities: [
-      { name: "Data Protection (DLP)", desc: "Endpoint content DLP, web-upload DLP, AI Gateway leaks and Office 365 / Purview events in one place." },
-      { name: "Detection Packs & EDM", desc: "Built-in and signed Marketplace packs, Exact Data Match and document fingerprints, plus an AI-assisted pattern builder." },
-      { name: "Data Catalog", desc: "Every data store — PostgreSQL, MySQL, SQL Server, Snowflake, object storage and SaaS — with its sensitivity and protections.", tag: "DSPM add-on" },
-      { name: "Access & Hygiene", desc: "Who can read sensitive data, risky grants, and duplicated or stale copies.", tag: "DSPM add-on" },
-      { name: "Data Remediation", desc: "Fix data-store exposure with two-admin approval and rollback, using hosted or in-environment scanners.", tag: "DSPM add-on" },
+      { icon: FileLock2, name: "Data Protection (DLP)", desc: "Endpoint, web, AI, Purview" },
+      { icon: ScanSearch, name: "Detection Packs & EDM", desc: "Patterns & fingerprints" },
+      { icon: DatabaseZap, name: "Data Catalog", desc: "Databases, storage, SaaS", tag: "DSPM" },
+      { icon: KeyRound, name: "Access & Hygiene", desc: "Who can read what", tag: "DSPM" },
+      { icon: Wrench, name: "Data Remediation", desc: "Approved, with rollback", tag: "DSPM" },
     ],
     screen: DataSecurityScreen,
+    docSlug: "data-security",
+    demoId: "05-data-security",
   },
   {
     id: "endpoint",
@@ -160,14 +178,16 @@ const domains: Domain[] = [
     label: "Endpoint Defence",
     color: "#4d9eff",
     headline: "A cross-platform EDR agent, managed from one console",
-    intro: "CyEDR runs on Windows, macOS and Linux — collecting process, file and network telemetry, applying policy per group and responding automatically.",
+    intro: "CyEDR for Windows, macOS and Linux.",
     capabilities: [
-      { name: "Fleet", desc: "Health, versions and coverage for every agent, with one-click isolation." },
-      { name: "Detections", desc: "YARA, Sysmon and ML classifiers for command lines, DGA domains and JA3 drift — not just static signatures." },
-      { name: "Policies & Groups", desc: "Per-group detection, data protection, log collection and response policy." },
-      { name: "Installers", desc: "Signed installers and deployment tokens for scripted or MDM roll-out." },
+      { icon: Monitor, name: "Fleet", desc: "Health, versions, isolation" },
+      { icon: Brain, name: "Detections", desc: "YARA, Sysmon & ML" },
+      { icon: SlidersHorizontal, name: "Policies & Groups", desc: "Per-group policy" },
+      { icon: Download, name: "Installers", desc: "Signed, MDM-ready" },
     ],
     screen: EndpointScreen,
+    docSlug: "endpoint-defence",
+    demoId: "06-endpoint-defense",
   },
   {
     id: "ai",
@@ -175,15 +195,17 @@ const domains: Domain[] = [
     label: "AI Security",
     color: "#b06eff",
     headline: "Use AI safely — and see the AI you didn't approve",
-    intro: "A policy-enforced AI Gateway, a managed browser extension and a cloud sensor give you one view of every AI tool in use and one place to govern it.",
+    intro: "One view of every AI tool in use, one place to govern it.",
     capabilities: [
-      { name: "AI Estate", desc: "Every AI application, model and provider in use across the organisation." },
-      { name: "Shadow AI", desc: "Unapproved AI tools detected from network, DNS, endpoint and browser signals." },
-      { name: "Threat Activity", desc: "Prompt DLP, prompt-injection detection and anomalies — redact or block before data leaves." },
-      { name: "Governance", desc: "Allow/deny policies per tool and team, with approval workflows and a full audit trail." },
-      { name: "Sensors & Access", desc: "AI Gateway keys, browser extension and cloud sensor — local models or routed to the cloud." },
+      { icon: Sparkles, name: "AI Estate", desc: "Apps, models, providers" },
+      { icon: EyeOff, name: "Shadow AI", desc: "Unapproved AI tools" },
+      { icon: ShieldAlert, name: "Threat Activity", desc: "Prompt DLP & injection" },
+      { icon: Scale, name: "Governance", desc: "Policies & approvals" },
+      { icon: Lock, name: "AI Gateway", desc: "Local or cloud models" },
     ],
     screen: AiSecurityScreen,
+    docSlug: "ai-security",
+    demoId: "07-ai-security",
   },
   {
     id: "grc",
@@ -191,16 +213,18 @@ const domains: Domain[] = [
     label: "Governance & Compliance",
     color: "#00c8a0",
     headline: "Compliance posture that updates itself",
-    intro: "Controls are scored from real findings and incidents, not a spreadsheet. Assessments, policies, risks and the GDPR processing register live next to the security data that proves them.",
+    intro: "Controls scored from real findings, not spreadsheets.",
     capabilities: [
-      { name: "GRC Posture", desc: "Live scoring across NIS2, ISO 27001, DORA, SOC 2, NIST CSF, PCI DSS and GDPR." },
-      { name: "Assessments & Policies", desc: "Guided questionnaires and AI analysis of your policy documents against each framework." },
-      { name: "Findings & Risk", desc: "Findings auto-raised from security events, feeding a risk register synced with exposure data." },
-      { name: "Forecast", desc: "Predicts which controls are drifting toward non-compliance before the audit does." },
-      { name: "Processing Register", desc: "GDPR records of processing with data-residency tracking." },
-      { name: "GRC Reports", desc: "Board- and auditor-ready reports, with an AI copilot to draft them." },
+      { icon: Gauge, name: "GRC Posture", desc: "NIS2, ISO 27001, DORA…" },
+      { icon: ClipboardList, name: "Assessments & Policies", desc: "AI-assisted analysis" },
+      { icon: AlertTriangle, name: "Findings & Risk", desc: "Auto-raised risk register" },
+      { icon: TrendingUp, name: "Forecast", desc: "Drift before the audit" },
+      { icon: FileText, name: "GDPR Register", desc: "Processing & residency" },
+      { icon: FileCheck, name: "GRC Reports", desc: "Board & auditor ready" },
     ],
     screen: GrcScreen,
+    docSlug: "governance-and-compliance",
+    demoId: "08-governance-compliance",
   },
 ];
 
@@ -239,7 +263,7 @@ const ProductsSection = () => {
             Every function your SOC needs
           </h2>
           <p className="mx-auto max-w-2xl text-muted-foreground">
-            One platform, one console, one data lake — ten security domains that share the same assets, incidents and intelligence.
+            Ten security domains, one console. Pick one to explore.
           </p>
         </motion.div>
 
@@ -292,26 +316,36 @@ const ProductsSection = () => {
                 </p>
               </div>
               <h3 className="mb-3 font-heading text-2xl font-bold text-foreground md:text-3xl">{active.headline}</h3>
-              <p className="mb-6 text-sm leading-relaxed text-muted-foreground">{active.intro}</p>
+              <p className="mb-6 text-sm text-muted-foreground">{active.intro}</p>
 
-              <ul className="space-y-3">
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                 {active.capabilities.map((c) => (
-                  <li key={c.name} className="flex gap-3">
-                    <Check className="mt-0.5 h-4 w-4 shrink-0" style={{ color: active.color }} />
-                    <div>
-                      <p className="flex flex-wrap items-center gap-2 text-sm font-semibold text-foreground">
-                        {c.name}
-                        {c.tag && (
-                          <span className="rounded-full border border-border bg-secondary/60 px-2 py-0.5 text-[10px] font-medium text-muted-foreground">
-                            {c.tag}
-                          </span>
-                        )}
-                      </p>
-                      <p className="text-sm leading-relaxed text-muted-foreground">{c.desc}</p>
-                    </div>
-                  </li>
+                  <div
+                    key={c.name}
+                    className="flex flex-col gap-2 rounded-xl border border-border bg-card p-3 transition-colors hover:border-primary/40"
+                  >
+                    <c.icon className="h-5 w-5" style={{ color: active.color }} />
+                    <p className="flex flex-wrap items-center gap-1.5 text-xs font-semibold leading-snug text-foreground">
+                      {c.name}
+                      {c.tag && (
+                        <span className="rounded-full border border-border bg-secondary/60 px-1.5 py-px text-[9px] font-medium text-muted-foreground">
+                          {c.tag}
+                        </span>
+                      )}
+                    </p>
+                    <p className="text-[11px] leading-snug text-muted-foreground">{c.desc}</p>
+                  </div>
                 ))}
-              </ul>
+              </div>
+
+              <div className="mt-6 flex flex-wrap gap-4 text-sm">
+                <Link to={`/docs/${active.docSlug}`} className="flex items-center gap-1.5 text-primary hover:underline">
+                  <BookOpen className="h-4 w-4" /> Read the docs
+                </Link>
+                <Link to={`/demos?v=${active.demoId}`} className="flex items-center gap-1.5 text-primary hover:underline">
+                  <PlayCircle className="h-4 w-4" /> Watch the demo
+                </Link>
+              </div>
             </div>
 
             <div className="relative lg:sticky lg:top-28">

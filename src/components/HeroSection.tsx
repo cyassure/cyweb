@@ -39,9 +39,7 @@ const HeroSection = () => {
           </h1>
 
           <p className="mx-auto mb-6 max-w-xl text-sm leading-relaxed text-muted-foreground md:text-base">
-            Cy360 unifies SIEM, EDR, attack surface, vulnerability, asset, cloud &amp; SaaS (CSPM), data (DSPM) and AI
-            security with GRC — plus ML detection, case management, response actions and self-remediation. One platform
-            that turns raw signals into real, actionable defense. Self-hosted, SaaS or fully managed.
+            One platform for your entire security operation. Self-hosted, SaaS or fully managed.
           </p>
 
           <div className="mb-8 flex flex-wrap items-center justify-center gap-2">
