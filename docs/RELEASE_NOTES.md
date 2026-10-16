@@ -1,3 +1,11 @@
+## v1.0.84 -- 2026-10-16
+
+### Improvements
+
+  - Trim site copy: one-line hero, icon-tile capabilities per product tab
+
+---
+
 ## v1.0.83 -- 2026-10-16
 
 ### Improvements
