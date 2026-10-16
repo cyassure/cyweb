@@ -3,22 +3,43 @@ import {
   Shield, Monitor, FileCheck, Cloud, Network, Globe, Bot,
   Server, Wifi, Database, Lock, AlertTriangle, ArrowRight, Zap, Brain,
   Gauge, Search, Users, Bug, EyeOff, Boxes, Radar,
+  Wrench, FlaskConical, ScanEye, Router, CloudCog, Share2, FileLock2, DatabaseZap,
+  FolderKanban, Ban, Fingerprint, Container,
 } from "lucide-react";
 
 const capabilities = [
-  { icon: Globe, label: "ASM" },
-  { icon: Gauge, label: "Benchmarking" },
-  { icon: Search, label: "Threat Hunting" },
+  { icon: Database, label: "SIEM & Data Lake" },
   { icon: Users, label: "UEBA" },
-  { icon: Database, label: "SIEM" },
+  { icon: Fingerprint, label: "Identity Timeline" },
+  { icon: Search, label: "Threat Hunting" },
+  { icon: Brain, label: "ML Detection" },
+  { icon: Bot, label: "AI SOC Agents" },
+  { icon: FolderKanban, label: "Case Mgmt" },
+  { icon: Zap, label: "Response Actions" },
+  { icon: Wrench, label: "Self-Remediation" },
+  { icon: Ban, label: "EDL Blocklists" },
+  { icon: FlaskConical, label: "Sandbox" },
+  { icon: Radar, label: "Threat Intel" },
   { icon: Bug, label: "Vuln Mgmt" },
+  { icon: Globe, label: "Attack Surface" },
+  { icon: ScanEye, label: "Digital Risk" },
+  { icon: Boxes, label: "ITAM" },
+  { icon: Router, label: "IoT / OT" },
+  { icon: CloudCog, label: "CSPM" },
+  { icon: Container, label: "Kubernetes Posture" },
+  { icon: Share2, label: "SaaS Security" },
+  { icon: FileLock2, label: "Data Security / DLP" },
+  { icon: DatabaseZap, label: "DSPM" },
   { icon: Monitor, label: "EDR" },
   { icon: Lock, label: "AI Gateway" },
   { icon: EyeOff, label: "Shadow AI" },
-  { icon: Boxes, label: "ITAM" },
-  { icon: Wifi, label: "IoT Scan" },
   { icon: FileCheck, label: "GRC" },
-  { icon: Radar, label: "Threat Intel" },
+  { icon: Gauge, label: "Benchmarking" },
+];
+
+const foundation = [
+  "Multi-tenant / MSSP", "SSO & SCIM", "Role-based access", "MCP server for AI assistants",
+  "Marketplace connectors", "Model Center", "Audit trail", "Bring your own LLM",
 ];
 
 const logSources = [
@@ -200,6 +221,7 @@ const PlatformSection = () => {
               {[
                 { icon: AlertTriangle, label: "Alerts" },
                 { icon: Zap, label: "Auto-Response" },
+                { icon: Wrench, label: "Remediation" },
                 { icon: FileCheck, label: "Reports" },
               ].map((item, i) => (
                 <motion.div
@@ -218,7 +240,7 @@ const PlatformSection = () => {
           </div>
 
           <p className="mt-6 text-center text-xs text-muted-foreground">
-            Firewalls · Endpoints · Cloud · Network · Identity — all unified.{" "}
+            Firewalls · Endpoints · Cloud · SaaS · Network · Identity — all unified.{" "}
             <span className="text-violet-400/80">Powered by CyMind AI.</span>
           </p>
         </motion.div>
@@ -239,6 +261,15 @@ const PlatformSection = () => {
           ))}
         </div>
 
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
+          <span className="mr-1 text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground">Built in</span>
+          {foundation.map((f) => (
+            <span key={f} className="rounded-full border border-border bg-secondary/40 px-3 py-1 text-xs text-muted-foreground">
+              {f}
+            </span>
+          ))}
+        </div>
+
         {/* Embedded Intelligence */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -251,6 +282,9 @@ const PlatformSection = () => {
               <h3 className="mb-4 font-heading text-2xl font-bold text-foreground">Embedded Intelligence</h3>
               <p className="mb-4 text-muted-foreground">
                 Cy360 integrates custom Large Language Models (LLMs) to enrich alerts, automate investigations, summarize incidents, and recommend actions.
+              </p>
+              <p className="mb-4 text-muted-foreground">
+                Underneath, machine-learning models classify false positives, spot DGA domains, obfuscated commands, beaconing and novel behaviour, and baseline every user and host — measured per model, and improved through opt-in federated learning.
               </p>
               <p className="text-sm text-primary font-medium">Need control? You can Bring Your Own AI/LLM.</p>
             </div>

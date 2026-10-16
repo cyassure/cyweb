@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Play, Lock, Zap, Activity, Brain } from "lucide-react";
+import { ArrowRight, Play, Lock, Zap, Activity, Brain, Sparkles } from "lucide-react";
 import dashboardScreenshot from "@/assets/screenshots/attack-posture.jpg";
 import DemoRequestDialog from "@/components/DemoRequestDialog";
 
@@ -7,6 +7,13 @@ const stats = [
   { icon: Zap, value: "<30 min", label: "To fully operational" },
   { icon: Activity, value: "~70%", label: "Less SOC noise" },
   { icon: Brain, value: "24×7", label: "AI-assisted monitoring" },
+];
+
+const whatsNew = [
+  { label: "Vulnerability Management", href: "/#products-vuln" },
+  { label: "Data Security & DSPM", href: "/#products-data" },
+  { label: "AI SOC Agents & Remediation", href: "/#products-response" },
+  { label: "Cloud & SaaS Security", href: "/#products-cloud-saas" },
 ];
 
 const HeroSection = () => {
@@ -31,9 +38,26 @@ const HeroSection = () => {
             Next-Generation Cybersecurity <span className="text-gradient">and AI</span>
           </h1>
 
-          <p className="mx-auto mb-8 max-w-xl text-sm leading-relaxed text-muted-foreground md:text-base">
-            Cy360 turns raw security signals into real, actionable defense — one unified platform, self-hosted or fully managed.
+          <p className="mx-auto mb-6 max-w-xl text-sm leading-relaxed text-muted-foreground md:text-base">
+            Cy360 unifies SIEM, EDR, attack surface, vulnerability, asset, cloud &amp; SaaS (CSPM), data (DSPM) and AI
+            security with GRC — plus ML detection, case management, response actions and self-remediation. One platform
+            that turns raw signals into real, actionable defense. Self-hosted, SaaS or fully managed.
           </p>
+
+          <div className="mb-8 flex flex-wrap items-center justify-center gap-2">
+            <span className="flex items-center gap-1 text-xs font-semibold text-primary">
+              <Sparkles className="h-3.5 w-3.5" /> New
+            </span>
+            {whatsNew.map((n) => (
+              <a
+                key={n.href}
+                href={n.href}
+                className="rounded-full border border-border bg-secondary/40 px-3 py-1 text-xs text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
+              >
+                {n.label}
+              </a>
+            ))}
+          </div>
 
           <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
             <a
@@ -76,7 +100,7 @@ const HeroSection = () => {
             </div>
             <img
               src={dashboardScreenshot}
-              alt="Cy360 External Attack Posture dashboard — live security score, SSL health, and infrastructure exposure"
+              alt="Cy360 Attack Surface overview — live security score, SSL health, and infrastructure exposure"
               className="w-full"
               loading="eager"
             />

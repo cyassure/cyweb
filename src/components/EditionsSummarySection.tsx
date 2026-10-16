@@ -9,7 +9,7 @@ const editions = [
     tag: "Free, self-hosted",
     accent: "border-primary/30 bg-primary/5",
     iconCls: "text-primary",
-    bullets: ["Full core SOC stack", "Public GHCR images", "Community support"],
+    bullets: ["Full core SOC stack", "Vulnerability Mgmt & DLP included", "Community support"],
   },
   {
     name: "Enterprise",
@@ -17,7 +17,7 @@ const editions = [
     tag: "Licensed, self-hosted",
     accent: "border-emerald-500/30 bg-emerald-500/5",
     iconCls: "text-emerald-400",
-    bullets: ["Purchased user & agent counts", "CyMind AI + CyTIM intel", "Priority support"],
+    bullets: ["Purchased user & agent counts", "CyMind AI + CyTIM intel", "DSPM, AI Security, GRC add-ons"],
   },
 ];
 
