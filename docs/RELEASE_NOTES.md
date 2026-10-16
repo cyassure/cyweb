@@ -1,3 +1,11 @@
+## v1.0.85 -- 2026-10-16
+
+### New Features
+
+  - Bring back animated capability cards, add module descriptions to tabs
+
+---
+
 ## v1.0.84 -- 2026-10-16
 
 ### Improvements
