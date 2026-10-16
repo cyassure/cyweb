@@ -45,7 +45,7 @@ const domains: Domain[] = [
     label: "Security Operations",
     color: "#ff3b3b",
     headline: "From raw events to a handful of real incidents",
-    intro: "One data lake, correlated incidents and ML that cuts the noise.",
+    intro: "Every EDR, cloud, firewall and identity event lands in one searchable data lake. Cy360 correlates related signals into a small number of risk-scored, MITRE-mapped incidents, and machine-learning models filter out false positives and flag threats no rule has seen before. Analysts work real cases instead of alert walls.",
     capabilities: [
       { icon: Database, name: "SIEM & Data Lake", desc: "Multi-vendor log ingestion" },
       { icon: Layers, name: "Correlated Incidents", desc: "Risk-scored, MITRE-mapped" },
@@ -65,7 +65,7 @@ const domains: Domain[] = [
     label: "Response & AI Agents",
     color: "#b06eff",
     headline: "Respond, remediate and close the case",
-    intro: "AI agents and analysts act together — with approval where it matters.",
+    intro: "Every incident becomes a case with an owner, evidence and an SLA. From there, analysts or AI agents can isolate hosts, kill processes and block hashes, push blocklists to your firewalls as EDL feeds, and apply fixes that Cy360 verifies and rolls back automatically if they fail. Anything risky waits for a human to approve it.",
     capabilities: [
       { icon: FolderKanban, name: "Case Management", desc: "Evidence, owners, SLAs" },
       { icon: Zap, name: "Response Actions", desc: "Isolate, kill, quarantine, block" },
@@ -84,7 +84,7 @@ const domains: Domain[] = [
     label: "Vulnerability Management",
     color: "#ff5c8a",
     headline: "One prioritised queue for every vulnerability",
-    intro: "Ranked by what is actually exploited, not just CVSS.",
+    intro: "Findings from endpoints, agentless scans and your external attack surface merge into one de-duplicated queue per asset. Cy360 ranks them by real-world exploitation (EPSS and CISA KEV) and asset exposure, not just CVSS, then turns them into owner-ready remediation plans with SLAs and an audit-ready exceptions register.",
     capabilities: [
       { icon: Gauge, name: "Risk-based Priority", desc: "CVSS, EPSS & CISA KEV" },
       { icon: Layers, name: "Unified Findings", desc: "Internal + external, de-duplicated" },
@@ -101,7 +101,7 @@ const domains: Domain[] = [
     label: "Attack Surface",
     color: "#ff8c00",
     headline: "See your organisation the way an attacker does",
-    intro: "Continuous external discovery and exposure monitoring.",
+    intro: "Starting from your domains and IP ranges, Cy360 continuously discovers everything you expose to the internet and checks it for risky ports, weak TLS, exposed admin portals and subdomain takeover. It also watches for lookalike domains, leaked code and breached credentials, and alerts you the moment something new appears.",
     capabilities: [
       { icon: Globe, name: "Discovery", desc: "Domains, IPs, certificates" },
       { icon: AlertTriangle, name: "Exposures", desc: "Ports, TLS, admin portals" },
@@ -126,7 +126,7 @@ const domains: Domain[] = [
     label: "Asset Management",
     color: "#f5c518",
     headline: "Every asset, and which ones nobody is watching",
-    intro: "IT, IoT/OT and cloud assets in one inventory.",
+    intro: "Cy360 builds one inventory of laptops, servers, IoT/OT devices and cloud resources from network scans, cloud APIs or your CMDB. It then shows which assets have no EDR agent or SIEM coverage, so blind spots are obvious, and matches installed software to known vulnerabilities.",
     capabilities: [
       { icon: Network, name: "Network Assets", desc: "Including IoT / OT" },
       { icon: EyeOff, name: "Coverage Gaps", desc: "No EDR, no SIEM" },
@@ -143,7 +143,7 @@ const domains: Domain[] = [
     label: "Cloud & SaaS Security",
     color: "#38bdf8",
     headline: "Close the public doors in your cloud and SaaS",
-    intro: "Read-only posture checks across cloud accounts and SaaS suites.",
+    intro: "Using read-only access to your AWS, Azure and GCP accounts, Cy360 checks the real configuration for public storage, open firewalls, exposed databases, weak Kubernetes settings and missing encryption (CSPM). In Microsoft 365, Google Workspace, Box and Dropbox it finds files shared publicly or outside the company, and raises each issue as an incident.",
     capabilities: [
       { icon: CloudCog, name: "CSPM", desc: "AWS, Azure, GCP misconfigurations" },
       { icon: Container, name: "Kubernetes Posture", desc: "EKS & AKS" },
@@ -160,7 +160,7 @@ const domains: Domain[] = [
     label: "Data Security & DSPM",
     color: "#2dd4bf",
     headline: "Know where sensitive data lives — and stop it leaving",
-    intro: "DLP on every exit, DSPM for every data store.",
+    intro: "Data Protection (DLP) stops sensitive data leaving through endpoints, web uploads and AI prompts. The DSPM add-on maps where sensitive data lives across databases, cloud storage and SaaS, shows who can read it and where stale copies sit, and fixes exposure with admin approval and rollback.",
     capabilities: [
       { icon: FileLock2, name: "Data Protection (DLP)", desc: "Endpoint, web, AI, Purview" },
       { icon: ScanSearch, name: "Detection Packs & EDM", desc: "Patterns & fingerprints" },
@@ -178,7 +178,7 @@ const domains: Domain[] = [
     label: "Endpoint Defence",
     color: "#4d9eff",
     headline: "A cross-platform EDR agent, managed from one console",
-    intro: "CyEDR for Windows, macOS and Linux.",
+    intro: "CyEDR is a lightweight agent for Windows, macOS and Linux that collects process, file and network telemetry. Detections combine YARA, Sysmon and machine-learning classifiers, policies are set per group, and every agent's health and coverage is visible in one console.",
     capabilities: [
       { icon: Monitor, name: "Fleet", desc: "Health, versions, isolation" },
       { icon: Brain, name: "Detections", desc: "YARA, Sysmon & ML" },
@@ -195,7 +195,7 @@ const domains: Domain[] = [
     label: "AI Security",
     color: "#b06eff",
     headline: "Use AI safely — and see the AI you didn't approve",
-    intro: "One view of every AI tool in use, one place to govern it.",
+    intro: "Cy360 discovers every AI tool in use across the organisation — approved or not — from network, DNS, endpoint and browser signals. The AI Gateway enforces policy in front of each provider, redacting sensitive data and blocking prompt injection before anything leaves, with a full audit trail.",
     capabilities: [
       { icon: Sparkles, name: "AI Estate", desc: "Apps, models, providers" },
       { icon: EyeOff, name: "Shadow AI", desc: "Unapproved AI tools" },
@@ -213,7 +213,7 @@ const domains: Domain[] = [
     label: "Governance & Compliance",
     color: "#00c8a0",
     headline: "Compliance posture that updates itself",
-    intro: "Controls scored from real findings, not spreadsheets.",
+    intro: "Controls for NIS2, ISO 27001, DORA, SOC 2, NIST CSF, PCI DSS and GDPR are scored continuously from real findings and incidents. Assessments, policies, the risk register and the GDPR processing register sit next to the evidence, and a forecast warns you which controls are drifting before the audit does.",
     capabilities: [
       { icon: Gauge, name: "GRC Posture", desc: "NIS2, ISO 27001, DORA…" },
       { icon: ClipboardList, name: "Assessments & Policies", desc: "AI-assisted analysis" },
@@ -316,7 +316,7 @@ const ProductsSection = () => {
                 </p>
               </div>
               <h3 className="mb-3 font-heading text-2xl font-bold text-foreground md:text-3xl">{active.headline}</h3>
-              <p className="mb-6 text-sm text-muted-foreground">{active.intro}</p>
+              <p className="mb-6 text-sm leading-relaxed text-muted-foreground">{active.intro}</p>
 
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                 {active.capabilities.map((c) => (

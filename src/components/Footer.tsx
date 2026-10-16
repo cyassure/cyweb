@@ -4,6 +4,7 @@ import cy360Icon from "@/assets/cy360-icon.png";
 // Mirrors the Navbar, plus the contact anchor.
 const siteLinks = [
   { label: "Products", href: "/#products" },
+  { label: "Capabilities", href: "/#capabilities" },
   { label: "Platform", href: "/#platform" },
   { label: "Services", href: "/#services" },
   { label: "Editions", href: "/editions" },
