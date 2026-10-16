@@ -1,3 +1,11 @@
+## v1.0.83 -- 2026-10-16
+
+### Improvements
+
+  - Expand capability coverage, full footer nav, drop Worldwide from contact
+
+---
+
 ## v1.0.82 -- 2026-10-15
 
 ### Improvements
