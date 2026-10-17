@@ -33,7 +33,7 @@ Each device shows EDR/SIEM coverage, device class, management state (agent, agen
 One page per device with three tabs:
 
 - **Overview & Inventory** — identity, network location, installed software, ownership. Analysts can set the **owner**, **business unit**, **criticality** (1–5 — it also weights vulnerability priority and attack-surface risk) and, if the automatic class is wrong, a **device-class override**. Buttons for an agentless **Deep Scan** (SSH/WinRM), **SNMP Scan** and **Enrich CVEs**.
-- **Security Profile** (when an agent or log source covers the device) — hardening checks (SCA), vulnerabilities, file-integrity and malware events, MITRE techniques, compliance and alerts. Each item has **Remediate…** — see [Response & Remediation](/docs/response-and-remediation#remediation).
+- **Security Profile** (when an agent or log source covers the device) — hardening checks (SCA: over 200 checks across Windows, macOS and Linux, covering accounts and passwords, remote access, network and kernel settings, logging and audit policy, malware protection, credential protection, updates, encryption and platform integrity, each with a severity and category you can filter by), vulnerabilities, file-integrity and malware events, MITRE techniques, compliance and alerts. Each item has **Remediate…** — see [Response & Remediation](/docs/response-and-remediation#remediation).
 - **EDR Response** (when CyEDR is installed) — the forensic timeline, response commands and applied policies.
 
 The header shows an **UNMONITORED** badge when nothing covers the device — install CyEDR from Endpoint Defence → Installers or connect its log source.
