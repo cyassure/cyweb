@@ -21,14 +21,12 @@ interface FunctionItem {
 
 interface FunctionGroup {
   label: string;
-  gridCls: string;
   items: FunctionItem[];
 }
 
 const groups: FunctionGroup[] = [
   {
     label: "Exposure & Discovery",
-    gridCls: "sm:grid-cols-2 lg:grid-cols-3",
     items: [
       {
         id: "asm",
@@ -69,7 +67,6 @@ const groups: FunctionGroup[] = [
   },
   {
     label: "Detection & Investigation",
-    gridCls: "sm:grid-cols-2 lg:grid-cols-3",
     items: [
       {
         id: "siem",
@@ -117,7 +114,6 @@ const groups: FunctionGroup[] = [
   },
   {
     label: "Response & Remediation",
-    gridCls: "sm:grid-cols-2 lg:grid-cols-4",
     items: [
       {
         id: "cases",
@@ -151,7 +147,6 @@ const groups: FunctionGroup[] = [
   },
   {
     label: "Data & AI Security",
-    gridCls: "sm:grid-cols-2 lg:grid-cols-4",
     items: [
       {
         id: "dlp",
@@ -185,7 +180,6 @@ const groups: FunctionGroup[] = [
   },
   {
     label: "Risk & Compliance",
-    gridCls: "sm:grid-cols-3",
     items: [
       {
         id: "vuln",
@@ -239,7 +233,7 @@ const CapabilitiesSection = () => {
               >
                 {group.label}
               </motion.p>
-              <div className={`grid gap-6 ${group.gridCls}`}>
+              <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                 {group.items.map((fn, i) => (
                   <motion.div
                     key={fn.id}
@@ -249,17 +243,17 @@ const CapabilitiesSection = () => {
                     transition={{ delay: i * 0.08 }}
                     className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all hover:border-primary/40 hover:shadow-[var(--glow-primary)]"
                   >
-                    <div className="h-36 w-full border-b border-border">
+                    <div className="h-28 w-full shrink-0 border-b border-border">
                       <fn.visual />
                     </div>
-                    <div className="flex flex-1 flex-col gap-3 p-6">
-                      <div className="flex items-center gap-3">
-                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-border bg-secondary/50">
+                    <div className="flex flex-1 flex-col gap-2 p-4">
+                      <div className="flex min-h-10 items-center gap-2.5">
+                        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-border bg-secondary/50">
                           <fn.icon className="h-4 w-4 text-primary" />
                         </div>
-                        <h3 className="font-heading text-base font-bold leading-snug text-foreground">{fn.name}</h3>
+                        <h3 className="font-heading text-sm font-bold leading-snug text-foreground">{fn.name}</h3>
                       </div>
-                      <p className="text-sm leading-relaxed text-muted-foreground">{fn.desc}</p>
+                      <p className="text-xs leading-relaxed text-muted-foreground">{fn.desc}</p>
                     </div>
                   </motion.div>
                 ))}
