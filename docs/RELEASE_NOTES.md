@@ -1,3 +1,11 @@
+## v1.0.86 -- 2026-10-17
+
+### Improvements
+
+  - Uniform 5-across capability cards; capability names inline in tab copy
+
+---
+
 ## v1.0.85 -- 2026-10-16
 
 ### New Features
