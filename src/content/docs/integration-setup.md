@@ -1,0 +1,174 @@
+# Integration Setup Guides
+
+Each Marketplace integration needs two things before data flows: **the vendor side** (an account, permissions and sometimes a licence or plan) and **the Cy360 side** (the package installed and configured). An integration that is installed but missing either side shows no data. This page lists both sides, plus the limits worth knowing, for the most-used log and SaaS integrations.
+
+For the general install flow see [Marketplace](/docs/marketplace). To check that an integration is working see [Checking that data arrives](#checking-that-data-arrives) below.
+
+## Best practices for every integration
+
+- **One dedicated, read-only identity per integration.** Never reuse a person's account, an admin key or the app registration Cy360 uses for SSO sign-in. Then removing or rotating one integration can't break anything else, and the vendor's own audit log shows exactly what Cy360 did.
+- **Least privilege.** Grant only the permissions listed below. Every integration on this page needs read access only.
+- **Restrict where the credential can be used.** Where the vendor allows it, limit the credential to your Cy360 server's outbound IP address (AWS IAM `aws:SourceIp` condition, GitHub IP allow lists, Microsoft Entra Conditional Access for workload identities).
+- **Track expiry and rotate.** Client secrets and tokens expire (Microsoft: at most 24 months; GitHub fine-grained tokens: the date you choose). Put the expiry date in your calendar, create the new secret before the old one expires, paste it in **Configure**, press **Test Connection**, then delete the old one.
+- **One instance per scope.** Add a separate instance (**Configure → + Add Another**) per AWS region, Microsoft tenant or GitHub organisation, each with its own name, so alerts and health say exactly where they came from.
+- **Test before you trust.** **Test Connection** checks sign-in, and for some packages a sample read. Some permissions are only exercised on the first real poll, so check **Integration Health** after one poll interval as well.
+- **Don't leave items on *Needs setup*.** An installed item without credentials collects nothing. Configure it or remove it.
+- **Watch Integration Health.** An integration that fails repeatedly raises an incident automatically. Fix the cause rather than closing the incident, because a silent log source is a blind spot.
+
+## AWS CloudTrail
+
+Pulls AWS management events (console sign-ins, IAM changes, API calls that create, change or delete resources) using CloudTrail's **LookupEvents** API. It needs no S3 bucket or trail setup, because AWS keeps the last 90 days of management events for every account automatically.
+
+**On the AWS side**
+
+1. In IAM, create a dedicated user, for example `cy360-cloudtrail-reader`, with programmatic access only (no console password).
+2. Attach this policy. `LookupEvents` doesn't support resource-level permissions, so `Resource` must be `*`:
+
+   ```json
+   {
+     "Version": "2012-10-17",
+     "Statement": [{
+       "Effect": "Allow",
+       "Action": "cloudtrail:LookupEvents",
+       "Resource": "*",
+       "Condition": { "IpAddress": { "aws:SourceIp": "<your Cy360 server's public IP>/32" } }
+     }]
+   }
+   ```
+
+   The `Condition` block is optional but recommended. AWS's managed policy `AWSCloudTrail_ReadOnlyAccess` also works, but grants more than Cy360 needs.
+3. Create an access key for the user and note the Access Key ID and Secret Access Key.
+
+**On the Cy360 side**
+
+1. **Marketplace → AWS CloudTrail → Install → Configure.**
+2. Enter the Access Key ID, the Secret Access Key and the **region**.
+3. **Test Connection** reads one event. It fails with `AccessDeniedException … cloudtrail:LookupEvents` if the policy is missing or the source-IP condition doesn't match.
+
+**Limits and best practice**
+
+- **One region per instance.** LookupEvents only returns events from the configured region. Add one instance per region you use, and **always one for `us-east-1`**, which records the global services (IAM, STS, CloudFront, Route 53). Without it, IAM user and key changes are missed if your workloads run elsewhere.
+- **Management events only.** Data events (S3 object reads and writes, Lambda invocations) are not returned by LookupEvents. Turn them on with a CloudTrail trail if you need them.
+- Polled every 5 minutes, up to 2,000 events per poll. AWS limits LookupEvents to 2 requests per second per account and region, so don't point other tools at the same API with the same user.
+- Rotate the access key at least every 90 days. Consider AWS Organizations, so that a new account's CloudTrail is set up consistently.
+
+## Microsoft Entra ID
+
+One package for Microsoft identity:
+
+- **Logs:** sign-in logs and directory audit logs.
+- **Detections:** a privileged role member added, an application credential added, a PIM role activated, a Conditional Access policy changed.
+- **Identity context:** who is an administrator (PIM-eligible included), account status, title, department, manager and trusted named locations. On Enterprise, also sign-in risk and MFA strength.
+
+It replaces the older *Azure AD (Entra ID)* log connector.
+
+**On the Microsoft side**
+
+1. **Entra admin center → Identity → Applications → App registrations → New registration.** Name it, for example, "Cy360 Entra ID integration", and choose *Accounts in this organizational directory only*. Use a **dedicated** app, never the one Cy360 SSO sign-in uses.
+2. **API permissions → Add a permission → Microsoft Graph → Application permissions:**
+
+   | Permission | Used for |
+   |---|---|
+   | `AuditLog.Read.All` | Sign-in and directory-audit logs, MFA registration report |
+   | `Directory.Read.All` | Users, managers, group membership, directory roles |
+   | `RoleManagement.Read.Directory` | Role members, PIM activations and eligibility |
+   | `Application.Read.All` | Application credential changes |
+   | `Policy.Read.All` | Conditional Access policies and named locations |
+   | `IdentityRiskyUser.Read.All` *(optional, Enterprise)* | Sign-in risk |
+
+3. Click **Grant admin consent**. Every permission must show a green tick.
+4. **Certificates & secrets → New client secret.** Copy the *Value* straight away, because it is shown only once. Choose an expiry and record it.
+5. From **Overview**, copy the Directory (tenant) ID and the Application (client) ID.
+
+**Microsoft licensing.** Directory audit logs work on every tenant. **Sign-in logs, the MFA registration report and PIM need Entra ID P1 or P2**, and Identity Protection risk needs P2. Without them those parts are skipped and the rest keeps working.
+
+**On the Cy360 side**
+
+1. **Marketplace → Microsoft Entra ID → Install → Configure.** Enter the tenant ID, client ID and client secret. Optionally list extra administrator role template IDs to treat as privileged.
+2. **Test Connection** checks that a token can be issued. Missing Graph permissions show up on the first poll, in Integration Health.
+3. If you still have the old **Azure AD (Entra ID)** connector, it stops being polled once this package is enabled. Delete it afterwards. Until the package is installed, that old connector reports *No signed Marketplace package installed* and collects nothing.
+
+**Limits and best practice**
+
+- Polled every 20 minutes. The first detection poll records a baseline, so detections start from the next change onwards.
+- Add one instance per Microsoft tenant.
+- Optionally limit the app with a Conditional Access policy for workload identities to your Cy360 server's IP. This needs the Workload Identities licence.
+
+## Office 365 (Microsoft 365 audit logs)
+
+Pulls the Microsoft 365 unified audit log through the **Office 365 Management Activity API**: Exchange, SharePoint and OneDrive, Teams and general activity, Entra sign-in activity, and Purview DLP events.
+
+**On the Microsoft side**
+
+1. Make sure auditing is on: **Microsoft Purview → Audit**. If it offers *Start recording user and admin activity*, click it. Records can take up to 24 hours to appear after you switch it on.
+2. Create a **dedicated** app registration as above.
+3. **API permissions → Add a permission → Office 365 Management APIs → Application permissions:** `ActivityFeed.Read`, and **`ActivityFeed.ReadDlp`** if you collect DLP events (the default). Grant admin consent.
+4. Create a client secret and note the tenant ID, client ID and secret.
+
+**On the Cy360 side**
+
+1. **Marketplace → Office 365 → Install → Configure** with the tenant ID, client ID and secret.
+2. **Content types** defaults to all five: `Audit.AzureActiveDirectory`, `Audit.Exchange`, `Audit.SharePoint`, `Audit.General` and `DLP.All`. If you don't grant `ActivityFeed.ReadDlp`, **remove `DLP.All`**. A content type the app can't read makes the whole poll fail, not just that one type.
+3. Cy360 subscribes to each content type on its first poll. Microsoft can take several hours to deliver the first records after a new subscription, so an empty result on day one is normal.
+
+**Limits:** polled every 5 minutes, in windows of up to 24 hours. Microsoft usually publishes audit records 30 to 90 minutes after the activity, sometimes longer.
+
+## Microsoft 365 — Shared Files (SaaS Sharing)
+
+Not a log source. It scans OneDrive and SharePoint for files shared publicly, with external users or with personal accounts. It reads metadata only. With the Data Security add-on, the same app also lets DSPM classify file contents. Results appear in **Cloud & SaaS Security → Shared Files**.
+
+**On the Microsoft side**
+
+1. The tenant needs a **SharePoint Online** licence, which most Microsoft 365 business plans include. Without one, Microsoft returns *Tenant does not have a SPO license*: there is no OneDrive or SharePoint to scan, and the scan fails.
+2. Create a dedicated app registration with these Microsoft Graph **application** permissions, then grant admin consent: `Files.Read.All`, `Sites.Read.All` and `User.Read.All`. `Domain.Read.All` is optional and detects your internal domains automatically.
+3. Create a client secret.
+
+**On the Cy360 side**
+
+1. **Marketplace → SaaS Sharing → Microsoft 365**, or **Cloud & SaaS Security → Shared Files → settings**. Enter the tenant ID, client ID and secret, and your internal domains if `Domain.Read.All` isn't granted.
+2. *Exhaustive mode* checks every item. It is thorough but slow on large tenants, so leave it off unless you need it.
+3. Run a scan and check that the run shows *items seen* above zero.
+
+**Best practice:** `Files.Read.All` lets the app read every file in the tenant, which is a sensitive permission. Keep this app separate from the others, give its secret the shortest practical expiry, and restrict it with Conditional Access for workload identities where you can.
+
+## GitHub Audit Logs
+
+Pulls the organisation audit log: membership and team changes, repository creation, deletion and visibility changes, OAuth and GitHub App access, admin actions and, optionally, Git events.
+
+**On the GitHub side**
+
+1. **Plan requirement: GitHub Enterprise Cloud** (including Enterprise Managed Users). The audit-log API doesn't exist for Free, Pro or Team organisations, whatever the token: GitHub answers *404*.
+2. The token must belong to an **organisation owner**. Create a dedicated machine user that is an owner if you don't want to tie it to a person.
+3. Create a token, either:
+   - **Fine-grained token (recommended):** Resource owner = your organisation; Organization permissions → **Administration: Read-only**; set an expiry. If the organisation requires approval for fine-grained tokens, an owner must approve it.
+   - **Classic token:** scope **`read:audit_log`** only.
+4. If the organisation uses an IP allow list, add your Cy360 server's outbound IP.
+
+**On the Cy360 side**
+
+1. **Marketplace → GitHub Audit Logs → Install → Configure.**
+2. Enter the organisation login (as in `github.com/<org>`), the token and the event type: `web` (non-Git events), `git` (Git events) or `all`. `web` is the most useful for security; add `git` if you need clone and push activity.
+3. **Test Connection.** A 404 means the organisation isn't on Enterprise Cloud.
+
+**Limits:** polled every 5 minutes, up to 100 events per poll, oldest first. A very busy organisation with `all` selected can fall behind. GitHub limits this API to 1,750 queries per hour per user and IP.
+
+## Checking that data arrives
+
+1. **Marketplace:** the item shows **Active**, not *Needs setup*.
+2. **System Health → Integration Health:** the integration is *OK*, with a recent last check and no error. Errors quote the vendor's message, for example *not authorized to perform cloudtrail:LookupEvents*.
+3. **CyDataLake:** filter by the vendor (`aws`, `azure`, `office365`, `github`) for the last hour. Raw events appear here even when none of them became an alert.
+4. **Incidents:** alerts from these sources go through correlation like any other source, so quiet periods with no incidents are normal.
+
+## Common errors
+
+| Message | Cause | Fix |
+|---|---|---|
+| `AccessDeniedException … cloudtrail:LookupEvents` | The IAM user lacks the permission, or a source-IP condition doesn't match | Attach the policy above, and check the server's outbound IP |
+| *No signed Marketplace package installed for this azure connector* | An old Azure AD connector, and the Microsoft Entra ID package isn't installed | Install and configure **Microsoft Entra ID**, then delete the old connector |
+| `Authentication_RequestFromNonPremiumTenantOrB2CTenant` | Sign-in logs need Entra ID P1/P2 | Expected on free tenants. Directory audits still arrive |
+| `Insufficient privileges` / `Authorization_RequestDenied` | Graph permission missing or admin consent not granted | Add the permission and click **Grant admin consent** |
+| *O365 content listing failed for DLP.All* | `ActivityFeed.ReadDlp` not granted | Grant it, or remove `DLP.All` from the content types |
+| *Tenant does not have a SPO license* | No SharePoint Online in the Microsoft tenant | Licence SharePoint Online, or don't use Shared Files for that tenant |
+| GitHub *404* | The organisation isn't on GitHub Enterprise Cloud | Upgrade the plan. The API isn't available on other plans |
+| GitHub *401* / *403* | Token expired, not an owner, or wrong permission | Re-create the token as an organisation owner with the permission above |
+| `AADSTS7000215` / `invalid_client` | Wrong or expired client secret | Create a new secret and update **Configure** |

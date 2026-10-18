@@ -108,6 +108,7 @@ Container logs from before an update are archived for 30 days under `/opt/cyassu
 |---|---|---|
 | Marketplace item stuck at *Needs setup* | Installed but not configured | **Configure** it with credentials. |
 | "No signed Marketplace package installed" on a connector | The connector's package is missing | Install the matching package in Marketplace (for example *Microsoft Entra ID* for Azure AD logs). |
+| Log connector *Active* but no events, or Integration Health shows a vendor permission error (AWS `AccessDeniedException`, Graph `Authorization_RequestDenied`, GitHub 404, *Tenant does not have a SPO license*) | A vendor-side permission, licence or plan is missing | Follow the vendor-side steps in [Integration Setup Guides](/docs/integration-setup). |
 | Marketplace catalog unavailable | CyAssure marketplace service unreachable from your server | Installed items keep working; check outbound HTTPS. |
 | Cloud Inventory / Cloud Posture card red | An account's credentials or permissions failed | Marketplace → Cloud Asset Inventory → that account; grant the read-only roles listed on the page. |
 | DSPM store shows sensitivity *unknown* | Never content-scanned (scanning off, store set to *never*, or credentials can't read objects) | Data Security → Settings → content scanning; check the store override and credentials. |

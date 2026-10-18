@@ -26,6 +26,8 @@ Vulnerability sources (Harbor, Amazon Inspector, Defender for Cloud, Google Arti
 3. Click **Configure** and enter the credentials and options. Each item states the time it takes to configure and the exact permissions it needs — always use a read-only account where one is offered.
 4. The item turns **Active** once it connects. Check it later in **System Health → Integration Health**.
 
+For the exact permissions, licences and limits of AWS CloudTrail, Microsoft Entra ID, Office 365, Microsoft 365 Shared Files and GitHub Audit Logs, see [Integration Setup Guides](/docs/integration-setup).
+
 **Several instances.** Log connectors, identity packages and cloud accounts can hold several instances — one per firewall, per Active Directory forest, per Entra tenant, per GCP project. Once one exists, **Configure** lists them with **Manage**, **Disable**, **Delete** and **+ Add Another**. Each instance has its own name, credentials and health, and its alerts say which instance they came from.
 
 **Remove** uninstalls an item.

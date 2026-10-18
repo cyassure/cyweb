@@ -29,6 +29,7 @@ import aiSecurity from "@/content/docs/ai-security.md?raw";
 import grc from "@/content/docs/governance-and-compliance.md?raw";
 import cases from "@/content/docs/case-management.md?raw";
 import marketplace from "@/content/docs/marketplace.md?raw";
+import integrationSetup from "@/content/docs/integration-setup.md?raw";
 import mcpIntegrations from "@/content/docs/mcp-integrations.md?raw";
 import settings from "@/content/docs/settings.md?raw";
 import systemHealth from "@/content/docs/system-health.md?raw";
@@ -119,6 +120,9 @@ export const docs: DocEntry[] = [
   { slug: "marketplace", category: "Administration", icon: Store, content: marketplace,
     title: "Marketplace",
     description: "Install and configure signed integrations, context sources and playbooks." },
+  { slug: "integration-setup", category: "Administration", icon: Plug, content: integrationSetup,
+    title: "Integration Setup Guides",
+    description: "What to enable on the vendor side and in Cy360 for AWS CloudTrail, Entra ID, Office 365, Microsoft 365 Shared Files and GitHub." },
   { slug: "mcp-integrations", category: "Administration", icon: Plug, content: mcpIntegrations,
     title: "MCP Integrations",
     description: "Connect AI assistants and other platforms to Cy360, and Cy360 to any platform with an MCP server." },
