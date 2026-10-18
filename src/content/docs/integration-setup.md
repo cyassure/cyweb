@@ -12,7 +12,7 @@ For the general install flow see [Marketplace](/docs/marketplace). To check that
 - **Track expiry and rotate.** Client secrets and tokens expire (Microsoft: at most 24 months; GitHub fine-grained tokens: the date you choose). Put the expiry date in your calendar, create the new secret before the old one expires, paste it in **Configure**, press **Test Connection**, then delete the old one.
 - **One instance per scope.** Add a separate instance (**Configure → + Add Another**) per AWS region, Microsoft tenant or GitHub organisation, each with its own name, so alerts and health say exactly where they came from.
 - **Test before you trust.** **Test Connection** checks sign-in, and for some packages a sample read. Some permissions are only exercised on the first real poll, so check **Integration Health** after one poll interval as well.
-- **Don't leave items on *Needs setup*.** An installed item without credentials collects nothing. Configure it or remove it.
+- **Don't leave items on *Needs setup*.** An installed item without credentials collects nothing. Integration Health lists it as *Installed — no SIEM connector configured yet*. Configure it or remove it.
 - **Watch Integration Health.** An integration that fails repeatedly raises an incident automatically. Fix the cause rather than closing the incident, because a silent log source is a blind spot.
 
 ## AWS CloudTrail
@@ -108,8 +108,13 @@ Pulls the Microsoft 365 unified audit log through the **Office 365 Management Ac
 **On the Cy360 side**
 
 1. **Marketplace → Office 365 → Install → Configure** with the tenant ID, client ID and secret.
-2. **Content types** defaults to all five: `Audit.AzureActiveDirectory`, `Audit.Exchange`, `Audit.SharePoint`, `Audit.General` and `DLP.All`. If you don't grant `ActivityFeed.ReadDlp`, **remove `DLP.All`**. A content type the app can't read makes the whole poll fail, not just that one type.
-3. Cy360 subscribes to each content type on its first poll. Microsoft can take several hours to deliver the first records after a new subscription, so an empty result on day one is normal.
+2. **Test Connection** checks that the app may use the Management Activity API, not only that it can sign in.
+3. **Content types** defaults to all five: `Audit.AzureActiveDirectory`, `Audit.Exchange`, `Audit.SharePoint`, `Audit.General` and `DLP.All`. Each content type is read separately:
+   - If the app may not read one (typically `DLP.All` without `ActivityFeed.ReadDlp`), that type is skipped and the others keep flowing.
+   - The connector then shows **partial**: an amber dot in Marketplace, *degraded* in Integration Health, and the reason underneath.
+   - Grant the permission and the skipped type catches up on the last 7 days. If you don't want DLP events, remove `DLP.All` instead.
+4. Cy360 subscribes to each content type on its first poll. Microsoft can take several hours to deliver the first records after a new subscription, so an empty result on day one is normal.
+5. Package 2.0.0 failed the whole poll when any content type was unreadable. If yours shows 2.0.0, update it from Marketplace.
 
 **Limits:** polled every 5 minutes, in windows of up to 24 hours. Microsoft usually publishes audit records 30 to 90 minutes after the activity, sometimes longer.
 
@@ -119,7 +124,7 @@ Not a log source. It scans OneDrive and SharePoint for files shared publicly, wi
 
 **On the Microsoft side**
 
-1. The tenant needs a **SharePoint Online** licence, which most Microsoft 365 business plans include. Without one, Microsoft returns *Tenant does not have a SPO license*: there is no OneDrive or SharePoint to scan, and the scan fails.
+1. The tenant needs a **SharePoint Online** licence, which most Microsoft 365 business plans include. Without one there is no OneDrive or SharePoint at all. The scan then reports Microsoft 365 as **not applicable** (hover for the reason). That isn't an error and raises no incidents.
 2. Create a dedicated app registration with these Microsoft Graph **application** permissions, then grant admin consent: `Files.Read.All`, `Sites.Read.All` and `User.Read.All`. `Domain.Read.All` is optional and detects your internal domains automatically.
 3. Create a client secret.
 
@@ -150,12 +155,12 @@ Pulls the organisation audit log: membership and team changes, repository creati
 2. Enter the organisation login (as in `github.com/<org>`), the token and the event type: `web` (non-Git events), `git` (Git events) or `all`. `web` is the most useful for security; add `git` if you need clone and push activity.
 3. **Test Connection.** A 404 means the organisation isn't on Enterprise Cloud.
 
-**Limits:** polled every 5 minutes, up to 100 events per poll, oldest first. A very busy organisation with `all` selected can fall behind. GitHub limits this API to 1,750 queries per hour per user and IP.
+**Limits:** polled every 5 minutes, up to 2,000 events per poll (20 pages of 100), oldest first. Events are never delivered twice. GitHub limits this API to 1,750 queries per hour per user and IP. Package 2.0.0 read only 100 events per poll, so update it from Marketplace if yours shows 2.0.0.
 
 ## Checking that data arrives
 
 1. **Marketplace:** the item shows **Active**, not *Needs setup*.
-2. **System Health → Integration Health:** the integration is *OK*, with a recent last check and no error. Errors quote the vendor's message, for example *not authorized to perform cloudtrail:LookupEvents*.
+2. **System Health → Integration Health:** the integration is *OK*, with a recent last check and no error. Errors quote the vendor's message, for example *not authorized to perform cloudtrail:LookupEvents*. **Degraded** with a reason means some sources were read and some weren't (for example one Office 365 content type). Fix the permission it names. **Marketplace → Configure** shows the same reason under each instance.
 3. **CyDataLake:** filter by the vendor (`aws`, `azure`, `office365`, `github`) for the last hour. Raw events appear here even when none of them became an alert.
 4. **Incidents:** alerts from these sources go through correlation like any other source, so quiet periods with no incidents are normal.
 
@@ -167,8 +172,9 @@ Pulls the organisation audit log: membership and team changes, repository creati
 | *No signed Marketplace package installed for this azure connector* | An old Azure AD connector, and the Microsoft Entra ID package isn't installed | Install and configure **Microsoft Entra ID**, then delete the old connector |
 | `Authentication_RequestFromNonPremiumTenantOrB2CTenant` | Sign-in logs need Entra ID P1/P2 | Expected on free tenants. Directory audits still arrive |
 | `Insufficient privileges` / `Authorization_RequestDenied` | Graph permission missing or admin consent not granted | Add the permission and click **Grant admin consent** |
-| *O365 content listing failed for DLP.All* | `ActivityFeed.ReadDlp` not granted | Grant it, or remove `DLP.All` from the content types |
-| *Tenant does not have a SPO license* | No SharePoint Online in the Microsoft tenant | Licence SharePoint Online, or don't use Shared Files for that tenant |
+| Office 365 *partial*: *DLP.All: not allowed (403)* | `ActivityFeed.ReadDlp` not granted. The other content types still arrive | Grant it, or remove `DLP.All` from the content types |
+| Shared Files: Microsoft 365 *not applicable* | No SharePoint Online in the Microsoft tenant | Licence SharePoint Online, or don't use Shared Files for that tenant |
+| Item listed as *Installed — no SIEM connector configured yet* | Installed in Marketplace but never configured | Open it in Marketplace and click **Configure**, or remove it |
 | GitHub *404* | The organisation isn't on GitHub Enterprise Cloud | Upgrade the plan. The API isn't available on other plans |
-| GitHub *401* / *403* | Token expired, not an owner, or wrong permission | Re-create the token as an organisation owner with the permission above |
+| GitHub *401* / *403* | Token expired, not an owner, wrong permission, or the org's IP allow list | Re-create the token as an organisation owner with **Administration: Read-only** (or classic `read:audit_log`), and check the allow list |
 | `AADSTS7000215` / `invalid_client` | Wrong or expired client secret | Create a new secret and update **Configure** |
