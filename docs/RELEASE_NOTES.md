@@ -1,3 +1,11 @@
+## v1.0.93 -- 2026-10-18
+
+### Improvements
+
+  - docs(integrations): partial status, not-applicable M365, GitHub paging, unconfigured items
+
+---
+
 ## v1.0.92 -- 2026-10-18
 
 ### Improvements
