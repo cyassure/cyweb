@@ -118,7 +118,7 @@ const domains: Domain[] = [
     label: "Endpoint Defence",
     color: "#4d9eff",
     headline: "A cross-platform EDR agent, managed from one console",
-    intro: "CyEDR is a lightweight agent for Windows, macOS and Linux. The **Fleet** view shows every agent's health and coverage with one-click isolation, **Detections** combine YARA, Sysmon and machine-learning classifiers, **Policies & Groups** set behaviour per team, and signed **Installers** are ready for scripted or MDM roll-out.",
+    intro: "CyEDR is a lightweight agent for Windows, macOS and Linux. The **Fleet** view shows every agent's health and coverage with one-click isolation, **Detections** combine CyScan file-scanning rules, Sysmon and machine-learning classifiers, **Policies & Groups** set behaviour per team, and signed **Installers** are ready for scripted or MDM roll-out.",
     screen: EndpointScreen,
     docSlug: "endpoint-defence",
     demoId: "06-endpoint-defense",
