@@ -124,7 +124,7 @@ When an admin clicks **Approve**, Cy360 makes the change through the same endpoi
 
 Under **Connected platforms → + Connect a platform** (tenant admin), fill in:
 
-- **id** — a short name such as `okta`. It prefixes the platform's tools, so they are called `okta.list_users`, `okta.deactivate_user` and so on.
+- **id** — a short name such as `okta`. It prefixes the platform's tools, so they are called `okta.list_users`, `okta.deactivate_user` and so on. It only has to be unique within your tenant.
 - **MCP server URL** — the platform's MCP endpoint. **Transport** *auto* tries Streamable HTTP and then SSE; pick one if you know it.
 - **Authentication** — the credential the *platform* gave you:
 
@@ -191,6 +191,19 @@ curl -X POST https://<your-cy360-domain>/api/ai-security/mcp/call \
 
 A read answers `200` with the result. A write answers `202` with an `approval_id`.
 
+### Resources and prompts
+
+Besides tools, an MCP server can offer:
+- **Resources:** documents or data sets you can read, such as a user list or a policy file. Some servers offer resource *templates*, for example `user://{id}`, which you fill in.
+- **Prompts:** ready-made instructions with arguments, for example "triage this alert".
+
+Click **Resources & prompts** on a connection to see them:
+- **Read** shows a resource's content. Reading never changes anything on the other platform, so it needs no approval, but it is rate-limited, cleaned of secrets and personal data, and logged in Activity like a tool call.
+- **Get** fills in a prompt's arguments and shows its text. That text comes from the other platform, so treat it as untrusted input.
+- **Block / Allow** turns a single resource or prompt off or on. Prompts get the same hidden-instruction check as tools, and a prompt that changes after you set the connection up is blocked until you allow it.
+
+The CyMind assistant can read a listed resource for you, and AI agents can read resources during a run.
+
 ### 4. Pull data into CyDataLake
 
 Under **Scheduled pulls → + Schedule a pull**:
@@ -199,6 +212,8 @@ Under **Scheduled pulls → + Schedule a pull**:
 2. Set how often to run it (every 5 minutes to once a day) and any fixed arguments.
 3. Set **Records path**: where the list of records sits in the tool's JSON result, for example `data.items`. Leave it blank if the whole result is one record.
 4. Optionally name the **id**, **time** and **title** fields of a record.
+
+Instead of a tool you can choose a **resource**: Cy360 reads it on the same schedule and stores the records it contains.
 
 Click **Run now** to test it. Each record becomes one event in CyDataLake under vendor `mcp`, tagged with the connection and tool, so you can search it next to every other source.
 
@@ -213,6 +228,8 @@ Look at the tool under **Tools**, then click **Allow** if it is still what you e
 ## Approvals
 
 While anything waits, admins see **MCP approvals waiting** under **Notifications** (and on the sidebar badge).
+
+**Email notices.** Cy360 also emails new items, as one digest every few minutes, to the tenant's admins. If the tenant has no admin, the email goes to the admin address in the SMTP settings. Each item is emailed once. Turn the emails off or on for your tenant with the checkbox at the top of **Approvals**. This needs SMTP set up under **Settings → SSO & Email**. Items that arrive while emails are off are not sent later.
 
 **Approvals** lists everything waiting for a tenant admin, in both directions. Analysts can see the list; only admins can decide. Filter by status: *pending*, *applied* or *executed*, *rejected*, *failed*, or *all*. A failed item shows why, for example the error the other platform returned.
 
