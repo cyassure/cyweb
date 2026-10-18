@@ -21,13 +21,12 @@ Everything is set up in **Settings → MCP Management**, and everything there be
 
 The MCP server runs inside the correlation engine and is on by default. A global administrator can switch it off or on under **MCP Server** → *Disable MCP / Enable MCP*. The change applies when the `cysiemstack-engine` container restarts. While the server is off, every request to `/mcp` gets *404*.
 
-The address is shown on the same page:
+Two addresses are shown on the same page, and they serve the same tools with the same keys:
 
-```
-https://<your-cy360-domain>/mcp/sse
-```
-
-It uses the SSE (Server-Sent Events) transport.
+| Transport | Address | Use it for |
+|---|---|---|
+| Streamable HTTP | `https://<your-cy360-domain>/mcp/stream` | Most current MCP clients and agent frameworks |
+| SSE | `https://<your-cy360-domain>/mcp/sse` | Older clients, and Claude Desktop through `mcp-remote` |
 
 ### 2. Create a key for each application
 
@@ -67,6 +66,8 @@ A request without a valid key gets *401*. A key only ever reaches the data of th
   }
 }
 ```
+
+**Any client that speaks Streamable HTTP:** set the URL to `https://<your-cy360-domain>/mcp/stream` and add the `Authorization: Bearer cymk_…` header.
 
 **Python (official MCP SDK), or any agent framework that supports MCP:**
 
@@ -133,13 +134,28 @@ Under **Connected platforms → + Connect a platform** (tenant admin), fill in:
 | API key header | your chosen header, e.g. `X-API-Key: <key>` |
 | Username + password | HTTP basic authentication |
 | OAuth client credentials | Cy360 gets a token from your token URL with the client id and secret, and refreshes it before it expires |
+| OAuth sign-in (browser) | You sign in once at the provider; Cy360 keeps the connection signed in (see below) |
 | No authentication | nothing |
+
+**OAuth sign-in (browser).** Use this for servers that want you to log in, such as many hosted MCP servers.
+
+1. Choose **OAuth sign-in (browser)** and save the connection. It shows *not signed in*.
+2. Click **Sign in**. A window opens at the provider; log in and allow access. The window closes, the connection shows *signed in* with your name, and its tools are listed.
+3. From then on Cy360 renews the access itself with the refresh token the provider issued, stored encrypted for this connection. If the provider stops accepting it (for example, access was revoked), the connection shows *sign-in expired*: click **Sign in again**.
+
+Most MCP servers are set up automatically: Cy360 reads the server's OAuth metadata and registers itself. Providers that don't allow automatic registration, such as Google and Microsoft, need an app registered with them first:
+
+1. Register an app (an OAuth client) with the provider and add the **redirect URI** shown in the form, `https://<your-cy360-domain>/api/ai-security/mcp/oauth/callback`.
+2. Enter the provider's **authorization URL** and **token URL**, the app's **client id** and **client secret**, and the **scope**.
+3. Add **extra parameters** if the provider needs them to issue a refresh token. Google needs `access_type=offline&prompt=consent`; Microsoft needs `offline_access` in the scope.
+
+The sign-in has to finish in the same browser and Cy360 session that started it.
 
 The credential is stored encrypted for this one connection and is never shown again. Cy360 never sends your own Cy360 sign-in to another platform.
 
 When you click **Connect**, Cy360 connects, lists the platform's tools and checks them for risks. A tool description that contains hidden instructions for an AI, or a connection that trusts every tool by default, is flagged. If the platform can't be reached, the connection is still saved and the error is shown; fix it and click **Rescan**.
 
-For safety, Cy360 refuses URLs that point at Cy360's own services, at cloud metadata addresses, or at loopback and link-local addresses, and it never follows redirects. Internal servers on private addresses are allowed. A platform administrator can refuse those too, with `MCP_CLIENT_ALLOW_PRIVATE_NETWORKS=false`.
+For safety, Cy360 refuses URLs that point at Cy360's own services, at cloud metadata addresses, or at loopback and link-local addresses, and it never follows redirects. It also connects only to the addresses it checked, so a DNS server that answers differently later can't redirect a connection to an internal address. Internal servers on private addresses are allowed. A platform administrator can refuse those too, with `MCP_CLIENT_ALLOW_PRIVATE_NETWORKS=false`.
 
 ### 2. Read tools and write tools
 
@@ -188,7 +204,15 @@ Click **Run now** to test it. Each record becomes one event in CyDataLake under 
 
 MCP is a good fit for data that changes slowly or arrives in small batches, such as users, devices or open tickets. For continuous, high-volume logs that should drive detections, a **Marketplace** integration is still the better choice.
 
+### When a platform changes a tool
+
+Cy360 rescans every connection once a day, and whenever you click **Rescan**. It compares each tool with what it found before. If a tool's description, inputs or annotations changed, or a new tool appeared on a connection that was already set up, that tool is **blocked** and shows *changed — review* or *new — review*. An event also appears under AI Security.
+
+Look at the tool under **Tools**, then click **Allow** if it is still what you expect. This stops a platform from quietly changing what a tool you already trusted does, or what it tells an AI.
+
 ## Approvals
+
+While anything waits, admins see **MCP approvals waiting** under **Notifications** (and on the sidebar badge).
 
 **Approvals** lists everything waiting for a tenant admin, in both directions. Analysts can see the list; only admins can decide. Filter by status: *pending*, *applied* or *executed*, *rejected*, *failed*, or *all*. A failed item shows why, for example the error the other platform returned.
 
@@ -213,5 +237,9 @@ Arguments are not stored in full. Cy360 keeps a fingerprint and a short preview 
 | Tool answers *Rate limit reached* | Raise the key's calls/min, or slow the client down. |
 | Connection shows **unreachable** | Click **Tools** to see the error. Check the URL, transport and credential, then **Rescan**. |
 | *… is a loopback, link-local, metadata or reserved address* / *belongs to the Cy360 platform's own network* | That address is refused on purpose. Use the platform's real address. |
+| Connection shows **not signed in** or **sign-in expired** | Click **Sign in** (or **Sign in again**) on the connection. |
+| Sign-in window says *needs a client id* | The provider doesn't allow automatic registration. Register an app with it using the redirect URI shown in the form, then enter its URLs, client id and secret. |
+| Sign-in window says *Your Cy360 session was not found* | Finish the sign-in in the same browser you use for Cy360, and stay logged in to Cy360. |
+| A tool shows **changed — review** and calls are denied | The platform changed it after you set it up. Review it under **Tools** and click **Allow**. |
 | Pull shows **partial** — *records handed to CyDataLake* | CyDataLake is switched off (Settings → CyDataLake). |
 | A tool is marked write but only reads | The platform didn't mark it read-only. An admin can click **Mark read**. |
