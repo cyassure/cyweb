@@ -1,3 +1,11 @@
+## v1.0.89 -- 2026-10-18
+
+### Bug Fixes
+
+  - site): name CyScan, not YARA, on the CyEDR product card
+
+---
+
 ## v1.0.88 -- 2026-10-18
 
 ### Improvements
