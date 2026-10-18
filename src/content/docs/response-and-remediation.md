@@ -73,8 +73,8 @@ Remediation is **off by default, per tenant**. In **Settings**, tick *Allow reme
 
 1. Open the device: **Asset Management → Network Assets →** the device → **Security Profile**.
 2. In **SCA** (failed checks), **Vulnerabilities** or **FIM / Malware**, click the item → **Remediate…**
-3. Cy360 suggests a built-in fix — for example a signed hardening script for common SCA checks (SSH options, kernel settings, file permissions, firewall, Defender and more) or step-by-step guidance for the rest, a package upgrade via apt/dnf/yum/zypper, `winget` on Windows, restoring or quarantining a changed file, or kill process / block hash / log a user out for a detection.
-4. Adjust the parameters, give a reason and click **Propose fix**. If no built-in fix fits, **Draft with AI** writes a script for you to review.
+3. Cy360 suggests a built-in fix — for SCA, a signed script for the specific failed check on Linux, macOS and Windows (198 of 210 checks: SSH, kernel settings, permissions, password and audit policy, services, firewall, macOS sharing and update settings, Windows policies, Defender and more), each with a preview, a verification check and a rollback; the few that can't be scripted (firmware Secure Boot, FileVault, SIP, disk encryption, MDM enrolment and similar) show exact manual steps. Other fixes: a package upgrade via apt/dnf/yum/zypper, `winget` on Windows, restoring or quarantining a changed file, or kill process / block hash / log a user out for a detection.
+4. Adjust the parameters, give a reason and click **Propose fix**. If no built-in fix fits, **Draft with AI** writes a script for you to review, edit and propose; a second admin always approves AI-drafted scripts.
 
 Analysts propose; admins approve. Some settings cannot be changed safely by script (SELinux/AppArmor enforcing, FileVault, SIP, BitLocker, Credential Guard) — those show manual steps instead.
 
