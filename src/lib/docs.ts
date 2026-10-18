@@ -1,7 +1,7 @@
 import {
   Rocket, Server, HelpCircle, LucideIcon, Compass, LayoutGrid, ShieldAlert, Siren, Bot,
   SlidersHorizontal, Search, Bug, Radar, Boxes, CloudCog, Database, Laptop, BrainCircuit,
-  ShieldCheck, Folder, Store, Settings, HeartPulse, Network, Wrench,
+  ShieldCheck, Folder, Store, Settings, HeartPulse, Network, Wrench, Plug,
 } from "lucide-react";
 
 // Raw-imported at build time via Vite's `?raw` — no runtime fetch, no cross-repo
@@ -29,6 +29,7 @@ import aiSecurity from "@/content/docs/ai-security.md?raw";
 import grc from "@/content/docs/governance-and-compliance.md?raw";
 import cases from "@/content/docs/case-management.md?raw";
 import marketplace from "@/content/docs/marketplace.md?raw";
+import mcpIntegrations from "@/content/docs/mcp-integrations.md?raw";
 import settings from "@/content/docs/settings.md?raw";
 import systemHealth from "@/content/docs/system-health.md?raw";
 import architecture from "@/content/docs/architecture.md?raw";
@@ -118,6 +119,9 @@ export const docs: DocEntry[] = [
   { slug: "marketplace", category: "Administration", icon: Store, content: marketplace,
     title: "Marketplace",
     description: "Install and configure signed integrations, context sources and playbooks." },
+  { slug: "mcp-integrations", category: "Administration", icon: Plug, content: mcpIntegrations,
+    title: "MCP Integrations",
+    description: "Connect AI assistants and other platforms to Cy360, and Cy360 to any platform with an MCP server." },
   { slug: "settings", category: "Administration", icon: Settings, content: settings,
     title: "Settings",
     description: "Every Settings tab — updates, licence, domains, AI, users and roles, backups and more." },

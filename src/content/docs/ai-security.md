@@ -71,4 +71,4 @@ Three tabs:
 
 - **Settings → AI Gateway** — the gateway mode for this tenant (None, Local or Cloud).
 - **Settings → AI Providers** — the AI providers (local Ollama, Anthropic, OpenAI, Gemini, Mistral, Groq, DeepSeek, Azure OpenAI) Cy360's own AI features use.
-- **Settings → MCP Management** — Model Context Protocol server and client settings.
+- **Settings → MCP Management** — connect other platforms' MCP servers so Cy360's assistant and AI agents can use them (writes need an admin's approval). See [MCP Integrations](/docs/mcp-integrations).

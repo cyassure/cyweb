@@ -15,7 +15,7 @@
 | AI Providers | Per tenant (local LLM install-wide) | Which AI models Cy360's AI features use |
 | AI Gateway | Per tenant | AI mode for the tenant: None, Local or Cloud |
 | Threat Intelligence (TIM) | Install-wide | Threat-intel enrichment and the EDL blocklist feed |
-| MCP Management | Per tenant (server switch install-wide) | Model Context Protocol access for external AI clients |
+| MCP Management | Per tenant (server switch install-wide) | Two-way MCP: other tools into Cy360, Cy360 out to other platforms |
 | FP Auto-Close | Per tenant | Threshold for closing likely false positives automatically |
 | SLA Thresholds | Per tenant | Target response times per severity |
 | Network Quarantine (NAC) | Per tenant | The tenant's network access control provider |
@@ -87,7 +87,7 @@ Enterprise with TIM. Threat-intel enrichment through **CyTIM** (included with En
 
 ## MCP Management
 
-**MCP Server** — lets external AI clients (for example Claude Desktop or other MCP-compatible tools) query Cy360 data. A tenant admin mints one key per client; the key is shown once and only ever reaches that tenant's data. Turning the MCP server on or off is for the global administrator. **MCP Client** (with AI Security) — lets Cy360's own AI call your MCP servers.
+A two-way MCP pipeline, per tenant. **MCP Server** — other tools (Claude Desktop, AI agents, other platforms, scripts) connect to Cy360 with one key per application. Each key has an access level (read, read + propose, full), an optional tool allowlist, a rate limit and an expiry. Turning the server on or off is for the global administrator. **Connected platforms** (with AI Security) — Cy360 connects to other platforms' MCP servers with their own encrypted credentials; reads run, writes wait for an admin. **Approvals** — changes waiting for an admin in both directions. **Scheduled pulls** (with AI Security) — a connected platform's data into CyDataLake. **Activity** — every MCP call. Step-by-step: [MCP Integrations](/docs/mcp-integrations).
 
 ## FP Auto-Close
 
