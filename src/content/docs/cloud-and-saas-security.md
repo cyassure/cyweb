@@ -49,7 +49,7 @@ How it differs from the neighbouring features:
 
 Severity rises for folders, edit access and sensitive-looking file names, and falls for password-protected links.
 
-**Privacy: metadata only.** Cy360 reads who a file is shared with, its name and location. It never downloads or reads file contents, and every permission it requests is read-only (for Google, the permission itself makes reading contents impossible).
+**Privacy: metadata only.** Cy360 reads who a file is shared with, its name and location. It never downloads or reads file contents, and every permission it requests is read-only (for Google, the token used for files and sharing can't read contents; the optional `drive.readonly` scope is used only to list Shared Drives).
 
 **How to use it.**
 
@@ -57,5 +57,16 @@ Severity rises for folders, edit access and sensitive-looking file names, and fa
 2. Under **Connectors**, list **your internal domains** (shares to anything outside them are external) and the **maximum items per provider** (caps a first scan against a very large tenant). **Save settings**.
 3. Click **Scan** on a provider or **Scan all configured**.
 4. Review the **Findings** list (filter by provider, severity and type). Remove the share in the SaaS application (or from Data Security → Remediation, with DSPM), then set the finding to *remediated*, *accepted* or *false positive*.
+
+**Google Workspace notes.**
+
+- **Super admin email to impersonate** must be a real Workspace super-admin user (for example `admin@yourdomain`), not the service account's own `…iam.gserviceaccount.com` address.
+- In the Google Admin console (**Security → API controls → Domain-wide delegation**), enter the scopes for the service account's client ID as one comma-separated list:
+
+  ```
+  https://www.googleapis.com/auth/drive.metadata.readonly,https://www.googleapis.com/auth/admin.directory.user.readonly,https://www.googleapis.com/auth/admin.directory.domain.readonly
+  ```
+
+- To scan **Shared Drives**, also add `https://www.googleapis.com/auth/drive.readonly`. Google only allows that scope to list Shared Drives. Without it, Cy360 scans My Drive and marks the Google result *partial*. Shared Drives the super admin isn't a member of are skipped and named in the result.
 
 **Incidents.** Critical and high sharing findings raise exposure incidents (drawer source "Cloud & SaaS Security → Shared Files"), and with AI Agents licensed they are investigated automatically with the *Sensitive data exposure* playbook.
