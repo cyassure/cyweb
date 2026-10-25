@@ -1,3 +1,11 @@
+## v1.0.95 -- 2026-10-25
+
+### Improvements
+
+  - docs(dlp): DLP Activity, Email DLP, regulations, accuracy, classification, password-protected files, endpoint enforcement, mailbox packages, trial guide
+
+---
+
 ## v1.0.94 -- 2026-10-25
 
 ### Improvements
