@@ -2,7 +2,7 @@
 
 The **Data Security** section protects sensitive data in two complementary ways:
 
-- **Data Protection (DLP)** — data *in motion and in use*: sensitive data leaving through endpoints, web uploads, AI tools and Microsoft 365. Part of the base Endpoint Defence module, available on every edition.
+- **Data Protection (DLP)** — data *in motion and in use*: sensitive data leaving through endpoints, email, web uploads, AI tools and Microsoft 365 / Google Workspace. Part of the base Endpoint Defence module, available on every edition.
 - **Data Security Posture Management (DSPM)** — data *at rest*: where sensitive data lives across your clouds, SaaS drives and databases, who can reach it and whether it is exposed. A separately licensed add-on; without it the section shows only Data Protection.
 
 Both use the **same detectors**, so a credit-card number or a national ID is recognised the same way wherever it appears. Neither stores the sensitive values themselves — only which detector matched, how many times, how confidently and where.
@@ -11,25 +11,62 @@ Both use the **same detectors**, so a credit-card number or a national ID is rec
 
 ![Data Security → Data Protection](/docs-img/data-protection.jpg)
 
-**Channels covered.** CyEDR endpoints (USB and removable media, cloud-sync folders such as OneDrive/Dropbox/Google Drive/Box/iCloud, and folders you choose), the TLS gateway (uploads to ordinary websites), the AI Security Gateway (prompts and tool output) and Microsoft Purview / Office 365.
+**Channels covered.** CyEDR endpoints (USB and removable media, cloud-sync folders such as OneDrive/Dropbox/Google Drive/Box/iCloud, folders you choose, the clipboard and — on Linux and macOS — print jobs), email (the Cy360 mail relay and mailbox scanning for Microsoft 365 and Google Workspace — see [Email DLP](#email-dlp)), the TLS gateway (uploads to ordinary websites), the AI Security Gateway (prompts and tool output) and Microsoft Purview / Office 365.
 
-**Why it matters.** Regulations such as GDPR, PCI DSS and India's DPDP Act require you to know when personal or payment data leaves the organisation. DLP turns that into events you can investigate.
+**Why it matters.** Regulations such as GDPR, PCI DSS, HIPAA and India's DPDP Act require you to know when personal or payment data leaves the organisation. DLP turns that into events you can investigate — and, where you choose, stops the data leaving.
 
-The page has six tabs.
+**What it looks inside.** Text, Word/Excel/PowerPoint (new and old formats, including comments and notes), PDF, RTF, OpenDocument, Outlook `.msg` and `.eml` mail with attachments, and ZIP/TAR/GZIP/7z archives, recognised by content rather than file name. Images and scanned PDFs (screenshots, photos of ID cards) are read with **OCR** on your Cy360 server (Enterprise). **Password-protected** ZIP (including AES), 7z, Word/Excel/PowerPoint and PDF files are opened with a password found in the same email, a follow-up email, or your organisation's sharing passwords — see [Password-protected files](#password-protected-files). Files protected by Microsoft Purview / RMS are reported as rights-managed and are not opened.
+
+The page has nine tabs.
 
 ### Overview
 
-Choose 7, 30 or 90 days. Tiles count DLP events across all sources, endpoint events, gateway events (AI prompts and web uploads), Microsoft events and encrypted containers that left unchecked. Below: events per day, by source, by endpoint channel, top users and hosts, **what was found** per detector with its **precision** (the share of reviewed incidents analysts confirmed versus marked false positive), recent events, and whether OCR is available on the server.
+Choose 7, 30 or 90 days. Tiles count DLP events across all sources, endpoint events, gateway events (AI prompts and web uploads), Microsoft events and encrypted containers that left unchecked. Below: events per day, by source, by endpoint channel, top users and hosts, **what was found** per detector with its **precision** (the share of reviewed events analysts confirmed versus marked false positive), recent events, and whether OCR is available on the server.
 
 ### Detection Packs
 
-Sets of detectors. Built in:
+Sets of detectors — 94 in total across the built-in and Marketplace packs, each tested against its own test cases, with checksums verified wherever the identifier has one. Built in:
 
-- **Global** — payment cards (with the Luhn check), IBAN, US SSN, contact lists;
+- **Global** — payment cards including RuPay, UnionPay and Maestro (with the Luhn check), card security codes, IBAN, SWIFT/BIC, US SSN, contact lists;
 - **Secrets & keys** — API keys, tokens, private keys;
-- **India (DPDP Act)** — Aadhaar (with its checksum), PAN, GSTIN, IFSC, bank account, UPI IDs, passport, voter ID, mobile numbers.
+- **India (DPDP Act)** — Aadhaar (with its checksum), PAN, GSTIN, IFSC, bank account, UPI IDs, passport, voter ID, driving licence, ABHA health ID, mobile numbers.
 
-Install more from the Marketplace (Europe/GDPR national IDs, Gulf IDs, cloud and SaaS secrets). Air-gapped installs can upload a signed `.dlppack` file instead. A pack is data, never executed as code. Disable or remove a pack here. After any change, every Data Protection policy is re-sent to endpoints; switch the new detectors on in the policy.
+Install more from the Marketplace:
+
+| Pack | Covers |
+|---|---|
+| Europe / GDPR | National IDs and tax numbers of 17 EU countries and the UK with their checksums, EU VAT, passports, UK driving licences and sort codes |
+| United States | ITIN, ABA routing numbers, bank accounts, passports, driver's licences, EIN |
+| Canada | SIN, OHIP / RAMQ / BC health cards, passports, bank transit numbers, driver's licences |
+| Australia | TFN, Medicare, ABN, ACN, passports, driver's licences, BSB |
+| Gulf | Emirates ID, Saudi ID / Iqama, Qatar ID, Kuwait Civil ID, Bahrain CPR, Oman civil number |
+| Middle East | Turkey TC Kimlik, Israel Teudat Zehut, Egypt national ID, Jordan national number |
+| Health records | ICD-10 codes, NPI, DEA, Medicare MBI, medical record numbers |
+| Cloud & SaaS secrets | GitHub, GitLab, npm, PyPI, Shopify and Twilio tokens, Entra client secrets, PGP keys, passwords written in text |
+
+Air-gapped installs can upload a signed `.dlppack` file instead; the CyAssure signature is checked. A pack is data, never executed as code. Disable or remove a pack here. After any change, every Data Protection policy is re-sent to endpoints; switch the new detectors on in the policy.
+
+### Regulations
+
+One-click templates: GDPR, UK GDPR, PCI DSS, HIPAA, GLBA, CCPA/CPRA, PIPEDA, PHIPA, Australian Privacy Act, DPDP Act, UAE PDPL, Saudi PDPL, Gulf (Qatar / Kuwait / Bahrain / Oman), KVKK, Israel / Egypt / Jordan, and Credentials & secrets.
+
+Each template creates two Email DLP policies — one for **low volume** (a few values in a message) and one for **high volume** (many). Choose the mode:
+
+- **Monitor** — record only;
+- **Enforce** — encrypt messages with a few values, hold messages with many for review;
+- **Strict** — hold a few, block many.
+
+Applying a template again updates the same two policies. A card shows which packs the regulation needs and are missing, with an **Install** button; detectors from a missing pack are left out until it is installed. For endpoints, use **Add a regulation's detectors** in Endpoint Defence → Policies → Data Protection.
+
+### Accuracy
+
+How accurate is each detector? For every detector you have, the page shows the benchmark's **precision** (how often a match is real) and **recall** (how often real data is found), measured against:
+
+- the detector's own test cases;
+- copies of them with the digits changed — a number its checksum rejects must not be reported;
+- hundreds of look-alikes that commonly trip DLP tools: phone numbers, dates, IDs, hashes, IP addresses, prices, order, tracking and part numbers.
+
+Next to it, **In production** shows what your analysts decided on real DLP events (Confirmed vs False positive in [DLP Activity](#dlp-activity)). Tick **Only below 97 %** to find the detectors worth tuning. To score your own sample files — for example in an evaluation against another DLP product — run `python -m cy360_sdk.dlp.benchmark --folder <dir>` with a `labels.csv` (`file,detector,count`).
 
 ### Exact Data Match (Enterprise)
 
@@ -43,15 +80,120 @@ Fingerprint a confidential document — a contract template, a board pack. Copie
 
 Test your own regular expressions, or describe the data and let AI draft one (Enterprise with AI). Patterns must avoid look-ahead/look-behind and back-references, because the same pattern runs on endpoints and the server. Add them to a policy under Endpoint Defence → Policies → Data Protection.
 
+### Classification
+
+Every DLP event is **Public**, **General** (Internal), **Confidential** or **Highly Confidential** — Microsoft Purview Information Protection's default label names, so MIP sensitivity labels map one to one.
+
+The level is the higher of what the content holds and the sensitivity label on the file:
+
+| Level | Given when |
+|---|---|
+| Highly Confidential | Secrets or keys, Exact Data Match records, a fingerprinted document, a highly sensitive document type, or the bulk threshold (default 10) of identifiers in one item |
+| Confidential | Identifiers backed by a checksum or a keyword, contact lists, your own patterns, a confidential document type |
+| General | Pattern-only matches |
+| Public | Only from an explicit label — finding nothing never makes an item Public |
+
+Content can raise an item above its label (shown as a **label mismatch**) but never lower it. Admins set the bulk threshold and add their own label names; sub-labels such as `Confidential\Finance` use the parent.
+
+**Document types.** Some files are sensitive because of *what they are*, not because they hold an ID number. Each document type raises an item to at least its level:
+
+- **Highly Confidential** — payroll and HR records, identity / KYC documents, medical records, customer data exports, credentials files, board / M&A / strategy papers, source code containing secrets;
+- **Confidential** — contracts, financial and bank statements, source code, CVs, engineering designs;
+- **General** — invoices, technical documents; **Public** — marketing material.
+
+Source code is recognised on your Cy360 server and on endpoints without AI. The other types use **AI document classification** (Enterprise), through the AI providers you have already configured: turn it on for endpoints in the Data Protection policy, and for email under Email DLP → Settings (up to three attachments per message). Only text with every detected value masked is sent, and only to a local model unless Data Protection → Settings allows cloud providers. Add **your own document types** (Enterprise, up to 20): a name, a plain-language description and the level — for example *"Deal memo — internal memos about pending acquisitions, with code names and valuations"*, at least Highly Confidential. Email DLP policies can match document types on their own.
+
 ### Settings (admin, Enterprise)
 
-Whether cloud AI providers may be used for AI document classification (off = only a local model on this server), and whether to share anonymous detector-quality statistics with CyAssure (confirmed vs false-positive counts per detector only — no content, file names, users or hosts).
+- Whether cloud AI providers may be used for AI document classification (off = only a local model on this server).
+- **Passwords for protected files** — your organisation's sharing passwords, stored encrypted and never shown again or logged; see below.
+- Whether to share anonymous detector-quality statistics with CyAssure (confirmed vs false-positive counts per detector only — no content, file names, users or hosts).
+
+### Password-protected files
+
+Encrypted files are a common way data leaves unchecked. Cy360 opens password-protected ZIP (including AES), 7z, Word/Excel/PowerPoint and PDF files and scans what is inside:
+
+| Where | Where the password comes from |
+|---|---|
+| Email (relay and mailbox scans) | A password written in the same email ("password: …", recognised in many languages); a follow-up email between the same people within 30 minutes (relay; kept in memory only); your organisation's sharing passwords |
+| Endpoints | With the Enterprise policy option **Open password-protected files on this server**, the file is uploaded to your Cy360 server, opened with your organisation's sharing passwords, scanned and deleted. PDFs that only restrict editing open without a password |
+| DSPM (data at rest) | Your organisation's sharing passwords |
+
+The event says that an item was opened and how — never the password. A file that still can't be opened is reported as **unscannable**, and policies can treat that as a match (for example, hold an unreadable attachment sent externally). On the relay, **Deliver held mail when its password arrives** re-checks a held message when the sender emails the password to the same recipient within 30 minutes, and delivers it if nothing then matches a hold or block policy.
 
 ### Turning DLP on for endpoints
 
-Endpoint DLP is configured in an Endpoint Defence policy's **Data Protection (DLP)** section (off by default): which folders and channels to watch, which detectors to look for, the minimum confidence, whether to report encrypted containers and sensitivity labels, and Enterprise options (Exact Data Match, fingerprints, OCR of images and scanned PDFs, AI document classification). It is **monitor-only** — to stop copies to USB, use Device Control. See [Endpoint Defence](/docs/endpoint-defence#policies).
+Endpoint DLP is configured in an Endpoint Defence policy's **Data Protection (DLP)** section (off by default): which folders and channels to watch, which detectors to look for, the minimum confidence, whether to report encrypted containers and sensitivity labels, and Enterprise options (Exact Data Match, fingerprints, OCR of images and scanned PDFs, opening password-protected files on the server, AI document classification). On for new policies: **Tell the user** (a desktop notification through the CyEDR tray says what was found and what happened — never the data itself) and **Source code** detection.
 
-DLP events are triaged as incidents (category **dlp**) in Security Operations → Incidents.
+By default a copy is only reported. To **stop** it:
+
+- **Quarantine (enforce)** — tick the channels (USB, cloud-sync, other folders) where a sensitive file is moved into the endpoint's DLP quarantine right after it is found; optionally also files that can't be checked. A cloud-sync client that has already uploaded the file removes the cloud copy when the local one goes. Analysts restore a file from DLP Activity → the event → **Restore file** (a reason is required and recorded).
+- **Clipboard** — text the user copies is checked by the CyEDR tray in their session; optionally the clipboard is cleared. Only detector names are reported, never the text.
+- **Print** (Linux and macOS, through the CUPS print queue) — jobs are reported and optionally cancelled. A job the printer has already taken can't be pulled back. Not available on Windows.
+- **Device Control** can still block USB storage outright or make it read-only.
+
+Quarantine acts within the check interval after the file is written; it is not a block before the copy completes, which would need a signed Windows file-system driver or an Apple Endpoint Security entitlement. See [Endpoint Defence](/docs/endpoint-defence#policies).
+
+DLP events are triaged as incidents (category **dlp**) in Security Operations → Incidents and open data-exfiltration cases.
+
+## DLP Activity
+
+Data Security → **DLP Activity** (analysts) lists every DLP event from every source one by one:
+
+- **when**, and its **criticality** — critical / high / medium / low: how much it matters that this data went this way (Highly Confidential data to an external destination and not stopped is critical; a blocked event drops one step);
+- the **classification** (⚠ = more sensitive than its label);
+- **who** and on which host; **what data** (detector × count); the item (file, attachment or masked email subject);
+- **channel** and source; **destination** (↗ = external);
+- **what happened** — blocked, held for review, delivered encrypted, user overrode, delivered, or detected but not stopped.
+
+Filter by window (7 days to 1 year), classification, criticality, outcome, source and channel, or search; tiles, breakdowns (classification, data type, channel, outcome, people, destinations) and the table all follow the filters. Click a row for every detail and the linked incident — including which items were opened with a password or read with OCR, the document type and a sender's override reason. Analysts mark an event **Confirmed** or **False positive** with a note; verdicts feed the per-detector precision on Data Protection → Accuracy. Endpoint quarantine events have **Restore file**. **Export CSV** is recorded in the Audit Trail. The page shows up to the newest 20,000 events per window.
+
+The PDF version is Dashboard & Reports → Reports → **Data Loss Prevention Report** (summary, breakdowns, findings, actions and the 25 most critical events).
+
+## Email DLP
+
+Two ways to cover email, both using the same detection packs, Exact Data Match, fingerprints, document types and classification as every other DLP channel. The body and every attachment (Office, PDF, archives, forwarded mail, images) are scanned separately, so an event names the attachment that carried the data.
+
+### 1. The Cy360 mail relay — inline, can stop mail
+
+Outbound mail is routed through Cy360 before it leaves. Each message is scanned and the tenant's email policies decide:
+
+| Action | What happens |
+|---|---|
+| Monitor | Delivered and reported |
+| Encrypt | Delivered with the header `X-CyAssure-DLP-Action: encrypt`; a Microsoft 365 or Google rule then encrypts it (Cy360 does not encrypt mail itself) |
+| Quarantine | Held for review, stored encrypted |
+| Block | Rejected with `550 5.7.1`, so the sender gets a bounce |
+
+The most restrictive matching policy wins. The relay is a pass-through, not a queue: mail is handed to the next hop during the same SMTP session, and if the next hop is down the sending server gets `451` and retries, so a restart loses nothing.
+
+Policies can let the sender **release a held message themselves with a business reason**: the hold notice carries a single-use link (valid 72 hours, no Cy360 sign-in needed) to a page showing what was found; the sender gives a reason and the message is delivered, recorded as **User overrode** in DLP Activity for review.
+
+**Turning it on (admin).** On the server, add `maildlp` to `COMPOSE_PROFILES` in `.env`, set `MAIL_DLP_HOSTNAME` to the DNS name your mail platform connects to, run `docker compose up -d`, and re-run `cyassure-setup.sh` to open port 25 (see [Installation & Deployment](/docs/docker-deployment#6-key-environment-variables)). STARTTLS uses `/opt/cyassure/mail-dlp/relay.crt` — self-signed on first start; replace it with a trusted certificate if your connector requires one.
+
+The Email DLP page has six tabs:
+
+- **Quarantine** (analysts) — held mail with sender, recipients, masked subject, classification, what was found per attachment and the policy. **Release and deliver** or **Delete**; both need a reason, recorded in the Audit Trail. Held messages are erased when released, deleted or expired.
+- **Policies** — name, action, scope (only mail with external recipients, or all mail), detectors, minimum matches, minimum classification, document types and sensitivity labels that match on their own, sender domains, and whether unreadable password-protected attachments match.
+- **Settings** (per tenant) — scanning on/off, your email domains, the next hop (for Microsoft 365 your `<domain-with-dashes>.mail.protection.outlook.com` endpoint, for Google `smtp-relay.gmail.com` port 587), optional sign-in, how long held mail is kept (default 30 days), whether the sender is told, OCR of images and scanned PDFs (Enterprise, up to five per message), AI document classification, and whether held mail is delivered when its password arrives.
+- **Setup** — the exact Microsoft 365 and Google steps. For Microsoft 365: an outbound connector to the relay used only by a transport rule for external recipients, an inbound connector that accepts mail back from the relay's IP, and the transport rule's exception on the relay's sender IP — never on a header, because any sender can type a header.
+- **Test a message** — upload an `.eml` to see what the relay would do; nothing is sent or stored.
+- **Relay access** (global admin) — your mail platform's sending networks (every other address gets `550`; `0.0.0.0/0` is refused, so the relay can never be an open relay), the maximum message size (default 35 MB) and what to answer for a sender domain no tenant has listed.
+
+### 2. Mailbox scanning — after sending (Marketplace)
+
+**Microsoft 365 Email DLP (mailbox scan)** and **Google Workspace Email DLP** read each sent message through Microsoft Graph or the Gmail API and scan it with Cy360's DLP engine. They also see internal-only mail, but cannot stop a message that has already gone. The Google package can also import Google's own Admin-console DLP rule events. See [Integration Setup](/docs/integration-setup#microsoft-365-email-dlp-mailbox-scan) for the permissions each needs.
+
+## Running a DLP trial or data-leak assessment
+
+To show what sensitive data is leaving an environment without changing mail flow or blocking anything:
+
+1. **Email** — install **Microsoft 365 Email DLP (mailbox scan)** or **Google Workspace Email DLP** from the Marketplace and set **Assessment: on the first run, scan mail sent in the last N days** (up to 90). The first run reviews weeks of past sent mail; large tenants catch up over several runs (each run is capped by *Messages per run* and *Mailboxes per run*).
+2. **Endpoints** (optional) — turn on Data Protection in an Endpoint Defence policy, in report-only mode, for a few endpoints.
+3. **Regulations** (optional) — apply the templates that matter to the customer in **Monitor** mode.
+4. **Review** — DLP Activity shows each event; the **Data Loss Prevention Report** is the summary to hand over.
+
+Mailbox scanning is read-only: it never moves, changes or deletes mail, and messages are scanned in memory. Only detector names, counts, item names, sender, recipients and a masked subject are kept — never the matched values or the message body.
 
 ## DSPM — Data Security Posture Management
 
@@ -83,7 +225,11 @@ Duplicate sensitive datasets (the same values in several stores, matched by salt
 
 ### Remediation
 
-One-click fixes that need **two admins** — one requests, a different one approves, approval executes. Off until enabled in Settings. Actions: block S3 public access, remove public access from a GCS bucket, make an Azure container private (all reversible with **Rollback**), and remove public/anyone links from SaaS files (not reversible).
+One-click fixes that need **two admins** — one requests, a different one approves, approval executes. Off until enabled in Settings. Actions:
+
+- block S3 public access, remove public access from a GCS bucket, make an Azure container private (all reversible with **Rollback**);
+- remove public/anyone links from SaaS files (not reversible);
+- **apply a Microsoft Purview sensitivity label** to SharePoint/OneDrive files — pick the label (or paste its GUID when the label list can't be read) and list the item ids; the label's own encryption and marking apply. Rollback restores the labels the files had before; a file that had none keeps the new one. Needs `Files.ReadWrite.All` and Microsoft Graph metered APIs, which Microsoft bills to your Azure subscription.
 
 ### Settings (admin)
 

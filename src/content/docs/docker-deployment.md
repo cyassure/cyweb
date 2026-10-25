@@ -96,6 +96,8 @@ You don't need a license to get started — with no license file present, the po
 | `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | Optional | Enables "Sign in with Google" |
 | `MICROSOFT_CLIENT_ID` / `MICROSOFT_CLIENT_SECRET` | Optional | Enables "Sign in with Microsoft" |
 | `SMTP_HOST` / `SMTP_PORT` / `SMTP_USER` / `SMTP_PASSWORD` | Optional | Enables outbound email alerting |
+| `COMPOSE_PROFILES` | Optional | Extra containers to run. Add `maildlp` for the Email DLP mail relay (listens on host port 25; re-run `cyassure-setup.sh` to open the port) |
+| `MAIL_DLP_HOSTNAME` | With `maildlp` | The DNS name your mail platform connects to for the Email DLP relay |
 
 `MAXMIND_KEY` (GeoIP enrichment) is the one exception to this table — it's read from `/opt/cyassure/.env`, not the project `.env` above, since the installer script downloads the GeoLite2 database directly to the host. See Section 2 for how to set it.
 

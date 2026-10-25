@@ -136,6 +136,45 @@ Not a log source. It scans OneDrive and SharePoint for files shared publicly, wi
 
 **Best practice:** `Files.Read.All` lets the app read every file in the tenant, which is a sensitive permission. Keep this app separate from the others, give its secret the shortest practical expiry, and restrict it with Conditional Access for workload identities where you can.
 
+## Microsoft 365 Email DLP (mailbox scan)
+
+Scans every message users send in Exchange Online with Cy360's DLP engine — the same detection packs, Exact Data Match, fingerprints and classification as endpoints and the mail relay. No Purview licence needed. Detection happens after sending; to hold or block mail before it leaves, use the [mail relay](/docs/data-security#email-dlp).
+
+**On the Microsoft side**
+
+1. Create a **dedicated** app registration (not the Cy360 SSO app) and a client secret.
+2. **API permissions → Microsoft Graph → Application permissions:** `Mail.Read` (reads each sent message) and `User.Read.All` (lists mailboxes). Optional: `GroupMember.Read.All` if you limit the scan to a group, and `Domain.Read.All` so Cy360 can find your verified domains when you leave *Internal email domains* empty. Grant admin consent.
+3. Recommended: `Mail.Read` reaches every mailbox in the tenant, so restrict the app to the mailboxes you scan with an Exchange Online application access policy (`New-ApplicationAccessPolicy -AccessRight RestrictAccess`) or RBAC for Applications.
+
+**On the Cy360 side**
+
+1. **Marketplace → Microsoft 365 Email DLP (mailbox scan) → Install → Configure** with the tenant ID, client ID and secret, and your internal email domains (so Cy360 can tell internal from external recipients).
+2. Optional: limit to certain mailboxes or one Entra group, report internal-only mail too, choose the minimum classification to report, and turn on OCR of images and scanned PDFs (Enterprise).
+3. **For a trial or data-leak assessment**, set *Assessment: on the first run, scan mail sent in the last N days* (1–90). Otherwise the first run looks back *First run: scan mail sent in the last N hours* (up to 168).
+
+The package is read-only — it never moves, changes or deletes mail. Messages are scanned in memory; only detector names, counts, item names, sender, recipients and a masked subject reach the event. Polled every 15 minutes; findings appear in Data Security → DLP Activity and Incidents.
+
+## Google Workspace Email DLP
+
+Two parts you can turn on separately: a **Gmail sent-mail scan** with Cy360's DLP engine, and an **import of Google's own Admin-console DLP rule events** (Gmail, Drive, Chat).
+
+**On the Google side**
+
+1. In Google Cloud, create a service account, enable the **Gmail API** and the **Admin SDK API** on its project, and create a JSON key.
+2. In the Admin console: **Security → Access and data control → API controls → Manage domain-wide delegation → Add new**, with the service account's client ID and these scopes:
+   - `https://www.googleapis.com/auth/gmail.readonly` (sent-mail scan, impersonating each user)
+   - `https://www.googleapis.com/auth/admin.directory.user.readonly` (list users)
+   - `https://www.googleapis.com/auth/admin.reports.audit.readonly` (DLP rule events)
+3. The admin email you enter must be a super admin, or an admin with Reports and Users read privileges. Workspace DLP rule events need data-protection rules in the Admin console (Enterprise / Education editions).
+
+**On the Cy360 side**
+
+1. **Marketplace → Google Workspace Email DLP → Install → Configure** with the admin email, the JSON key and your internal email domains.
+2. Turn off *Scan sent mail* or *Import Workspace DLP rule events* if you only want one. `gmail.readonly` reaches every mailbox — list *Only these mailboxes* to narrow the scan.
+3. The same options as Microsoft 365: internal-only mail, minimum classification, OCR, and *Assessment … last N days* (1–90) for a trial.
+
+Read-only, scanned in memory, polled every 15 minutes; findings appear in Data Security → DLP Activity and Incidents.
+
 ## GitHub Audit Logs
 
 Pulls the organisation audit log: membership and team changes, repository creation, deletion and visibility changes, OAuth and GitHub App access, admin actions and, optionally, Git events.

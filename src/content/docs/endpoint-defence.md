@@ -77,7 +77,7 @@ Detections also flow into Security Operations → Incidents, where they are corr
 | **Log Collection** | Ships OS logs (journald/syslog, macOS Unified Log, Windows Event Log) into CyDataLake |
 | **Heartbeat** | How often the agent checks in; Shadow AI discovery |
 | **Sandbox Sample Collection** | Uploads unknown files from detections at or above a chosen severity for sandbox detonation (off by default; at most once per file per day, 20 per hour) |
-| **Data Protection (DLP)** | Watches files written to removable media, cloud-sync and chosen folders for sensitive data (off by default, monitor-only). See [Data Security](/docs/data-security) |
+| **Data Protection (DLP)** | Watches files written to removable media, cloud-sync and chosen folders, the clipboard and (Linux/macOS) print jobs for sensitive data (off by default). Report only, or quarantine the file / clear the clipboard / cancel the print job; analysts restore quarantined files from DLP Activity. See [Data Security](/docs/data-security) |
 
 **Why it matters.** Policies are how you turn a detection-only agent into prevention — blocking USB storage, unknown scripts or known-bad domains — and how you collect the logs and data your investigations need.
 

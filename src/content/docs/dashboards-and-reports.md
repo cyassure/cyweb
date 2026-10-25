@@ -95,6 +95,7 @@ Reserved for web-application findings mapped to the OWASP Top 10 categories. Thi
 | External Exposure | ASM Executive & Technical Reports | Attack-surface posture. These are produced automatically with every scan — use **Run Scan** to make a new one |
 | Security Operations | SIEM & Security Operations Report | Incidents, threat hunting, MITRE techniques, SIEM component health |
 | Security Operations | Vulnerability Management Report | Combined external and internal vulnerability exposure |
+| Data Security | Data Loss Prevention Report | Every DLP event across endpoints, email, web, AI tools and Microsoft / Google — what data, its classification, who, which channel, where to, what happened and how critical, with the 25 most critical events |
 | Endpoint Defence | Endpoint report | Fleet health, detections and policy coverage |
 | Asset Management | Asset report | Inventory coverage, software inventory, IoT and Shadow AI risk |
 | Security Compliance | GRC Compliance Report | Framework posture, findings and risk register |
