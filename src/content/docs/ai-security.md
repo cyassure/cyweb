@@ -2,11 +2,11 @@
 
 Employees paste customer data into chatbots, developers run local models and coding assistants, and teams wire AI agents into business systems. **AI Security** gives you visibility and control over all of it: which AI is in use, what data is sent to it, and who is allowed to use what.
 
-The section has five entries: **AI Estate**, **Shadow AI**, **Threat Activity**, **Governance** and **Sensors & Access**. Shadow AI is free on every edition; the other pages and the **AI Security Gateway** are the Enterprise **AI Security** add-on. Each page has **How this works** links that explain it in place.
+The section has six entries: **AI Estate**, **Shadow AI**, **AI Agents**, **Threat Activity**, **Governance** and **Sensors & Access**. Shadow AI is free on every edition; the other pages and the **AI Security Gateway** are the Enterprise **AI Security** add-on. Each page has **How this works** links that explain it in place.
 
 ## How AI traffic is seen
 
-- **CyEDR agents** see AI applications and processes on endpoints and DNS lookups to AI services.
+- **CyEDR agents** see AI applications and processes on endpoints, DNS lookups to AI services, and which process owns each connection to an AI service (Linux, macOS and Windows) — so a renamed binary or a custom script talking to an AI provider is still found.
 - The **browser extension** sees AI use in the browser (chat sites, AI features in web apps).
 - The **AI Security Gateway** sits between users/applications and AI providers. It inspects prompts and responses, blocks prompt injection and policy violations, detects sensitive data and credentials, and enforces governance policies. Endpoints are routed through it by setting a proxy in their Endpoint Defence policy; applications call it with a Gateway Key.
 - **Cloud Sensors** find AI workloads and AI-service use in your cloud accounts.
@@ -38,6 +38,32 @@ The section has five entries: **AI Estate**, **Shadow AI**, **Threat Activity**,
 Approving an app only stops new Shadow AI findings for it: DLP events, behavioural anomalies and endpoint detections from that app are still reported. *Inspect via AI Gateway* on a high-risk app is advice: route those hosts through the AI Security Gateway by setting a proxy in their endpoint policy.
 
 The list of AI applications Cy360 recognises is managed in [Detection Rules → AI Applications](/docs/detection-rules-and-context#ai-applications).
+
+## AI Agents
+
+**What it is.** AI agents running on your endpoints, found by what they do rather than by their name. CyEDR counts a process as an AI agent when it holds a live connection to an AI provider or to one of your internal LLM endpoints, or when it starts MCP servers — together with everything it launches. Each agent is identified by a fingerprint (its executable's SHA-256 plus, for scripts, the script path), so a random process name or a new process ID keeps the same identity, and one agent can be tracked across many hosts. Part of the **AI Security** add-on.
+
+CyEDR reports what each agent connects to, which programs it starts (shells and MCP servers are marked) and the *names* — never the values — of LLM API-key environment variables. It sees processes and connections, not the content of AI requests; for that, route the agent through the AI Security Gateway.
+
+**How to use it.**
+
+- **Agents** — every agent found, its pool, hosts, destinations and started programs. An *AI client* only talks to an AI provider; an *AI agent* also starts programs or connects elsewhere. Move an agent to another pool here (admins).
+- **Pools & Policies** — every new agent lands in the default pool **Unclassified AI Agents**: alert mode, AI providers only, no other destinations, no shells, no MCP servers. Create wider pools for agents you trust. A pool's policy sets allowed AI providers, allowed destinations (IP, CIDR or host name, optional port), private network / internet access with allowed ports, whether it may start shells or MCP servers, and allowed and denied programs. DNS is always allowed. Admins also list your **internal LLM endpoints** (vLLM, Ollama, LiteLLM…) here; endpoints pick changes up within 30 minutes.
+- **Breaches** — one row per agent, host, rule and target with a hit count. **Accept** marks it as expected (no more alerts, never enforced — widen the pool instead if it should be allowed), **Resolve** closes it until it happens again, **Reopen**.
+
+**Pool modes.**
+
+| Mode | What happens on a breach |
+|---|---|
+| Observe | Recorded on the Breaches tab only |
+| Alert | Also a CyEDR detection in Active Incidents (AI provider not allowed, destination not allowed, shell started, program not allowed, MCP server started); repeats are de-duplicated for 24 hours |
+| Enforce | Also acts on the endpoint: **Stop the agent's process** (Kill Process) or **Stop it and block its executable** (adds Block Hash — skipped for agents run by an interpreter such as Python or Node, because it would block every script on that interpreter) |
+
+Enforcement uses CyEDR's existing response actions, runs once per agent process, and counts towards the automatic-response limit (10 automatic actions per hour by default). Results show on the agent's host row and in [Response → Command History](/docs/response-and-remediation). There is no per-process network filtering: a disallowed connection is answered by stopping the agent.
+
+**Behaviour baseline.** Each agent is also compared with its own last 14 days of activity (new destinations, programs or volume well above its normal). This is the **Per-Agent Behavioural Baseline** model in Model Center; it starts in shadow mode and raises a detection only after an admin promotes it.
+
+**Why it matters.** Coding assistants and home-grown agents run with a user's access, can start shells and reach internal systems. Pools give every agent a least-privilege default from the moment it appears, and let you widen access deliberately rather than discover it after the fact.
 
 ## Threat Activity
 

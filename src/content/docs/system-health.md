@@ -36,7 +36,7 @@ Live host metrics: host name, platform, uptime and CPU cores; **CPU**, **RAM** a
 
 ![System Health → Model Center](/docs-img/model-center.jpg)
 
-**What it is.** Every machine-learning and AI detection model running against your data — training status, health and lifecycle — in one place. Examples include per-user and per-host behavioural anomaly models (UEBA), the false-positive classifier, the DGA/C2 domain classifier, the command-line obfuscation classifier, TLS-fingerprint drift detection, semantic incident grouping, file-hash IOC detection, the AI triage judge and the compliance drift forecast.
+**What it is.** Every machine-learning and AI detection model running against your data — training status, health and lifecycle — in one place. Examples include per-user and per-host behavioural anomaly models (UEBA), the per-agent baseline for endpoint AI agents ([AI Security → AI Agents](/docs/ai-security#ai-agents)), the false-positive classifier, the DGA/C2 domain classifier, the command-line obfuscation classifier, TLS-fingerprint drift detection, semantic incident grouping, file-hash IOC detection, the AI triage judge and the compliance drift forecast.
 
 ### Statuses
 
