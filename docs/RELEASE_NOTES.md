@@ -1,3 +1,11 @@
+## v1.0.94 -- 2026-10-25
+
+### Improvements
+
+  - docs(ai-security): endpoint AI agents — pools, policies, breaches, enforce, per-agent baseline
+
+---
+
 ## v1.0.93 -- 2026-10-18
 
 ### Improvements
