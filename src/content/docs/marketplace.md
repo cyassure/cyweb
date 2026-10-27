@@ -12,7 +12,7 @@ The **Marketplace** is where you connect Cy360 to the rest of your environment. 
 | **AI Cloud Sensors** | Discover AI workloads and AI-service use in your cloud accounts |
 | **Cloud Asset Inventory** | Cloud accounts used by Cloud Inventory and Cloud Posture (AWS, Azure, Google Cloud, Oracle, Hetzner, DigitalOcean) |
 | **Data Security** | Database connectors for DSPM (PostgreSQL, MySQL/MariaDB, SQL Server, Snowflake, BigQuery) and DLP detection packs |
-| **SaaS Sharing** | Microsoft 365, Google Workspace, Box and Dropbox connectors for Shared Files |
+| **SaaS Sharing** | Microsoft 365, Google Workspace, Box and Dropbox connectors for Data Access & Exposure → Shared files |
 | **Threat Intel** | Threat-intelligence providers |
 | **Playbooks** | Automation playbooks |
 | **SOAR** | SOAR platform add-on modules (global admin, Enterprise) |
@@ -26,7 +26,7 @@ Vulnerability sources (Harbor, Amazon Inspector, Defender for Cloud, Google Arti
 3. Click **Configure** and enter the credentials and options. Each item states the time it takes to configure and the exact permissions it needs — always use a read-only account where one is offered.
 4. The item turns **Active** once it connects. Check it later in **System Health → Integration Health**.
 
-For the exact permissions, licences and limits of AWS CloudTrail, Microsoft Entra ID, Office 365, Microsoft 365 Shared Files and GitHub Audit Logs, see [Integration Setup Guides](/docs/integration-setup).
+For the exact permissions, licences and limits of AWS CloudTrail, Microsoft Entra ID, Office 365, Microsoft 365 Shared files, the SaaS Posture packages (Okta, GitHub, Slack, Salesforce) and the data activity packages (AWS S3, RDS PostgreSQL), see [Integration Setup Guides](/docs/integration-setup).
 
 **Several instances.** Log connectors, identity packages and cloud accounts can hold several instances — one per firewall, per Active Directory forest, per Entra tenant, per GCP project. Once one exists, **Configure** lists them with **Manage**, **Disable**, **Delete** and **+ Add Another**. Each instance has its own name, credentials and health, and its alerts say which instance they came from.
 

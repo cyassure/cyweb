@@ -10,6 +10,8 @@
 | License | Install-wide | Edition, limits, modules, licence upload and activation |
 | Organization Domain | Install-wide | The hostname and port Cy360 itself runs on |
 | Exposure Monitoring | Per tenant | The tenant's attack-surface domain, scan schedule and ownership proof |
+| Connected Accounts | Per tenant | Every cloud, SaaS and database account the tenant connected, in one list |
+| Data Security | Per tenant | DSPM scanning, connections and in-environment scanners (DSPM licence) |
 | Environment Config | Install-wide | Advanced platform configuration variables |
 | Secrets Vault | Install-wide | Where Cy360 reads secrets from |
 | AI Providers | Per tenant (local LLM install-wide) | Which AI models Cy360's AI features use |
@@ -50,6 +52,14 @@ The hostname (and port) the platform itself is reached on — used for cookies, 
 ## Exposure Monitoring
 
 Per tenant: the **exposure domain** the tenant's attack-surface scans monitor, the **scan schedule** (daily, weekly or monthly, hour in UTC, scan type) and **Domain and IP Ownership Verification** (DNS TXT record or website file). Saving creates the tenant's recurring scan job. Changing the domain asks for confirmation because it resets the asset baseline. See [Attack Surface](/docs/attack-surface).
+
+## Connected Accounts
+
+Per tenant: every cloud (AWS, Azure, Google Cloud, Oracle, Hetzner, DigitalOcean), SaaS (Microsoft 365, Google Workspace, Box, Dropbox) and database account the tenant has connected, which modules use each one (Cloud Inventory, Cloud Posture, SaaS Posture, Shared files, DSPM), its last check with any missing permission, and **one on/off switch** that pauses the account for all of them. Credentials are added in the Marketplace (or under Data Security for DSPM databases) and are never shown here.
+
+## Data Security
+
+Per tenant, with the DSPM licence: content scanning (off until you consent), scan mode and interval, sampling budgets, AI document types for data at rest, remediation, connections and in-environment scanners. See [Data Security → DSPM](/docs/data-security#settings-admin).
 
 ## Environment Config
 

@@ -45,8 +45,8 @@ The round green button in the bottom-right corner opens **CyMind**, the built-in
 | **Vulnerability Management** | Overview, Findings, Remediation Plan, Exceptions, Sources & Policy | One prioritised queue of every vulnerability | [Vulnerability Management](/docs/vulnerability-management) |
 | **Attack Surface** | Overview, Discovery, Inventory, Exposures, Digital Risk, Changes, Scans | What an outside attacker can see | [Attack Surface](/docs/attack-surface) |
 | **Asset Management** | Network Assets, Cloud Inventory | Every device and cloud server you own | [Asset Management](/docs/asset-management) |
-| **Cloud & SaaS Security** | Cloud Posture, Shared Files (SaaS) | Public exposure in clouds and SaaS drives | [Cloud & SaaS Security](/docs/cloud-and-saas-security) |
-| **Data Security** | Data Protection, plus the DSPM pages | Where sensitive data lives and where it leaks | [Data Security](/docs/data-security) |
+| **Cloud & SaaS Security** | Cloud Posture (CSPM), SaaS Posture (SSPM), Shadow IT, Cloud Apps (CASB) | Exposure and risky settings in clouds and SaaS tenants, and risky file activity | [Cloud & SaaS Security](/docs/cloud-and-saas-security) |
+| **Data Security** | Overview, Classification, Data Access & Exposure, AI Data Protection, DSPM ▸, DLP ▸ | Where sensitive data lives, who uses it and where it leaks | [Data Security](/docs/data-security) |
 | **Endpoint Defence** | Fleet, Detections, Policies, Groups, Installers | The CyEDR endpoint agent | [Endpoint Defence](/docs/endpoint-defence) |
 | **AI Security** | AI Estate, Shadow AI, Threat Activity, Governance, Sensors & Access | Safe use of AI tools and models | [AI Security](/docs/ai-security) |
 | **Governance & Compliance** | GRC Setup … GRC Reports | Frameworks, risk register, privacy register, reports | [Governance & Compliance](/docs/governance-and-compliance) |

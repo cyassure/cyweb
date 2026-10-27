@@ -118,9 +118,11 @@ Pulls the Microsoft 365 unified audit log through the **Office 365 Management Ac
 
 **Limits:** polled every 5 minutes, in windows of up to 24 hours. Microsoft usually publishes audit records 30 to 90 minutes after the activity, sometimes longer.
 
+**Also feeds:** with `Audit.SharePoint` on, SharePoint/OneDrive file activity drives the CASB policies on Cloud & SaaS Security → **Cloud Apps** (mass downloads, Anyone links, shares to personal accounts) and Data Security → DSPM → **Data Activity** (who opened, downloaded, changed or shared which site's files).
+
 ## Microsoft 365 — Shared Files (SaaS Sharing)
 
-Not a log source. It scans OneDrive and SharePoint for files shared publicly, with external users or with personal accounts. It reads metadata only. With the Data Security add-on, the same app also lets DSPM classify file contents. Results appear in **Cloud & SaaS Security → Shared Files**.
+Not a log source. It scans OneDrive and SharePoint for files shared publicly, with external users or with personal accounts. It reads metadata only. With the Data Security add-on, the same app also lets DSPM classify file contents. Results appear in **Data Security → Data Access & Exposure → Shared files**. The account is listed in Settings → Connected Accounts and also drives **SaaS Posture** (below).
 
 **On the Microsoft side**
 
@@ -130,9 +132,11 @@ Not a log source. It scans OneDrive and SharePoint for files shared publicly, wi
 
 **On the Cy360 side**
 
-1. **Marketplace → SaaS Sharing → Microsoft 365**, or **Cloud & SaaS Security → Shared Files → settings**. Enter the tenant ID, client ID and secret, and your internal domains if `Domain.Read.All` isn't granted.
+1. **Marketplace → SaaS Sharing → Microsoft 365**, or **Data Security → Data Access & Exposure → Shared files → settings**. Enter the tenant ID, client ID and secret, and your internal domains if `Domain.Read.All` isn't granted.
 2. *Exhaustive mode* checks every item. It is thorough but slow on large tenants, so leave it off unless you need it.
 3. Run a scan and check that the run shows *items seen* above zero.
+
+**SaaS Posture (SSPM)** uses the same app. Add the Graph application permissions `Policy.Read.All` (security defaults, Conditional Access, authorization policy), `AuditLog.Read.All` (MFA registration), `RoleManagement.Read.Directory` (Global Administrators) and `SharePointTenantSettings.Read.All` (Anyone-link setting). A check whose permission is missing is listed as *not checked* with the permission to grant.
 
 **Best practice:** `Files.Read.All` lets the app read every file in the tenant, which is a sensitive permission. Keep this app separate from the others, give its secret the shortest practical expiry, and restrict it with Conditional Access for workload identities where you can.
 
@@ -175,6 +179,8 @@ Two parts you can turn on separately: a **Gmail sent-mail scan** with Cy360's DL
 
 Read-only, scanned in memory, polled every 15 minutes; findings appear in Data Security → DLP Activity and Incidents.
 
+**Drive activity** (*Send Drive activity*, on by default, same `admin.reports.audit.readonly` scope — nothing extra to grant): Drive downloads, views, edits, copies, deletions and sharing changes feed Cloud & SaaS Security → **Cloud Apps** (CASB policies) and Data Security → DSPM → **Data Activity**. The activity itself never becomes an alert; only a CASB policy or a data-access alert does. Starts from the first run, no backfill. Needs package 1.2.0 for views/edits/copies/deletions.
+
 ## GitHub Audit Logs
 
 Pulls the organisation audit log: membership and team changes, repository creation, deletion and visibility changes, OAuth and GitHub App access, admin actions and, optionally, Git events.
@@ -196,6 +202,35 @@ Pulls the organisation audit log: membership and team changes, repository creati
 
 **Limits:** polled every 5 minutes, up to 2,000 events per poll (20 pages of 100), oldest first. Events are never delivered twice. GitHub limits this API to 1,750 queries per hour per user and IP. Package 2.0.0 read only 100 events per poll, so update it from Marketplace if yours shows 2.0.0.
 
+## SaaS Posture packages (Okta, GitHub, Slack, Salesforce)
+
+Daily security-setting checks shown on Cloud & SaaS Security → **SaaS Posture**, next to the Microsoft 365 and Google ones (Cloud & SaaS Security licence). Each install is one account on the page; a check its token can't run is listed as *not checked* with what to grant. Read-only.
+
+| Package | Vendor side | Checks |
+|---|---|---|
+| **Okta** (1.1.0+, the same package as identity context) | an API token of a service user with only the **Read-Only Administrator** role | MFA enrolment required, super admins with a strong factor, ≤ 4 super admins, password length ≥ 12 |
+| **GitHub Posture** | a personal access token of an **organisation owner**: classic `read:org`, or fine-grained with organisation *Administration* and *Members* read-only (GitHub shows the 2FA, repository-creation and secret-scanning settings to owners only) | 2FA required, ≤ 5 owners, base permission not write/admin, no public repository creation, secret scanning for new repositories |
+| **Slack Posture** | a Slack app installed by an owner/admin with user-token scopes `users:read`, `channels:read`, `groups:read`; paste its **User OAuth Token** (`xoxp-…`) — a bot token can't see 2FA | owners/admins with 2FA, ≤ 5 owners/admins, channels shared with other organisations |
+| **Salesforce Posture** | a Connected App (or External Client App) with the **client credentials flow**, `api` scope, and a run-as user with *View Setup and Configuration* and *Manage Users*; enter the My Domain URL, consumer key and secret | users with no MFA method (SSO-only users get MFA at the identity provider — accept the finding there), ≤ 5 users with Modify All Data, no "Password Never Expires" |
+
+## Data activity packages (AWS S3, RDS PostgreSQL)
+
+Who touched which data store, for Data Security → DSPM → **Data Activity** and the data-access alerts. Only names reach Cy360 (bucket, object key, table, the calling principal), never content or SQL. The first run starts from now — no backfill.
+
+**AWS S3 Data Activity**
+
+1. In CloudTrail, edit (or create) a trail: **Data events → S3**, read and write, for all buckets or the sensitive ones. AWS bills data events per 100,000 events.
+2. Give a read-only principal `s3:ListBucket` on the trail's log bucket (prefix `AWSLogs/<account>/CloudTrail/`), `s3:GetObject` on its files, and `kms:Decrypt` if the trail uses SSE-KMS.
+3. In Cy360: the trail bucket, its prefix, the account ID and the regions to read. Polled every 15 minutes; activity is matched to DSPM's S3 buckets by name.
+
+**RDS PostgreSQL Data Activity (pgaudit)**
+
+1. In the instance's DB parameter group add `pgaudit` to `shared_preload_libraries` and set `pgaudit.log = 'read,write'`; reboot; run `CREATE EXTENSION pgaudit;` in each database. Keep RDS's default `log_line_prefix`.
+2. Give a read-only principal `rds:DescribeDBLogFiles` and `rds:DownloadDBLogFilePortion` on the instance — no database login is used.
+3. In Cy360: the DB instance identifier, region and endpoint — the same host as DSPM's PostgreSQL connection, so the activity is weighted by that database's sensitivity.
+
+**Windows file servers** are not a package: turn on **File-share audit** in a CyEDR Log Collection policy assigned to the server, and enable the audit subcategory on it: `auditpol /set /subcategory:"Detailed File Share" /success:enable`.
+
 ## Checking that data arrives
 
 1. **Marketplace:** the item shows **Active**, not *Needs setup*.
@@ -212,7 +247,7 @@ Pulls the organisation audit log: membership and team changes, repository creati
 | `Authentication_RequestFromNonPremiumTenantOrB2CTenant` | Sign-in logs need Entra ID P1/P2 | Expected on free tenants. Directory audits still arrive |
 | `Insufficient privileges` / `Authorization_RequestDenied` | Graph permission missing or admin consent not granted | Add the permission and click **Grant admin consent** |
 | Office 365 *partial*: *DLP.All: not allowed (403)* | `ActivityFeed.ReadDlp` not granted. The other content types still arrive | Grant it, or remove `DLP.All` from the content types |
-| Shared Files: Microsoft 365 *not applicable* | No SharePoint Online in the Microsoft tenant | Licence SharePoint Online, or don't use Shared Files for that tenant |
+| Shared files: Microsoft 365 *not applicable* | No SharePoint Online in the Microsoft tenant | Licence SharePoint Online, or don't use Shared files for that tenant |
 | Item listed as *Installed — no SIEM connector configured yet* | Installed in Marketplace but never configured | Open it in Marketplace and click **Configure**, or remove it |
 | GitHub *404* | The organisation isn't on GitHub Enterprise Cloud | Upgrade the plan. The API isn't available on other plans |
 | GitHub *401* / *403* | Token expired, not an owner, wrong permission, or the org's IP allow list | Re-create the token as an organisation owner with **Administration: Read-only** (or classic `read:audit_log`), and check the allow list |

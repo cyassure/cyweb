@@ -74,10 +74,10 @@ Detections also flow into Security Operations → Incidents, where they are corr
 | **Isolation Exceptions** | Addresses and ports still reachable while a host is isolated |
 | **Network Probe** | Makes this agent the scanner inside its network for Asset Management: subnet discovery, mDNS, SNMP, switch polling, segmentation tests and SSH deep scans |
 | **Tamper Protection** | A password needed to stop or uninstall the agent |
-| **Log Collection** | Ships OS logs (journald/syslog, macOS Unified Log, Windows Event Log) into CyDataLake |
+| **Log Collection** | Ships OS logs (journald/syslog, macOS Unified Log, Windows Event Log) into CyDataLake. **File-share audit** (Windows file servers, off by default) also ships who read, wrote or deleted which file on the server's shares (Security event 5145) to Data Security → DSPM → Data Activity; it needs `auditpol /set /subcategory:"Detailed File Share" /success:enable` and is rolled up per day, not stored as alerts |
 | **Heartbeat** | How often the agent checks in; Shadow AI discovery |
 | **Sandbox Sample Collection** | Uploads unknown files from detections at or above a chosen severity for sandbox detonation (off by default; at most once per file per day, 20 per hour) |
-| **Data Protection (DLP)** | Watches files written to removable media, cloud-sync and chosen folders, the clipboard and (Linux/macOS) print jobs for sensitive data (off by default). Report only, or quarantine the file / clear the clipboard / cancel the print job; analysts restore quarantined files from DLP Activity. See [Data Security](/docs/data-security) |
+| **Data Protection (DLP)** | Watches files written to removable media, cloud-sync and chosen folders, the clipboard and (Linux/macOS) print jobs for sensitive data (off by default). Report only, or quarantine the file / clear the clipboard / cancel the print job; analysts restore quarantined files from DLP Activity. **Classify untyped documents** (on for new policies) types office documents that matched no detector (up to 20 an hour) and reports them only when the type is sensitive — contracts, tenders, price lists, payroll. See [Data Security](/docs/data-security) |
 
 **Why it matters.** Policies are how you turn a detection-only agent into prevention — blocking USB storage, unknown scripts or known-bad domains — and how you collect the logs and data your investigations need.
 

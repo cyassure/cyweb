@@ -2,16 +2,29 @@
 
 The **Data Security** section protects sensitive data in two complementary ways:
 
-- **Data Protection (DLP)** — data *in motion and in use*: sensitive data leaving through endpoints, email, web uploads, AI tools and Microsoft 365 / Google Workspace. Part of the base Endpoint Defence module, available on every edition.
-- **Data Security Posture Management (DSPM)** — data *at rest*: where sensitive data lives across your clouds, SaaS drives and databases, who can reach it and whether it is exposed. A separately licensed add-on; without it the section shows only Data Protection.
+- **DLP** — data *in motion and in use*: sensitive data leaving through endpoints, email, web uploads, AI tools and Microsoft 365 / Google Workspace. Part of the base Endpoint Defence module, available on every edition.
+- **Data Security Posture Management (DSPM)** — data *at rest*: where sensitive data lives across your clouds, SaaS drives and databases, who can reach it, who actually uses it and whether it is exposed. A separately licensed add-on.
 
-Both use the **same detectors**, so a credit-card number or a national ID is recognised the same way wherever it appears. Neither stores the sensitive values themselves — only which detector matched, how many times, how confidently and where.
+Both use the **same detectors and the same classification**, so a credit-card number, a national ID or a tender document is recognised the same way wherever it appears. Neither stores the sensitive values themselves — only which detector matched, how many times, how confidently and where.
 
-## Data Protection (DLP)
+The sidebar groups the section like this (an entry your licence or role doesn't cover is hidden):
 
-![Data Security → Data Protection](/docs-img/data-protection.jpg)
+| Entry | What it is | Licence |
+|---|---|---|
+| **Overview** | The DLP dashboard and the DSPM overview on one page | each half with its own licence |
+| **Classification** | The detectors, document types and levels every channel shares (below) | every edition |
+| **Data Access & Exposure** | Who can reach the data: **Store access** (DSPM) and **Shared files** — files in Microsoft 365, Google Workspace, Box and Dropbox shared publicly, externally or to personal accounts | DSPM / Cloud & SaaS Security |
+| **AI Data Protection** | Sensitive data sent to AI tools (opens AI Security → Threat Activity → DLP Events) | AI Security |
+| **DSPM ▸** Data Catalog, Findings, Data Activity, Hygiene, Remediation | Data at rest ([below](#dspm-data-security-posture-management)) | DSPM |
+| **DLP ▸** Policies, Activity, Email DLP | Data in motion | every edition |
 
-**Channels covered.** CyEDR endpoints (USB and removable media, cloud-sync folders such as OneDrive/Dropbox/Google Drive/Box/iCloud, folders you choose, the clipboard and — on Linux and macOS — print jobs), email (the Cy360 mail relay and mailbox scanning for Microsoft 365 and Google Workspace — see [Email DLP](#email-dlp)), the TLS gateway (uploads to ordinary websites), the AI Security Gateway (prompts and tool output) and Microsoft Purview / Office 365.
+DSPM's settings are under **Settings → Data Security**; cloud, SaaS and database accounts are listed in **Settings → Connected Accounts**.
+
+## Classification (DLP)
+
+![Data Security → Classification](/docs-img/data-protection.jpg)
+
+**Channels covered.** CyEDR endpoints (USB and removable media, cloud-sync folders such as OneDrive/Dropbox/Google Drive/Box/iCloud, folders you choose, the clipboard and — on Linux and macOS — print jobs), email (the Cy360 mail relay and mailbox scanning for Microsoft 365 and Google Workspace — see [Email DLP](#email-dlp)), the TLS gateway (uploads to ordinary websites **and to AI sites** such as ChatGPT, Gemini or Claude, scanned with your full detector set — monitor by default, block by policy), the AI Security Gateway (prompts and tool output) and Microsoft Purview / Office 365.
 
 **Why it matters.** Regulations such as GDPR, PCI DSS, HIPAA and India's DPDP Act require you to know when personal or payment data leaves the organisation. DLP turns that into events you can investigate — and, where you choose, stops the data leaving.
 
@@ -98,10 +111,10 @@ Content can raise an item above its label (shown as a **label mismatch**) but ne
 **Document types.** Some files are sensitive because of *what they are*, not because they hold an ID number. Each document type raises an item to at least its level:
 
 - **Highly Confidential** — payroll and HR records, identity / KYC documents, medical records, customer data exports, credentials files, board / M&A / strategy papers, source code containing secrets;
-- **Confidential** — contracts, financial and bank statements, source code, CVs, engineering designs;
+- **Confidential** — contracts, financial and bank statements, **tenders and RFPs**, **price lists and quotations**, **internal research**, source code, CVs, engineering designs;
 - **General** — invoices, technical documents; **Public** — marketing material.
 
-Source code is recognised on your Cy360 server and on endpoints without AI. The other types use **AI document classification** (Enterprise), through the AI providers you have already configured: turn it on for endpoints in the Data Protection policy, and for email under Email DLP → Settings (up to three attachments per message). Only text with every detected value masked is sent, and only to a local model unless Data Protection → Settings allows cloud providers. Add **your own document types** (Enterprise, up to 20): a name, a plain-language description and the level — for example *"Deal memo — internal memos about pending acquisitions, with code names and valuations"*, at least Highly Confidential. Email DLP policies can match document types on their own.
+Source code, tenders/RFPs, price lists and internal research are recognised on your Cy360 server without AI (by their headings and wording); the Marketplace pack **Confidentiality markings** also recognises "Confidential", "Internal only", "Commercial in confidence" and similar markings in many languages. On endpoints, office documents with no detector hit can also be typed (policy option, up to 20 per hour per endpoint) and are reported only if their type is sensitive. The other types use **AI document classification** (Enterprise), through the AI providers you have already configured: turn it on for endpoints in the Data Protection policy, and for email under Email DLP → Settings (up to three attachments per message). Only text with every detected value masked is sent, and only to a local model unless Data Protection → Settings allows cloud providers. Add **your own document types** (Enterprise, up to 20): a name, a plain-language description and the level — for example *"Deal memo — internal memos about pending acquisitions, with code names and valuations"*, at least Highly Confidential. Email DLP policies can match document types on their own.
 
 ### Settings (admin, Enterprise)
 
@@ -135,6 +148,19 @@ By default a copy is only reported. To **stop** it:
 Quarantine acts within the check interval after the file is written; it is not a block before the copy completes, which would need a signed Windows file-system driver or an Apple Endpoint Security entitlement. See [Endpoint Defence](/docs/endpoint-defence#policies).
 
 DLP events are triaged as incidents (category **dlp**) in Security Operations → Incidents and open data-exfiltration cases.
+
+## DLP Policies
+
+Data Security → DLP → **Policies** has the **Regulations** templates, the **Email** policies and **All channels**: one policy with one data condition — detectors, minimum matches, minimum classification level, document types, sensitivity labels, unreadable files, scope (only data leaving the organisation, or internal too) and user / destination-domain exceptions — and an action per channel:
+
+| Channel | Actions |
+|---|---|
+| Email (mail relay) | monitor, encrypt, quarantine, block |
+| AI tools (TLS gateway, AI sites) | monitor, block |
+| Web uploads (TLS gateway, other sites) | monitor, block |
+| Endpoints | monitor (DLP Activity names the policy; quarantine stays in the endpoint policy's Data Protection section) |
+
+Each channel adds these to its own policies and the **most restrictive** match wins, so an all-channels policy can only make a channel stricter. A channel without an action ignores the policy; channels pick up changes within five minutes.
 
 ## DLP Activity
 
@@ -197,7 +223,7 @@ Mailbox scanning is read-only: it never moves, changes or deletes mail, and mess
 
 ## DSPM — Data Security Posture Management
 
-With the DSPM add-on, the Data Security section adds seven pages.
+With the DSPM add-on, the Data Security section adds the pages below (Access is under Data Access & Exposure, Settings under Settings → Data Security).
 
 ### Overview
 
@@ -219,6 +245,28 @@ Derived issues with severity, evidence, remediation and compliance controls: pub
 
 "Who can read *category*?" — every principal (users, groups, roles, service accounts, anyone/public, external domains) with read, write or admin rights on sensitive stores, from cloud IAM, bucket policies and SaaS sharing. Access findings flag anyone-can-read, external, cross-account, wildcard policies, stale principals (unused 90+ days) and write access on sensitive stores.
 
+### Data Activity
+
+Who **read, downloaded, changed, copied, shared or deleted** data in each store over the last 7, 30 or 90 days, ranked by the number of objects touched weighted by the store's sensitivity (a critical store counts five times a low one). Click a store for its day-by-day rows per person or service, with example object names — names only, never content.
+
+| Source | How to turn it on |
+|---|---|
+| Microsoft 365 (SharePoint / OneDrive) | the Microsoft 365 log connector in Marketplace, with the *Audit.SharePoint* content type |
+| Google Drive | **Google Workspace Email DLP** package (1.2.0 or later), *Send Drive activity* on |
+| Windows file servers | a CyEDR **Log Collection** policy with **File-share audit** on, assigned to the server; the server needs `auditpol /set /subcategory:"Detailed File Share" /success:enable`. Listing-only access is skipped and repeats are de-duplicated |
+| Amazon S3 | **AWS S3 Data Activity** package — the CloudTrail trail must log S3 data events |
+| Amazon RDS / Aurora PostgreSQL | **RDS PostgreSQL Data Activity** package — the instance needs pgaudit (`pgaudit.log = 'read,write'`); only table names reach Cy360, never statements |
+
+Activity is kept as one row per store, person, action and day. Sources start from the moment they are connected — there is no backfill.
+
+**Data-access alerts (every edition).** Once a day Cy360 compares each person's access with their own last 30 days and raises an incident (category **data_activity**) for:
+
+- an **unusual volume** of data accessed in one store — the bar is lower and the severity higher the more sensitive the store is;
+- a **first access to a highly sensitive store** that others use regularly;
+- a **burst of DLP events** for one user.
+
+Without DSPM the alerts still run; DSPM only adds the sensitivity weighting.
+
 ### Hygiene
 
 Duplicate sensitive datasets (the same values in several stores, matched by salted fingerprints) and stale sensitive data (not modified for 365+ days by default) — candidates for deletion that reduce your risk.
@@ -236,5 +284,5 @@ One-click fixes that need **two admins** — one requests, a different one appro
 ![Data Security → Settings](/docs-img/dspm-settings.jpg)
 
 - **General** — **content scanning** (off by default: with it off, DSPM only discovers stores and their configuration; turning it on asks for explicit consent to read samples), scan mode (*Hosted* — Cy360 reads via provider APIs and discards content from memory — or *In-environment scanner*), scan interval (default 24 hours), sampling budgets (objects per store, bytes per object, rows per column), minimum detection confidence, allow remediation, stale-access days, internal domains and stale-data (ROT) days.
-- **Connections** — the sources. Cloud storage reuses the accounts from Marketplace → Cloud Asset Inventory; SaaS drives reuse Shared Files settings; databases (PostgreSQL, MySQL/MariaDB, SQL Server, Snowflake, BigQuery) are added from Marketplace → Data Security with a read-only user.
+- **Connections** — the sources. Cloud storage reuses the accounts from Marketplace → Cloud Asset Inventory; SaaS drives reuse the Shared files accounts (all listed in Settings → Connected Accounts); databases (PostgreSQL, MySQL/MariaDB, SQL Server, Snowflake, BigQuery) are added from Marketplace → Data Security with a read-only user.
 - **Scanners** — register an **in-environment scanner** for databases on private networks. The token is shown once. Run the published `cy360-dspm-scanner` container on a host that can reach the database; it needs outbound HTTPS to Cy360 only, keeps the database credentials locally and sends back only detector IDs, counts and salted hashes.
