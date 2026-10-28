@@ -1,3 +1,11 @@
+## v1.0.98 -- 2026-10-28
+
+### New Features
+
+  - web): Signal Spectrum redesign + free DLP scan offer
+
+---
+
 ## v1.0.97 -- 2026-10-28
 
 ### Improvements
