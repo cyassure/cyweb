@@ -70,7 +70,7 @@ const PlatformSection = () => {
           viewport={{ once: true }}
           className="relative mb-16 overflow-hidden rounded-lg border border-border bg-card p-8"
         >
-          <p className="mb-6 font-mono text-xs uppercase tracking-[0.12em] text-muted-foreground">
+          <p className="mb-6 eyebrow text-muted-foreground">
             Logs from every source. Processed by one platform.
           </p>
 
@@ -270,7 +270,7 @@ const PlatformSection = () => {
         >
           <div className="grid items-center gap-8 md:grid-cols-2">
             <div>
-              <h3 className="mb-4 font-heading text-2xl font-bold text-foreground">Embedded Intelligence</h3>
+              <h3 className="mb-4 text-2xl font-semibold leading-tight text-foreground md:text-[1.75rem]">Embedded Intelligence</h3>
               <p className="mb-4 text-muted-foreground">
                 Cy360 integrates custom Large Language Models (LLMs) to enrich alerts, automate investigations, summarize incidents, and recommend actions.
               </p>

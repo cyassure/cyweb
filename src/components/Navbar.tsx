@@ -19,7 +19,17 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/85 backdrop-blur-xl">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-xl">
+      {/* Announcement strip; adds ~36px to the header height (offsets use pt-32 / top-36). */}
+      <div className="bg-[#07122a] text-white">
+        <div className="container mx-auto flex h-9 items-center justify-center gap-2 px-6 text-center text-xs sm:text-[13px]">
+          <span className="eyebrow rounded-sm bg-white/15 px-1.5 py-0.5 text-[10px]">New</span>
+          <span className="truncate">Free Attack Surface and DLP scans for your organisation.</span>
+          <a href="/#free-scan" className="shrink-0 font-semibold text-[#8fb0ff] underline-offset-4 hover:underline">
+            Get started →
+          </a>
+        </div>
+      </div>
       <div className="container mx-auto flex items-center justify-between px-6 py-4">
         <Link to="/" className="flex items-center gap-2" aria-label="CyAssure home">
           <img src={cyassureMark} alt="" className="h-9 w-auto" />

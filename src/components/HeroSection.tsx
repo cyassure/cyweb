@@ -1,13 +1,15 @@
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, Play, Zap, Activity, Brain, ScanSearch } from "lucide-react";
+import { ArrowRight, Play, ScanSearch } from "lucide-react";
 import dashboardScreenshot from "@/assets/screenshots/attack-posture.jpg";
+import heroPhoto from "@/assets/photos/hero-earth.jpg";
 import DemoRequestDialog from "@/components/DemoRequestDialog";
 import { DOMAIN_COLORS, type DomainId } from "@/lib/domains";
 
 const stats = [
-  { icon: Zap, value: "<30 min", label: "To fully operational" },
-  { icon: Activity, value: "~70%", label: "Less SOC noise" },
-  { icon: Brain, value: "24×7", label: "AI-assisted monitoring" },
+  { value: "<30 min", label: "From install to fully operational", color: DOMAIN_COLORS.asm },
+  { value: "~70%", label: "Less SOC noise after correlation", color: DOMAIN_COLORS.data },
+  { value: "24×7", label: "AI-assisted monitoring by our SOC", color: DOMAIN_COLORS.endpoint },
+  { value: "10", label: "Security domains in one console", color: DOMAIN_COLORS.response },
 ];
 
 // Illustrative volumes for the hero funnel; bar width is relative to the largest source.
@@ -37,36 +39,33 @@ const HeroSection = () => {
   const reduce = useReducedMotion();
 
   return (
-    <section className="relative overflow-hidden pt-20">
-      {/* Soft wash in the domain colours behind the headline and funnel. */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-[640px]"
-        style={{
-          background: [
-            `radial-gradient(40% 55% at 8% 20%, ${DOMAIN_COLORS.secops}26, transparent 70%)`,
-            `radial-gradient(35% 50% at 45% 0%, ${DOMAIN_COLORS.itam}22, transparent 70%)`,
-            `radial-gradient(40% 60% at 85% 25%, ${DOMAIN_COLORS.endpoint}2e, transparent 70%)`,
-            `radial-gradient(35% 45% at 70% 85%, ${DOMAIN_COLORS.data}26, transparent 70%)`,
-          ].join(", "),
-        }}
-      />
-      <div className="container relative mx-auto px-6 pb-10 pt-12 md:pt-20">
-        <div className="grid items-end gap-12 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
+    <section className="relative pt-[106px]">
+      {/* Photo hero: text sits on the dark left side of the overlay. */}
+      <div className="relative overflow-hidden bg-[#07122a] text-white">
+        <img
+          src={heroPhoto}
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover object-[70%_center]"
+          loading="eager"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(90deg, rgba(7,18,42,0.96) 0%, rgba(7,18,42,0.85) 42%, rgba(7,18,42,0.35) 100%)",
+          }}
+        />
+        <div className="container relative mx-auto grid items-center gap-12 px-6 py-16 md:py-24 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
           <div>
-            <p className="mb-6 font-mono text-xs uppercase tracking-[0.12em] text-muted-foreground">
-              Cy360 by CyAssure · Netherlands &amp; India
-            </p>
-
-            <h1 className="mb-6 font-heading text-[2.1rem] font-bold leading-[1.04] text-foreground sm:text-5xl lg:text-[3.6rem]">
-              Every signal in. <span className="text-spectrum">Only real incidents</span> out.
+            <p className="eyebrow mb-5 text-white/70">Cy360 by CyAssure · Netherlands &amp; India</p>
+            <h1 className="mb-6 text-4xl font-semibold leading-[1.05] text-white sm:text-5xl lg:text-6xl">
+              Every signal in. <span className="text-[#8fb0ff]">Only real incidents</span> out.
             </h1>
-
-            <p className="mb-8 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
+            <p className="mb-8 max-w-xl text-lg leading-relaxed text-white/80">
               Cy360 correlates endpoint, firewall, cloud, identity and data-loss telemetry into a short list your
               team can close. Self-hosted, SaaS, or run by our 24×7 SOC.
             </p>
-
             <div className="flex flex-wrap items-center gap-3">
               <a
                 href="#contact"
@@ -79,7 +78,7 @@ const HeroSection = () => {
                 trigger={
                   <button
                     type="button"
-                    className="flex items-center gap-2 rounded-md px-6 py-3 text-sm font-semibold text-foreground shadow-[inset_0_0_0_1px_hsl(var(--input))] transition-all hover:bg-secondary"
+                    className="flex items-center gap-2 rounded-md bg-white/10 px-6 py-3 text-sm font-semibold text-white shadow-[inset_0_0_0_1px_rgba(255,255,255,0.35)] backdrop-blur transition-all hover:bg-white/20"
                   >
                     <Play className="h-4 w-4" />
                     Request a Demo
@@ -88,7 +87,7 @@ const HeroSection = () => {
               />
               <a
                 href="#free-scan"
-                className="flex items-center gap-1.5 px-2 py-3 text-sm text-muted-foreground transition-colors hover:text-foreground"
+                className="flex items-center gap-1.5 px-2 py-3 text-sm text-white/75 transition-colors hover:text-white"
               >
                 <ScanSearch className="h-4 w-4" /> Free ASM &amp; DLP scan
               </a>
@@ -96,13 +95,16 @@ const HeroSection = () => {
           </div>
 
           {/* The one orchestrated animation on the page: sources fill, then collapse into incidents. */}
-          <div className="font-mono text-xs" aria-label="Illustrative correlation: millions of events reduced to nine incidents">
-            <p className="mb-4 text-muted-foreground">Events → incidents · last 24h</p>
-            <div className="space-y-2.5">
+          <div
+            className="rounded-lg border border-white/15 bg-white/[0.06] p-6 text-sm backdrop-blur-md"
+            aria-label="Illustrative correlation: millions of events reduced to nine incidents"
+          >
+            <p className="eyebrow mb-5 text-white/60">Events → incidents · last 24h</p>
+            <div className="space-y-3">
               {funnel.map((row, i) => (
-                <div key={row.label} className="grid grid-cols-[92px_1fr_52px] items-center gap-3 text-muted-foreground">
+                <div key={row.label} className="grid grid-cols-[96px_1fr_56px] items-center gap-3 text-white/75">
                   <span>{row.label}</span>
-                  <div className="h-3.5">
+                  <div className="h-3">
                     <motion.div
                       className="h-full rounded-[1px]"
                       style={{ backgroundColor: row.color }}
@@ -111,12 +113,12 @@ const HeroSection = () => {
                       transition={{ duration: 0.9, delay: 0.3 + i * 0.12, ease: [0.22, 1, 0.36, 1] }}
                     />
                   </div>
-                  <span className="text-right font-semibold text-foreground">{row.value}</span>
+                  <span className="text-right font-semibold tabular-nums text-white">{row.value}</span>
                 </div>
               ))}
-              <div className="mt-3 grid grid-cols-[92px_1fr_52px] items-center gap-3 border-t border-dashed border-input pt-3 text-foreground">
-                <span>Incidents</span>
-                <div className="h-3.5">
+              <div className="mt-3 grid grid-cols-[96px_1fr_56px] items-center gap-3 border-t border-dashed border-white/25 pt-3 text-white">
+                <span className="font-semibold">Incidents</span>
+                <div className="h-3">
                   <motion.div
                     className="h-full w-[2%] min-w-[6px] rounded-[1px]"
                     style={{ backgroundColor: DOMAIN_COLORS.secops }}
@@ -125,10 +127,10 @@ const HeroSection = () => {
                     transition={{ duration: 0.4, delay: 1.25 }}
                   />
                 </div>
-                <span className="text-right text-base font-semibold">9</span>
+                <span className="text-right text-lg font-semibold tabular-nums">9</span>
               </div>
             </div>
-            <p className="mt-4 text-[11px] text-muted-foreground/70">Illustrative data</p>
+            <p className="mt-4 text-xs text-white/50">Illustrative data</p>
           </div>
         </div>
       </div>
@@ -143,9 +145,7 @@ const HeroSection = () => {
             style={{ backgroundColor: DOMAIN_COLORS[d.id] }}
           >
             {d.isNew ? (
-              <span className="self-start rounded-sm bg-[#07122a] px-1.5 py-0.5 font-mono text-[10px] font-medium uppercase tracking-wider text-white">
-                New
-              </span>
+              <span className="eyebrow self-start rounded-sm bg-[#07122a] px-1.5 py-0.5 text-[10px] text-white">New</span>
             ) : (
               <span aria-hidden className="h-[18px]" />
             )}
@@ -157,7 +157,7 @@ const HeroSection = () => {
         ))}
       </nav>
 
-      <div className="container mx-auto px-6 pt-14">
+      <div className="container mx-auto px-6 pt-16">
         <figure className="mx-auto max-w-5xl">
           <div className="overflow-hidden rounded-lg border border-border bg-card shadow-[var(--shadow-card)]">
             <img
@@ -167,19 +167,19 @@ const HeroSection = () => {
               loading="eager"
             />
           </div>
-          <figcaption className="mt-3 flex flex-wrap items-center justify-between gap-4 text-sm">
-            <span className="font-mono text-xs text-muted-foreground">Cy360 portal · Attack Surface overview</span>
-            <span className="flex flex-wrap gap-6">
-              {stats.map((s) => (
-                <span key={s.label} className="flex items-center gap-2">
-                  <s.icon className="h-4 w-4 text-primary" />
-                  <span className="font-semibold text-foreground">{s.value}</span>
-                  <span className="text-muted-foreground">{s.label}</span>
-                </span>
-              ))}
-            </span>
-          </figcaption>
+          <figcaption className="mt-3 text-xs text-muted-foreground">Cy360 portal · Attack Surface overview</figcaption>
         </figure>
+
+        {/* Stat band: oversized numerals, one domain colour rule each. */}
+        <dl className="mt-16 grid gap-8 border-t border-border pt-10 sm:grid-cols-2 lg:grid-cols-4">
+          {stats.map((s) => (
+            <div key={s.label} className="border-l-2 pl-5" style={{ borderColor: s.color }}>
+              <dt className="sr-only">{s.label}</dt>
+              <dd className="text-4xl font-semibold tabular-nums tracking-tight text-foreground md:text-5xl">{s.value}</dd>
+              <dd className="mt-2 text-sm text-muted-foreground">{s.label}</dd>
+            </div>
+          ))}
+        </dl>
       </div>
     </section>
   );

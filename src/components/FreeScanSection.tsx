@@ -2,7 +2,8 @@ import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Globe, Search, Zap, FileSearch, Check } from "lucide-react";
 import SectionHeader from "@/components/SectionHeader";
 import DlpScanDialog from "@/components/DlpScanDialog";
-import { DOMAIN_COLORS, ink } from "@/lib/domains";
+import { DOMAIN_COLORS } from "@/lib/domains";
+import cablesPhoto from "@/assets/photos/network-cables.jpg";
 
 const ASM = DOMAIN_COLORS.asm;
 const DLP = DOMAIN_COLORS.data;
@@ -44,7 +45,7 @@ const RadarVisual = () => (
       transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
     />
     <div className="relative z-10 rounded-full border bg-card p-4" style={{ borderColor: `${ASM}66` }}>
-      <Globe className="h-7 w-7" style={{ color: ink(ASM) }} />
+      <Globe className="h-7 w-7" style={{ color: ASM }} />
     </div>
     {[
       { top: "15%", left: "68%", delay: 0.5 },
@@ -79,7 +80,7 @@ const DocumentVisual = () => {
   return (
     <div className="relative h-44 w-40 overflow-hidden rounded-md border border-border bg-card px-4 py-4">
       <div className="mb-3 flex items-center gap-2">
-        <FileSearch className="h-4 w-4" style={{ color: ink(DLP) }} />
+        <FileSearch className="h-4 w-4" style={{ color: DLP }} />
         <span className="h-1.5 w-14 rounded-sm bg-muted-foreground/40" />
       </div>
       <div className="space-y-2.5">
@@ -113,7 +114,10 @@ const DocumentVisual = () => {
 
 const FreeScanSection = () => {
   return (
-    <section id="free-scan" className="relative bg-[color-mix(in_srgb,#2dd4bf_7%,hsl(var(--background)))] py-24">
+    // Dark island over a photo; the domain colours read at full strength here, so no ink().
+    <section id="free-scan" className="theme-dark relative overflow-hidden bg-background py-24">
+      <img src={cablesPhoto} alt="" className="absolute inset-0 h-full w-full object-cover" loading="lazy" />
+      <div aria-hidden className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,18,42,0.92),rgba(7,18,42,0.82))]" />
       <div className="container relative mx-auto px-6">
         <SectionHeader
           eyebrow="Free scans"
@@ -127,16 +131,16 @@ const FreeScanSection = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="flex flex-col overflow-hidden rounded-lg border bg-card"
+            className="flex flex-col overflow-hidden rounded-lg border bg-card/90 backdrop-blur"
             style={{ borderColor: `${ASM}55` }}
           >
             <div className="h-1" style={{ backgroundColor: ASM }} />
             <div className="flex flex-1 flex-col gap-8 p-8 sm:flex-row">
               <div className="flex-1">
-                <p className="mb-3 font-mono text-xs uppercase tracking-[0.12em]" style={{ color: ink(ASM) }}>
+                <p className="mb-3 eyebrow" style={{ color: ASM }}>
                   Attack surface · no account required
                 </p>
-                <h3 className="mb-3 font-heading text-xl font-bold text-foreground md:text-2xl">Free Attack Surface Scan</h3>
+                <h3 className="mb-3 text-2xl font-semibold leading-tight text-foreground md:text-[1.75rem]">Free Attack Surface Scan</h3>
                 <p className="mb-6 text-sm leading-relaxed text-muted-foreground">
                   Discover what attackers can see about your organisation, in minutes. Our CyASM engine runs a passive
                   reconnaissance scan across your domain and delivers an instant risk summary.
@@ -144,7 +148,7 @@ const FreeScanSection = () => {
                 <ul className="mb-8 grid gap-2 sm:grid-cols-2">
                   {scanModules.map((mod) => (
                     <li key={mod} className="flex items-start gap-2 text-xs text-muted-foreground">
-                      <Search className="mt-0.5 h-3.5 w-3.5 shrink-0" style={{ color: ink(ASM) }} />
+                      <Search className="mt-0.5 h-3.5 w-3.5 shrink-0" style={{ color: ASM }} />
                       {mod}
                     </li>
                   ))}
@@ -166,7 +170,7 @@ const FreeScanSection = () => {
                 Start Free ASM Scan
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </a>
-              <p className="mt-3 font-mono text-[11px] text-muted-foreground/70">
+              <p className="mt-3 text-xs text-muted-foreground/80">
                 Passive scan only · No agents required · Results in &lt; 5 minutes
               </p>
             </div>
@@ -179,16 +183,16 @@ const FreeScanSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="flex flex-col overflow-hidden rounded-lg border bg-card"
+            className="flex flex-col overflow-hidden rounded-lg border bg-card/90 backdrop-blur"
             style={{ borderColor: `${DLP}55` }}
           >
             <div className="h-1" style={{ backgroundColor: DLP }} />
             <div className="flex flex-1 flex-col gap-8 p-8 sm:flex-row">
               <div className="flex-1">
-                <p className="mb-3 font-mono text-xs uppercase tracking-[0.12em]" style={{ color: ink(DLP) }}>
+                <p className="mb-3 eyebrow" style={{ color: DLP }}>
                   Data loss · set up with our team
                 </p>
-                <h3 className="mb-3 font-heading text-xl font-bold text-foreground md:text-2xl">Free DLP Scan</h3>
+                <h3 className="mb-3 text-2xl font-semibold leading-tight text-foreground md:text-[1.75rem]">Free DLP Scan</h3>
                 <p className="mb-6 text-sm leading-relaxed text-muted-foreground">
                   Find out where sensitive data is sitting before someone else does. We connect Cy360 read-only to
                   Microsoft 365, Google Workspace or a few endpoints and report what we find, with GDPR and NIS2 context.
@@ -196,7 +200,7 @@ const FreeScanSection = () => {
                 <ul className="mb-8 grid gap-2 sm:grid-cols-2">
                   {dlpFindings.map((f) => (
                     <li key={f} className="flex items-start gap-2 text-xs text-muted-foreground">
-                      <Check className="mt-0.5 h-3.5 w-3.5 shrink-0" style={{ color: ink(DLP) }} />
+                      <Check className="mt-0.5 h-3.5 w-3.5 shrink-0" style={{ color: DLP }} />
                       {f}
                     </li>
                   ))}
@@ -220,7 +224,7 @@ const FreeScanSection = () => {
                   </button>
                 }
               />
-              <p className="mt-3 font-mono text-[11px] text-muted-foreground/70">
+              <p className="mt-3 text-xs text-muted-foreground/80">
                 Read-only access · No agent needed for Microsoft 365 or Google Workspace
               </p>
             </div>

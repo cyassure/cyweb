@@ -15,13 +15,13 @@ const DownloadCTASection = () => {
           <div className="flex items-start gap-5">
             <Terminal className="mt-1 h-6 w-6 shrink-0 text-primary" />
             <div>
-              <h2 className="mb-2 font-heading text-xl font-bold text-foreground md:text-2xl">
+              <h2 className="mb-2 text-2xl font-semibold leading-tight text-foreground md:text-[1.75rem] md:text-2xl">
                 Try Cy360 in minutes, not weeks
               </h2>
               <p className="max-w-lg text-muted-foreground">
                 Community edition is free and self-hosted. Public images, one install command, pick your version.
               </p>
-              <p className="mt-3 flex items-center gap-2 font-mono text-xs text-muted-foreground">
+              <p className="mt-3 flex items-center gap-2 text-xs text-muted-foreground">
                 <Zap className="h-3.5 w-3.5 text-primary" /> No card required
               </p>
             </div>

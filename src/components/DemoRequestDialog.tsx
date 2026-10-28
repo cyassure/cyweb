@@ -93,7 +93,7 @@ const DemoRequestDialog = ({ trigger, startWithLive = false }: DemoRequestDialog
                 className="group flex flex-col rounded-xl border border-border bg-card p-5 transition-all hover:border-primary/50"
               >
                 <PlayCircle className="mb-3 h-8 w-8 text-primary" />
-                <span className="mb-1 font-heading text-base font-bold text-foreground">Watch recorded demos</span>
+                <span className="mb-1 text-lg font-semibold leading-snug text-foreground">Watch recorded demos</span>
                 <span className="mb-4 flex-1 text-sm text-muted-foreground">
                   Start now, no sign-up. A {formatDuration(demos[0].duration)} platform overview and {demos.length - 1}{" "}
                   module walkthroughs ({totalMinutes} min in total).
@@ -108,7 +108,7 @@ const DemoRequestDialog = ({ trigger, startWithLive = false }: DemoRequestDialog
                 className="group flex flex-col rounded-xl border border-border bg-card p-5 text-left transition-all hover:border-primary/50"
               >
                 <CalendarClock className="mb-3 h-8 w-8 text-primary" />
-                <span className="mb-1 font-heading text-base font-bold text-foreground">Book a live demo</span>
+                <span className="mb-1 text-lg font-semibold leading-snug text-foreground">Book a live demo</span>
                 <span className="mb-4 flex-1 text-sm text-muted-foreground">
                   A guided session with a CyAssure expert, focused on your environment and questions.
                 </span>

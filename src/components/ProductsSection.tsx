@@ -217,11 +217,11 @@ const ProductsSection = () => {
             <div>
               <div className="mb-4 flex items-center gap-3">
                 <active.icon className="h-5 w-5" style={{ color: ink(active.color) }} />
-                <p className="font-mono text-xs font-medium uppercase tracking-[0.12em]" style={{ color: ink(active.color) }}>
+                <p className="eyebrow" style={{ color: ink(active.color) }}>
                   {active.label}
                 </p>
               </div>
-              <h3 className="mb-3 font-heading text-2xl font-bold text-foreground md:text-3xl">{active.headline}</h3>
+              <h3 className="mb-3 text-2xl font-semibold leading-tight text-foreground md:text-[1.75rem]">{active.headline}</h3>
               <p className="text-sm leading-relaxed text-muted-foreground md:text-base">
                 {active.intro.split("**").map((part, i) =>
                   i % 2 ? (
@@ -242,7 +242,7 @@ const ProductsSection = () => {
               </div>
             </div>
 
-            <div className="relative lg:sticky lg:top-28">
+            <div className="relative lg:sticky lg:top-36">
               <div
                 className="absolute -inset-4 rounded-[2rem] opacity-40 blur-2xl"
                 style={{ background: `radial-gradient(circle at 50% 40%, ${active.color}55, transparent 70%)` }}
@@ -250,7 +250,7 @@ const ProductsSection = () => {
               <div className="theme-dark relative">
                 <active.screen />
               </div>
-              <p className="mt-3 font-mono text-[11px] text-muted-foreground/70">Illustrative data</p>
+              <p className="mt-3 text-xs text-muted-foreground/80">Illustrative data</p>
             </div>
           </motion.div>
         </AnimatePresence>

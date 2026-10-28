@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Layers, Brain, Lock, Zap, Clock, Users, Activity, Monitor, MapPin } from "lucide-react";
+import socTeamPhoto from "@/assets/photos/soc-team.jpg";
 import SectionHeader from "@/components/SectionHeader";
 import { DOMAIN_COLORS, ink } from "@/lib/domains";
 
@@ -36,11 +37,12 @@ const WhySection = () => {
           ))}
         </div>
 
+        <div className="grid items-stretch gap-6 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="relative max-w-4xl overflow-hidden rounded-lg border border-border bg-card p-6"
+          className="relative flex flex-col justify-center overflow-hidden rounded-lg border border-border bg-card p-6"
         >
           <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-2">
@@ -55,7 +57,7 @@ const WhySection = () => {
               <MapPin className="h-3.5 w-3.5 text-primary" /> Rijswijk, Netherlands · Gurgaon, India · Global coverage
             </span>
           </div>
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <div className="grid grid-cols-2 gap-3">
             {socStats.map((stat, i) => (
               <motion.div
                 key={stat.label}
@@ -63,11 +65,11 @@ const WhySection = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 + i * 0.1 }}
-                className="flex flex-col gap-1 rounded-md border border-border bg-secondary/30 p-3"
+                className="flex flex-col gap-1 rounded-md border border-border bg-secondary/30 p-4"
               >
                 <stat.icon className="h-4 w-4 text-primary" />
-                <span className="font-mono text-base font-semibold text-foreground">{stat.value}</span>
-                <span className="text-[10px] text-muted-foreground">{stat.label}</span>
+                <span className="text-2xl font-semibold tabular-nums text-foreground">{stat.value}</span>
+                <span className="text-xs text-muted-foreground">{stat.label}</span>
               </motion.div>
             ))}
           </div>
@@ -77,6 +79,13 @@ const WhySection = () => {
             transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
           />
         </motion.div>
+        <img
+          src={socTeamPhoto}
+          alt="Security analysts working at their monitors"
+          className="h-full max-h-80 w-full rounded-lg object-cover lg:max-h-none"
+          loading="lazy"
+        />
+        </div>
       </div>
     </section>
   );

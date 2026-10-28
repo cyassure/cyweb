@@ -14,11 +14,11 @@ const Support = () => (
           viewport={{ once: true }}
           className="mb-10 max-w-3xl"
         >
-          <p className="mb-4 flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.12em] text-muted-foreground">
+          <p className="mb-4 flex items-center gap-2.5 eyebrow text-muted-foreground">
             <span className="h-2.5 w-2.5 shrink-0 bg-[var(--page-accent)]" />
             Support
           </p>
-          <h1 className="mb-4 font-heading text-2xl font-bold leading-[1.1] text-foreground md:text-4xl">
+          <h1 className="mb-4 font-heading text-3xl font-semibold leading-[1.1] text-foreground md:text-[2.75rem]">
             How can we help?
           </h1>
           <p className="max-w-md text-muted-foreground">

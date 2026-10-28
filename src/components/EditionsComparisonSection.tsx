@@ -61,11 +61,11 @@ const EditionsComparisonSection = () => {
           viewport={{ once: true }}
           className="mx-auto mb-14 max-w-4xl"
         >
-          <p className="mb-4 flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.12em] text-muted-foreground">
+          <p className="mb-4 flex items-center gap-2.5 eyebrow text-muted-foreground">
             <span className="h-2.5 w-2.5 shrink-0 bg-[var(--page-accent)]" />
             Self-Hosted Editions
           </p>
-          <h1 className="mb-4 font-heading text-2xl font-bold leading-[1.1] text-foreground md:text-4xl">
+          <h1 className="mb-4 font-heading text-3xl font-semibold leading-[1.1] text-foreground md:text-[2.75rem]">
             Run Cy360 on your own infrastructure
           </h1>
           <p className="max-w-xl text-muted-foreground">
@@ -93,7 +93,7 @@ const EditionsComparisonSection = () => {
                   <ed.icon className={`h-6 w-6 ${ed.iconCls}`} />
                 </div>
                 <div>
-                  <h2 className="font-heading text-xl font-bold text-foreground">{ed.name}</h2>
+                  <h2 className="text-2xl font-semibold leading-tight text-foreground md:text-[1.75rem]">{ed.name}</h2>
                   <p className="text-xs text-muted-foreground">{ed.tagline}</p>
                 </div>
               </div>

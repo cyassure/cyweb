@@ -19,7 +19,7 @@ const PageShell = ({ children, accent = "#4d9eff" }: PageShellProps) => {
         }}
       />
       <Navbar />
-      <main className="relative pt-24">{children}</main>
+      <main className="relative pt-32">{children}</main>
       <Footer />
     </div>
   );

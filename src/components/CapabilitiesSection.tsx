@@ -216,7 +216,7 @@ const CapabilitiesSection = () => {
         <div className="space-y-16">
           {groups.map((group) => (
             <div key={group.label}>
-              <p className="mb-6 flex items-center gap-4 font-mono text-xs font-medium uppercase tracking-[0.12em] text-muted-foreground">
+              <p className="mb-6 flex items-center gap-4 eyebrow text-muted-foreground">
                 {group.label}
                 <span className="h-px flex-1 bg-border" />
               </p>
@@ -236,7 +236,7 @@ const CapabilitiesSection = () => {
                     <div className="flex flex-1 flex-col gap-2 p-4">
                       <div className="flex min-h-10 items-center gap-2.5">
                         <fn.icon className="h-4 w-4 shrink-0 text-muted-foreground transition-colors group-hover:text-primary" />
-                        <h3 className="text-[15px] font-semibold leading-snug text-foreground">{fn.name}</h3>
+                        <h3 className="text-base font-semibold leading-snug text-foreground">{fn.name}</h3>
                       </div>
                       <p className="text-xs leading-relaxed text-muted-foreground">{fn.desc}</p>
                     </div>

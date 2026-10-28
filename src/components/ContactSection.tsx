@@ -115,7 +115,7 @@ const ContactSection = () => {
                 <BuildingFallback />
               </div>
             )}
-            <figcaption className="mt-3 flex flex-wrap justify-between gap-2 font-mono text-xs text-muted-foreground">
+            <figcaption className="mt-3 flex flex-wrap justify-between gap-2 text-xs text-muted-foreground">
               <span>Einsteinlaan 28, Rijswijk · near The Hague</span>
               {officePhoto && <span className="text-muted-foreground/70">Photo: Coworker.com</span>}
             </figcaption>

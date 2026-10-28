@@ -26,18 +26,18 @@ const Demos = () => {
       <section className="relative py-16">
         <div className="container mx-auto max-w-6xl px-6">
           <div className="mb-10 max-w-3xl">
-            <p className="mb-4 flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.12em] text-muted-foreground">
+            <p className="mb-4 flex items-center gap-2.5 eyebrow text-muted-foreground">
             <span className="h-2.5 w-2.5 shrink-0 bg-[var(--page-accent)]" />
             Demo videos
           </p>
-            <h1 className="mb-4 font-heading text-2xl font-bold leading-[1.1] text-foreground md:text-4xl">See Cy360 in action</h1>
+            <h1 className="mb-4 font-heading text-3xl font-semibold leading-[1.1] text-foreground md:text-[2.75rem]">See Cy360 in action</h1>
             <p className="max-w-2xl text-muted-foreground">
               Narrated walkthroughs of the platform and each of its modules, recorded in the live portal. Pick a video
               below; every one has a matching page in the <Link to="/docs" className="text-primary hover:underline">documentation</Link>.
             </p>
           </div>
 
-          <div ref={playerRef} className="mb-12 scroll-mt-28">
+          <div ref={playerRef} className="mb-12 scroll-mt-36">
             <div className="overflow-hidden rounded-xl border border-border bg-black shadow-xl">
               <video
                 key={current.id}
@@ -54,7 +54,7 @@ const Demos = () => {
             </div>
             <div className="mt-4 flex flex-wrap items-start justify-between gap-4">
               <div>
-                <h2 className="font-heading text-xl font-bold text-foreground">{current.title}</h2>
+                <h2 className="text-2xl font-semibold leading-tight text-foreground md:text-[1.75rem]">{current.title}</h2>
                 <p className="text-sm text-muted-foreground">{current.tagline}</p>
               </div>
               {current.docSlug && (
@@ -98,7 +98,7 @@ const Demos = () => {
                     </span>
                   </div>
                   <div className="p-4">
-                    <h3 className="mb-1 font-heading text-base font-bold text-foreground">{d.title}</h3>
+                    <h3 className="mb-1 text-lg font-semibold leading-snug text-foreground">{d.title}</h3>
                     <p className="text-sm text-muted-foreground">{d.tagline}</p>
                   </div>
                 </button>
