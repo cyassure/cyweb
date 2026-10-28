@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Layers, Brain, Lock, Zap, Clock, Users, Activity, Monitor, MapPin } from "lucide-react";
-import socTeamPhoto from "@/assets/photos/soc-team.jpg";
+import handoverArt from "@/assets/illustrations/handover.svg";
 import SectionHeader from "@/components/SectionHeader";
 import { DOMAIN_COLORS, ink } from "@/lib/domains";
 
@@ -80,9 +80,9 @@ const WhySection = () => {
           />
         </motion.div>
         <img
-          src={socTeamPhoto}
-          alt="Security analysts working at their monitors"
-          className="h-full max-h-80 w-full rounded-lg object-cover lg:max-h-none"
+          src={handoverArt}
+          alt="Two analysts handing over the SOC shift between Rijswijk at night and Gurgaon by day"
+          className="aspect-[16/9] w-full self-center rounded-lg"
           loading="lazy"
         />
         </div>

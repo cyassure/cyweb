@@ -12,6 +12,7 @@ const siteLinks = [
   { label: "Docs", href: "/docs" },
   { label: "Demos", href: "/demos" },
   { label: "Support", href: "/support" },
+  { label: "About Us", href: "/about" },
   { label: "Contact", href: "/#contact" },
 ];
 
