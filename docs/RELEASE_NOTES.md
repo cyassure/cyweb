@@ -1,3 +1,15 @@
+## v1.0.102 -- 2026-10-28
+
+### New Features
+
+  - web): cartoon illustrations for people, About Us page
+
+### Bug Fixes
+
+  - web): footer Site links in two columns, aligned with Products
+
+---
+
 ## v1.0.101 -- 2026-10-28
 
 ### New Features
