@@ -1,3 +1,11 @@
+## v1.0.99 -- 2026-10-28
+
+### New Features
+
+  - web): light, colour-coded inner pages + Rijswijk office photo
+
+---
+
 ## v1.0.98 -- 2026-10-28
 
 ### New Features
