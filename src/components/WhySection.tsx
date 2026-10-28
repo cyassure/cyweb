@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Layers, Brain, Lock, Zap, Clock, Users, Activity, Monitor, MapPin } from "lucide-react";
 import SectionHeader from "@/components/SectionHeader";
-import { DOMAIN_COLORS } from "@/lib/domains";
+import { DOMAIN_COLORS, ink } from "@/lib/domains";
 
 const pillars = [
   { icon: Layers, label: "Open, not locked in", color: DOMAIN_COLORS["cloud-saas"] },
@@ -30,7 +30,7 @@ const WhySection = () => {
         <div className="mb-14 grid gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
           {pillars.map((p) => (
             <div key={p.label} className="flex flex-col gap-4 bg-card p-6">
-              <p.icon className="h-5 w-5" style={{ color: p.color }} />
+              <p.icon className="h-5 w-5" style={{ color: ink(p.color) }} />
               <span className="text-sm font-medium leading-snug text-foreground">{p.label}</span>
             </div>
           ))}

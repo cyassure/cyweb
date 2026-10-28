@@ -15,3 +15,7 @@ export const DOMAIN_COLORS = {
 } as const;
 
 export type DomainId = keyof typeof DOMAIN_COLORS;
+
+// Domain colours are tuned for fills; darken one this much to use it as text or a
+// thin icon on the light ground (yellow and teal are unreadable otherwise).
+export const ink = (color: string) => `color-mix(in srgb, ${color} 68%, black)`;

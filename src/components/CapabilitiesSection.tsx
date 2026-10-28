@@ -209,7 +209,7 @@ const groups: FunctionGroup[] = [
 
 const CapabilitiesSection = () => {
   return (
-    <section id="capabilities" className="relative py-24">
+    <section id="capabilities" className="relative bg-secondary/70 py-24">
       <div className="container relative mx-auto px-6">
         <SectionHeader eyebrow="Capabilities" title="Everything Cy360 does, at a glance" />
 

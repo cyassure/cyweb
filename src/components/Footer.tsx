@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import cy360Icon from "@/assets/cy360-icon.png";
+import cyassureLogo from "@/assets/brand/cyassure-logo.png";
 
 // Mirrors the Navbar, plus the contact anchor.
 const siteLinks = [
@@ -49,9 +49,12 @@ const Footer = () => {
       <div className="container mx-auto px-6">
         <div className="grid gap-10 md:grid-cols-[1.2fr_1fr_1.6fr]">
           <div className="flex flex-col items-center gap-3 text-center md:items-start md:text-left">
-            <Link to="/" className="flex items-center gap-2">
-              <img src={cy360Icon} alt="" className="h-9 w-9" />
-              <span className="font-heading text-lg font-bold tracking-tight text-foreground">Cy360</span>
+            <Link to="/" aria-label="CyAssure home">
+              <img
+                src={cyassureLogo}
+                alt="CyAssure — Next generation cybersecurity and AI"
+                className="mb-2 h-auto w-56"
+              />
             </Link>
             <div>
               <p className="font-mono text-xs uppercase tracking-[0.12em] text-muted-foreground/80">Netherlands</p>

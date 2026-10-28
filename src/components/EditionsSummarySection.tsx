@@ -17,7 +17,7 @@ const editions = [
     icon: Building2,
     tag: "Licensed, self-hosted",
     accent: "border-emerald-500/30 bg-emerald-500/5",
-    iconCls: "text-emerald-400",
+    iconCls: "text-emerald-600",
     bullets: ["Purchased user & agent counts", "CyMind AI + CyTIM intel", "DSPM, AI Security, GRC add-ons"],
   },
 ];

@@ -10,12 +10,12 @@ import {
 // each visual pick a theme by short key. `hex` is for raw SVG/CSS values, which
 // aren't Tailwind classes and are safe to interpolate directly.
 const THEME = {
-  primary: { text: "text-primary", border: "border-primary/50", borderFaint: "border-primary/20", hex: "#22d3ee" },
-  emerald: { text: "text-emerald-400", border: "border-emerald-500/50", borderFaint: "border-emerald-500/20", hex: "#34d399" },
-  orange: { text: "text-orange-400", border: "border-orange-500/50", borderFaint: "border-orange-500/20", hex: "#fb923c" },
-  cyan: { text: "text-cyan-400", border: "border-cyan-400/50", borderFaint: "border-cyan-400/20", hex: "#22d3ee" },
-  violet: { text: "text-violet-400", border: "border-violet-500/50", borderFaint: "border-violet-500/20", hex: "#a78bfa" },
-  blue: { text: "text-blue-400", border: "border-blue-500/50", borderFaint: "border-blue-500/20", hex: "#60a5fa" },
+  primary: { text: "text-primary", border: "border-primary/50", borderFaint: "border-primary/20", hex: "#2f4cf5" },
+  emerald: { text: "text-emerald-600", border: "border-emerald-500/50", borderFaint: "border-emerald-500/20", hex: "#34d399" },
+  orange: { text: "text-orange-600", border: "border-orange-500/50", borderFaint: "border-orange-500/20", hex: "#fb923c" },
+  cyan: { text: "text-cyan-600", border: "border-cyan-400/50", borderFaint: "border-cyan-400/20", hex: "#22d3ee" },
+  violet: { text: "text-violet-600", border: "border-violet-500/50", borderFaint: "border-violet-500/20", hex: "#a78bfa" },
+  blue: { text: "text-blue-600", border: "border-blue-500/50", borderFaint: "border-blue-500/20", hex: "#60a5fa" },
 } as const;
 
 type ThemeKey = keyof typeof THEME;
@@ -248,7 +248,7 @@ export const FlowGate = ({ leftLabels, gateIcon: GateIcon, resultIcon: ResultIco
             animate={{ opacity: [0.5, 1, 0.5] }}
             transition={{ duration: 2, repeat: Infinity, delay: 0.8 }}
           >
-            <ResultIcon className="h-4 w-4 text-emerald-400" />
+            <ResultIcon className="h-4 w-4 text-emerald-600" />
           </motion.div>
         </div>
       </div>
@@ -265,7 +265,7 @@ export const HiddenAlert = () => (
         transition={{ duration: 2, repeat: Infinity }}
         className="flex h-14 w-14 items-center justify-center rounded-full border border-orange-500/50 bg-card"
       >
-        <EyeOff className="h-6 w-6 text-orange-400" />
+        <EyeOff className="h-6 w-6 text-orange-600" />
       </motion.div>
       {[
         { top: "-6%", left: "68%", delay: 0.3 },
@@ -279,7 +279,7 @@ export const HiddenAlert = () => (
           animate={{ opacity: [0, 1, 0], y: [4, -2, 4] }}
           transition={{ duration: 2.2, repeat: Infinity, delay: pos.delay }}
         >
-          <AlertTriangle className="h-3 w-3 text-orange-400" />
+          <AlertTriangle className="h-3 w-3 text-orange-600" />
         </motion.div>
       ))}
     </div>
@@ -300,7 +300,7 @@ export const SignalWaves = () => (
         />
       ))}
       <div className="relative z-10 flex h-11 w-11 items-center justify-center rounded-full border border-cyan-400/60 bg-card">
-        <Wifi className="h-5 w-5 text-cyan-400" />
+        <Wifi className="h-5 w-5 text-cyan-600" />
       </div>
     </div>
   </div>
@@ -317,8 +317,8 @@ export const ChecklistCycle = ({ items }: { items: string[] }) => (
           animate={{ opacity: [0.5, 1, 0.5] }}
           transition={{ duration: 2.4, repeat: Infinity, delay: i * 0.25 }}
         >
-          <Check className="h-3 w-3 text-emerald-400" />
-          <span className="text-[10px] font-medium text-emerald-300">{item}</span>
+          <Check className="h-3 w-3 text-emerald-600" />
+          <span className="text-[10px] font-medium text-emerald-700">{item}</span>
         </motion.div>
       ))}
     </div>
