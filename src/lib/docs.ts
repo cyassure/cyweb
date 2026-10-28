@@ -36,6 +36,7 @@ import mcpIntegrations from "@/content/docs/mcp-integrations.md?raw";
 import settings from "@/content/docs/settings.md?raw";
 import systemHealth from "@/content/docs/system-health.md?raw";
 import architecture from "@/content/docs/architecture.md?raw";
+import dataSecurityArch from "@/content/docs/data-security-architecture.md?raw";
 import troubleshooting from "@/content/docs/troubleshooting.md?raw";
 
 export type DocCategory = "Get started" | "User guide" | "Administration" | "Architecture & troubleshooting";
@@ -142,6 +143,9 @@ export const docs: DocEntry[] = [
   { slug: "architecture", category: "Architecture & troubleshooting", icon: Network, content: architecture,
     title: "System Architecture & Design",
     description: "Components, data flows, multi-tenancy, security model and licensing design." },
+  { slug: "data-security-architecture", category: "Architecture & troubleshooting", icon: Database,
+    content: dataSecurityArch, title: "How Cy360 Protects Your Sensitive Data",
+    description: "One detection engine on every channel — architecture, channels, detection, encryption, privacy by design and accuracy." },
   { slug: "troubleshooting", category: "Architecture & troubleshooting", icon: Wrench, content: troubleshooting,
     title: "Troubleshooting",
     description: "Symptoms, causes and fixes — installation, agents, scans, AI, integrations and more." },
@@ -169,6 +173,7 @@ const DOC_DOMAIN: Record<string, DomainId> = {
   "asset-management": "itam",
   "cloud-and-saas-security": "cloud-saas",
   "data-security": "data",
+  "data-security-architecture": "data",
   "endpoint-defence": "endpoint",
   "ai-security": "ai",
   "governance-and-compliance": "grc",

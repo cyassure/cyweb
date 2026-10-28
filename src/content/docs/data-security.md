@@ -20,6 +20,8 @@ The sidebar groups the section like this (an entry your licence or role doesn't 
 
 DSPM's settings are under **Settings → Data Security**; cloud, SaaS and database accounts are listed in **Settings → Connected Accounts**.
 
+For the architecture behind it — one detection engine on every channel, what each channel inspects and can do, encryption handling, privacy by design and measured accuracy — see [How Cy360 Protects Your Sensitive Data](/docs/data-security-architecture), also available as a [PDF](/downloads/CyAssure-360-Data-Security.pdf).
+
 ## Classification (DLP)
 
 ![Data Security → Classification](/docs-img/data-protection.jpg)
