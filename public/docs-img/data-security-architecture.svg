@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 792" font-family="Inter, Segoe UI, Helvetica, Arial, sans-serif">
+  <title>Cy360 data security architecture: where data is stored, one shared detection engine, where data leaves</title>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0L10 5L0 10z" fill="#13d8ec"/>
+    </marker>
+    <style>
+      .box{fill:#121821;stroke:#2b3646;stroke-width:1.5}
+      .core{fill:#0f2a30;stroke:#13d8ec;stroke-width:1.8}
+      .out{fill:#122217;stroke:#3ecf8e;stroke-width:1.5}
+      .ctx{fill:#1a1830;stroke:#8b7cf6;stroke-width:1.5}
+      .t{fill:#e6edf5;font-size:15px;font-weight:600}
+      .big{fill:#13d8ec;font-size:22px;font-weight:700}
+      .s{fill:#9aa7b8;font-size:12px}
+      .b{fill:#cdd6e2;font-size:13px}
+      .h{fill:#9aa7b8;font-size:11px;letter-spacing:1.5px;font-weight:600}
+      .tag{fill:#13d8ec;font-size:11px;letter-spacing:1px;font-family:ui-monospace, SFMono-Regular, Menlo, monospace}
+      .l{stroke:#13d8ec;stroke-width:1.6;fill:none}
+    </style>
+  </defs>
+  <rect width="1000" height="792" rx="14" fill="#0b0e13"/>
+  <text class="h" x="30" y="34">WHERE DATA IS STORED</text>
+  <text class="h" x="346" y="34">SHARED BY EVERY CHANNEL</text>
+  <text class="h" x="700" y="34">WHERE DATA LEAVES</text>
+
+  <rect class="box" x="30" y="50" width="270" height="108" rx="8"/>
+  <text class="tag" x="46" y="72">DSPM</text>
+  <text class="t" x="46" y="94">Cloud drives and storage</text>
+  <text class="s" x="46" y="114">SharePoint, OneDrive, Google Drive,</text>
+  <text class="s" x="46" y="130">Box, Dropbox, Amazon S3, Azure Blob,</text>
+  <text class="s" x="46" y="146">Google Cloud Storage</text>
+  <rect class="box" x="30" y="168" width="270" height="108" rx="8"/>
+  <text class="tag" x="46" y="190">DSPM</text>
+  <text class="t" x="46" y="212">Databases</text>
+  <text class="s" x="46" y="232">PostgreSQL, MySQL, SQL Server,</text>
+  <text class="s" x="46" y="248">Snowflake, BigQuery</text>
+  <rect class="box" x="30" y="286" width="270" height="108" rx="8"/>
+  <text class="tag" x="46" y="308">DSPM</text>
+  <text class="t" x="46" y="330">File shares</text>
+  <text class="s" x="46" y="350">Windows (SMB) shares</text>
+  <rect class="box" x="30" y="404" width="270" height="108" rx="8"/>
+  <text class="tag" x="46" y="426">CyEDR</text>
+  <text class="t" x="46" y="448">Laptops and servers</text>
+  <text class="s" x="46" y="468">Scheduled scan of files already</text>
+  <text class="s" x="46" y="484">on the device</text>
+  <rect class="box" x="700" y="50" width="270" height="108" rx="8"/>
+  <text class="tag" x="716" y="72">EMAIL DLP</text>
+  <text class="t" x="716" y="94">Email</text>
+  <text class="s" x="716" y="114">Inline mail relay, and mailbox scanning</text>
+  <text class="s" x="716" y="130">for Microsoft 365 and Google Workspace</text>
+  <rect class="box" x="700" y="168" width="270" height="108" rx="8"/>
+  <text class="tag" x="716" y="190">SECURE WEB GATEWAY · BROWSER</text>
+  <text class="t" x="716" y="212">AI tools and web uploads</text>
+  <text class="s" x="716" y="232">Prompts, pasted text and files sent to AI</text>
+  <text class="s" x="716" y="248">sites and other websites, through the</text>
+  <text class="s" x="716" y="264">gateway or the browser extension</text>
+  <rect class="box" x="700" y="286" width="270" height="108" rx="8"/>
+  <text class="tag" x="716" y="308">CyEDR</text>
+  <text class="t" x="716" y="330">Endpoints</text>
+  <text class="s" x="716" y="350">USB, cloud-sync folders, network shares,</text>
+  <text class="s" x="716" y="366">remote-desktop drives, printing,</text>
+  <text class="s" x="716" y="382">clipboard, Bluetooth</text>
+  <rect class="box" x="700" y="404" width="270" height="108" rx="8"/>
+  <text class="tag" x="716" y="426">CASB</text>
+  <text class="t" x="716" y="448">SaaS sharing</text>
+  <text class="s" x="716" y="468">Public links, shares to personal</text>
+  <text class="s" x="716" y="484">accounts, mass downloads</text>
+  <rect class="core" x="330" y="50" width="340" height="462" rx="10"/>
+  <text class="big" x="352" y="98">One detection engine</text>
+  <text class="s" x="352" y="120">same detectors, records, fingerprints and levels</text>
+  <circle cx="360" cy="150" r="2.6" fill="#13d8ec"/>
+  <text class="b" x="372" y="154">Data detectors with checksum checks,</text>
+  <text class="b" x="372" y="171">including regional packs</text>
+  <circle cx="360" cy="196" r="2.6" fill="#13d8ec"/>
+  <text class="b" x="372" y="200">Exact Data Match on your real records</text>
+  <circle cx="360" cy="225" r="2.6" fill="#13d8ec"/>
+  <text class="b" x="372" y="229">Fingerprints of your confidential</text>
+  <text class="b" x="372" y="246">documents</text>
+  <circle cx="360" cy="271" r="2.6" fill="#13d8ec"/>
+  <text class="b" x="372" y="275">Document-type recognition</text>
+  <circle cx="360" cy="300" r="2.6" fill="#13d8ec"/>
+  <text class="b" x="372" y="304">Sensitivity labels read from files</text>
+  <circle cx="360" cy="329" r="2.6" fill="#13d8ec"/>
+  <text class="b" x="372" y="333">OCR for images and scanned PDFs</text>
+  <circle cx="360" cy="358" r="2.6" fill="#13d8ec"/>
+  <text class="b" x="372" y="362">Opens password-protected files and</text>
+  <text class="b" x="372" y="379">encrypted email</text>
+  <circle cx="360" cy="404" r="2.6" fill="#13d8ec"/>
+  <text class="b" x="372" y="408">One policy, one action per channel</text>
+  <text class="h" x="352" y="434">FOUR LEVELS</text>
+  <rect x="352" y="444" width="58" height="24" rx="5" fill="none" stroke="#8b98ab" stroke-width="1.3"/>
+  <text x="381.0" y="460" text-anchor="middle" font-size="11.5" fill="#8b98ab">Public</text>
+  <rect x="416" y="444" width="66" height="24" rx="5" fill="none" stroke="#4d9eff" stroke-width="1.3"/>
+  <text x="449.0" y="460" text-anchor="middle" font-size="11.5" fill="#4d9eff">General</text>
+  <rect x="488" y="444" width="96" height="24" rx="5" fill="none" stroke="#f5a524" stroke-width="1.3"/>
+  <text x="536.0" y="460" text-anchor="middle" font-size="11.5" fill="#f5a524">Confidential</text>
+  <rect x="352" y="474" width="138" height="24" rx="5" fill="none" stroke="#ff5c5c" stroke-width="1.3"/>
+  <text x="421.0" y="490" text-anchor="middle" font-size="11.5" fill="#ff5c5c">Highly Confidential</text>
+  <path class="l" d="M302 281H326" marker-end="url(#a)"/>
+  <path class="l" d="M698 281H674" marker-end="url(#a)"/>
+  <rect class="ctx" x="30" y="530" width="465" height="90" rx="8"/>
+  <text class="tag" x="46" y="552">CSPM · SSPM</text>
+  <text class="t" x="46" y="574">Posture context</text>
+  <text class="s" x="46" y="594">Cloud and SaaS configuration checks: is a store public,</text>
+  <text class="s" x="46" y="610">is logging on, who holds admin rights</text>
+  <rect class="ctx" x="505" y="530" width="465" height="90" rx="8"/>
+  <text class="tag" x="521" y="552">DATA ACTIVITY</text>
+  <text class="t" x="521" y="574">Who reads the data</text>
+  <text class="s" x="521" y="594">Access logs from storage and databases, with behaviour</text>
+  <text class="s" x="521" y="610">analytics for unusual reads</text>
+  <rect class="out" x="30" y="634" width="306" height="112" rx="8"/>
+  <text class="tag" x="46" y="656">ONE VIEW</text>
+  <text class="t" x="46" y="678">DLP Activity</text>
+  <text class="s" x="46" y="698">Every event from every source as one</text>
+  <text class="s" x="46" y="714">record: what data, which level, who,</text>
+  <text class="s" x="46" y="730">which channel, where to, outcome</text>
+  <rect class="out" x="347" y="634" width="306" height="112" rx="8"/>
+  <text class="tag" x="363" y="656">SECURITY OPERATIONS</text>
+  <text class="t" x="363" y="678">Incidents</text>
+  <text class="s" x="363" y="698">Alerts weighted by how sensitive the</text>
+  <text class="s" x="363" y="714">data is, then correlated with the rest</text>
+  <text class="s" x="363" y="730">of your security telemetry</text>
+  <rect class="out" x="664" y="634" width="306" height="112" rx="8"/>
+  <text class="tag" x="680" y="656">REPORTING</text>
+  <text class="t" x="680" y="678">Reports</text>
+  <text class="s" x="680" y="698">Data Loss Prevention, Data Security</text>
+  <text class="s" x="680" y="714">and Data Leak Assessment reports</text>
+  <text class="s" x="30" y="776">Matched values are never stored — only which detector matched, how often, the level, the document type and the file name.</text>
+</svg>

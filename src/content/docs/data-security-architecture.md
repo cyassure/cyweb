@@ -6,6 +6,8 @@ One detection engine runs on every route your data can take: **email, AI tools, 
 
 ## Architecture: where the data is, where it leaves, and one engine in between
 
+![Cy360 data security architecture: cloud drives, databases, file shares and laptops on the left; one shared detection engine in the middle; email, AI tools and web uploads, endpoints and SaaS sharing on the right; posture context and data activity below; DLP Activity, Incidents and Reports at the bottom](/docs-img/data-security-architecture.svg)
+
 **Where data is stored**
 
 | Source | Covered by | What is scanned |
