@@ -1,3 +1,11 @@
+## v1.0.106 -- 2026-10-28
+
+### New Features
+
+  - web): About Us banner — one Cy360 platform panel, no connecting arcs
+
+---
+
 ## v1.0.105 -- 2026-10-28
 
 ### New Features
