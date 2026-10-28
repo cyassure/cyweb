@@ -2,26 +2,28 @@
   <title>Cy360 data security architecture: where data is stored, one shared detection engine, where data leaves</title>
   <defs>
     <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-      <path d="M0 0L10 5L0 10z" fill="#13d8ec"/>
+      <path d="M0 0L10 5L0 10z" fill="#7aa8f0"/>
     </marker>
     <style>
-      .box{fill:#121821;stroke:#2b3646;stroke-width:1.5}
-      .core{fill:#0f2a30;stroke:#13d8ec;stroke-width:1.8}
-      .out{fill:#122217;stroke:#3ecf8e;stroke-width:1.5}
-      .ctx{fill:#1a1830;stroke:#8b7cf6;stroke-width:1.5}
-      .t{fill:#e6edf5;font-size:15px;font-weight:600}
-      .big{fill:#13d8ec;font-size:22px;font-weight:700}
-      .s{fill:#9aa7b8;font-size:12px}
-      .b{fill:#cdd6e2;font-size:13px}
-      .h{fill:#9aa7b8;font-size:11px;letter-spacing:1.5px;font-weight:600}
-      .tag{fill:#13d8ec;font-size:11px;letter-spacing:1px;font-family:ui-monospace, SFMono-Regular, Menlo, monospace}
-      .l{stroke:#13d8ec;stroke-width:1.6;fill:none}
+      .box{fill:#171e29;stroke:#2b3545;stroke-width:1.2}
+      .core{fill:#1b2a42;stroke:#7aa8f0;stroke-width:2}
+      .out{fill:#171e29;stroke:#7aa8f0;stroke-width:1.2}
+      .ctx{fill:#171e29;stroke:#2b3545;stroke-width:1.2}
+      .t{fill:#e7ecf3;font-size:15px;font-weight:600}
+      .big{fill:#7aa8f0;font-size:22px;font-weight:700}
+      .s{fill:#9aa6b7;font-size:12px}
+      .b{fill:#e7ecf3;font-size:13px}
+      .h{fill:#9aa6b7;font-size:11px;letter-spacing:1.5px;font-weight:600;font-family:ui-monospace, SFMono-Regular, Menlo, monospace}
+      .tag{fill:#7aa8f0;font-size:11px;letter-spacing:0.8px;font-family:ui-monospace, SFMono-Regular, Menlo, monospace}
+      .l{stroke:#7aa8f0;stroke-width:1.6;fill:none}
+      .u{stroke:#2b3545;stroke-width:1}
     </style>
   </defs>
-  <rect width="1000" height="792" rx="14" fill="#0b0e13"/>
+  <rect width="1000" height="792" rx="14" fill="#0f141c"/>
   <text class="h" x="30" y="34">WHERE DATA IS STORED</text>
   <text class="h" x="346" y="34">SHARED BY EVERY CHANNEL</text>
   <text class="h" x="700" y="34">WHERE DATA LEAVES</text>
+  <path class="u" d="M30 41H300M330 41H670M700 41H970"/>
 
   <rect class="box" x="30" y="50" width="270" height="108" rx="8"/>
   <text class="tag" x="46" y="72">DSPM</text>
@@ -68,34 +70,34 @@
   <rect class="core" x="330" y="50" width="340" height="462" rx="10"/>
   <text class="big" x="352" y="98">One detection engine</text>
   <text class="s" x="352" y="120">same detectors, records, fingerprints and levels</text>
-  <circle cx="360" cy="150" r="2.6" fill="#13d8ec"/>
+  <circle cx="360" cy="150" r="2.6" fill="#7aa8f0"/>
   <text class="b" x="372" y="154">Data detectors with checksum checks,</text>
   <text class="b" x="372" y="171">including regional packs</text>
-  <circle cx="360" cy="196" r="2.6" fill="#13d8ec"/>
+  <circle cx="360" cy="196" r="2.6" fill="#7aa8f0"/>
   <text class="b" x="372" y="200">Exact Data Match on your real records</text>
-  <circle cx="360" cy="225" r="2.6" fill="#13d8ec"/>
+  <circle cx="360" cy="225" r="2.6" fill="#7aa8f0"/>
   <text class="b" x="372" y="229">Fingerprints of your confidential</text>
   <text class="b" x="372" y="246">documents</text>
-  <circle cx="360" cy="271" r="2.6" fill="#13d8ec"/>
+  <circle cx="360" cy="271" r="2.6" fill="#7aa8f0"/>
   <text class="b" x="372" y="275">Document-type recognition</text>
-  <circle cx="360" cy="300" r="2.6" fill="#13d8ec"/>
+  <circle cx="360" cy="300" r="2.6" fill="#7aa8f0"/>
   <text class="b" x="372" y="304">Sensitivity labels read from files</text>
-  <circle cx="360" cy="329" r="2.6" fill="#13d8ec"/>
+  <circle cx="360" cy="329" r="2.6" fill="#7aa8f0"/>
   <text class="b" x="372" y="333">OCR for images and scanned PDFs</text>
-  <circle cx="360" cy="358" r="2.6" fill="#13d8ec"/>
+  <circle cx="360" cy="358" r="2.6" fill="#7aa8f0"/>
   <text class="b" x="372" y="362">Opens password-protected files and</text>
   <text class="b" x="372" y="379">encrypted email</text>
-  <circle cx="360" cy="404" r="2.6" fill="#13d8ec"/>
+  <circle cx="360" cy="404" r="2.6" fill="#7aa8f0"/>
   <text class="b" x="372" y="408">One policy, one action per channel</text>
   <text class="h" x="352" y="434">FOUR LEVELS</text>
-  <rect x="352" y="444" width="58" height="24" rx="5" fill="none" stroke="#8b98ab" stroke-width="1.3"/>
-  <text x="381.0" y="460" text-anchor="middle" font-size="11.5" fill="#8b98ab">Public</text>
-  <rect x="416" y="444" width="66" height="24" rx="5" fill="none" stroke="#4d9eff" stroke-width="1.3"/>
-  <text x="449.0" y="460" text-anchor="middle" font-size="11.5" fill="#4d9eff">General</text>
-  <rect x="488" y="444" width="96" height="24" rx="5" fill="none" stroke="#f5a524" stroke-width="1.3"/>
-  <text x="536.0" y="460" text-anchor="middle" font-size="11.5" fill="#f5a524">Confidential</text>
-  <rect x="352" y="474" width="138" height="24" rx="5" fill="none" stroke="#ff5c5c" stroke-width="1.3"/>
-  <text x="421.0" y="490" text-anchor="middle" font-size="11.5" fill="#ff5c5c">Highly Confidential</text>
+  <rect x="352" y="444" width="58" height="24" rx="5" fill="none" stroke="#9aa4b2" stroke-width="1.3"/>
+  <text x="381.0" y="460" text-anchor="middle" font-size="11.5" fill="#9aa4b2">Public</text>
+  <rect x="416" y="444" width="66" height="24" rx="5" fill="none" stroke="#7aa8f0" stroke-width="1.3"/>
+  <text x="449.0" y="460" text-anchor="middle" font-size="11.5" fill="#7aa8f0">General</text>
+  <rect x="488" y="444" width="96" height="24" rx="5" fill="none" stroke="#e2a646" stroke-width="1.3"/>
+  <text x="536.0" y="460" text-anchor="middle" font-size="11.5" fill="#e2a646">Confidential</text>
+  <rect x="352" y="474" width="138" height="24" rx="5" fill="none" stroke="#ef7a7a" stroke-width="1.3"/>
+  <text x="421.0" y="490" text-anchor="middle" font-size="11.5" fill="#ef7a7a">Highly Confidential</text>
   <path class="l" d="M302 281H326" marker-end="url(#a)"/>
   <path class="l" d="M698 281H674" marker-end="url(#a)"/>
   <rect class="ctx" x="30" y="530" width="465" height="90" rx="8"/>
