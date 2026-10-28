@@ -1,3 +1,11 @@
+## v1.0.101 -- 2026-10-28
+
+### New Features
+
+  - web): photo-led enterprise refresh + one consistent type system
+
+---
+
 ## v1.0.100 -- 2026-10-28
 
 ### New Features
