@@ -1,3 +1,11 @@
+## v1.0.104 -- 2026-10-28
+
+### New Features
+
+  - web): About Us — 10+ security modules; Deepak's avatar drawn from his photo
+
+---
+
 ## v1.0.103 -- 2026-10-28
 
 ### Improvements
