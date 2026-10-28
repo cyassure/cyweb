@@ -1,3 +1,11 @@
+## v1.0.100 -- 2026-10-28
+
+### New Features
+
+  - web): light homepage, new CyAssure logo
+
+---
+
 ## v1.0.99 -- 2026-10-28
 
 ### New Features
