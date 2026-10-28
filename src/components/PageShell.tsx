@@ -1,4 +1,4 @@
-import { ReactNode, useLayoutEffect, type CSSProperties } from "react";
+import { ReactNode, type CSSProperties } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -8,14 +8,7 @@ interface PageShellProps {
   accent?: string;
 }
 
-// Inner pages render on the light theme. The class goes on <html> rather than a
-// wrapper so dialogs, selects and toasts (portalled to <body>) pick it up too.
 const PageShell = ({ children, accent = "#4d9eff" }: PageShellProps) => {
-  useLayoutEffect(() => {
-    document.documentElement.classList.add("theme-light");
-    return () => document.documentElement.classList.remove("theme-light");
-  }, []);
-
   return (
     <div className="relative min-h-screen bg-background" style={{ "--page-accent": accent } as CSSProperties}>
       <div

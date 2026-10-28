@@ -1,6 +1,6 @@
 import { Eye, MonitorSpeaker, FileCheck, UserCog, Bug, Briefcase } from "lucide-react";
 import SectionHeader from "@/components/SectionHeader";
-import { DOMAIN_COLORS } from "@/lib/domains";
+import { DOMAIN_COLORS, ink } from "@/lib/domains";
 
 const services = [
   { icon: Eye, color: DOMAIN_COLORS.secops, title: "Managed Detection & Response", desc: "24×7 monitoring, detection, investigation, and response across endpoints, networks, and cloud." },
@@ -13,7 +13,7 @@ const services = [
 
 const ServicesSection = () => {
   return (
-    <section id="services" className="relative py-24">
+    <section id="services" className="relative bg-[color-mix(in_srgb,#b06eff_6%,hsl(var(--background)))] py-24">
       <div className="container mx-auto px-6">
 
         <SectionHeader
@@ -25,7 +25,7 @@ const ServicesSection = () => {
         <div className="grid gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-2 xl:grid-cols-3">
           {services.map((s) => (
             <div key={s.title} className="flex flex-col bg-card p-6 transition-colors hover:bg-secondary/60">
-              <s.icon className="mb-5 h-5 w-5" style={{ color: s.color }} />
+              <s.icon className="mb-5 h-5 w-5" style={{ color: ink(s.color) }} />
               <h3 className="mb-2 text-base font-semibold text-foreground">{s.title}</h3>
               <p className="text-sm leading-relaxed text-muted-foreground">{s.desc}</p>
             </div>

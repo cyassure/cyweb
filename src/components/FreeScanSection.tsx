@@ -2,7 +2,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Globe, Search, Zap, FileSearch, Check } from "lucide-react";
 import SectionHeader from "@/components/SectionHeader";
 import DlpScanDialog from "@/components/DlpScanDialog";
-import { DOMAIN_COLORS } from "@/lib/domains";
+import { DOMAIN_COLORS, ink } from "@/lib/domains";
 
 const ASM = DOMAIN_COLORS.asm;
 const DLP = DOMAIN_COLORS.data;
@@ -44,7 +44,7 @@ const RadarVisual = () => (
       transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
     />
     <div className="relative z-10 rounded-full border bg-card p-4" style={{ borderColor: `${ASM}66` }}>
-      <Globe className="h-7 w-7" style={{ color: ASM }} />
+      <Globe className="h-7 w-7" style={{ color: ink(ASM) }} />
     </div>
     {[
       { top: "15%", left: "68%", delay: 0.5 },
@@ -79,7 +79,7 @@ const DocumentVisual = () => {
   return (
     <div className="relative h-44 w-40 overflow-hidden rounded-md border border-border bg-card px-4 py-4">
       <div className="mb-3 flex items-center gap-2">
-        <FileSearch className="h-4 w-4" style={{ color: DLP }} />
+        <FileSearch className="h-4 w-4" style={{ color: ink(DLP) }} />
         <span className="h-1.5 w-14 rounded-sm bg-muted-foreground/40" />
       </div>
       <div className="space-y-2.5">
@@ -113,7 +113,7 @@ const DocumentVisual = () => {
 
 const FreeScanSection = () => {
   return (
-    <section id="free-scan" className="relative py-24">
+    <section id="free-scan" className="relative bg-[color-mix(in_srgb,#2dd4bf_7%,hsl(var(--background)))] py-24">
       <div className="container relative mx-auto px-6">
         <SectionHeader
           eyebrow="Free scans"
@@ -133,7 +133,7 @@ const FreeScanSection = () => {
             <div className="h-1" style={{ backgroundColor: ASM }} />
             <div className="flex flex-1 flex-col gap-8 p-8 sm:flex-row">
               <div className="flex-1">
-                <p className="mb-3 font-mono text-xs uppercase tracking-[0.12em]" style={{ color: ASM }}>
+                <p className="mb-3 font-mono text-xs uppercase tracking-[0.12em]" style={{ color: ink(ASM) }}>
                   Attack surface · no account required
                 </p>
                 <h3 className="mb-3 font-heading text-xl font-bold text-foreground md:text-2xl">Free Attack Surface Scan</h3>
@@ -144,7 +144,7 @@ const FreeScanSection = () => {
                 <ul className="mb-8 grid gap-2 sm:grid-cols-2">
                   {scanModules.map((mod) => (
                     <li key={mod} className="flex items-start gap-2 text-xs text-muted-foreground">
-                      <Search className="mt-0.5 h-3.5 w-3.5 shrink-0" style={{ color: ASM }} />
+                      <Search className="mt-0.5 h-3.5 w-3.5 shrink-0" style={{ color: ink(ASM) }} />
                       {mod}
                     </li>
                   ))}
@@ -185,7 +185,7 @@ const FreeScanSection = () => {
             <div className="h-1" style={{ backgroundColor: DLP }} />
             <div className="flex flex-1 flex-col gap-8 p-8 sm:flex-row">
               <div className="flex-1">
-                <p className="mb-3 font-mono text-xs uppercase tracking-[0.12em]" style={{ color: DLP }}>
+                <p className="mb-3 font-mono text-xs uppercase tracking-[0.12em]" style={{ color: ink(DLP) }}>
                   Data loss · set up with our team
                 </p>
                 <h3 className="mb-3 font-heading text-xl font-bold text-foreground md:text-2xl">Free DLP Scan</h3>
@@ -196,7 +196,7 @@ const FreeScanSection = () => {
                 <ul className="mb-8 grid gap-2 sm:grid-cols-2">
                   {dlpFindings.map((f) => (
                     <li key={f} className="flex items-start gap-2 text-xs text-muted-foreground">
-                      <Check className="mt-0.5 h-3.5 w-3.5 shrink-0" style={{ color: DLP }} />
+                      <Check className="mt-0.5 h-3.5 w-3.5 shrink-0" style={{ color: ink(DLP) }} />
                       {f}
                     </li>
                   ))}

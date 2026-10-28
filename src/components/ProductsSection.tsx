@@ -11,7 +11,7 @@ import {
   DataSecurityScreen, EndpointScreen, AiSecurityScreen, GrcScreen, ScreenshotScreen,
 } from "@/components/ProductScreens";
 import attackPosture from "@/assets/screenshots/attack-posture.jpg";
-import { DOMAIN_COLORS } from "@/lib/domains";
+import { DOMAIN_COLORS, ink } from "@/lib/domains";
 import SectionHeader from "@/components/SectionHeader";
 
 interface Domain {
@@ -195,7 +195,7 @@ const ProductsSection = () => {
                   }`}
                   style={isActive ? { borderColor: `${d.color}99`, backgroundColor: `${d.color}1a` } : undefined}
                 >
-                  <d.icon className="h-4 w-4" style={{ color: d.color }} />
+                  <d.icon className="h-4 w-4" style={{ color: ink(d.color) }} />
                   {d.label}
                 </button>
               );
@@ -216,8 +216,8 @@ const ProductsSection = () => {
           >
             <div>
               <div className="mb-4 flex items-center gap-3">
-                <active.icon className="h-5 w-5" style={{ color: active.color }} />
-                <p className="font-mono text-xs font-medium uppercase tracking-[0.12em]" style={{ color: active.color }}>
+                <active.icon className="h-5 w-5" style={{ color: ink(active.color) }} />
+                <p className="font-mono text-xs font-medium uppercase tracking-[0.12em]" style={{ color: ink(active.color) }}>
                   {active.label}
                 </p>
               </div>
@@ -225,7 +225,7 @@ const ProductsSection = () => {
               <p className="text-sm leading-relaxed text-muted-foreground md:text-base">
                 {active.intro.split("**").map((part, i) =>
                   i % 2 ? (
-                    <strong key={i} className="font-semibold" style={{ color: active.color }}>{part}</strong>
+                    <strong key={i} className="font-semibold" style={{ color: ink(active.color) }}>{part}</strong>
                   ) : (
                     part
                   )
@@ -247,7 +247,7 @@ const ProductsSection = () => {
                 className="absolute -inset-4 rounded-[2rem] opacity-40 blur-2xl"
                 style={{ background: `radial-gradient(circle at 50% 40%, ${active.color}55, transparent 70%)` }}
               />
-              <div className="relative">
+              <div className="theme-dark relative">
                 <active.screen />
               </div>
               <p className="mt-3 font-mono text-[11px] text-muted-foreground/70">Illustrative data</p>

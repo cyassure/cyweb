@@ -38,6 +38,19 @@ const HeroSection = () => {
 
   return (
     <section className="relative overflow-hidden pt-20">
+      {/* Soft wash in the domain colours behind the headline and funnel. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-[640px]"
+        style={{
+          background: [
+            `radial-gradient(40% 55% at 8% 20%, ${DOMAIN_COLORS.secops}26, transparent 70%)`,
+            `radial-gradient(35% 50% at 45% 0%, ${DOMAIN_COLORS.itam}22, transparent 70%)`,
+            `radial-gradient(40% 60% at 85% 25%, ${DOMAIN_COLORS.endpoint}2e, transparent 70%)`,
+            `radial-gradient(35% 45% at 70% 85%, ${DOMAIN_COLORS.data}26, transparent 70%)`,
+          ].join(", "),
+        }}
+      />
       <div className="container relative mx-auto px-6 pb-10 pt-12 md:pt-20">
         <div className="grid items-end gap-12 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
           <div>

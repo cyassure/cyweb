@@ -44,12 +44,12 @@ const foundation = [
 ];
 
 const logSources = [
-  { icon: Server, label: "Servers", color: "text-blue-400" },
-  { icon: Wifi, label: "Firewalls", color: "text-green-400" },
-  { icon: Cloud, label: "Cloud", color: "text-purple-400" },
-  { icon: Monitor, label: "Endpoints", color: "text-yellow-400" },
-  { icon: Lock, label: "Identity", color: "text-red-400" },
-  { icon: Network, label: "Network", color: "text-cyan-400" },
+  { icon: Server, label: "Servers", color: "text-blue-600" },
+  { icon: Wifi, label: "Firewalls", color: "text-green-600" },
+  { icon: Cloud, label: "Cloud", color: "text-purple-600" },
+  { icon: Monitor, label: "Endpoints", color: "text-yellow-600" },
+  { icon: Lock, label: "Identity", color: "text-red-600" },
+  { icon: Network, label: "Network", color: "text-cyan-600" },
 ];
 
 const PlatformSection = () => {
@@ -163,9 +163,9 @@ const PlatformSection = () => {
                   animate={{ opacity: [1, 0.3, 1] }}
                   transition={{ duration: 1.5, repeat: Infinity }}
                 >
-                  <Brain className="h-3 w-3 text-violet-400" />
+                  <Brain className="h-3 w-3 text-violet-600" />
                 </motion.div>
-                <span className="text-[9px] font-semibold text-violet-400">CyMind AI</span>
+                <span className="text-[9px] font-semibold text-violet-600">CyMind AI</span>
               </div>
               <div className="flex gap-1">
                 {[0, 1, 2].map((i) => (
@@ -232,7 +232,7 @@ const PlatformSection = () => {
 
           <p className="mt-6 text-center text-xs text-muted-foreground">
             Firewalls · Endpoints · Cloud · SaaS · Network · Identity — all unified.{" "}
-            <span className="text-violet-400/80">Powered by CyMind AI.</span>
+            <span className="text-violet-600/80">Powered by CyMind AI.</span>
           </p>
         </motion.div>
 
