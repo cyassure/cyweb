@@ -1,3 +1,11 @@
+## v1.0.105 -- 2026-10-28
+
+### New Features
+
+  - web): About Us — Deepak's photo, Cy360 modules on the offices arc
+
+---
+
 ## v1.0.104 -- 2026-10-28
 
 ### New Features
