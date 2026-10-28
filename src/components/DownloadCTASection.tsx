@@ -10,25 +10,25 @@ const DownloadCTASection = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mx-auto flex max-w-3xl flex-col items-center gap-6 rounded-2xl border border-primary/25 bg-gradient-to-br from-primary/10 via-card to-card p-10 text-center"
+          className="flex flex-col gap-6 rounded-lg border border-border bg-card p-8 md:flex-row md:items-center md:justify-between md:p-10"
         >
-          <div className="flex h-14 w-14 items-center justify-center rounded-full border border-primary/40 bg-primary/15">
-            <Terminal className="h-7 w-7 text-primary" />
-          </div>
-          <div>
-            <h2 className="mb-2 font-heading text-2xl font-bold text-foreground md:text-3xl">
-              Try Cy360 in minutes, not weeks
-            </h2>
-            <p className="mx-auto max-w-md text-muted-foreground">
-              Community edition is free and self-hosted. Public images, one install command, pick your version.
-            </p>
-          </div>
-          <div className="flex items-center gap-2 rounded-full border border-primary/20 bg-background/40 px-3 py-1.5 text-xs text-primary">
-            <Zap className="h-3.5 w-3.5" /> No card required
+          <div className="flex items-start gap-5">
+            <Terminal className="mt-1 h-6 w-6 shrink-0 text-primary" />
+            <div>
+              <h2 className="mb-2 font-heading text-xl font-bold text-foreground md:text-2xl">
+                Try Cy360 in minutes, not weeks
+              </h2>
+              <p className="max-w-lg text-muted-foreground">
+                Community edition is free and self-hosted. Public images, one install command, pick your version.
+              </p>
+              <p className="mt-3 flex items-center gap-2 font-mono text-xs text-muted-foreground">
+                <Zap className="h-3.5 w-3.5 text-primary" /> No card required
+              </p>
+            </div>
           </div>
           <Link
             to="/download"
-            className="group inline-flex items-center gap-2 rounded-lg bg-primary px-7 py-3.5 font-heading text-sm font-semibold text-primary-foreground transition-all hover:brightness-110"
+            className="group inline-flex shrink-0 items-center gap-2 self-start rounded-md bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground transition-all hover:brightness-110 md:self-center"
           >
             Get the Install Command
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />

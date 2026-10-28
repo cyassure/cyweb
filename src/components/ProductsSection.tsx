@@ -11,6 +11,8 @@ import {
   DataSecurityScreen, EndpointScreen, AiSecurityScreen, GrcScreen, ScreenshotScreen,
 } from "@/components/ProductScreens";
 import attackPosture from "@/assets/screenshots/attack-posture.jpg";
+import { DOMAIN_COLORS } from "@/lib/domains";
+import SectionHeader from "@/components/SectionHeader";
 
 interface Domain {
   id: string;
@@ -32,7 +34,7 @@ const domains: Domain[] = [
     id: "secops",
     icon: ShieldAlert,
     label: "Security Operations",
-    color: "#ff3b3b",
+    color: DOMAIN_COLORS.secops,
     headline: "From raw events to a handful of real incidents",
     intro: "Every EDR, cloud, firewall and identity event lands in one **SIEM & Data Lake**. Cy360 groups related signals into risk-scored, MITRE-mapped **Correlated Incidents**, while **ML Detection** filters false positives and flags novel threats. Analysts dig deeper with **Threat Hunting**, **Behaviour Analysis (UEBA)**, the **Identity Timeline** and **Sandbox** detonation.",
     screen: SecOpsScreen,
@@ -43,7 +45,7 @@ const domains: Domain[] = [
     id: "response",
     icon: Bot,
     label: "Response & AI Agents",
-    color: "#b06eff",
+    color: DOMAIN_COLORS.response,
     headline: "Respond, remediate and close the case",
     intro: "Every incident is tracked in **Case Management** with an owner, evidence and an SLA. Analysts or **AI SOC Agents** take **Response Actions** — isolate hosts, kill processes, block hashes — push **EDL Blocklists** to your firewalls, and run **Self-Remediation** that verifies each fix and rolls back if it fails. **SOAR Playbooks** automate the routine work; anything risky waits for human approval.",
     screen: ResponseScreen,
@@ -54,7 +56,7 @@ const domains: Domain[] = [
     id: "vuln",
     icon: Bug,
     label: "Vulnerability Management",
-    color: "#ff5c8a",
+    color: DOMAIN_COLORS.vuln,
     headline: "One prioritised queue for every vulnerability",
     intro: "Findings from endpoints, agentless scans and your external attack surface merge into **Unified Findings**, de-duplicated per asset. **Risk-based Priority** ranks them by EPSS, CISA KEV and exposure rather than CVSS alone, the **Remediation Plan** assigns owners and SLAs, and the **Exceptions** register keeps accepted risks audit-ready.",
     screen: VulnScreen,
@@ -65,7 +67,7 @@ const domains: Domain[] = [
     id: "asm",
     icon: Radar,
     label: "Attack Surface",
-    color: "#ff8c00",
+    color: DOMAIN_COLORS.asm,
     headline: "See your organisation the way an attacker does",
     intro: "Starting from your domains and IP ranges, **Discovery** continuously finds everything you expose to the internet. **Exposures** flags risky ports, weak TLS and open admin portals, **Digital Risk** watches for lookalike domains, code leaks and breached credentials, **Change Tracking** alerts on new hosts the moment they appear, and **Benchmarking** scores you against your industry.",
     screen: () => (
@@ -83,7 +85,7 @@ const domains: Domain[] = [
     id: "itam",
     icon: Boxes,
     label: "Asset Management",
-    color: "#f5c518",
+    color: DOMAIN_COLORS.itam,
     headline: "Every asset, and which ones nobody is watching",
     intro: "Cy360 builds one inventory from **Network Assets** — including IoT/OT devices agents can't reach — and **Cloud Inventory** across AWS, Azure and GCP. **Coverage Gaps** shows which assets have no EDR or SIEM coverage, and **Software Inventory** matches installed software to known vulnerabilities.",
     screen: ItamScreen,
@@ -94,7 +96,7 @@ const domains: Domain[] = [
     id: "cloud-saas",
     icon: CloudCog,
     label: "Cloud & SaaS Security",
-    color: "#38bdf8",
+    color: DOMAIN_COLORS["cloud-saas"],
     headline: "Close the public doors in your cloud and SaaS",
     intro: "With read-only access to your AWS, Azure and GCP accounts, **CSPM** checks the real configuration for public storage, open firewalls and exposed databases, alongside **Kubernetes Posture** for EKS and AKS and **Data Protection Checks** for missing encryption and logging. **SaaS Security** finds files shared publicly or outside the company in Microsoft 365, Google Workspace, Box and Dropbox.",
     screen: CloudSaasScreen,
@@ -105,7 +107,7 @@ const domains: Domain[] = [
     id: "data",
     icon: Database,
     label: "Data Security & DSPM",
-    color: "#2dd4bf",
+    color: DOMAIN_COLORS.data,
     headline: "Know where sensitive data lives — and stop it leaving",
     intro: "**Data Protection (DLP)** stops sensitive data leaving through endpoints, web uploads, AI prompts and Microsoft Purview, using **Detection Packs & EDM** fingerprints. The **DSPM** add-on adds a **Data Catalog** of every database, bucket and SaaS store, **Access & Hygiene** to show who can read what, and **Data Remediation** with admin approval and rollback.",
     screen: DataSecurityScreen,
@@ -116,7 +118,7 @@ const domains: Domain[] = [
     id: "endpoint",
     icon: Laptop,
     label: "Endpoint Defence",
-    color: "#4d9eff",
+    color: DOMAIN_COLORS.endpoint,
     headline: "A cross-platform EDR agent, managed from one console",
     intro: "CyEDR is a lightweight agent for Windows, macOS and Linux. The **Fleet** view shows every agent's health and coverage with one-click isolation, **Detections** combine CyScan file-scanning rules, Sysmon and machine-learning classifiers, **Policies & Groups** set behaviour per team, and signed **Installers** are ready for scripted or MDM roll-out.",
     screen: EndpointScreen,
@@ -127,7 +129,7 @@ const domains: Domain[] = [
     id: "ai",
     icon: BrainCircuit,
     label: "AI Security",
-    color: "#b06eff",
+    color: DOMAIN_COLORS.ai,
     headline: "Use AI safely — and see the AI you didn't approve",
     intro: "The **AI Estate** lists every AI application, model and provider in use, and **Shadow AI** detects the tools nobody approved. **Threat Activity** catches prompt DLP violations and prompt injection, **Governance** sets allow/deny policy per tool and team, and the **AI Gateway** enforces it in front of local or cloud models.",
     screen: AiSecurityScreen,
@@ -138,7 +140,7 @@ const domains: Domain[] = [
     id: "grc",
     icon: ShieldCheck,
     label: "Governance & Compliance",
-    color: "#00c8a0",
+    color: DOMAIN_COLORS.grc,
     headline: "Compliance posture that updates itself",
     intro: "**GRC Posture** scores NIS2, ISO 27001, DORA, SOC 2, NIST CSF, PCI DSS and GDPR continuously from real findings. **Assessments & Policies** use AI to check your documents, **Findings & Risk** feed the risk register, the **Forecast** warns which controls are drifting, and the **GDPR Register** and **GRC Reports** are ready for auditors and the board.",
     screen: GrcScreen,
@@ -167,28 +169,18 @@ const ProductsSection = () => {
 
   return (
     <section id="products" className="relative py-24">
-      <div className="absolute inset-0 grid-pattern opacity-20" />
-      <div className="absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/3 blur-[140px]" />
 
       <div className="container relative mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-12 text-center"
-        >
-          <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-primary">The Cy360 Platform</p>
-          <h2 className="mb-4 font-heading text-3xl font-bold text-foreground md:text-5xl">
-            Every function your SOC needs
-          </h2>
-          <p className="mx-auto max-w-2xl text-muted-foreground">
-            Ten security domains, one console. Pick one to explore.
-          </p>
-        </motion.div>
+        <SectionHeader
+          eyebrow="The Cy360 Platform"
+          color={active.color}
+          title="Every function your SOC needs"
+          lede="Ten security domains, one console. Pick one to explore."
+        />
 
         {/* Domain tabs */}
         <div className="-mx-6 mb-10 overflow-x-auto px-6 lg:mx-0 lg:px-0">
-          <div role="tablist" aria-label="Platform domains" className="flex w-max gap-2 lg:w-auto lg:flex-wrap lg:justify-center">
+          <div role="tablist" aria-label="Platform domains" className="flex w-max gap-2 lg:w-auto lg:flex-wrap">
             {domains.map((d) => {
               const isActive = d.id === active.id;
               return (
@@ -198,7 +190,7 @@ const ProductsSection = () => {
                   aria-selected={isActive}
                   aria-controls={`domain-${d.id}`}
                   onClick={() => setActiveId(d.id)}
-                  className={`flex items-center gap-2 whitespace-nowrap rounded-full border px-4 py-2 text-sm transition-all ${
+                  className={`flex items-center gap-2 whitespace-nowrap rounded-md border px-4 py-2 text-sm transition-all ${
                     isActive ? "font-semibold text-foreground" : "border-border bg-card/60 text-muted-foreground hover:text-foreground"
                   }`}
                   style={isActive ? { borderColor: `${d.color}99`, backgroundColor: `${d.color}1a` } : undefined}
@@ -224,13 +216,8 @@ const ProductsSection = () => {
           >
             <div>
               <div className="mb-4 flex items-center gap-3">
-                <div
-                  className="flex h-11 w-11 items-center justify-center rounded-xl border"
-                  style={{ borderColor: `${active.color}66`, backgroundColor: `${active.color}1a` }}
-                >
-                  <active.icon className="h-5 w-5" style={{ color: active.color }} />
-                </div>
-                <p className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: active.color }}>
+                <active.icon className="h-5 w-5" style={{ color: active.color }} />
+                <p className="font-mono text-xs font-medium uppercase tracking-[0.12em]" style={{ color: active.color }}>
                   {active.label}
                 </p>
               </div>
@@ -263,7 +250,7 @@ const ProductsSection = () => {
               <div className="relative">
                 <active.screen />
               </div>
-              <p className="mt-3 text-center text-[11px] text-muted-foreground/70">Illustrative data</p>
+              <p className="mt-3 font-mono text-[11px] text-muted-foreground/70">Illustrative data</p>
             </div>
           </motion.div>
         </AnimatePresence>
@@ -272,7 +259,7 @@ const ProductsSection = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-14 text-center"
+          className="mt-14"
         >
           <p className="text-sm text-muted-foreground">
             Self-hosted in Community or Enterprise, or delivered as SaaS.{" "}

@@ -11,13 +11,16 @@ const Support = () => (
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-10 text-center"
+          className="mb-10 max-w-3xl"
         >
-          <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-primary">Support</p>
-          <h1 className="mb-4 font-heading text-3xl font-bold text-foreground md:text-5xl">
+          <p className="mb-4 flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.12em] text-muted-foreground">
+            <span className="h-2.5 w-2.5 shrink-0 bg-primary" />
+            Support
+          </p>
+          <h1 className="mb-4 font-heading text-2xl font-bold leading-[1.1] text-foreground md:text-4xl">
             How can we help?
           </h1>
-          <p className="mx-auto max-w-md text-muted-foreground">
+          <p className="max-w-md text-muted-foreground">
             Installation issues, licensing questions, or anything else — a real person reads every message.
           </p>
         </motion.div>

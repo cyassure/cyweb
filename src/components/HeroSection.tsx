@@ -1,7 +1,8 @@
-import { motion } from "framer-motion";
-import { ArrowRight, Play, Lock, Zap, Activity, Brain, Sparkles } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
+import { ArrowRight, Play, Zap, Activity, Brain, ScanSearch } from "lucide-react";
 import dashboardScreenshot from "@/assets/screenshots/attack-posture.jpg";
 import DemoRequestDialog from "@/components/DemoRequestDialog";
+import { DOMAIN_COLORS, type DomainId } from "@/lib/domains";
 
 const stats = [
   { icon: Zap, value: "<30 min", label: "To fully operational" },
@@ -9,93 +10,143 @@ const stats = [
   { icon: Brain, value: "24×7", label: "AI-assisted monitoring" },
 ];
 
-const whatsNew = [
-  { label: "Vulnerability Management", href: "/#products-vuln" },
-  { label: "Data Security & DSPM", href: "/#products-data" },
-  { label: "AI SOC Agents & Remediation", href: "/#products-response" },
-  { label: "Cloud & SaaS Security", href: "/#products-cloud-saas" },
+// Illustrative volumes for the hero funnel; bar width is relative to the largest source.
+const funnel = [
+  { label: "EDR", value: "1.12M", pct: 100, color: DOMAIN_COLORS.endpoint },
+  { label: "Firewall", value: "806k", pct: 72, color: DOMAIN_COLORS.asm },
+  { label: "Cloud / SaaS", value: "342k", pct: 31, color: DOMAIN_COLORS["cloud-saas"] },
+  { label: "Identity", value: "118k", pct: 11, color: DOMAIN_COLORS.response },
+  { label: "Data / DLP", value: "41k", pct: 4, color: DOMAIN_COLORS.data },
+];
+
+// One tile per ProductsSection tab; `isNew` replaces the old "What's new" pills.
+const spectrum: { id: DomainId; label: string; isNew?: boolean }[] = [
+  { id: "secops", label: "Security Ops" },
+  { id: "response", label: "AI SOC Agents", isNew: true },
+  { id: "vuln", label: "Vulnerability", isNew: true },
+  { id: "asm", label: "Attack Surface" },
+  { id: "itam", label: "Assets" },
+  { id: "cloud-saas", label: "Cloud & SaaS", isNew: true },
+  { id: "data", label: "Data & DSPM", isNew: true },
+  { id: "endpoint", label: "Endpoint" },
+  { id: "ai", label: "AI Security" },
+  { id: "grc", label: "GRC" },
 ];
 
 const HeroSection = () => {
+  const reduce = useReducedMotion();
+
   return (
     <section className="relative overflow-hidden pt-20">
-      <div className="absolute inset-0 grid-pattern opacity-30" />
-      <div className="absolute left-1/2 top-0 h-[500px] w-[700px] -translate-x-1/2 rounded-full bg-primary/5 blur-[130px]" />
+      <div className="container relative mx-auto px-6 pb-10 pt-12 md:pt-20">
+        <div className="grid items-end gap-12 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
+          <div>
+            <p className="mb-6 font-mono text-xs uppercase tracking-[0.12em] text-muted-foreground">
+              Cy360 by CyAssure · Netherlands &amp; India
+            </p>
 
-      <div className="container relative mx-auto px-6 pb-16 pt-10 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          className="mx-auto max-w-2xl"
-        >
-          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-border bg-secondary/50 px-4 py-1.5 text-xs text-muted-foreground">
-            <span className="h-1.5 w-1.5 animate-pulse-glow rounded-full bg-primary" />
-            Netherlands · India · Operating Globally
-          </div>
+            <h1 className="mb-6 font-heading text-[2.1rem] font-bold leading-[1.04] text-foreground sm:text-5xl lg:text-[3.6rem]">
+              Every signal in. <span className="text-spectrum">Only real incidents</span> out.
+            </h1>
 
-          <h1 className="mb-4 font-heading text-3xl font-bold leading-tight tracking-tight text-foreground md:text-4xl">
-            Next-Generation Cybersecurity <span className="text-gradient">and AI</span>
-          </h1>
+            <p className="mb-8 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
+              Cy360 correlates endpoint, firewall, cloud, identity and data-loss telemetry into a short list your
+              team can close. Self-hosted, SaaS, or run by our 24×7 SOC.
+            </p>
 
-          <p className="mx-auto mb-6 max-w-xl text-sm leading-relaxed text-muted-foreground md:text-base">
-            One platform for your entire security operation. Self-hosted, SaaS or fully managed.
-          </p>
-
-          <div className="mb-8 flex flex-wrap items-center justify-center gap-2">
-            <span className="flex items-center gap-1 text-xs font-semibold text-primary">
-              <Sparkles className="h-3.5 w-3.5" /> New
-            </span>
-            {whatsNew.map((n) => (
+            <div className="flex flex-wrap items-center gap-3">
               <a
-                key={n.href}
-                href={n.href}
-                className="rounded-full border border-border bg-secondary/40 px-3 py-1 text-xs text-muted-foreground transition-colors hover:border-primary/50 hover:text-foreground"
+                href="#contact"
+                className="group flex items-center gap-2 rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-all hover:brightness-110"
               >
-                {n.label}
+                Talk to an Expert
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </a>
-            ))}
-          </div>
-
-          <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-            <a
-              href="#contact"
-              className="group flex items-center gap-2 rounded-lg bg-primary px-6 py-3 font-heading text-sm font-semibold text-primary-foreground transition-all hover:brightness-110"
-            >
-              Talk to an Expert
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </a>
-            <DemoRequestDialog
-              trigger={
-                <button
-                  type="button"
-                  className="flex items-center gap-2 rounded-lg border border-border bg-secondary/50 px-6 py-3 font-heading text-sm font-semibold text-foreground transition-all hover:border-primary/50 hover:bg-secondary"
-                >
-                  <Play className="h-4 w-4 text-primary" />
-                  Request a Demo
-                </button>
-              }
-            />
-          </div>
-        </motion.div>
-
-        {/* Dominant visual — real Cy360 dashboard, framed like a browser window */}
-        <motion.div
-          initial={{ opacity: 0, y: 40, scale: 0.97 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="relative mx-auto mt-12 max-w-5xl"
-        >
-          <div className="absolute -inset-4 rounded-[2rem] bg-gradient-to-r from-primary/20 via-accent/10 to-violet-500/20 blur-2xl" />
-          <div className="relative overflow-hidden rounded-2xl border border-border/60 bg-card shadow-2xl">
-            <div className="flex items-center gap-2 border-b border-border/60 bg-secondary/40 px-4 py-2.5">
-              <span className="h-2.5 w-2.5 rounded-full bg-red-400/70" />
-              <span className="h-2.5 w-2.5 rounded-full bg-yellow-400/70" />
-              <span className="h-2.5 w-2.5 rounded-full bg-green-400/70" />
-              <span className="ml-3 flex items-center gap-1.5 rounded-md bg-background/60 px-3 py-1 text-[11px] text-muted-foreground">
-                <Lock className="h-3 w-3 text-primary" /> cy360.cyassure.eu
-              </span>
+              <DemoRequestDialog
+                trigger={
+                  <button
+                    type="button"
+                    className="flex items-center gap-2 rounded-md px-6 py-3 text-sm font-semibold text-foreground shadow-[inset_0_0_0_1px_hsl(var(--input))] transition-all hover:bg-secondary"
+                  >
+                    <Play className="h-4 w-4" />
+                    Request a Demo
+                  </button>
+                }
+              />
+              <a
+                href="#free-scan"
+                className="flex items-center gap-1.5 px-2 py-3 text-sm text-muted-foreground transition-colors hover:text-foreground"
+              >
+                <ScanSearch className="h-4 w-4" /> Free ASM &amp; DLP scan
+              </a>
             </div>
+          </div>
+
+          {/* The one orchestrated animation on the page: sources fill, then collapse into incidents. */}
+          <div className="font-mono text-xs" aria-label="Illustrative correlation: millions of events reduced to nine incidents">
+            <p className="mb-4 text-muted-foreground">Events → incidents · last 24h</p>
+            <div className="space-y-2.5">
+              {funnel.map((row, i) => (
+                <div key={row.label} className="grid grid-cols-[92px_1fr_52px] items-center gap-3 text-muted-foreground">
+                  <span>{row.label}</span>
+                  <div className="h-3.5">
+                    <motion.div
+                      className="h-full rounded-[1px]"
+                      style={{ backgroundColor: row.color }}
+                      initial={reduce ? false : { width: 0 }}
+                      animate={{ width: `${row.pct}%` }}
+                      transition={{ duration: 0.9, delay: 0.3 + i * 0.12, ease: [0.22, 1, 0.36, 1] }}
+                    />
+                  </div>
+                  <span className="text-right font-semibold text-foreground">{row.value}</span>
+                </div>
+              ))}
+              <div className="mt-3 grid grid-cols-[92px_1fr_52px] items-center gap-3 border-t border-dashed border-input pt-3 text-foreground">
+                <span>Incidents</span>
+                <div className="h-3.5">
+                  <motion.div
+                    className="h-full w-[2%] min-w-[6px] rounded-[1px]"
+                    style={{ backgroundColor: DOMAIN_COLORS.secops }}
+                    initial={reduce ? false : { opacity: 0, scaleY: 0.2 }}
+                    animate={{ opacity: 1, scaleY: 1 }}
+                    transition={{ duration: 0.4, delay: 1.25 }}
+                  />
+                </div>
+                <span className="text-right text-base font-semibold">9</span>
+              </div>
+            </div>
+            <p className="mt-4 text-[11px] text-muted-foreground/70">Illustrative data</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Domain spectrum: each tile opens that domain's tab in the platform tour below. */}
+      <nav aria-label="Security domains" className="grid grid-cols-2 sm:grid-cols-5 lg:grid-cols-10">
+        {spectrum.map((d) => (
+          <a
+            key={d.id}
+            href={`/#products-${d.id}`}
+            className="group relative flex min-h-[72px] flex-col justify-between gap-2 px-3 py-3 text-[13px] font-semibold leading-tight text-[#07122a] transition-[filter] hover:brightness-110"
+            style={{ backgroundColor: DOMAIN_COLORS[d.id] }}
+          >
+            {d.isNew ? (
+              <span className="self-start rounded-sm bg-[#07122a] px-1.5 py-0.5 font-mono text-[10px] font-medium uppercase tracking-wider text-white">
+                New
+              </span>
+            ) : (
+              <span aria-hidden className="h-[18px]" />
+            )}
+            <span className="flex items-center justify-between gap-1">
+              {d.label}
+              <ArrowRight className="h-3.5 w-3.5 shrink-0 opacity-0 transition-opacity group-hover:opacity-100" />
+            </span>
+          </a>
+        ))}
+      </nav>
+
+      <div className="container mx-auto px-6 pt-14">
+        <figure className="mx-auto max-w-5xl">
+          <div className="overflow-hidden rounded-lg border border-border bg-card shadow-[var(--shadow-card)]">
             <img
               src={dashboardScreenshot}
               alt="Cy360 Attack Surface overview — live security score, SSL health, and infrastructure exposure"
@@ -103,23 +154,19 @@ const HeroSection = () => {
               loading="eager"
             />
           </div>
-        </motion.div>
-
-        {/* Compact stat strip */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.6 }}
-          className="mx-auto mt-8 flex max-w-2xl flex-wrap justify-center gap-6"
-        >
-          {stats.map((s) => (
-            <div key={s.label} className="flex items-center gap-2 text-sm">
-              <s.icon className="h-4 w-4 text-primary" />
-              <span className="font-heading font-bold text-foreground">{s.value}</span>
-              <span className="text-muted-foreground">{s.label}</span>
-            </div>
-          ))}
-        </motion.div>
+          <figcaption className="mt-3 flex flex-wrap items-center justify-between gap-4 text-sm">
+            <span className="font-mono text-xs text-muted-foreground">Cy360 portal · Attack Surface overview</span>
+            <span className="flex flex-wrap gap-6">
+              {stats.map((s) => (
+                <span key={s.label} className="flex items-center gap-2">
+                  <s.icon className="h-4 w-4 text-primary" />
+                  <span className="font-semibold text-foreground">{s.value}</span>
+                  <span className="text-muted-foreground">{s.label}</span>
+                </span>
+              ))}
+            </span>
+          </figcaption>
+        </figure>
       </div>
     </section>
   );

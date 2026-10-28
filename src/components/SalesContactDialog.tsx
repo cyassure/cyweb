@@ -48,7 +48,7 @@ const SalesContactDialog = () => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <button className="group flex items-center gap-2 rounded-lg bg-primary px-7 py-3.5 font-heading text-sm font-semibold text-primary-foreground transition-all hover:brightness-110">
+        <button className="group flex items-center gap-2 rounded-md bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground transition-all hover:brightness-110">
           Talk to Sales
           <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
         </button>

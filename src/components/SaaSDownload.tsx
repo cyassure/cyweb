@@ -11,13 +11,16 @@ const SaaSDownload = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-12 text-center"
+          className="mb-12 max-w-3xl"
         >
-          <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-primary">Cy360 SaaS</p>
-          <h1 className="mb-4 font-heading text-3xl font-bold text-foreground md:text-5xl">
+          <p className="mb-4 flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.12em] text-muted-foreground">
+            <span className="h-2.5 w-2.5 shrink-0 bg-primary" />
+            Cy360 SaaS
+          </p>
+          <h1 className="mb-4 font-heading text-2xl font-bold leading-[1.1] text-foreground md:text-4xl">
             Fully hosted. Nothing to run.
           </h1>
-          <p className="mx-auto max-w-xl text-muted-foreground">
+          <p className="max-w-xl text-muted-foreground">
             Sign in with your existing organization credentials — the SaaS app handles SSO, provisioning, and
             upgrades for you.
           </p>
@@ -40,7 +43,7 @@ const SaaSDownload = () => {
           </div>
           <a
             href={SAAS_URL}
-            className="group inline-flex items-center gap-2 rounded-lg bg-primary px-7 py-3.5 font-heading text-sm font-semibold text-primary-foreground transition-all hover:brightness-110"
+            className="group inline-flex items-center gap-2 rounded-lg bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground transition-all hover:brightness-110"
           >
             Go to Cy360 SaaS
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />

@@ -6,6 +6,7 @@ import {
   Wrench, FlaskConical, ScanEye, Router, CloudCog, Share2, FileLock2, DatabaseZap,
   FolderKanban, Ban, Fingerprint, Container,
 } from "lucide-react";
+import SectionHeader from "@/components/SectionHeader";
 
 const capabilities = [
   { icon: Database, label: "SIEM & Data Lake" },
@@ -54,32 +55,22 @@ const logSources = [
 const PlatformSection = () => {
   return (
     <section id="platform" className="relative py-24">
-      <div className="absolute right-0 top-0 h-[500px] w-[500px] rounded-full bg-accent/3 blur-[150px]" />
 
       <div className="container relative mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-16 text-center"
-        >
-          <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-primary">Cy360 Security Platform</p>
-          <h2 className="mb-4 font-heading text-3xl font-bold text-foreground md:text-5xl">
-            Open platforms, smart intelligence
-          </h2>
-          <p className="mx-auto max-w-2xl text-muted-foreground">
-            Built on trusted open technologies, enhanced with proprietary intelligence and automation layers. We transform open platforms into smart sensors, smart storage, and smart correlation engines.
-          </p>
-        </motion.div>
+        <SectionHeader
+          eyebrow="Cy360 Security Platform"
+          title="Open platforms, smart intelligence"
+          lede="Built on trusted open technologies, with our own intelligence and automation layers on top. Open sensors, storage and correlation engines, tuned to work as one."
+        />
 
         {/* Animated log convergence diagram */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="relative mb-16 overflow-hidden rounded-2xl border border-border/50 bg-card p-8"
+          className="relative mb-16 overflow-hidden rounded-lg border border-border bg-card p-8"
         >
-          <p className="mb-6 text-center text-sm font-medium text-foreground">
+          <p className="mb-6 font-mono text-xs uppercase tracking-[0.12em] text-muted-foreground">
             Logs from every source. Processed by one platform.
           </p>
 
