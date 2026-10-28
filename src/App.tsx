@@ -10,6 +10,7 @@ import Docs from "./pages/Docs";
 import DocsArticle from "./pages/DocsArticle";
 import Demos from "./pages/Demos";
 import Support from "./pages/Support";
+import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/docs/:slug" element={<DocsArticle />} />
           <Route path="/demos" element={<Demos />} />
           <Route path="/support" element={<Support />} />
+          <Route path="/about" element={<About />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

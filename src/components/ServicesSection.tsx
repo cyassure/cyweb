@@ -1,20 +1,20 @@
 import { Eye, MonitorSpeaker, FileCheck, UserCog, Bug, Briefcase } from "lucide-react";
-import mdrPhoto from "@/assets/photos/mdr.jpg";
-import socServicePhoto from "@/assets/photos/soc-service.jpg";
-import grcPhoto from "@/assets/photos/grc.jpg";
-import vcisoPhoto from "@/assets/photos/vciso.jpg";
-import pentestPhoto from "@/assets/photos/pentest.jpg";
-import consultingPhoto from "@/assets/photos/consulting.jpg";
+import mdrArt from "@/assets/illustrations/mdr.svg";
+import socArt from "@/assets/illustrations/soc-team.svg";
+import grcArt from "@/assets/illustrations/grc.svg";
+import vcisoArt from "@/assets/illustrations/vciso.svg";
+import pentestArt from "@/assets/illustrations/pentest.svg";
+import consultingArt from "@/assets/illustrations/consulting.svg";
 import SectionHeader from "@/components/SectionHeader";
 import { DOMAIN_COLORS, ink } from "@/lib/domains";
 
 const services = [
-  { icon: Eye, photo: mdrPhoto, color: DOMAIN_COLORS.secops, title: "Managed Detection & Response", desc: "24×7 monitoring, detection, investigation, and response across endpoints, networks, and cloud." },
-  { icon: MonitorSpeaker, photo: socServicePhoto, color: DOMAIN_COLORS.endpoint, title: "SOC as a Service", desc: "A fully operational Security Operations Center — without the hiring, training, or infrastructure overhead." },
-  { icon: FileCheck, photo: grcPhoto, color: DOMAIN_COLORS.grc, title: "GRC & Compliance", desc: "From gap assessments to audit readiness — simplifying governance for ISO 27001, NIS2, DORA, and GDPR." },
-  { icon: UserCog, photo: vcisoPhoto, color: DOMAIN_COLORS.response, title: "vCISO Services", desc: "Executive-level security leadership tailored to your risk profile — without the full-time cost." },
-  { icon: Bug, photo: pentestPhoto, color: DOMAIN_COLORS.vuln, title: "Penetration Testing", desc: "Automated, manual, and hybrid testing across networks, web applications, cloud, and APIs." },
-  { icon: Briefcase, photo: consultingPhoto, color: DOMAIN_COLORS["cloud-saas"], title: "IT Consultancy", desc: "Security architecture, cloud migrations, and tooling advice from engineers who run this stack daily." },
+  { icon: Eye, art: mdrArt, color: DOMAIN_COLORS.secops, title: "Managed Detection & Response", desc: "24×7 monitoring, detection, investigation, and response across endpoints, networks, and cloud." },
+  { icon: MonitorSpeaker, art: socArt, color: DOMAIN_COLORS.endpoint, title: "SOC as a Service", desc: "A fully operational Security Operations Center — without the hiring, training, or infrastructure overhead." },
+  { icon: FileCheck, art: grcArt, color: DOMAIN_COLORS.grc, title: "GRC & Compliance", desc: "From gap assessments to audit readiness — simplifying governance for ISO 27001, NIS2, DORA, and GDPR." },
+  { icon: UserCog, art: vcisoArt, color: DOMAIN_COLORS.response, title: "vCISO Services", desc: "Executive-level security leadership tailored to your risk profile — without the full-time cost." },
+  { icon: Bug, art: pentestArt, color: DOMAIN_COLORS.vuln, title: "Penetration Testing", desc: "Automated, manual, and hybrid testing across networks, web applications, cloud, and APIs." },
+  { icon: Briefcase, art: consultingArt, color: DOMAIN_COLORS["cloud-saas"], title: "IT Consultancy", desc: "Security architecture, cloud migrations, and tooling advice from engineers who run this stack daily." },
 ];
 
 const ServicesSection = () => {
@@ -36,7 +36,7 @@ const ServicesSection = () => {
             >
               <div className="relative aspect-[16/9] overflow-hidden">
                 <img
-                  src={s.photo}
+                  src={s.art}
                   alt=""
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                   loading="lazy"

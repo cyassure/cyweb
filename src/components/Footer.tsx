@@ -12,6 +12,7 @@ const siteLinks = [
   { label: "Docs", href: "/docs" },
   { label: "Demos", href: "/demos" },
   { label: "Support", href: "/support" },
+  { label: "About Us", href: "/about" },
   { label: "Contact", href: "/#contact" },
 ];
 
@@ -47,7 +48,7 @@ const Footer = () => {
     <footer className="bg-card pb-12">
       <div className="spectrum-rule mb-12" />
       <div className="container mx-auto px-6">
-        <div className="grid gap-10 md:grid-cols-[1.2fr_1fr_1.6fr]">
+        <div className="grid gap-10 md:grid-cols-[1.1fr_1.1fr_1.6fr]">
           <div className="flex flex-col items-center gap-3 text-center md:items-start md:text-left">
             <Link to="/" aria-label="CyAssure home">
               <img
@@ -74,7 +75,7 @@ const Footer = () => {
 
           <nav aria-label="Site" className="text-center md:text-left">
             <p className="mb-3 eyebrow text-foreground">Site</p>
-            <ul className="grid grid-cols-2 gap-x-6 gap-y-2 md:grid-cols-1">
+            <ul className="grid grid-cols-2 gap-x-8 gap-y-2">
               {siteLinks.map((link) => (
                 <li key={link.href}>
                   <FooterLinkItem link={link} />
@@ -85,7 +86,7 @@ const Footer = () => {
 
           <nav aria-label="Products" className="text-center md:text-left">
             <p className="mb-3 eyebrow text-foreground">Products</p>
-            <ul className="grid gap-x-6 gap-y-2 sm:grid-cols-2">
+            <ul className="grid gap-x-8 gap-y-2 sm:grid-cols-2">
               {productLinks.map((link) => (
                 <li key={link.href}>
                   <FooterLinkItem link={link} />
