@@ -1,7 +1,7 @@
 import {
   Rocket, Server, HelpCircle, LucideIcon, Compass, LayoutGrid, ShieldAlert, Siren, Bot,
   SlidersHorizontal, Search, Bug, Radar, Boxes, CloudCog, Database, Laptop, BrainCircuit,
-  ShieldCheck, Folder, Store, Settings, HeartPulse, Network, Wrench, Plug,
+  ShieldCheck, Folder, Store, Settings, HeartPulse, Network, Wrench, Plug, UserCheck,
 } from "lucide-react";
 import { DOMAIN_COLORS, type DomainId } from "@/lib/domains";
 
@@ -28,6 +28,7 @@ import dataSecurity from "@/content/docs/data-security.md?raw";
 import endpointDefence from "@/content/docs/endpoint-defence.md?raw";
 import aiSecurity from "@/content/docs/ai-security.md?raw";
 import grc from "@/content/docs/governance-and-compliance.md?raw";
+import privacyOps from "@/content/docs/privacy-operations.md?raw";
 import cases from "@/content/docs/case-management.md?raw";
 import marketplace from "@/content/docs/marketplace.md?raw";
 import integrationSetup from "@/content/docs/integration-setup.md?raw";
@@ -113,6 +114,9 @@ export const docs: DocEntry[] = [
   { slug: "governance-and-compliance", category: "User guide", icon: ShieldCheck, content: grc,
     title: "Governance & Compliance",
     description: "GRC setup, posture, assessments, policies, findings, risk, forecast, RoPA and reports." },
+  { slug: "privacy-operations", category: "User guide", icon: UserCheck, content: privacyOps,
+    title: "Privacy Operations",
+    description: "DPDP notices, consent, rights requests, grievances, Consent Managers and breach intimation." },
   { slug: "case-management", category: "User guide", icon: Folder, content: cases,
     title: "Case Management",
     description: "Tracked investigations with comments, IOCs, evidence, checklists and SLA metrics." },
@@ -168,6 +172,7 @@ const DOC_DOMAIN: Record<string, DomainId> = {
   "endpoint-defence": "endpoint",
   "ai-security": "ai",
   "governance-and-compliance": "grc",
+  "privacy-operations": "grc",
   "case-management": "response",
 };
 
