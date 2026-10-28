@@ -11,13 +11,16 @@ const DocsIndexSection = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-12 text-center"
+          className="mb-12 max-w-3xl"
         >
-          <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-primary">Documentation</p>
-          <h1 className="mb-4 font-heading text-3xl font-bold text-foreground md:text-5xl">
+          <p className="mb-4 flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.12em] text-muted-foreground">
+            <span className="h-2.5 w-2.5 shrink-0 bg-primary" />
+            Documentation
+          </p>
+          <h1 className="mb-4 font-heading text-2xl font-bold leading-[1.1] text-foreground md:text-4xl">
             Everything you need to run Cy360
           </h1>
-          <p className="mx-auto max-w-2xl text-muted-foreground">
+          <p className="max-w-2xl text-muted-foreground">
             From a three-step quick start to a page-by-page user guide, the system architecture and a troubleshooting
             reference.
           </p>

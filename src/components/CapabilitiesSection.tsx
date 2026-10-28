@@ -10,6 +10,7 @@ import {
   FlowGate, HiddenAlert, SignalWaves, ChecklistCycle,
   endpointSatellites, assetSatellites,
 } from "@/components/FunctionVisuals";
+import SectionHeader from "@/components/SectionHeader";
 
 interface FunctionItem {
   id: string;
@@ -210,29 +211,15 @@ const CapabilitiesSection = () => {
   return (
     <section id="capabilities" className="relative py-24">
       <div className="container relative mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-16 text-center"
-        >
-          <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-primary">Capabilities</p>
-          <h2 className="mb-4 font-heading text-3xl font-bold text-foreground md:text-5xl">
-            Everything Cy360 does, at a glance
-          </h2>
-        </motion.div>
+        <SectionHeader eyebrow="Capabilities" title="Everything Cy360 does, at a glance" />
 
         <div className="space-y-16">
           {groups.map((group) => (
             <div key={group.label}>
-              <motion.p
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="mb-6 text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground"
-              >
+              <p className="mb-6 flex items-center gap-4 font-mono text-xs font-medium uppercase tracking-[0.12em] text-muted-foreground">
                 {group.label}
-              </motion.p>
+                <span className="h-px flex-1 bg-border" />
+              </p>
               <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                 {group.items.map((fn, i) => (
                   <motion.div
@@ -241,17 +228,15 @@ const CapabilitiesSection = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.08 }}
-                    className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all hover:border-primary/40 hover:shadow-[var(--glow-primary)]"
+                    className="group flex flex-col overflow-hidden rounded-lg border border-border bg-card transition-all hover:border-primary/40 hover:shadow-[var(--glow-primary)]"
                   >
                     <div className="h-28 w-full shrink-0 border-b border-border">
                       <fn.visual />
                     </div>
                     <div className="flex flex-1 flex-col gap-2 p-4">
                       <div className="flex min-h-10 items-center gap-2.5">
-                        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-border bg-secondary/50">
-                          <fn.icon className="h-4 w-4 text-primary" />
-                        </div>
-                        <h3 className="font-heading text-sm font-bold leading-snug text-foreground">{fn.name}</h3>
+                        <fn.icon className="h-4 w-4 shrink-0 text-muted-foreground transition-colors group-hover:text-primary" />
+                        <h3 className="text-[15px] font-semibold leading-snug text-foreground">{fn.name}</h3>
                       </div>
                       <p className="text-xs leading-relaxed text-muted-foreground">{fn.desc}</p>
                     </div>

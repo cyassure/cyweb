@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Users, Building2, ArrowRight, Check } from "lucide-react";
 import { Link } from "react-router-dom";
+import SectionHeader from "@/components/SectionHeader";
 
 const editions = [
   {
@@ -25,19 +26,9 @@ const EditionsSummarySection = () => {
   return (
     <section className="relative py-20">
       <div className="container mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-12 text-center"
-        >
-          <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-primary">Own It, Run It</p>
-          <h2 className="mb-4 font-heading text-3xl font-bold text-foreground md:text-4xl">
-            Community or Enterprise — self-hosted either way
-          </h2>
-        </motion.div>
+        <SectionHeader eyebrow="Own It, Run It" title="Community or Enterprise. Self-hosted either way." />
 
-        <div className="mx-auto grid max-w-3xl gap-5 sm:grid-cols-2">
+        <div className="grid max-w-4xl gap-5 sm:grid-cols-2">
           {editions.map((ed, i) => (
             <motion.div
               key={ed.name}
@@ -45,12 +36,12 @@ const EditionsSummarySection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className={`rounded-2xl border ${ed.accent} p-6`}
+              className={`rounded-lg border ${ed.accent} p-6`}
             >
               <div className="mb-4 flex items-center gap-3">
                 <ed.icon className={`h-6 w-6 ${ed.iconCls}`} />
                 <div>
-                  <p className="font-heading font-bold text-foreground">{ed.name}</p>
+                  <p className="text-base font-semibold text-foreground">{ed.name}</p>
                   <p className="text-xs text-muted-foreground">{ed.tag}</p>
                 </div>
               </div>
@@ -66,7 +57,7 @@ const EditionsSummarySection = () => {
           ))}
         </div>
 
-        <div className="mt-8 text-center">
+        <div className="mt-8">
           <Link
             to="/editions"
             className="group inline-flex items-center gap-2 text-sm font-semibold text-primary transition-all hover:gap-3"

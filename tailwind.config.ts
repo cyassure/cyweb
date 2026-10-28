@@ -14,8 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        heading: ["Space Grotesk", "system-ui", "sans-serif"],
-        body: ["Inter", "system-ui", "sans-serif"],
+        heading: ["Unbounded", "system-ui", "sans-serif"],
+        body: ["IBM Plex Sans", "system-ui", "sans-serif"],
+        mono: ["JetBrains Mono", "ui-monospace", "monospace"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -64,8 +65,11 @@ export default {
       },
       borderRadius: {
         lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        md: "calc(var(--radius) - 1px)",
+        sm: "calc(var(--radius) - 2px)",
+        // Tighter than Tailwind's defaults so cards read as panels, not pills.
+        xl: "0.5rem",
+        "2xl": "0.75rem",
       },
       keyframes: {
         "accordion-down": {

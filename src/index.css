@@ -1,58 +1,59 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* "Signal Spectrum": ink-blue ground taken from the CyAssure logo; the nine portal
+   domain colours (src/lib/domains.ts) carry the colour instead of a single accent. */
 @layer base {
   :root {
-    --background: 220 25% 6%;
-    --foreground: 210 20% 92%;
+    --background: 222 71% 9%;
+    --foreground: 226 100% 96%;
 
-    --card: 220 22% 10%;
-    --card-foreground: 210 20% 92%;
+    --card: 222 55% 13%;
+    --card-foreground: 226 100% 96%;
 
-    --popover: 220 22% 10%;
-    --popover-foreground: 210 20% 92%;
+    --popover: 222 55% 13%;
+    --popover-foreground: 226 100% 96%;
 
-    --primary: 185 85% 50%;
-    --primary-foreground: 220 25% 6%;
+    --primary: 225 100% 66%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 20% 14%;
-    --secondary-foreground: 210 20% 85%;
+    --secondary: 222 45% 17%;
+    --secondary-foreground: 226 60% 88%;
 
-    --muted: 220 18% 16%;
-    --muted-foreground: 215 15% 55%;
+    --muted: 222 40% 18%;
+    --muted-foreground: 224 35% 68%;
 
-    --accent: 200 80% 55%;
-    --accent-foreground: 220 25% 6%;
+    --accent: 204 100% 65%;
+    --accent-foreground: 222 71% 9%;
 
-    --destructive: 0 72% 51%;
-    --destructive-foreground: 210 20% 92%;
+    --destructive: 0 84% 61%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 220 15% 18%;
-    --input: 220 15% 18%;
-    --ring: 185 85% 50%;
+    --border: 224 40% 21%;
+    --input: 224 40% 24%;
+    --ring: 225 100% 66%;
 
-    --radius: 0.75rem;
+    --radius: 0.375rem;
 
-    --sidebar-background: 220 22% 8%;
-    --sidebar-foreground: 210 20% 92%;
-    --sidebar-primary: 185 85% 50%;
-    --sidebar-primary-foreground: 220 25% 6%;
-    --sidebar-accent: 220 18% 14%;
-    --sidebar-accent-foreground: 210 20% 92%;
-    --sidebar-border: 220 15% 18%;
-    --sidebar-ring: 185 85% 50%;
+    --sidebar-background: 222 65% 11%;
+    --sidebar-foreground: 226 100% 96%;
+    --sidebar-primary: 225 100% 66%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 222 45% 17%;
+    --sidebar-accent-foreground: 226 100% 96%;
+    --sidebar-border: 224 40% 21%;
+    --sidebar-ring: 225 100% 66%;
 
-    /* Custom tokens */
-    --gradient-primary: linear-gradient(135deg, hsl(185 85% 50%), hsl(200 80% 55%));
-    --gradient-hero: linear-gradient(180deg, hsl(220 25% 6%) 0%, hsl(220 30% 10%) 50%, hsl(220 25% 6%) 100%);
-    --glow-primary: 0 0 40px hsl(185 85% 50% / 0.15);
-    --glow-accent: 0 0 60px hsl(200 80% 55% / 0.1);
-    --shadow-card: 0 4px 24px hsl(0 0% 0% / 0.3);
-    --font-heading: 'Space Grotesk', system-ui, sans-serif;
-    --font-body: 'Inter', system-ui, sans-serif;
+    /* Portal domain colours, secops → AI (src/lib/domains.ts). */
+    --spectrum: #ff3b3b, #ff5c8a, #ff8c00, #f5c518, #38bdf8, #2dd4bf, #4d9eff, #b06eff;
+    --glow-primary: 0 0 0 1px hsl(225 100% 66% / 0.25), 0 10px 30px -12px hsl(225 100% 50% / 0.45);
+    --shadow-card: 0 4px 24px hsl(222 80% 3% / 0.4);
+    --font-heading: 'Unbounded', system-ui, sans-serif;
+    --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
   }
 }
 
@@ -68,27 +69,31 @@
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-body);
+    background-image: radial-gradient(90% 60% at 100% 0%, hsl(224 70% 20% / 0.55), transparent 70%);
+    background-repeat: no-repeat;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
   }
 }
 
 @layer utilities {
-  .text-gradient {
+  /* Used once, in the hero headline. */
+  .text-spectrum {
     @apply bg-clip-text text-transparent;
-    background-image: var(--gradient-primary);
+    background-image: linear-gradient(90deg, var(--spectrum));
   }
 
-  .glow-border {
-    box-shadow: var(--glow-primary);
-  }
-
-  .grid-pattern {
-    background-image: 
-      linear-gradient(hsl(var(--border) / 0.3) 1px, transparent 1px),
-      linear-gradient(90deg, hsl(var(--border) / 0.3) 1px, transparent 1px);
-    background-size: 60px 60px;
+  /* Thin brand rule under the navbar and above the footer. */
+  .spectrum-rule {
+    height: 2px;
+    background-image: linear-gradient(90deg, var(--spectrum));
   }
 }

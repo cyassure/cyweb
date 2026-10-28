@@ -7,16 +7,13 @@ import { Lock } from "lucide-react";
 // (Cy360 portal/src/sidebar/navConfig.jsx) with illustrative sample data, so
 // they stay crisp at any size and never leak real customer data.
 
-/* Browser-style frame + a mini portal sidebar showing the section's nav items */
+/* Portal-style frame (accent stripe + breadcrumb) + a mini portal sidebar showing the section's nav items */
 export const ScreenFrame = ({
   section, accent, nav, active, children,
 }: { section: string; accent: string; nav: string[]; active: number; children: ReactNode }) => (
-  <div className="relative overflow-hidden rounded-2xl border border-border/60 bg-card shadow-2xl">
+  <div className="relative overflow-hidden rounded-lg border border-border/60 bg-card shadow-2xl" style={{ borderTopColor: accent, borderTopWidth: 2 }}>
     <div className="flex items-center gap-2 border-b border-border/60 bg-secondary/40 px-4 py-2.5">
-      <span className="h-2.5 w-2.5 rounded-full bg-red-400/70" />
-      <span className="h-2.5 w-2.5 rounded-full bg-yellow-400/70" />
-      <span className="h-2.5 w-2.5 rounded-full bg-green-400/70" />
-      <span className="ml-3 flex min-w-0 items-center gap-1.5 truncate rounded-md bg-background/60 px-3 py-1 text-[11px] text-muted-foreground">
+      <span className="flex min-w-0 items-center gap-1.5 truncate rounded-md bg-background/60 px-3 py-1 text-[11px] text-muted-foreground">
         <Lock className="h-3 w-3 shrink-0 text-primary" /> cy360 · {section} › {nav[active]}
       </span>
     </div>
@@ -349,12 +346,9 @@ export const GrcScreen = () => (
 
 /* ── Attack Surface: the real portal screenshot, framed ─────────────────── */
 export const ScreenshotScreen = ({ src, alt, section, page }: { src: string; alt: string; section: string; page: string }) => (
-  <div className="relative overflow-hidden rounded-2xl border border-border/60 bg-card shadow-2xl">
+  <div className="relative overflow-hidden rounded-lg border border-border/60 bg-card shadow-2xl">
     <div className="flex items-center gap-2 border-b border-border/60 bg-secondary/40 px-4 py-2.5">
-      <span className="h-2.5 w-2.5 rounded-full bg-red-400/70" />
-      <span className="h-2.5 w-2.5 rounded-full bg-yellow-400/70" />
-      <span className="h-2.5 w-2.5 rounded-full bg-green-400/70" />
-      <span className="ml-3 flex items-center gap-1.5 truncate rounded-md bg-background/60 px-3 py-1 text-[11px] text-muted-foreground">
+      <span className="flex items-center gap-1.5 truncate rounded-md bg-background/60 px-3 py-1 text-[11px] text-muted-foreground">
         <Lock className="h-3 w-3 text-primary" /> cy360 · {section} › {page}
       </span>
     </div>

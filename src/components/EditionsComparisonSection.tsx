@@ -59,17 +59,20 @@ const EditionsComparisonSection = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-14 text-center"
+          className="mb-14 max-w-3xl"
         >
-          <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-primary">Self-Hosted Editions</p>
-          <h1 className="mb-4 font-heading text-3xl font-bold text-foreground md:text-5xl">
+          <p className="mb-4 flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.12em] text-muted-foreground">
+            <span className="h-2.5 w-2.5 shrink-0 bg-primary" />
+            Self-Hosted Editions
+          </p>
+          <h1 className="mb-4 font-heading text-2xl font-bold leading-[1.1] text-foreground md:text-4xl">
             Run Cy360 on your own infrastructure
           </h1>
-          <p className="mx-auto max-w-xl text-muted-foreground">
+          <p className="max-w-xl text-muted-foreground">
             Community is free forever and covers the full core stack. Enterprise adds scale, governance,
             and priority support for larger environments.
           </p>
-          <p className="mx-auto mt-4 max-w-xl text-xs text-muted-foreground/70">
+          <p className="mt-4 max-w-xl text-xs text-muted-foreground/70">
             Looking for our managed SOC service instead, where our analysts run it for you?{" "}
             <Link to="/support" className="text-primary underline underline-offset-4">Talk to sales →</Link>
           </p>
@@ -112,7 +115,7 @@ const EditionsComparisonSection = () => {
               {ed.ctaVariant === "primary" ? (
                 <Link
                   to={ed.ctaHref}
-                  className="group inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3 font-heading text-sm font-semibold text-primary-foreground transition-all hover:brightness-110"
+                  className="group inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-all hover:brightness-110"
                 >
                   {ed.cta}
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -120,7 +123,7 @@ const EditionsComparisonSection = () => {
               ) : (
                 <Link
                   to={ed.ctaHref}
-                  className="inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-secondary/50 px-6 py-3 font-heading text-sm font-semibold text-foreground transition-all hover:border-primary/50"
+                  className="inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-secondary/50 px-6 py-3 text-sm font-semibold text-foreground transition-all hover:border-primary/50"
                 >
                   {ed.cta}
                 </Link>
