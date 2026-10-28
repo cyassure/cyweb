@@ -98,7 +98,9 @@ Cy360 is one product unlocked by a licence file. There is no time-limited trial.
 
 **Base modules (every edition):** Asset Management, Endpoint Defence (CyEDR, Security Operations, Case Management, CyDataLake) and Vulnerability Management.
 
-**Add-on modules (Enterprise, each licensed separately):** Attack Surface, Cloud & SaaS Security, AI Security, Governance & Compliance, Data Security Posture Management (DSPM), Automation Agents (AI Agents) and Multi-Tenancy.
+**Add-on modules (Enterprise, each licensed separately):** Attack Surface, Cloud & SaaS Security, AI Security, Governance & Compliance, Data Security Posture Management (DSPM), Privacy Operations, Automation Agents (AI Agents) and Multi-Tenancy.
+
+**DPDP package (India):** Governance & Compliance, DSPM, Cloud & SaaS Security and Privacy Operations, with 365-day log retention (DPDP Rule 6(1)(e)); Significant Data Fiduciaries add AI Security and Attack Surface. See [Privacy Operations](/docs/privacy-operations).
 
 If an Enterprise licence expires or becomes invalid, Cy360 keeps working on the last valid entitlement for a 30-day grace period and then falls back to Community limits. Your data is never deleted. See **Settings → License**.
 

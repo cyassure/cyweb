@@ -83,6 +83,11 @@ Reserved for web-application findings mapped to the OWASP Top 10 categories. Thi
 
 **How to use it.** Drag a widget by its header to move it, drag the bottom-right corner to resize it, and click **×** to remove it. **Reset Layout** restores the default. The layout is saved in **your browser only** — it is not shared with colleagues and does not follow you to another computer.
 
+**Start from template** replaces the layout with a ready-made set (it asks first):
+
+- **Security Operations** — the default widgets.
+- **DPDP Compliance (India)** — DPDP assessment score, the DPDP setup checklist, rights requests and grievance deadlines, consent, breach clocks (72-hour Board report, 6-hour CERT-In), Processing Register gaps, personal data discovery and Indian identifiers seen by DLP. A widget for a module your licence or role doesn't include says which one it needs.
+
 ## Reports
 
 ![Reports](/docs-img/reports.jpg)
@@ -99,6 +104,7 @@ Reserved for web-application findings mapped to the OWASP Top 10 categories. Thi
 | Endpoint Defence | Endpoint report | Fleet health, detections and policy coverage |
 | Asset Management | Asset report | Inventory coverage, software inventory, IoT and Shadow AI risk |
 | Security Compliance | GRC Compliance Report | Framework posture, findings and risk register |
+| Privacy Operations | Privacy Operations Report | DPDP rights requests and grievances against their deadlines, verified erasures, consent, notices, children's pages, Consent Managers, personal data breaches and the DPDP score (Privacy Operations licence) |
 | Platform Configuration | Case report | SOC case load, MTTA/MTTR and resolution trends |
 | Platform Monitoring | Platform Health Report | Integration health, scheduled-job health, backups, licence and audit activity |
 

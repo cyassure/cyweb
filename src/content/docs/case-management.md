@@ -10,7 +10,7 @@
 - **Automatically** — for a high or critical incident with a false-positive probability under 40 once enrichment has run, when it has three or more alerts, or when a CyEDR detection on it scored 80 or more.
 - **By CyMind or an AI agent** — on request, with your confirmation.
 
-A case opened on an exposure incident gets the exposure checklist; data-loss incidents get the data-exfiltration checklist.
+A case opened on an exposure incident gets the exposure checklist; data-loss incidents get the data-exfiltration checklist. When personal data is affected, **Personal data breach** on the case header switches it to the breach notification checklist — time you became aware, containment, scope, CERT-In within 6 hours, informing the Data Protection Board and every affected person, the 72-hour detailed report, evidence and review. With Privacy Operations, [Breach Intimation](/docs/privacy-operations#breach-intimation) runs the clocks and drafts the notices.
 
 ## The case list
 

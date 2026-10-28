@@ -92,15 +92,16 @@ Where framework scores and individual controls are heading:
 
 ![Governance & Compliance → Processing Register](/docs-img/grc-processing-register.jpg)
 
-Your **records of processing activities** — the GDPR Article 30 / DPDP inventory of what personal data you process, why, where it lives, who receives it and how long you keep it. Five tabs:
+Your **records of processing activities** — the GDPR Article 30 / DPDP inventory of what personal data you process, why, where it lives, who receives it and how long you keep it. Six tabs:
 
 - **Overview** — active activities, complete records, gaps by severity, vendors and **personal data discovered but not in the register** (DSPM stores holding personal data no activity links — *Create activity* makes a draft for it). **Export CSV / JSON** produces the Art. 30 record; **Update compliance evidence** writes the register's evidence to GRC now (it also runs every 6 hours).
-- **Processing Activities** — one record per business process: status, owner, your role (controller/processor), purposes, lawful basis, data subjects, data categories (special categories need an Art. 9/10 condition and a DPIA decision), retention, security measures and review interval. Link the systems that hold the data (a DSPM store, an asset or a named system) and add data flows for each recipient, including cross-border transfers and their mechanism.
+- **Processing Activities** — one record per business process: status, owner, your role (controller/processor), purposes, lawful basis, data subjects, data categories (special categories need an Art. 9/10 condition and a DPIA decision), retention, security measures and review interval. Link the systems that hold the data (a DSPM store, an asset or a named system) and add data flows for each recipient, including cross-border transfers and their mechanism. For India's DPDP Act, an activity on a *legitimate use* names its s.7 ground, and each activity records when its DPIA was completed.
 - **Vendors & Processors** — processors, sub-processors and other recipients with country, DPA status and default transfer mechanism.
 - **Data Flows** — every flow across activities.
+- **DPDP Transfers & Exemptions** — whether you are a **Significant Data Fiduciary** (every activity then needs a DPIA every 12 months), the **countries restricted** for transfers under s.16 (flows to them are flagged), and the **s.17 exemption register** (section, activity, obligations not applied, justification, approver and review date).
 - **Data Residency** — where your data is stored and processed: the technically enforced controls computed live from this installation (AI provider region routing, threat-intel residency filtering, backup region) and a declared posture that admins attest to.
 
-Gaps are checked per activity — missing purpose, lawful basis, owner or retention; special categories without a condition or DPIA; no linked system; overdue review; a linked store holding a data category the activity doesn't declare; processors without a signed DPA; cross-border flows without a transfer mechanism.
+Gaps are checked per activity — missing purpose, lawful basis, owner or retention; special categories without a condition or DPIA; no linked system; overdue review; a linked store holding a data category the activity doesn't declare; processors without a signed DPA; cross-border flows without a transfer mechanism; a DPDP legitimate use without its s.7 ground; a flow to a restricted country; and, for a Significant Data Fiduciary, no DPIA in the last 12 months.
 
 ## GRC Reports
 
@@ -115,3 +116,4 @@ Gaps are checked per activity — missing purpose, lawful basis, owner or retent
 - Detections are mapped through MITRE ATT&CK techniques to framework controls hourly and become findings.
 - **Control validation** runs daily from live data. A failing *SIEM monitoring coverage* control (no security alerts in 24 hours) also raises an exposure incident.
 - DSPM findings and the Processing Register answer specific GDPR and DPDP questions automatically, marked with their source.
+- With the Privacy Operations add-on, its records answer the DPDP notice, consent, rights, grievance, children's, breach and erasure questions too — see [Privacy Operations](/docs/privacy-operations).

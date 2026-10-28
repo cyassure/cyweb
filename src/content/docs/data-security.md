@@ -285,6 +285,10 @@ One-click fixes that need **two admins** — one requests, a different one appro
 - remove public/anyone links from SaaS files (not reversible);
 - **apply a Microsoft Purview sensitivity label** to SharePoint/OneDrive files — pick the label (or paste its GUID when the label list can't be read) and list the item ids; the label's own encryption and marking apply. Rollback restores the labels the files had before; a file that had none keeps the new one. Needs `Files.ReadWrite.All` and Microsoft Graph metered APIs, which Microsoft bills to your Azure subscription.
 
+### Finding one person's data
+
+For a DPDP access or erasure request, Privacy Operations asks DSPM to find one person's data: enter their email, phone, Aadhaar, PAN, passport or account reference on the request. The identifiers are turned into keyed hashes and never stored. DSPM reads each connected store — catalogued personal-data files first (up to 500 per store) and database columns classified as personal data (up to 100,000 rows) — and lists each store, file or column that holds them. Stores that need the in-environment scanner or have content scanning off are listed as *not searched*; a store where a limit was reached is *partly searched*. After an erasure, a verification run repeats the same search. See [Privacy Operations → Rights Requests](/docs/privacy-operations#rights-requests).
+
 ### Settings (admin)
 
 ![Data Security → Settings](/docs-img/dspm-settings.jpg)
