@@ -244,7 +244,9 @@ scenes["offices"] = svg(
 
 // Leadership avatars — head and shoulders in a coloured disc. `placeholder` draws a faceless
 // silhouette for roles that are not yet filled.
-const avatar = (id, { bg, skin, hair, shirt, style = "short", glasses, beard, placeholder }) => {
+// Optional details for avatars drawn from a reference photo: `sweep` (fuller, side-swept hair), `brows`,
+// `stubble`, `grin` (open smile) and `blazer` + `turtleneck` colours.
+const avatar = (id, { bg, skin, hair, shirt, style = "short", glasses, beard, placeholder, sweep, brows, stubble, grin, blazer, turtleneck }) => {
   let s = `<clipPath id="c-${id}"><circle cx="60" cy="60" r="60"/></clipPath><circle cx="60" cy="60" r="60" fill="${bg}"/><g clip-path="url(#c-${id})">`;
   if (placeholder) {
     s += `<rect x="22" y="88" width="76" height="50" rx="26" fill="#ffffff" opacity=".55"/><circle cx="60" cy="56" r="22" fill="#ffffff" opacity=".55"/>`;
@@ -252,17 +254,32 @@ const avatar = (id, { bg, skin, hair, shirt, style = "short", glasses, beard, pl
     return svg(s, "0 0 120 120", "Placeholder avatar");
   }
   if (style === "long") s += `<rect x="36" y="30" width="48" height="66" rx="20" fill="${hair}"/>`;
-  s += `<rect x="22" y="88" width="76" height="50" rx="26" fill="${shirt}"/><rect x="53" y="74" width="14" height="18" rx="5" fill="${skin}"/>`;
-  s += `<circle cx="60" cy="50" r="24" fill="${hair}"/><circle cx="60" cy="58" r="21" fill="${skin}"/>`;
-  s += `<path d="M39 54 Q 42 30 62 31 Q 80 32 82 52 Q 66 40 39 54 Z" fill="${hair}"/>`;
+  if (blazer) {
+    s += `<rect x="18" y="88" width="84" height="50" rx="26" fill="${blazer}"/>`;
+    s += `<path d="M47 90 L60 118 L73 90 Z" fill="${turtleneck}"/><rect x="48" y="73" width="24" height="22" rx="9" fill="${turtleneck}"/><path d="M50 82 L70 82 M50 87 L70 87" stroke="#000" stroke-width="1" opacity=".18"/>`;
+    s += `<path d="M47 89 L60 120 L50 124 L36 97 Z" fill="#000" opacity=".22"/><path d="M73 89 L60 120 L70 124 L84 97 Z" fill="#000" opacity=".22"/>`;
+  } else {
+    s += `<rect x="22" y="88" width="76" height="50" rx="26" fill="${shirt}"/><rect x="53" y="74" width="14" height="18" rx="5" fill="${skin}"/>`;
+  }
+  s += sweep ? `<ellipse cx="60" cy="49" rx="24" ry="21" fill="${hair}"/>` : `<circle cx="60" cy="50" r="24" fill="${hair}"/>`;
+  if (sweep) s += `<circle cx="39.5" cy="60" r="4" fill="${skin}"/><circle cx="80.5" cy="60" r="4" fill="${skin}"/>`;
+  s += `<circle cx="60" cy="58" r="21" fill="${skin}"/>`;
+  s += sweep
+    ? `<path d="M37 61 Q 33 31 57 27 Q 84 25 84 56 Q 81 44 73 43 Q 66 37 56 40 Q 46 42 42 50 Q 39 55 37 61 Z" fill="${hair}"/>`
+    : `<path d="M39 54 Q 42 30 62 31 Q 80 32 82 52 Q 66 40 39 54 Z" fill="${hair}"/>`;
+  if (stubble) s += `<path d="M41 61 Q 43 83 60 85 Q 77 83 79 61 Q 74 77 60 78 Q 46 77 41 61 Z" fill="${hair}" opacity=".38"/><path d="M53 66.5 Q 60 63.5 67 66.5" stroke="${hair}" stroke-width="2.6" fill="none" stroke-linecap="round" opacity=".55"/>`;
+  if (brows) s += `<path d="M46.5 52 Q 52 48.5 57 51" stroke="${hair}" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M63 51 Q 68 48.5 73.5 52" stroke="${hair}" stroke-width="2.4" fill="none" stroke-linecap="round"/>`;
   if (beard) s += `<path d="M42 62 Q 44 82 60 84 Q 76 82 78 62 Q 70 74 60 74 Q 50 74 42 62 Z" fill="${hair}"/>`;
   s += `<circle cx="52" cy="58" r="2.2" fill="${C.ink}"/><circle cx="68" cy="58" r="2.2" fill="${C.ink}"/>`;
-  s += `<path d="M54 68 Q 60 72 66 68" stroke="${beard ? "#fff" : C.ink}" stroke-width="1.8" fill="none" stroke-linecap="round"/>`;
+  s += grin
+    ? `<path d="M51 68.5 Q 60 78 69 68.5 Z" fill="#fff" stroke="${C.ink}" stroke-width="1.4" stroke-linejoin="round"/>`
+    : `<path d="M54 68 Q 60 72 66 68" stroke="${beard ? "#fff" : C.ink}" stroke-width="1.8" fill="none" stroke-linecap="round"/>`;
   if (glasses) s += `<rect x="46" y="53" width="11" height="8" rx="3" fill="none" stroke="${C.ink}" stroke-width="1.6"/><rect x="63" y="53" width="11" height="8" rx="3" fill="none" stroke="${C.ink}" stroke-width="1.6"/><path d="M57 57 L63 57" stroke="${C.ink}" stroke-width="1.4"/>`;
   return svg(s + `</g>`, "0 0 120 120", "Cartoon avatar");
 };
 const avatars = {
-  "avatar-deepak-bhatnagar": { bg: C.blue, skin: SKIN[2], hair: HAIR[0], shirt: C.ink, glasses: true },
+  // Drawn from Deepak's photo: side-swept dark hair, stubble, wide smile, grey turtleneck, cobalt blazer.
+  "avatar-deepak-bhatnagar": { bg: C.yellow, skin: "#c48a5e", hair: HAIR[0], sweep: true, brows: true, stubble: true, grin: true, blazer: "#2a4fd6", turtleneck: "#5d6270" },
   "avatar-jeroen-van-dijk": { bg: C.orange, skin: SKIN[0], hair: HAIR[2], shirt: "#33467a" },
   "avatar-hiteshwar-hooda": { bg: C.teal, skin: SKIN[2], hair: HAIR[0], shirt: C.cobalt, beard: true },
   "avatar-bhupender-mahalwal": { bg: C.pink, skin: SKIN[1], hair: HAIR[3], shirt: "#ffffff" },

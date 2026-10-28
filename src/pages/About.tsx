@@ -14,7 +14,7 @@ import avatarOpenGreen from "@/assets/illustrations/avatar-placeholder-green.svg
 const facts = [
   { value: "2026", label: "Founded", color: DOMAIN_COLORS.asm },
   { value: "2", label: "Offices: Rijswijk and Gurgaon", color: DOMAIN_COLORS.data },
-  { value: "10", label: "Security domains in Cy360", color: DOMAIN_COLORS.response },
+  { value: "10+", label: "Security modules in Cy360", color: DOMAIN_COLORS.response },
   { value: "24×7", label: "SOC monitoring", color: DOMAIN_COLORS.endpoint },
 ];
 
