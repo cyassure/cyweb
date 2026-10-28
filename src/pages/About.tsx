@@ -4,7 +4,7 @@ import PageShell from "@/components/PageShell";
 import SectionHeader from "@/components/SectionHeader";
 import { DOMAIN_COLORS, ink } from "@/lib/domains";
 import officesArt from "@/assets/illustrations/offices.svg";
-import avatarDeepak from "@/assets/illustrations/avatar-deepak-bhatnagar.svg";
+import photoDeepak from "@/assets/team/deepak-bhatnagar.jpg";
 import avatarJeroen from "@/assets/illustrations/avatar-jeroen-van-dijk.svg";
 import avatarHiteshwar from "@/assets/illustrations/avatar-hiteshwar-hooda.svg";
 import avatarBhupender from "@/assets/illustrations/avatar-bhupender-mahalwal.svg";
@@ -25,9 +25,10 @@ const principles = [
   { icon: Zap, title: "Running in hours", text: "One install command, fully operational in under 30 minutes.", color: DOMAIN_COLORS.itam },
 ];
 
-// Roles without a name yet show "To be announced" with a placeholder avatar.
+// Deepak's card uses his photo; other roles use cartoon avatars, and roles without a
+// name yet show "To be announced" with a placeholder avatar.
 const leaders = [
-  { name: "Deepak Bhatnagar", role: "Founder & CEO", avatar: avatarDeepak, bio: "Founded CyAssure in 2026. Leads the company and the direction of the Cy360 platform." },
+  { name: "Deepak Bhatnagar", role: "Founder & CEO", avatar: photoDeepak, bio: "Founded CyAssure in 2026. Leads the company and the direction of the Cy360 platform." },
   { name: "Jeroen Van Dijk", role: "Partner & Investor", avatar: avatarJeroen, bio: "Partner and investor in CyAssure." },
   { name: "To be announced", role: "Chief Business Officer", avatar: avatarOpenViolet, bio: "Will lead partnerships and business development.", open: true },
   { name: "To be announced", role: "Legal Advisor", avatar: avatarOpenGreen, bio: "Will advise on contracts, privacy and regulatory matters.", open: true },
@@ -55,7 +56,7 @@ const About = () => (
 
       <img
         src={officesArt}
-        alt="Illustration of the Rijswijk office tower and the Gurgaon towers linked by a 24×7 SOC arc"
+        alt="Illustration of the Rijswijk office tower and the Gurgaon towers linked by arcs naming the Cy360 modules"
         className="mb-14 aspect-[32/9] w-full rounded-lg"
       />
 
@@ -103,7 +104,7 @@ const About = () => (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {leaders.map((l) => (
             <article key={l.role} className="flex gap-5 rounded-lg border border-border bg-card p-6">
-              <img src={l.avatar} alt="" className="h-20 w-20 shrink-0 rounded-full" loading="lazy" />
+              <img src={l.avatar} alt="" className="h-20 w-20 shrink-0 rounded-full object-cover" loading="lazy" />
               <div className="min-w-0">
                 <h3 className={`text-lg font-semibold leading-snug ${l.open ? "text-muted-foreground" : "text-foreground"}`}>{l.name}</h3>
                 <p className="eyebrow mt-1 text-primary">{l.role}</p>
