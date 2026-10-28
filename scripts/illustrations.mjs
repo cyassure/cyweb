@@ -223,6 +223,21 @@ const windowsGrid = (x, y, cols, rows, w, h, gx, gy, lit) => {
     }
   return s;
 };
+// Cy360 modules along the arcs between the two offices, coloured by portal domain.
+// With the control point centred, x is linear in t, so pills are evenly spaced.
+const ARC_OUTER = [["SIEM", C.red], ["UEBA", C.red], ["EDR", C.blue], ["DLP", C.teal], ["DSPM", C.teal], ["SSPM", C.sky], ["CSPM", C.sky]];
+const ARC_INNER = [["CASB", C.sky], ["Vuln Mgmt", C.pink], ["ASM", C.orange], ["AI Security", C.violet], ["GRC", C.green], ["Data Security", C.teal]];
+const moduleArc = ([x0, y0], [x1, y1], [x2, y2], labels) => {
+  const at = (t) => [(1 - t) ** 2 * x0 + 2 * (1 - t) * t * x1 + t * t * x2, (1 - t) ** 2 * y0 + 2 * (1 - t) * t * y1 + t * t * y2];
+  let s = `<path d="M${x0} ${y0} Q ${x1} ${y1} ${x2} ${y2}" stroke="#fff" stroke-width="2.5" stroke-dasharray="2 9" stroke-linecap="round" fill="none" opacity=".85"/>`;
+  labels.forEach(([label, color], i) => {
+    const [x, y] = at(0.1 + (0.8 * i) / (labels.length - 1));
+    const w = label.length * 6.6 + 16;
+    s += `<rect x="${x - w / 2}" y="${y - 11}" width="${w}" height="22" rx="11" fill="${color}"/>` +
+      `<text x="${x}" y="${y + 4}" text-anchor="middle" font-size="11.5" font-weight="700" fill="${C.ink}">${label}</text>`;
+  });
+  return s;
+};
 scenes["offices"] = svg(
   `<defs><linearGradient id="sky" x1="0" x2="1"><stop offset="0" stop-color="#16295a"/><stop offset=".5" stop-color="#4d6fd8"/><stop offset="1" stop-color="#ffcf8a"/></linearGradient></defs>` +
   `<rect width="1280" height="360" fill="url(#sky)"/><rect y="300" width="1280" height="60" fill="#0d1d40" opacity=".35"/>` +
@@ -237,10 +252,9 @@ scenes["offices"] = svg(
   `<rect x="980" y="70" width="90" height="230" fill="#e3f2fa"/>` + windowsGrid(990, 82, 5, 15, 10, 9, 6, 5, C.yellow) +
   `<rect x="1080" y="160" width="64" height="140" fill="#bfe0f0"/>` + windowsGrid(1088, 170, 4, 8, 9, 9, 5, 6, C.pink) +
   `<text x="1020" y="336" text-anchor="middle" font-size="18" font-weight="700" fill="#fff">Gurgaon · IN</text>` +
-  `<path d="M370 120 Q 640 -40 900 120" stroke="#fff" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round" fill="none"/>` +
-  `<g transform="translate(640 66)"><rect x="-74" y="-22" width="148" height="44" rx="22" fill="#fff"/><text x="0" y="7" text-anchor="middle" font-size="18" font-weight="700" fill="${C.ink}">24×7 SOC</text></g>` +
-  `<circle cx="470" cy="62" r="6" fill="${C.teal}"/><circle cx="810" cy="62" r="6" fill="${C.orange}"/>`,
-  "0 0 1280 360", "Rijswijk office tower and Gurgaon glass towers linked by a 24×7 SOC handover arc");
+  moduleArc([370, 150], [640, -70], [900, 150], ARC_OUTER) +
+  moduleArc([396, 184], [640, 44], [884, 184], ARC_INNER),
+  "0 0 1280 360", "Rijswijk office tower and Gurgaon glass towers linked by two arcs labelled with Cy360 modules");
 
 // Leadership avatars — head and shoulders in a coloured disc. `placeholder` draws a faceless
 // silhouette for roles that are not yet filled.
@@ -278,8 +292,6 @@ const avatar = (id, { bg, skin, hair, shirt, style = "short", glasses, beard, pl
   return svg(s + `</g>`, "0 0 120 120", "Cartoon avatar");
 };
 const avatars = {
-  // Drawn from Deepak's photo: side-swept dark hair, stubble, wide smile, grey turtleneck, cobalt blazer.
-  "avatar-deepak-bhatnagar": { bg: C.yellow, skin: "#c48a5e", hair: HAIR[0], sweep: true, brows: true, stubble: true, grin: true, blazer: "#2a4fd6", turtleneck: "#5d6270" },
   "avatar-jeroen-van-dijk": { bg: C.orange, skin: SKIN[0], hair: HAIR[2], shirt: "#33467a" },
   "avatar-hiteshwar-hooda": { bg: C.teal, skin: SKIN[2], hair: HAIR[0], shirt: C.cobalt, beard: true },
   "avatar-bhupender-mahalwal": { bg: C.pink, skin: SKIN[1], hair: HAIR[3], shirt: "#ffffff" },
