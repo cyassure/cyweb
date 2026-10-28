@@ -36,6 +36,10 @@ The agent picks up commands on its next check-in (seconds, depending on its hear
 
 You can also respond from an incident's **Recommended response** panel and from an endpoint's **EDR Response** tab — they use the same mechanism.
 
+## Blocking an IP at the WAF
+
+If an AWS WAF, Azure Front Door WAF, F5 BIG-IP Advanced WAF or Imperva Cloud WAF package is installed from Marketplace, an incident's **Source IPs** section has **Block at WAF**: pick the WAF, click **Block** next to an IP and confirm. Cy360 adds the IP to the one block list it owns at the vendor — an AWS WAF IP set you create and reference from a Block rule, the Front Door policy's *CY360BLOCKLIST* custom rule, an F5 always-block IP exception, or the Imperva site's blacklist — and **Unblock** removes it. Nothing else in the WAF is changed. Analysts and admins only; every block and unblock is in the Audit Trail. You can also ask the AI Assistant to block an IP at the WAF.
+
 ## Command History
 
 Every command sent to every endpoint with its status: **Pending** (waiting for the agent), **Acknowledged**, **Completed**, **Failed** or **Dry Run**, plus who issued it, when, and the agent's result. The history panel can be resized. Use it to confirm that an isolation actually took effect.

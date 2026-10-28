@@ -78,4 +78,12 @@ To act, open the device → **Move to segment / Quarantine**: choose move to VLA
 
 **How to set it up.** Cloud accounts are configured in **Marketplace → Cloud Asset Inventory → Configure** (several accounts per provider — for example one per GCP project). Grant read-only access: AWS *SecurityAudit*; Azure *Reader* on the subscription; Google *compute.viewer* (+ *container.clusterViewer* for GKE); Oracle *inspect all-resources*; Hetzner a read-only project token; DigitalOcean a read-scope token.
 
+**Posture badge.** With Cloud & SaaS Security licensed, each discovered resource shows how many Cloud Posture findings are open on it (and the worst severity); click it to open Cloud Posture.
+
 **How to use the page.** Each provider card lists its accounts with their last result and a **Sync** button; **Sync all providers** runs everything (accounts also sync automatically every 4 hours). Tiles show cloud assets, providers connected, VMs/servers, Kubernetes clusters and alarms (an account whose sync failed). The **Discovered assets** table can be filtered by provider and type. Discovered assets join the Network Assets registry, so coverage gaps show up there.
+
+## SaaS Applications
+
+**What it is.** The SaaS your organisation uses, on every edition: the tenants connected to Cy360 (Settings → Connected Accounts — Microsoft 365, Google Workspace, Box, Dropbox — and Marketplace packages and log connectors such as Okta, GitHub, Slack, Salesforce, Workday or ServiceNow) and the apps seen on the network by Shadow IT and Shadow AI. One row per app, with how it is connected, how many hosts used it and when it was first and last seen.
+
+**What it is not.** An inventory only: whether an app is sanctioned and how risky it is are reviewed in Cloud & SaaS Security → Shadow IT, and its security settings in SaaS Posture. Apps seen on the network appear once Cloud & SaaS Security is licensed (Shadow IT records them).

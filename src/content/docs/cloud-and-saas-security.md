@@ -1,9 +1,10 @@
 # Cloud & SaaS Security
 
-**Cloud & SaaS Security** finds risky configuration and risky activity in your own cloud accounts and SaaS tenants. It is an Enterprise add-on module with four pages:
+**Cloud & SaaS Security** finds risky configuration and risky activity in your own cloud accounts and SaaS tenants. It is an Enterprise add-on module with five pages:
 
 | Page | Answers |
 |---|---|
+| **Overview** | Which cloud account or SaaS tenant needs work first, and which SaaS has nobody sanctioned? |
 | **Cloud Posture (CSPM)** | Is anything in our AWS / Azure / Google Cloud / Oracle / Hetzner / DigitalOcean accounts exposed or weakly configured? |
 | **SaaS Posture (SSPM)** | Are our Microsoft 365, Google Workspace, Okta, GitHub, Slack and Salesforce tenants set up securely (MFA, admins, sharing)? |
 | **Shadow IT** | Which SaaS apps are people using, and are they sanctioned? |
@@ -19,6 +20,10 @@ How it differs from the neighbouring features:
 | Cloud & SaaS Security → **Cloud Posture** | *Is it exposed or weakly configured*? |
 | Marketplace **cloud log connectors** (CloudTrail, Google Cloud, OCI Audit…) | *What is happening* in the account (activity → detections)? |
 | AI Security → **Cloud Sensors** | Which AI workloads and services run in the cloud? |
+
+## Overview
+
+A posture score for every cloud account (Cloud Posture) and SaaS tenant (SaaS Posture): 100 minus 15 per open critical finding, 8 per high, 3 per medium and 1 per low, so the account to fix first is at the top. Below it, the open findings to fix first across both, and the SaaS apps nobody has reviewed or that were blocked but are still in use (from Shadow IT). Each row opens the page it came from.
 
 ## Cloud Posture (CSPM)
 
@@ -42,6 +47,10 @@ How it differs from the neighbouring features:
 | AWS | root user without MFA or with access keys; IAM users who can sign in without MFA; access keys not rotated in 90 days; no or weak password policy (minimum length below 14); no multi-region CloudTrail trail logging; trails without log file validation |
 | Azure | subscription Activity Log not exported; Defender for Cloud plans on the Free tier for servers, storage, SQL or Key Vault; more than 3 Owners on the subscription |
 | Google Cloud | personal gmail.com accounts holding project roles; service accounts with Owner or Editor; service account keys older than 90 days; Data Access audit logs off |
+
+**Over-privilege (CIEM).** Cloud Posture also finds identities with more access than they need: an AWS customer-managed policy in use that allows every action on every resource; IAM users with *AdministratorAccess* attached directly; passwords or access keys unused for 45 days or more; an Azure custom role whose actions include `*`; Google Cloud service accounts holding an *Admin* role on the project; and users or groups who can impersonate every service account in a project. The read-only roles above already cover these checks.
+
+**On Cloud Inventory.** Each resource in Asset Management → Cloud Inventory shows a posture badge — the number of open findings on its instance, security groups, volumes, cluster or firewall, coloured by the worst one — that opens Cloud Posture.
 
 **Compliance controls.** Every finding lists the ISO 27001 / SOC 2 / NIST CSF 2.0 / NIS2 / PCI DSS v4.0 / DORA controls it is evidence against — in the finding, in its incident and in GRC's exposure register.
 
@@ -75,7 +84,7 @@ A check the account's permissions don't allow is listed under **Not checked** wi
 
 ## Shadow IT
 
-SaaS apps in use on your network — file sharing and transfer, paste sites, VPNs, messaging, developer tools, CRM and more — seen by the network DNS monitor and the firewall/proxy syslog listener and matched against Cy360's SaaS catalogue. One row per app with hosts, sources and a review: **sanctioned**, **blocked** (a label — block it on your proxy or firewall) or **dismissed**; a review sticks when the app is seen again. AI apps found by Shadow AI are listed too and reviewed in AI Security.
+SaaS apps in use on your network — file sharing and transfer, paste sites, VPNs, messaging, developer tools, CRM and more — seen by the network DNS monitor and the firewall/proxy syslog listener and matched against Cy360's SaaS catalogue. One row per app with hosts, sources and a review: **sanctioned**, **blocked** (a label — block it on your proxy or firewall) or **dismissed**; a review sticks when the app is seen again. AI apps found by Shadow AI are listed too and reviewed in AI Security. Install the free **SaaS App Catalogue** package from Marketplace to recognise 150+ more SaaS domains (cloud storage, transfer and paste sites, VPNs, converters, HR, finance, password managers, marketing and developer tunnels); it is updated through the package, without a server upgrade.
 
 ## Cloud Apps (CASB)
 

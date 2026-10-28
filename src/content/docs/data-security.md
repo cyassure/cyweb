@@ -114,7 +114,7 @@ Content can raise an item above its label (shown as a **label mismatch**) but ne
 - **Confidential** — contracts, financial and bank statements, **tenders and RFPs**, **price lists and quotations**, **internal research**, source code, CVs, engineering designs;
 - **General** — invoices, technical documents; **Public** — marketing material.
 
-Source code, tenders/RFPs, price lists and internal research are recognised on your Cy360 server without AI (by their headings and wording); the Marketplace pack **Confidentiality markings** also recognises "Confidential", "Internal only", "Commercial in confidence" and similar markings in many languages. On endpoints, office documents with no detector hit can also be typed (policy option, up to 20 per hour per endpoint) and are reported only if their type is sensitive. The other types use **AI document classification** (Enterprise), through the AI providers you have already configured: turn it on for endpoints in the Data Protection policy, and for email under Email DLP → Settings (up to three attachments per message). Only text with every detected value masked is sent, and only to a local model unless Data Protection → Settings allows cloud providers. Add **your own document types** (Enterprise, up to 20): a name, a plain-language description and the level — for example *"Deal memo — internal memos about pending acquisitions, with code names and valuations"*, at least Highly Confidential. Email DLP policies can match document types on their own.
+Source code, tenders/RFPs, price lists and internal research are recognised on your Cy360 server without AI (by their headings and wording); the Marketplace pack **Confidentiality markings** also recognises "Confidential", "Internal only", "Commercial in confidence" and similar markings in many languages. On endpoints, office documents with no detector hit can also be typed (policy option, on for new policies, up to 20 per hour per endpoint) and are reported only if their type is sensitive. The other types use **AI document classification** (Enterprise), through the AI providers you have already configured: turn it on for endpoints in the Data Protection policy, and for email under Email DLP → Settings (up to three attachments per message). Only text with every detected value masked is sent, and only to a local model unless Classification → Settings allows cloud providers. Add **your own document types** (Enterprise, up to 20): a name, a plain-language description and the level — for example *"Deal memo — internal memos about pending acquisitions, with code names and valuations"*, at least Highly Confidential. Email DLP policies can match document types on their own.
 
 ### Settings (admin, Enterprise)
 
@@ -172,7 +172,7 @@ Data Security → **DLP Activity** (analysts) lists every DLP event from every s
 - **channel** and source; **destination** (↗ = external);
 - **what happened** — blocked, held for review, delivered encrypted, user overrode, delivered, or detected but not stopped.
 
-Filter by window (7 days to 1 year), classification, criticality, outcome, source and channel, or search; tiles, breakdowns (classification, data type, channel, outcome, people, destinations) and the table all follow the filters. Click a row for every detail and the linked incident — including which items were opened with a password or read with OCR, the document type and a sender's override reason. Analysts mark an event **Confirmed** or **False positive** with a note; verdicts feed the per-detector precision on Data Protection → Accuracy. Endpoint quarantine events have **Restore file**. **Export CSV** is recorded in the Audit Trail. The page shows up to the newest 20,000 events per window.
+Filter by window (7 days to 1 year), classification, criticality, outcome, source and channel, or search; tiles, breakdowns (classification, data type, channel, outcome, people, destinations) and the table all follow the filters. Click a row for every detail and the linked incident — including which items were opened with a password or read with OCR, the document type and a sender's override reason. Analysts mark an event **Confirmed** or **False positive** with a note; verdicts feed the per-detector precision on Classification → Accuracy. Endpoint quarantine events have **Restore file**. **Export CSV** is recorded in the Audit Trail. The page shows up to the newest 20,000 events per window.
 
 The PDF version is Dashboard & Reports → Reports → **Data Loss Prevention Report** (summary, breakdowns, findings, actions and the 25 most critical events).
 
@@ -256,6 +256,9 @@ Who **read, downloaded, changed, copied, shared or deleted** data in each store 
 | Windows file servers | a CyEDR **Log Collection** policy with **File-share audit** on, assigned to the server; the server needs `auditpol /set /subcategory:"Detailed File Share" /success:enable`. Listing-only access is skipped and repeats are de-duplicated |
 | Amazon S3 | **AWS S3 Data Activity** package — the CloudTrail trail must log S3 data events |
 | Amazon RDS / Aurora PostgreSQL | **RDS PostgreSQL Data Activity** package — the instance needs pgaudit (`pgaudit.log = 'read,write'`); only table names reach Cy360, never statements |
+| Snowflake | **Snowflake Data Activity** package — Access History (Enterprise edition); a key-pair user whose role can read the SNOWFLAKE database |
+| BigQuery | **BigQuery Data Activity** package — the project's Data Access audit logs; a service account with Private Logs Viewer |
+| Azure SQL Database / Managed Instance | **Azure SQL Data Activity** package — SQL auditing sent to Log Analytics; add the *SCHEMA_OBJECT_ACCESS_GROUP* audit action group to see each table |
 
 Activity is kept as one row per store, person, action and day. Sources start from the moment they are connected — there is no backfill.
 
@@ -263,7 +266,10 @@ Activity is kept as one row per store, person, action and day. Sources start fro
 
 - an **unusual volume** of data accessed in one store — the bar is lower and the severity higher the more sensitive the store is;
 - a **first access to a highly sensitive store** that others use regularly;
-- a **burst of DLP events** for one user.
+- a **burst of DLP events** for one user;
+- a **bulk read of a sensitive database** — one person reading 20 or more tables, or running 1,000 or more read queries, in a high or critical database on one day.
+
+**Sensitivity on alerts.** A DLP, Cloud Apps (CASB) or file-share alert on a store DSPM rates high or critical shows that store's sensitivity and data categories in its details, and is raised one level (high) or two (critical), so the same activity on payroll data outranks it on a wiki.
 
 Without DSPM the alerts still run; DSPM only adds the sensitivity weighting.
 
@@ -284,5 +290,5 @@ One-click fixes that need **two admins** — one requests, a different one appro
 ![Data Security → Settings](/docs-img/dspm-settings.jpg)
 
 - **General** — **content scanning** (off by default: with it off, DSPM only discovers stores and their configuration; turning it on asks for explicit consent to read samples), scan mode (*Hosted* — Cy360 reads via provider APIs and discards content from memory — or *In-environment scanner*), scan interval (default 24 hours), sampling budgets (objects per store, bytes per object, rows per column), minimum detection confidence, allow remediation, stale-access days, internal domains and stale-data (ROT) days.
-- **Connections** — the sources. Cloud storage reuses the accounts from Marketplace → Cloud Asset Inventory; SaaS drives reuse the Shared files accounts (all listed in Settings → Connected Accounts); databases (PostgreSQL, MySQL/MariaDB, SQL Server, Snowflake, BigQuery) are added from Marketplace → Data Security with a read-only user.
-- **Scanners** — register an **in-environment scanner** for databases on private networks. The token is shown once. Run the published `cy360-dspm-scanner` container on a host that can reach the database; it needs outbound HTTPS to Cy360 only, keeps the database credentials locally and sends back only detector IDs, counts and salted hashes.
+- **Connections** — the sources. Cloud storage reuses the accounts from Marketplace → Cloud Asset Inventory; SaaS drives reuse the Shared files accounts (all listed in Settings → Connected Accounts); databases (PostgreSQL, MySQL/MariaDB, SQL Server, Snowflake, BigQuery) and **Windows file shares / NAS** (SMB 2 or 3 — Windows file servers, Synology, QNAP, NetApp and similar) are added from Marketplace → Data Security with a read-only user. For a file share, give the host, the shares to scan and a domain or NAS account with read access; file servers are usually on a private network, so use the in-environment scanner.
+- **Scanners** — register an **in-environment scanner** for databases and file shares on private networks. The token is shown once. Run the published `cy360-dspm-scanner` container on a host that can reach the database; it needs outbound HTTPS to Cy360 only, keeps the database credentials locally and sends back only detector IDs, counts and salted hashes.

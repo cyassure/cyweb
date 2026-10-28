@@ -8,7 +8,7 @@ The **Marketplace** is where you connect Cy360 to the rest of your environment. 
 
 | Filter | What you find there |
 |---|---|
-| **Integrations** | Log and detection connectors — cloud audit logs (AWS CloudTrail, Google Cloud, Oracle OCI, Azure/Entra ID, Hetzner, DigitalOcean), firewalls (Fortinet, Cloudflare WAF…), SaaS (Office 365, GitHub audit…), identity (Active Directory, Microsoft Entra ID, Okta), EDR/XDR feeds (Microsoft Defender XDR, CrowdStrike Falcon), e-mail security (Proofpoint TAP), Microsoft Purview DLP, MDM (Jamf, Intune) and the generic *Application Audit Log* connector |
+| **Integrations** | Log and detection connectors — cloud audit logs (AWS CloudTrail, Google Cloud, Oracle OCI, Azure/Entra ID, Hetzner, DigitalOcean), firewalls and WAFs (Fortinet, Cloudflare WAF, AWS WAF, Azure Front Door WAF, F5 BIG-IP Advanced WAF, Imperva Cloud WAF…), SaaS (Office 365, GitHub audit…), identity (Active Directory, Microsoft Entra ID, Okta), EDR/XDR feeds (Microsoft Defender XDR, CrowdStrike Falcon), e-mail security (Proofpoint TAP), Microsoft Purview DLP, MDM (Jamf, Intune) and the generic *Application Audit Log* connector |
 | **AI Cloud Sensors** | Discover AI workloads and AI-service use in your cloud accounts |
 | **Cloud Asset Inventory** | Cloud accounts used by Cloud Inventory and Cloud Posture (AWS, Azure, Google Cloud, Oracle, Hetzner, DigitalOcean) |
 | **Data Security** | Database connectors for DSPM (PostgreSQL, MySQL/MariaDB, SQL Server, Snowflake, BigQuery) and DLP detection packs |
