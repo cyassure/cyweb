@@ -57,11 +57,11 @@ const Footer = () => {
               />
             </Link>
             <div>
-              <p className="font-mono text-xs uppercase tracking-[0.12em] text-muted-foreground/80">Netherlands</p>
+              <p className="eyebrow text-muted-foreground/80">Netherlands</p>
               <p className="text-sm text-muted-foreground">Einsteinlaan 28, 2289 CC Rijswijk, The Netherlands</p>
             </div>
             <div>
-              <p className="font-mono text-xs uppercase tracking-[0.12em] text-muted-foreground/80">India</p>
+              <p className="eyebrow text-muted-foreground/80">India</p>
               <p className="text-sm text-muted-foreground">518, Sector 1, Manesar, Gurgaon, India</p>
             </div>
             <a
@@ -73,7 +73,7 @@ const Footer = () => {
           </div>
 
           <nav aria-label="Site" className="text-center md:text-left">
-            <p className="mb-3 font-mono text-xs uppercase tracking-[0.12em] text-foreground">Site</p>
+            <p className="mb-3 eyebrow text-foreground">Site</p>
             <ul className="grid grid-cols-2 gap-x-6 gap-y-2 md:grid-cols-1">
               {siteLinks.map((link) => (
                 <li key={link.href}>
@@ -84,7 +84,7 @@ const Footer = () => {
           </nav>
 
           <nav aria-label="Products" className="text-center md:text-left">
-            <p className="mb-3 font-mono text-xs uppercase tracking-[0.12em] text-foreground">Products</p>
+            <p className="mb-3 eyebrow text-foreground">Products</p>
             <ul className="grid gap-x-6 gap-y-2 sm:grid-cols-2">
               {productLinks.map((link) => (
                 <li key={link.href}>

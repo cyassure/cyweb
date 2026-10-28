@@ -14,11 +14,11 @@ const DocsIndexSection = () => {
           viewport={{ once: true }}
           className="mb-12 max-w-3xl"
         >
-          <p className="mb-4 flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.12em] text-muted-foreground">
+          <p className="mb-4 flex items-center gap-2.5 eyebrow text-muted-foreground">
             <span className="h-2.5 w-2.5 shrink-0 bg-[var(--page-accent)]" />
             Documentation
           </p>
-          <h1 className="mb-4 font-heading text-2xl font-bold leading-[1.1] text-foreground md:text-4xl">
+          <h1 className="mb-4 font-heading text-3xl font-semibold leading-[1.1] text-foreground md:text-[2.75rem]">
             Everything you need to run Cy360
           </h1>
           <p className="max-w-2xl text-muted-foreground">
@@ -42,7 +42,7 @@ const DocsIndexSection = () => {
 
         {DOC_CATEGORIES.map((cat) => (
           <div key={cat.name} className="mb-12">
-            <h2 className="mb-1 font-heading text-xl font-bold text-foreground">{cat.name}</h2>
+            <h2 className="mb-1 text-2xl font-semibold leading-tight text-foreground md:text-[1.75rem]">{cat.name}</h2>
             <p className="mb-5 text-sm text-muted-foreground">{cat.blurb}</p>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {docsInCategory(cat.name).map((doc, i) => {
@@ -64,7 +64,7 @@ const DocsIndexSection = () => {
                     }}
                   >
                     <doc.icon className="mb-5 h-6 w-6" style={{ color: `color-mix(in srgb, ${c} 75%, black)` }} />
-                    <h3 className="mb-2 text-base font-semibold text-foreground">{doc.title}</h3>
+                    <h3 className="mb-2 text-lg font-semibold leading-snug text-foreground">{doc.title}</h3>
                     <p className="mb-4 flex-1 text-sm text-muted-foreground">{doc.description}</p>
                     <span
                       className="inline-flex items-center gap-1 text-xs font-semibold"

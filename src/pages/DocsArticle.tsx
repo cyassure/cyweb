@@ -15,8 +15,8 @@ function textOf(node: ReactNode): string {
 }
 
 const markdownComponents: Components = {
-  h2: ({ children }) => <h2 id={slugifyHeading(textOf(children))} className="scroll-mt-28">{children}</h2>,
-  h3: ({ children }) => <h3 id={slugifyHeading(textOf(children))} className="scroll-mt-28">{children}</h3>,
+  h2: ({ children }) => <h2 id={slugifyHeading(textOf(children))} className="scroll-mt-36">{children}</h2>,
+  h3: ({ children }) => <h3 id={slugifyHeading(textOf(children))} className="scroll-mt-36">{children}</h3>,
   a: ({ href = "", children }) =>
     href.startsWith("/") ? (
       <Link to={href}>{children}</Link>
@@ -95,7 +95,7 @@ const DocsArticle = () => {
         <div className="container mx-auto max-w-7xl px-6">
           <div className="grid gap-10 lg:grid-cols-[220px_minmax(0,1fr)] xl:grid-cols-[220px_minmax(0,1fr)_200px]">
             <aside className="hidden lg:block">
-              <div className="sticky top-28 max-h-[calc(100vh-8rem)] overflow-y-auto pb-8 pr-2">
+              <div className="sticky top-36 max-h-[calc(100vh-10rem)] overflow-y-auto pb-8 pr-2">
                 <DocsNav current={doc.slug} />
               </div>
             </aside>
@@ -107,7 +107,7 @@ const DocsArticle = () => {
               >
                 <ArrowLeft className="h-4 w-4" /> All docs
               </Link>
-              <p className="mb-3 flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.12em] text-muted-foreground">
+              <p className="mb-3 flex items-center gap-2.5 eyebrow text-muted-foreground">
                 <span className="h-2.5 w-2.5 shrink-0 bg-[var(--page-accent)]" />
                 {doc.category}
               </p>
@@ -156,7 +156,7 @@ const DocsArticle = () => {
 
             {headings.length > 2 && (
               <aside className="hidden xl:block">
-                <div className="sticky top-28 max-h-[calc(100vh-8rem)] overflow-y-auto pb-8">
+                <div className="sticky top-36 max-h-[calc(100vh-10rem)] overflow-y-auto pb-8">
                   <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">On this page</p>
                   <ul className="space-y-2 text-sm">
                     {headings.map((h) => (

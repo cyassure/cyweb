@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -49,13 +49,12 @@
     --sidebar-border: 225 28% 88%;
     --sidebar-ring: 230 90% 54%;
 
-    /* Portal domain colours, secops → AI (src/lib/domains.ts); the -ink variant
-       is the same run darkened enough to read as text on the light ground. */
+    /* Portal domain colours, secops → AI (src/lib/domains.ts). */
     --spectrum: #ff3b3b, #ff5c8a, #ff8c00, #f5c518, #38bdf8, #2dd4bf, #4d9eff, #b06eff;
-    --spectrum-ink: #e11d48, #db2777, #ea580c, #0d9488, #2563eb, #7c3aed;
     --glow-primary: 0 0 0 1px hsl(230 90% 54% / 0.2), 0 12px 28px -14px hsl(230 90% 40% / 0.35);
     --shadow-card: 0 10px 30px -12px hsl(222 60% 20% / 0.18);
-    --font-heading: 'Unbounded', system-ui, sans-serif;
+    /* One family for headings and body; mono is for code and portal mock-ups only. */
+    --font-heading: 'IBM Plex Sans', system-ui, sans-serif;
     --font-body: 'IBM Plex Sans', system-ui, sans-serif;
     --font-mono: 'JetBrains Mono', ui-monospace, monospace;
     color-scheme: light;
@@ -113,6 +112,7 @@
 
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
+    font-weight: 600;
     letter-spacing: -0.02em;
     text-wrap: balance;
   }
@@ -122,13 +122,14 @@
   }
 }
 
-@layer utilities {
-  /* Used once, in the hero headline. */
-  .text-spectrum {
-    @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(90deg, var(--spectrum-ink));
+@layer components {
+  /* The one label style above headings, in footers and on cards. */
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.14em];
   }
+}
 
+@layer utilities {
   /* Thin brand rule under the navbar and above the footer. */
   .spectrum-rule {
     height: 2px;

@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        heading: ["Unbounded", "system-ui", "sans-serif"],
+        heading: ["IBM Plex Sans", "system-ui", "sans-serif"],
         body: ["IBM Plex Sans", "system-ui", "sans-serif"],
         mono: ["JetBrains Mono", "ui-monospace", "monospace"],
       },
