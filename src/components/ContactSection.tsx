@@ -103,20 +103,21 @@ const ContactSection = () => {
           </div>
 
           <figure>
-            <div className="aspect-[4/3] max-w-full overflow-hidden rounded-lg border border-border">
-              {officePhoto ? (
-                <img
-                  src={officePhoto}
-                  alt="CyAssure's Netherlands office building at Einsteinlaan 28, Rijswijk"
-                  className="h-full w-full object-cover"
-                  loading="lazy"
-                />
-              ) : (
+            {officePhoto ? (
+              <img
+                src={officePhoto}
+                alt="CyAssure's Netherlands office building at Einsteinlaan 28, Rijswijk"
+                className="w-full rounded-lg border border-border"
+                loading="lazy"
+              />
+            ) : (
+              <div className="aspect-[4/3] max-w-full overflow-hidden rounded-lg border border-border">
                 <BuildingFallback />
-              )}
-            </div>
-            <figcaption className="mt-3 font-mono text-xs text-muted-foreground">
-              Einsteinlaan 28, Rijswijk · near The Hague
+              </div>
+            )}
+            <figcaption className="mt-3 flex flex-wrap justify-between gap-2 font-mono text-xs text-muted-foreground">
+              <span>Einsteinlaan 28, Rijswijk · near The Hague</span>
+              {officePhoto && <span className="text-muted-foreground/70">Photo: Coworker.com</span>}
             </figcaption>
           </figure>
         </div>

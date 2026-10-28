@@ -1,8 +1,9 @@
 import PageShell from "@/components/PageShell";
+import { DOMAIN_COLORS } from "@/lib/domains";
 import EditionsComparisonSection from "@/components/EditionsComparisonSection";
 
 const Editions = () => (
-  <PageShell>
+  <PageShell accent={DOMAIN_COLORS.grc}>
     <EditionsComparisonSection />
   </PageShell>
 );

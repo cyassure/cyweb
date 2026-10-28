@@ -1,10 +1,11 @@
 import PageShell from "@/components/PageShell";
+import { DOMAIN_COLORS } from "@/lib/domains";
 import DownloadSection from "@/components/DownloadSection";
 import SaaSDownload from "@/components/SaaSDownload";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Download = () => (
-  <PageShell>
+  <PageShell accent={DOMAIN_COLORS.asm}>
     <div className="container mx-auto flex justify-center px-6 pt-8">
       <Tabs defaultValue="on-premises" className="w-full">
         <div className="flex justify-center">
