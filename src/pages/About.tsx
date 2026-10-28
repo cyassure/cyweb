@@ -56,7 +56,7 @@ const About = () => (
 
       <img
         src={officesArt}
-        alt="Illustration of the Rijswijk office tower and the Gurgaon towers linked by arcs naming the Cy360 modules"
+        alt="Illustration of the Rijswijk and Gurgaon offices either side of one Cy360 platform listing its modules"
         className="mb-14 aspect-[32/9] w-full rounded-lg"
       />
 
