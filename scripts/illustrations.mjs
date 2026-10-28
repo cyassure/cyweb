@@ -223,18 +223,34 @@ const windowsGrid = (x, y, cols, rows, w, h, gx, gy, lit) => {
     }
   return s;
 };
-// Cy360 modules along the arcs between the two offices, coloured by portal domain.
-// With the control point centred, x is linear in t, so pills are evenly spaced.
-const ARC_OUTER = [["SIEM", C.red], ["UEBA", C.red], ["EDR", C.blue], ["DLP", C.teal], ["DSPM", C.teal], ["SSPM", C.sky], ["CSPM", C.sky]];
-const ARC_INNER = [["CASB", C.sky], ["Vuln Mgmt", C.pink], ["ASM", C.orange], ["AI Security", C.violet], ["GRC", C.green], ["Data Security", C.teal]];
-const moduleArc = ([x0, y0], [x1, y1], [x2, y2], labels) => {
-  const at = (t) => [(1 - t) ** 2 * x0 + 2 * (1 - t) * t * x1 + t * t * x2, (1 - t) ** 2 * y0 + 2 * (1 - t) * t * y1 + t * t * y2];
-  let s = `<path d="M${x0} ${y0} Q ${x1} ${y1} ${x2} ${y2}" stroke="#fff" stroke-width="2.5" stroke-dasharray="2 9" stroke-linecap="round" fill="none" opacity=".85"/>`;
-  labels.forEach(([label, color], i) => {
-    const [x, y] = at(0.1 + (0.8 * i) / (labels.length - 1));
-    const w = label.length * 6.6 + 16;
-    s += `<rect x="${x - w / 2}" y="${y - 11}" width="${w}" height="22" rx="11" fill="${color}"/>` +
-      `<text x="${x}" y="${y + 4}" text-anchor="middle" font-size="11.5" font-weight="700" fill="${C.ink}">${label}</text>`;
+// Cy360 modules in one panel between the two offices, coloured by portal domain:
+// both branches deliver the same unified platform.
+const MODULES = [
+  ["SIEM", C.red], ["UEBA", C.red], ["EDR", C.blue], ["DLP", C.teal], ["DSPM", C.teal], ["SSPM", C.sky], ["CSPM", C.sky],
+  ["CASB", C.sky], ["Vuln Mgmt", C.pink], ["ASM", C.orange], ["AI Security", C.violet], ["GRC", C.green], ["Data Security", C.teal],
+];
+const platformPanel = (x, y, w, h) => {
+  let s = `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="16" fill="#fff" opacity=".14"/><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="16" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="1.5"/>`;
+  s += `<text x="${x + w / 2}" y="${y + 40}" text-anchor="middle" font-size="24" font-weight="700" fill="#fff">Cy360</text>`;
+  s += `<text x="${x + w / 2}" y="${y + 64}" text-anchor="middle" font-size="13" font-weight="500" fill="#fff" opacity=".85">One unified platform, delivered from both offices</text>`;
+  // Lay the pills out in centred rows that fit the panel.
+  const pad = 20, gap = 8, rowH = 26, rowGap = 10, rows = [[]];
+  let used = 0;
+  for (const [label, color] of MODULES) {
+    const pw = label.length * 7.6 + 22;
+    if (used + pw > w - pad * 2 && rows.at(-1).length) { rows.push([]); used = 0; }
+    rows.at(-1).push([label, color, pw]);
+    used += pw + gap;
+  }
+  rows.forEach((row, r) => {
+    const rowW = row.reduce((t, [, , pw]) => t + pw, 0) + gap * (row.length - 1);
+    let cx = x + (w - rowW) / 2;
+    const cy = y + 86 + r * (rowH + rowGap);
+    for (const [label, color, pw] of row) {
+      s += `<rect x="${cx}" y="${cy}" width="${pw}" height="${rowH}" rx="13" fill="${color}"/>` +
+        `<text x="${cx + pw / 2}" y="${cy + 17.5}" text-anchor="middle" font-size="13" font-weight="700" fill="${C.ink}">${label}</text>`;
+      cx += pw + gap;
+    }
   });
   return s;
 };
@@ -252,9 +268,8 @@ scenes["offices"] = svg(
   `<rect x="980" y="70" width="90" height="230" fill="#e3f2fa"/>` + windowsGrid(990, 82, 5, 15, 10, 9, 6, 5, C.yellow) +
   `<rect x="1080" y="160" width="64" height="140" fill="#bfe0f0"/>` + windowsGrid(1088, 170, 4, 8, 9, 9, 5, 6, C.pink) +
   `<text x="1020" y="336" text-anchor="middle" font-size="18" font-weight="700" fill="#fff">Gurgaon · IN</text>` +
-  moduleArc([370, 150], [640, -70], [900, 150], ARC_OUTER) +
-  moduleArc([396, 184], [640, 44], [884, 184], ARC_INNER),
-  "0 0 1280 360", "Rijswijk office tower and Gurgaon glass towers linked by two arcs labelled with Cy360 modules");
+  platformPanel(444, 58, 424, 210),
+  "0 0 1280 360", "Rijswijk and Gurgaon offices either side of one Cy360 platform panel listing its modules");
 
 // Leadership avatars — head and shoulders in a coloured disc. `placeholder` draws a faceless
 // silhouette for roles that are not yet filled.
