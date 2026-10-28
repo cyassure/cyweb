@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight, PlayCircle } from "lucide-react";
-import { DOC_CATEGORIES, docsInCategory } from "@/lib/docs";
+import { DOC_CATEGORIES, docsInCategory, docColor } from "@/lib/docs";
+import { DOMAIN_COLORS } from "@/lib/domains";
 
 const DocsIndexSection = () => {
   return (
@@ -14,7 +15,7 @@ const DocsIndexSection = () => {
           className="mb-12 max-w-3xl"
         >
           <p className="mb-4 flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.12em] text-muted-foreground">
-            <span className="h-2.5 w-2.5 shrink-0 bg-primary" />
+            <span className="h-2.5 w-2.5 shrink-0 bg-[var(--page-accent)]" />
             Documentation
           </p>
           <h1 className="mb-4 font-heading text-2xl font-bold leading-[1.1] text-foreground md:text-4xl">
@@ -28,14 +29,15 @@ const DocsIndexSection = () => {
 
         <Link
           to="/demos"
-          className="group mb-12 flex items-center gap-4 rounded-xl border border-primary/30 bg-primary/5 p-5 transition-all hover:border-primary/60"
+          className="group mb-12 flex items-center gap-4 rounded-lg p-5 text-white transition-all hover:brightness-110"
+          style={{ backgroundColor: DOMAIN_COLORS.response }}
         >
-          <PlayCircle className="h-10 w-10 shrink-0 text-primary" />
+          <PlayCircle className="h-10 w-10 shrink-0" />
           <div className="flex-1">
-            <p className="font-heading text-base font-bold text-foreground">Prefer to watch? See the demo videos</p>
-            <p className="text-sm text-muted-foreground">A three-minute platform overview and a narrated walkthrough of every module.</p>
+            <p className="font-heading text-base font-bold">Prefer to watch? See the demo videos</p>
+            <p className="text-sm text-white/85">A three-minute platform overview and a narrated walkthrough of every module.</p>
           </div>
-          <ArrowRight className="h-5 w-5 text-primary transition-transform group-hover:translate-x-1" />
+          <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
         </Link>
 
         {DOC_CATEGORIES.map((cat) => (
@@ -43,7 +45,9 @@ const DocsIndexSection = () => {
             <h2 className="mb-1 font-heading text-xl font-bold text-foreground">{cat.name}</h2>
             <p className="mb-5 text-sm text-muted-foreground">{cat.blurb}</p>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {docsInCategory(cat.name).map((doc, i) => (
+              {docsInCategory(cat.name).map((doc, i) => {
+                const c = docColor(doc);
+                return (
                 <motion.div
                   key={doc.slug}
                   initial={{ opacity: 0, y: 20 }}
@@ -53,19 +57,25 @@ const DocsIndexSection = () => {
                 >
                   <Link
                     to={`/docs/${doc.slug}`}
-                    className="group flex h-full flex-col rounded-xl border border-border bg-card p-6 transition-all hover:border-primary/40"
+                    className="group flex h-full flex-col rounded-lg border p-6 transition-all hover:shadow-[var(--shadow-card)]"
+                    style={{
+                      backgroundColor: `color-mix(in srgb, ${c} 7%, hsl(var(--card)))`,
+                      borderColor: `color-mix(in srgb, ${c} 35%, transparent)`,
+                    }}
                   >
-                    <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl border border-border bg-secondary/50 transition-all group-hover:border-primary/40 group-hover:bg-primary/10">
-                      <doc.icon className="h-5 w-5 text-primary" />
-                    </div>
-                    <h3 className="mb-2 font-heading text-base font-bold text-foreground">{doc.title}</h3>
+                    <doc.icon className="mb-5 h-6 w-6" style={{ color: `color-mix(in srgb, ${c} 75%, black)` }} />
+                    <h3 className="mb-2 text-base font-semibold text-foreground">{doc.title}</h3>
                     <p className="mb-4 flex-1 text-sm text-muted-foreground">{doc.description}</p>
-                    <span className="inline-flex items-center gap-1 text-xs font-semibold text-primary">
+                    <span
+                      className="inline-flex items-center gap-1 text-xs font-semibold"
+                      style={{ color: `color-mix(in srgb, ${c} 70%, black)` }}
+                    >
                       Read <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
                     </span>
                   </Link>
                 </motion.div>
-              ))}
+                );
+              })}
             </div>
           </div>
         ))}

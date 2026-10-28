@@ -35,7 +35,7 @@ const editions = [
     priceNote: "activated by a .lic file, scoped to your environment",
     accent: "border-emerald-500/30",
     accentBg: "bg-emerald-500/5",
-    iconCls: "text-emerald-400",
+    iconCls: "text-emerald-600",
     features: [
       "Everything in Community, purchased user & agent counts",
       "90-day raw event history (CyDataLake)",
@@ -59,10 +59,10 @@ const EditionsComparisonSection = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-14 max-w-3xl"
+          className="mx-auto mb-14 max-w-4xl"
         >
           <p className="mb-4 flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.12em] text-muted-foreground">
-            <span className="h-2.5 w-2.5 shrink-0 bg-primary" />
+            <span className="h-2.5 w-2.5 shrink-0 bg-[var(--page-accent)]" />
             Self-Hosted Editions
           </p>
           <h1 className="mb-4 font-heading text-2xl font-bold leading-[1.1] text-foreground md:text-4xl">

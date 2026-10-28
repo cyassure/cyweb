@@ -58,6 +58,56 @@
 }
 
 @layer base {
+  /* Inner pages (PageShell) switch the root to a light ground; the landing page stays dark. */
+  .theme-light {
+    --background: 228 40% 98%;
+    --foreground: 222 60% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 60% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 60% 12%;
+
+    --primary: 230 90% 54%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 226 45% 95%;
+    --secondary-foreground: 222 50% 20%;
+
+    --muted: 226 40% 94%;
+    --muted-foreground: 222 18% 40%;
+
+    --accent: 204 90% 40%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 48%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 225 28% 88%;
+    --input: 225 24% 80%;
+    --ring: 230 90% 54%;
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 222 60% 12%;
+    --sidebar-primary: 230 90% 54%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 226 45% 95%;
+    --sidebar-accent-foreground: 222 60% 12%;
+    --sidebar-border: 225 28% 88%;
+    --sidebar-ring: 230 90% 54%;
+
+    --glow-primary: 0 0 0 1px hsl(230 90% 54% / 0.2), 0 12px 28px -14px hsl(230 90% 40% / 0.35);
+    --shadow-card: 0 10px 30px -12px hsl(222 60% 20% / 0.18);
+    color-scheme: light;
+  }
+
+  .theme-light body {
+    background-image: none;
+  }
+}
+
+@layer base {
   * {
     @apply border-border;
   }

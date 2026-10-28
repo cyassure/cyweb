@@ -1,10 +1,11 @@
 import { motion } from "framer-motion";
 import { Mail, MapPin } from "lucide-react";
 import PageShell from "@/components/PageShell";
+import { DOMAIN_COLORS } from "@/lib/domains";
 import SupportForm from "@/components/SupportForm";
 
 const Support = () => (
-  <PageShell>
+  <PageShell accent={DOMAIN_COLORS.data}>
     <section className="relative py-16">
       <div className="container mx-auto max-w-2xl px-6">
         <motion.div
@@ -14,7 +15,7 @@ const Support = () => (
           className="mb-10 max-w-3xl"
         >
           <p className="mb-4 flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.12em] text-muted-foreground">
-            <span className="h-2.5 w-2.5 shrink-0 bg-primary" />
+            <span className="h-2.5 w-2.5 shrink-0 bg-[var(--page-accent)]" />
             Support
           </p>
           <h1 className="mb-4 font-heading text-2xl font-bold leading-[1.1] text-foreground md:text-4xl">

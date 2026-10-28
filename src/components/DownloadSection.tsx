@@ -42,7 +42,7 @@ const DownloadSection = () => {
           className="mb-12 max-w-3xl"
         >
           <p className="mb-4 flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.12em] text-muted-foreground">
-            <span className="h-2.5 w-2.5 shrink-0 bg-primary" />
+            <span className="h-2.5 w-2.5 shrink-0 bg-[var(--page-accent)]" />
             Get Cy360
           </p>
           <h1 className="mb-4 font-heading text-2xl font-bold leading-[1.1] text-foreground md:text-4xl">
@@ -125,14 +125,14 @@ const DownloadSection = () => {
           className="flex flex-col items-center gap-3 rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-6 text-center sm:flex-row sm:justify-between sm:text-left"
         >
           <div className="flex items-center gap-3">
-            <ShieldCheck className="h-6 w-6 shrink-0 text-emerald-400" />
+            <ShieldCheck className="h-6 w-6 shrink-0 text-emerald-600" />
             <p className="text-sm text-foreground">
               Need more users, more agents, or CyMind AI + CyTIM intel? That's Enterprise — licensed, not public.
             </p>
           </div>
           <Link
             to="/support"
-            className="group inline-flex shrink-0 items-center gap-2 rounded-lg border border-emerald-500/40 bg-card px-5 py-2.5 text-sm font-semibold text-emerald-400 transition-all hover:brightness-110"
+            className="group inline-flex shrink-0 items-center gap-2 rounded-lg border border-emerald-500/40 bg-card px-5 py-2.5 text-sm font-semibold text-emerald-600 transition-all hover:brightness-110"
           >
             Contact Sales
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />

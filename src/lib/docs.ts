@@ -3,6 +3,7 @@ import {
   SlidersHorizontal, Search, Bug, Radar, Boxes, CloudCog, Database, Laptop, BrainCircuit,
   ShieldCheck, Folder, Store, Settings, HeartPulse, Network, Wrench, Plug,
 } from "lucide-react";
+import { DOMAIN_COLORS, type DomainId } from "@/lib/domains";
 
 // Raw-imported at build time via Vite's `?raw` — no runtime fetch, no cross-repo
 // build dependency. Content is a hand-curated, customer-safe allowlist written
@@ -148,6 +149,37 @@ export function getDocBySlug(slug: string): DocEntry | undefined {
 
 export function docsInCategory(category: DocCategory): DocEntry[] {
   return docs.filter((d) => d.category === category);
+}
+
+// User-guide pages take the colour of the portal domain they document; the rest
+// fall back to a colour per category.
+const DOC_DOMAIN: Record<string, DomainId> = {
+  "dashboards-and-reports": "cloud-saas",
+  "incidents-and-posture": "secops",
+  "response-and-remediation": "response",
+  "ai-agents": "response",
+  "detection-rules-and-context": "secops",
+  investigations: "secops",
+  "vulnerability-management": "vuln",
+  "attack-surface": "asm",
+  "asset-management": "itam",
+  "cloud-and-saas-security": "cloud-saas",
+  "data-security": "data",
+  "endpoint-defence": "endpoint",
+  "ai-security": "ai",
+  "governance-and-compliance": "grc",
+  "case-management": "response",
+};
+
+const CATEGORY_DOMAIN: Record<DocCategory, DomainId> = {
+  "Get started": "asm",
+  "User guide": "endpoint",
+  Administration: "itam",
+  "Architecture & troubleshooting": "cloud-saas",
+};
+
+export function docColor(doc: DocEntry): string {
+  return DOMAIN_COLORS[DOC_DOMAIN[doc.slug] ?? CATEGORY_DOMAIN[doc.category]];
 }
 
 /** Heading text → URL fragment, shared by the article renderer and its table of contents. */

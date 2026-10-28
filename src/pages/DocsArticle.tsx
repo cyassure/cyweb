@@ -5,7 +5,7 @@ import remarkGfm from "remark-gfm";
 import { ArrowLeft, ArrowRight, PlayCircle } from "lucide-react";
 import PageShell from "@/components/PageShell";
 import { demoForDoc, formatDuration } from "@/lib/demos";
-import { DOC_CATEGORIES, docs, docsInCategory, extractHeadings, getDocBySlug, slugifyHeading } from "@/lib/docs";
+import { DOC_CATEGORIES, docColor, docs, docsInCategory, extractHeadings, getDocBySlug, slugifyHeading } from "@/lib/docs";
 
 // Plain text of a rendered heading, so its id matches extractHeadings()'s.
 function textOf(node: ReactNode): string {
@@ -90,7 +90,7 @@ const DocsArticle = () => {
   const next = idx < docs.length - 1 ? docs[idx + 1] : undefined;
 
   return (
-    <PageShell>
+    <PageShell accent={docColor(doc)}>
       <section className="relative py-12">
         <div className="container mx-auto max-w-7xl px-6">
           <div className="grid gap-10 lg:grid-cols-[220px_minmax(0,1fr)] xl:grid-cols-[220px_minmax(0,1fr)_200px]">
@@ -107,7 +107,10 @@ const DocsArticle = () => {
               >
                 <ArrowLeft className="h-4 w-4" /> All docs
               </Link>
-              <p className="mb-2 text-xs font-medium uppercase tracking-[0.2em] text-primary">{doc.category}</p>
+              <p className="mb-3 flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.12em] text-muted-foreground">
+                <span className="h-2.5 w-2.5 shrink-0 bg-[var(--page-accent)]" />
+                {doc.category}
+              </p>
 
               <details className="mb-8 rounded-lg border border-border bg-card p-4 lg:hidden">
                 <summary className="cursor-pointer text-sm font-medium text-foreground">Browse all documentation</summary>
@@ -125,7 +128,7 @@ const DocsArticle = () => {
                 </Link>
               )}
 
-              <article className="prose prose-invert max-w-none prose-headings:font-heading prose-a:text-primary prose-table:text-sm prose-th:text-foreground prose-img:my-0 prose-code:before:content-none prose-code:after:content-none prose-code:rounded prose-code:bg-secondary/60 prose-code:px-1 prose-code:py-0.5 prose-code:font-normal [&_pre_code]:bg-transparent [&_pre_code]:p-0">
+              <article className="prose max-w-none prose-headings:text-foreground prose-p:text-foreground/90 prose-li:text-foreground/90 prose-strong:text-foreground prose-headings:font-heading prose-a:text-primary prose-table:text-sm prose-th:text-foreground prose-img:my-0 prose-code:before:content-none prose-code:after:content-none prose-code:rounded prose-code:bg-secondary/60 prose-code:px-1 prose-code:py-0.5 prose-code:font-normal [&_pre_code]:bg-transparent [&_pre_code]:p-0">
                 <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
                   {doc.content}
                 </ReactMarkdown>

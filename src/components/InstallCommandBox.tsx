@@ -34,19 +34,19 @@ const InstallCommandBox = ({ version }: InstallCommandBoxProps) => {
   };
 
   return (
-    <div className="rounded-xl border border-border bg-secondary/40 p-1.5">
-      <div className="flex items-center gap-3 rounded-lg bg-background/60 px-4 py-3.5">
-        <code className="flex-1 overflow-x-auto whitespace-pre text-xs text-foreground sm:text-sm">
+    <div className="rounded-lg border border-[#22335f] bg-[#0d1d40] p-1.5">
+      <div className="flex items-center gap-3 rounded-md bg-[#07122a] px-4 py-3.5">
+        <code className="flex-1 overflow-x-auto whitespace-pre font-mono text-xs text-[#eef2ff] sm:text-sm">
           {command}
         </code>
         <button
           onClick={handleCopy}
-          className="flex shrink-0 items-center gap-1.5 rounded-md border border-border bg-card px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
+          className="flex shrink-0 items-center gap-1.5 rounded-md border border-[#33467a] bg-[#0d1d40] px-3 py-1.5 text-xs font-medium text-[#a9b7dc] transition-colors hover:border-[#6b86ff] hover:text-white"
           aria-label="Copy install command"
         >
           {copied ? (
             <>
-              <Check className="h-3.5 w-3.5 text-primary" /> Copied
+              <Check className="h-3.5 w-3.5 text-[#2dd4bf]" /> Copied
             </>
           ) : (
             <>
