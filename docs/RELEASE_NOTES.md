@@ -1,3 +1,11 @@
+## v1.0.113 -- 2026-10-29
+
+### Improvements
+
+  - docs(dpdp): DPDP Compliance Guide — data and consent flow, full-benefit steps, current limits
+
+---
+
 ## v1.0.112 -- 2026-10-29
 
 ### New Features
