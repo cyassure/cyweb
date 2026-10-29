@@ -113,6 +113,13 @@ Container logs from before an update are archived for 30 days under `/opt/cyassu
 | Cloud Inventory / Cloud Posture card red | An account's credentials or permissions failed | Marketplace → Cloud Asset Inventory → that account; grant the read-only roles listed on the page. |
 | DSPM store shows sensitivity *unknown* | Never content-scanned (scanning off, store set to *never*, or credentials can't read objects) | Data Security → Settings → content scanning; check the store override and credentials. |
 | Private-network databases never appear in DSPM | No in-environment scanner | Register and run a scanner (Data Security → Settings → Scanners). |
+| In-environment scanner logs `HTTP 302` or a sign-in page, never appears as *Last seen*, on an install behind the IAP Gateway | The gateway sent the scanner to the sign-in page (fixed in Cy360 v0.60.0) | Update Cy360 (Settings → Updates & Upgrades, or `cyassure-setup.sh --update`); the update adds the `/api/dspm/scanner/` exemption to the web server. |
+| A database check shows *not checked: the query timed out* | The column has no index, and the table is too big to count within 15 seconds | Add an index on the age or customer-id column, then **Check now**. |
+| A database check shows *not checked: no in-environment scanner picked this up* | The database is on a private network and the scanner is stopped or older than 1.2.0 | Start or update the scanner (see [Data Security → Settings](/docs/data-security#settings-admin)). |
+| A person search stays at *waiting for the in-environment scanner* | Same as above; after 24 hours the database is listed as *not searched* | Start or update the scanner, then run the search again. |
+| A person search lists a database as *partly searched* | A lookup timed out, or the database engine only supports sampling | Index the email, mobile and customer-id columns; search that database yourself and record it on the request. |
+| *Rows kept past retention* incident keeps coming back | The deletion job in that database isn't removing rows older than the declared retention | Fix or schedule the job; the incident resolves once the daily check counts zero. |
+| *People who withdrew consent are still in a table* incident | The system that owns the table isn't acting on the consent change feed | Make it read `/api/privacy/public/consent/changes` and remove or suppress those people; then **Check now** under Privacy Operations → Consent & Notices → Data checks. |
 | Sandbox says "unavailable" | CyTIM not connected or no sandbox provider | Check Settings → Threat Intelligence; the CyTIM operator configures the provider. |
 
 ## Getting help

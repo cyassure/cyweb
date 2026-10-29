@@ -10,7 +10,7 @@ The section has five pages: **Overview**, **Rights Requests**, **Consent & Notic
 
 ## Overview
 
-A live **DPDP setup checklist** — privacy contact, purposes, a published notice, the consent and request keys, whether your systems read consent withdrawals, a complete Processing Register, personal data discovery, and one-year log retention — plus open and overdue requests, active consents and breaches in progress. Each unfinished item links to the page that fixes it.
+A live **DPDP setup checklist** — privacy contact, purposes, a published notice, the consent and request keys, whether your systems read consent withdrawals, a complete Processing Register, personal data discovery, and one-year log retention — plus open and overdue requests, active consents, breaches in progress and **Retention holds** (Rule 8(3) holds, with how many are due for erasure). Each unfinished item links to the page that fixes it.
 
 The **GRC compliance (DPDP)** panel shows when your DPDP assessment in Governance & Compliance was last updated from Privacy Operations, with a **Sync to GRC** button — see [Keeping GRC up to date](/docs/privacy-operations#keeping-grc-up-to-date).
 

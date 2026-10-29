@@ -59,7 +59,14 @@ Per tenant: every cloud (AWS, Azure, Google Cloud, Oracle, Hetzner, DigitalOcean
 
 ## Data Security
 
-Per tenant, with the DSPM licence: content scanning (off until you consent), scan mode and interval, sampling budgets, AI document types for data at rest, remediation, connections and in-environment scanners. See [Data Security → DSPM](/docs/data-security#settings-admin).
+Per tenant, with the DSPM licence: content scanning (off until you consent), scan mode and interval, sampling budgets, AI document types for data at rest, remediation, connections, in-environment scanners and **Database checks** (per-table age column, retention, customer-id column and consent purposes). See [Data Security → DSPM](/docs/data-security#settings-admin) and [Database checks](/docs/data-security#database-checks).
+
+Two person-search settings appear under General by their key:
+
+| Key | Default | What it does |
+|---|---|---|
+| `subject_search_value_days` | 90 | How long the identifiers of a person search stay sealed so a verification run can repeat the database lookup. After this they are wiped, and a later verification can only search files. |
+| `subject_search_max_objects` | 500 | Files and drive items read per store when searching for one person. Databases are looked up exactly and don't use this limit. |
 
 ## Environment Config
 
