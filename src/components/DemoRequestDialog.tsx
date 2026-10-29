@@ -12,6 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { demos, formatDuration } from "@/lib/demos";
+import PrivacyNote from "@/components/PrivacyNote";
 
 const formSchema = z.object({
   name: z.string().trim().min(1, "Please enter your name"),
@@ -197,6 +198,7 @@ const DemoRequestDialog = ({ trigger, startWithLive = false }: DemoRequestDialog
                     </FormItem>
                   )}
                 />
+                <PrivacyNote purpose="We use these details only to arrange your demo." />
                 <Button type="submit" className="w-full gap-2" disabled={mutation.isPending}>
                   <Send className="h-4 w-4" /> {mutation.isPending ? "Sending..." : "Request live demo"}
                 </Button>

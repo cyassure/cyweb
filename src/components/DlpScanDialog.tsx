@@ -11,6 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import PrivacyNote from "@/components/PrivacyNote";
 
 const sources = ["Microsoft 365", "Google Workspace", "Endpoints (Windows / macOS / Linux)", "Not sure yet"] as const;
 
@@ -151,6 +152,7 @@ const DlpScanDialog = ({ trigger }: { trigger: ReactNode }) => {
                 </FormItem>
               )}
             />
+            <PrivacyNote purpose="We use these details only to answer your assessment request." />
             <Button type="submit" className="w-full gap-2" disabled={mutation.isPending}>
               <Send className="h-4 w-4" /> {mutation.isPending ? "Sending..." : "Request my DLP scan"}
             </Button>

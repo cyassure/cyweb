@@ -6,6 +6,7 @@ import { CheckCircle2, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import PrivacyNote from "@/components/PrivacyNote";
 import {
   Form,
   FormControl,
@@ -148,6 +149,8 @@ const SupportForm = () => {
             </FormItem>
           )}
         />
+
+        <PrivacyNote purpose="We use these details only to answer your support request." />
 
         <Button type="submit" className="w-full gap-2 sm:w-auto" disabled={mutation.isPending}>
           <Send className="h-4 w-4" /> {mutation.isPending ? "Sending..." : "Send message"}

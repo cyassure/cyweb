@@ -90,9 +90,18 @@ export async function sendVerificationEmail(env: Env, to: string, name: string, 
   await graphSendMail(env, { to, subject: "Confirm your email to download Cy360", html });
 }
 
+// Privacy requests (rights, withdrawal of consent, grievances) come from the
+// form on /privacy-notice and go to the Grievance Officer's mailbox.
+const CONTACT_ROUTES: Record<ContactInput["destination"], { to: string; prefix: string }> = {
+  sales: { to: "sales@cyassure.eu", prefix: "[Website sales inquiry]" },
+  support: { to: "support@cyassure.eu", prefix: "[Website support]" },
+  privacy: { to: "privacy@cyassure.eu", prefix: "[Privacy request]" },
+};
+
 export async function sendContactEmail(env: Env, input: ContactInput): Promise<void> {
-  const to = input.destination === "sales" ? "sales@cyassure.eu" : "support@cyassure.eu";
-  const subjectPrefix = input.destination === "sales" ? "[Website sales inquiry]" : "[Website support]";
+  const route = CONTACT_ROUTES[input.destination];
+  const to = route.to;
+  const subjectPrefix = route.prefix;
   const topicLine = input.topic ? `<p style="font-size:14px;"><strong>Topic:</strong> ${escapeHtml(input.topic)}</p>` : "";
 
   const html = `

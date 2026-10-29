@@ -32,6 +32,8 @@
   // R2 and are streamed by worker/media.ts at /media/videos/<file>.mp4, with
   // Range support so players can seek. Upload with:
   //   npx wrangler r2 object put cyweb-videos/videos/<file>.mp4 --file <file> --content-type video/mp4 --remote
+  // Daily retention purge of website registrations (worker/retention.ts).
+  "triggers": { "crons": ["17 2 * * *"] },
   "r2_buckets": [
     {
       "binding": "VIDEOS",

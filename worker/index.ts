@@ -1,3 +1,4 @@
+import { purgeExpired } from "./retention";
 import { registrationSchema, contactSchema } from "./validate";
 import { upsertRegistration, getByVerifyToken, markVerified } from "./db";
 import { sendVerificationEmail, sendContactEmail } from "./email";
@@ -110,5 +111,10 @@ export default {
       return handleSession(request, env);
     }
     return json({ error: "not_found" }, 404);
+  },
+  async scheduled(_controller, env, ctx) {
+    ctx.waitUntil(
+      purgeExpired(env.DB, Date.now()).then((r) => console.log("registration retention purge", JSON.stringify(r))),
+    );
   },
 } satisfies ExportedHandler<Env>;

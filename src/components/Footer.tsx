@@ -98,6 +98,12 @@ const Footer = () => {
 
         <p className="mt-10 border-t border-border pt-6 text-center text-sm text-muted-foreground">
           © {new Date().getFullYear()} Cy360 by CyAssure. All rights reserved.
+          {" · "}
+          <a href="/privacy-notice" className="transition-colors hover:text-foreground">Privacy Notice</a>
+          {" · "}
+          <a href="/privacy-notice-hi" lang="hi" className="transition-colors hover:text-foreground">गोपनीयता सूचना</a>
+          {" · "}
+          <a href="mailto:privacy@cyassure.eu" className="transition-colors hover:text-foreground">Grievance Officer: privacy@cyassure.eu</a>
         </p>
       </div>
     </footer>

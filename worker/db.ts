@@ -38,8 +38,8 @@ export async function upsertRegistration(
   await db
     .prepare(
       `INSERT INTO registrations
-         (id, name, email, company, phone, role, city, country, verify_token, verify_token_expires_at, verified_at, created_at, ip, user_agent)
-       VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, NULL, ?11, ?12, ?13)
+         (id, name, email, company, phone, role, city, country, verify_token, verify_token_expires_at, verified_at, created_at, ip, user_agent, updated_at)
+       VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, NULL, ?11, ?12, ?13, ?11)
        ON CONFLICT(email) DO UPDATE SET
          name = excluded.name,
          company = excluded.company,
@@ -50,7 +50,8 @@ export async function upsertRegistration(
          verify_token = excluded.verify_token,
          verify_token_expires_at = excluded.verify_token_expires_at,
          ip = excluded.ip,
-         user_agent = excluded.user_agent`,
+         user_agent = excluded.user_agent,
+         updated_at = excluded.updated_at`,
     )
     .bind(
       crypto.randomUUID(),

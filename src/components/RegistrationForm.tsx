@@ -6,6 +6,7 @@ import { Mail, ShieldCheck, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import PrivacyNote from "@/components/PrivacyNote";
 
 const formSchema = z.object({
   name: z.string().min(1, "Please enter your name"),
@@ -149,6 +150,8 @@ const RegistrationForm = ({ onSubmitted }: RegistrationFormProps) => {
             )}
           />
         </div>
+
+        <PrivacyNote purpose="We use these details to confirm your email, unlock the download and support your licence." />
 
         <Button type="submit" className="w-full gap-2 sm:w-auto" disabled={mutation.isPending}>
           <Send className="h-4 w-4" /> {mutation.isPending ? "Sending..." : "Register & continue"}
