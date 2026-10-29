@@ -116,4 +116,4 @@ Gaps are checked per activity — missing purpose, lawful basis, owner or retent
 - Detections are mapped through MITRE ATT&CK techniques to framework controls hourly and become findings.
 - **Control validation** runs daily from live data. A failing *SIEM monitoring coverage* control (no security alerts in 24 hours) also raises an exposure incident.
 - DSPM findings and the Processing Register answer specific GDPR and DPDP questions automatically, marked with their source.
-- With the Privacy Operations add-on, its records answer the DPDP notice, consent, rights, grievance, children's, breach and erasure questions too — see [Privacy Operations](/docs/privacy-operations).
+- With the Privacy Operations add-on, its records answer the DPDP notice, consent, rights, grievance, children's, breach and erasure questions too. They update automatically every 6 hours, or straight away with **Sync to GRC** in Privacy Operations — see [Keeping GRC up to date](/docs/privacy-operations#keeping-grc-up-to-date).

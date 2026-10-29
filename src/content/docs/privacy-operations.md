@@ -10,6 +10,8 @@ The section has five pages: **Overview**, **Rights Requests**, **Consent & Notic
 
 A live **DPDP setup checklist** — privacy contact, purposes, a published notice, the consent and request keys, whether your systems read consent withdrawals, a complete Processing Register, personal data discovery, and one-year log retention — plus open and overdue requests, active consents and breaches in progress. Each unfinished item links to the page that fixes it.
 
+The **GRC compliance (DPDP)** panel shows when your DPDP assessment in Governance & Compliance was last updated from Privacy Operations, with a **Sync to GRC** button — see [Keeping GRC up to date](/docs/privacy-operations#keeping-grc-up-to-date).
+
 ## Settings
 
 Admins set:
@@ -17,6 +19,7 @@ Admins set:
 - **Contact** — name, email and phone of your Data Protection Officer or privacy contact. It is shown with every notice and added to every reply to a Data Principal automatically (Rule 9).
 - **Deadlines** — rights requests (default 30 days) and grievances (at most 90 days, Rule 14(3)).
 - **Board complaint link** — used by notices that don't set their own.
+- **Sync to GRC** — after changing your contact or deadlines, press it to update the DPDP assessment straight away instead of waiting for the next automatic update.
 - **Keys** — the **API key** stays on your servers (record consent, read consent state and the change feed); the **portal key** may be used from your web pages (notices, rights requests, request status). A key is shown once; *Rotate* replaces it immediately; *Revoke* stops it.
 
 ## Consent & Notices
@@ -77,9 +80,22 @@ Completing an **erasure** withdraws every consent and deletes the stored account
 
 The Board takes them on its own platform; mark each step done in Cy360. In **Case Management**, *Personal data breach* on a case switches it to the breach notification checklist.
 
-## Evidence and reporting
+## Keeping GRC up to date
 
-Every six hours Privacy Operations answers the DPDP assessment questions it can prove from its own records — notices, proof of consent, withdrawal enforcement, Consent Managers, request intake and on-time responses, the privacy contact, children's and guardians' consent, children's pages, verified erasures and breach notifications. It never overwrites an answer a person gave.
+What you do in Privacy Operations counts towards your DPDP assessment in **Governance & Compliance → Assessments → DPDP**. You don't need to fill in those questions twice — Privacy Operations answers the ones it can show evidence for: notices, proof of consent, honouring withdrawals, Consent Managers, how people reach you with requests, requests and grievances answered on time, your privacy contact, children's and guardians' consent, children's pages, verified erasures and breach notifications.
+
+**Automatic updates every 6 hours.** Your assessment is refreshed on its own four times a day. A change you make now — a new contact, a published notice, a closed request, a breach step marked done — shows up in GRC within 6 hours at most.
+
+**Sync to GRC for an immediate update.** When you want GRC to reflect a change right away — before an audit, a board meeting or a report — press **Sync to GRC** on the **Overview** or **Settings** page. It takes a few seconds and tells you how many DPDP answers were refreshed. Analysts and admins can use it; anyone can see when GRC was last updated.
+
+Good to know:
+
+- **Your team's answers always win.** If someone answered a DPDP question by hand in GRC, Privacy Operations leaves it alone. The sync message tells you how many answers were kept this way.
+- **No evidence yet, no answer.** A question stays open until there is something to show — for example, on-time responses appear once you have closed requests.
+- **Settings alone don't finish every question.** Most answers come from what actually happens: consents recorded, requests closed, breaches handled. Saving your settings updates the contact and request questions; the rest follow your day-to-day work.
+- **Licence needed.** Updates, automatic or by button, only run while the Privacy Operations add-on is active.
+
+## Reports and dashboards
 
 **Reports → Privacy Operations Report** summarises requests against their deadlines, verified erasures, consent, notices, children's pages, Consent Managers, breaches and the DPDP assessment score. On **Dashboard → Custom Dashboard**, *Start from template → DPDP Compliance* gives a ready-made DPDP dashboard.
 
