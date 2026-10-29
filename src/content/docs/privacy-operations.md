@@ -70,6 +70,10 @@ Each website gets a score out of 100 — 80 and above is low risk, 50 to 79 medi
 
 For pages directed at children the tracker result is also shown: **BREACH** means an ad or behavioural tracker loads; **REVIEW** means analytics or a tag manager.
 
+### Data checks
+
+For each database table declared under **Settings → Data Security → Database checks** with a customer-id column and consent purposes, Cy360 counts the people whose latest consent for one of those purposes is a withdrawal but who are still in the table. Found people raise a high-severity incident and lower the DPDP answer *processing stops on withdrawal* to partial. Counts only: no rows are read or changed. Checks run daily, or with **Check now**. Needs the Data Security (DSPM) add-on. See the [DPDP Compliance Guide](/docs/dpdp-guide#linking-a-withdrawal-to-the-data).
+
 ### Consent Managers
 
 Register each Consent Manager registered with the Board (name and registration number). Cy360 gives you an endpoint and a secret (shown once) for it. It sends signed grant and withdrawal events — each event is accepted once and must be signed within five minutes — and can query a person's consent state. Events land in the same ledger and change feed as every other channel. *Suspend* stops a Consent Manager; recent events show what was accepted or refused and why.
@@ -84,18 +88,20 @@ Copy-paste calls for your website or app:
 
 ## Rights Requests
 
-Tabs: **Rights requests**, **Grievances** and **Nominees**.
+Tabs: **Rights requests**, **Grievances**, **Nominees** and **Retention holds**.
 
 Requests arrive from your privacy page (portal key), your systems (API key) or *Log a request* (staff). Types: access (s.11), correction, erasure (s.12), nomination (s.14), consent withdrawal, and grievances (s.13). Each has a reference, a deadline and a full audit trail; overdue requests are shown in red.
 
 Working a request:
 
 1. **Verify identity** — record how (OTP, account login, document…) and, ideally, the person's account reference, which links their consents.
-2. **Find this person's data** (with Data Security) — enter their email, phone, Aadhaar, PAN, passport or account reference. Data Security keeps only a keyed hash of the identifiers, never the values, and lists each store, file or column that holds them.
+2. **Find this person's data** (with Data Security) — enter their email, phone, Aadhaar, PAN, passport or account reference. Data Security lists each store, file or column that holds them. Databases are looked up exactly, across the whole table. To repeat the lookup when verifying, the identifiers are kept sealed for 90 days and then wiped; they are never shown. Private databases are searched by the in-environment scanner (*waiting for the in-environment scanner* until it answers).
 3. **Build tasks** — one task per system in the Processing Register and per store where the person was found, plus one per Data Processor to instruct, each with its owner.
-4. Mark tasks **Done** or **N/A**, write the reply and **Complete** (or **Reject**). For an access request, *Draft access summary* writes the s.11 summary — processing, data, retention, and everyone it was shared with — from the Processing Register.
+4. Mark tasks **Done**, **N/A** or — for erase tasks — **Hold**: records DPDP Rule 8(3) requires you to keep for a year after the processing, out of active use, with an erasure date (default a year from today). Write the reply and **Complete** (or **Reject**). For an access request, *Draft access summary* writes the s.11 summary — processing, data, retention, and everyone it was shared with — from the Processing Register.
 
-Completing an **erasure** withdraws every consent and deletes the stored account reference; completing a **nomination** registers the nominee. To prove an erasure: **Run verification search** (same identifiers, nothing retyped) → **Record verification**. It counts as verified only when no copies remain, every store was searched, and no search limit was reached — a store Cy360 couldn't read is listed as *not searched*, never as clean.
+Completing an **erasure** withdraws every consent and deletes the stored account reference; completing a **nomination** registers the nominee. To prove an erasure: **Run verification search** (same identifiers, nothing retyped) → **Record verification**. It counts as verified only when no copies remain (copies in a held store are reported as held), every store was searched, and no search limit was reached — a store Cy360 couldn't read is listed as *not searched*, never as clean.
+
+**Retention holds** lists every Rule 8(3) hold with its erasure date. Click **Records erased** when they are deleted. A hold past its date shows red, lowers the DPDP erasure answer to partial and raises an incident until confirmed.
 
 ## Breach Intimation
 

@@ -289,7 +289,16 @@ One-click fixes that need **two admins** — one requests, a different one appro
 
 ### Finding one person's data
 
-For a DPDP access or erasure request, Privacy Operations asks DSPM to find one person's data: enter their email, phone, Aadhaar, PAN, passport or account reference on the request. The identifiers are turned into keyed hashes and never stored. DSPM reads each connected store — catalogued personal-data files first (up to 500 per store) and database columns classified as personal data (up to 100,000 rows) — and lists each store, file or column that holds them. Stores that need the in-environment scanner or have content scanning off are listed as *not searched*; a store where a limit was reached is *partly searched*. After an erasure, a verification run repeats the same search. See [Privacy Operations → Rights Requests](/docs/privacy-operations#rights-requests).
+For a DPDP access or erasure request, Privacy Operations asks DSPM to find one person's data: enter their email, phone, Aadhaar, PAN, passport or account reference on the request. In files and drives, DSPM reads catalogued personal-data files first (up to 500 per store) and compares keyed hashes. In databases it looks the person up exactly: it counts the rows whose personal-data columns, or a declared customer-id column, equal the identifier's common written forms. That covers the whole table through its index, not a sample. It lists each store, file or column holding them. The identifiers are kept sealed for 90 days so a verification run can repeat the lookup, then wiped. Private databases are looked up by the in-environment scanner (1.2.0 or later). Stores with content scanning off, or that no scanner answers for within 24 hours, are listed as *not searched*. A lookup that timed out (add an index) or a sampled-only engine makes the store *partly searched*. After an erasure, a verification run repeats the same search. See [Privacy Operations → Rights Requests](/docs/privacy-operations#rights-requests).
+
+### Database checks
+
+Under **Settings → Data Security → Database checks**, declare per table:
+
+- an **age column** (last activity, created or closed) with a **retention period** in days;
+- a **customer-id column** (customer id, email or mobile) with the Privacy Operations **consent purposes** the table serves.
+
+Daily, DSPM counts rows older than the retention (an incident *rows kept past retention*, resolved at zero; **Check now** runs it at once). Privacy Operations counts people who withdrew consent for one of the purposes but are still in the table (Consent & Notices → Data checks). Each check is a read-only `SELECT COUNT(*)`; nothing is read row by row or changed. Private databases are checked by the in-environment scanner. Index the named columns on large tables. The scanner token is a credential: during these checks the scanner receives the identifiers it looks up, so revoke and re-register it if it is ever exposed. On installs behind the IAP Gateway, `/api/dspm/scanner/` is exempt from sign-in; the scanner authenticates with its token.
 
 ### Settings (admin)
 

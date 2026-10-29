@@ -97,7 +97,7 @@ Cy360 can only prove what reaches it. These nine steps decide how much of your D
 
 **What to do.** In each system that uses personal data on the basis of consent (CRM, marketing tool, analytics, data warehouse), run a small scheduled job that calls `GET /api/privacy/public/consent/changes?since=<last id>`. For each withdrawal it should stop the processing for that purpose and customer, then store the last id it read. Ask your processors to do the same or to accept your instruction.
 
-**How you know it works.** The checklist item *Your systems read consent withdrawals* turns green once the feed has been read recently. If no system reads it for two days, the assessment answer drops.
+**How you know it works.** The checklist item *Your systems read consent withdrawals* turns green once the feed has been read recently. If no system reads it for two days, the assessment answer drops. To check the data itself, declare the tables under Database checks: **Privacy Operations → Consent & Notices → Data checks** then counts people who withdrew but are still there.
 
 ### 3. Connect every store that holds personal data
 
@@ -109,6 +109,8 @@ Cy360 can only prove what reaches it. These nine steps decide how much of your D
 - **Databases:** in **Marketplace → Data Security**, install the item for your engine (**PostgreSQL**, **MySQL / MariaDB**, **SQL Server / Azure SQL**, **Snowflake** or **BigQuery**). Each item has the SQL to create a read-only account. If Cy360 can reach the database, choose network *Public*. If not, choose *Private* and run the in-environment scanner, a container in your own network: register it under **Data Security → Settings → Scanners**. The scanner keeps the database password on your side and sends back only detector counts and salted hashes.
 - **File servers and NAS:** add them as file shares, usually through the in-environment scanner.
 - Leave **content scanning** on for stores holding personal data.
+
+Then declare your important tables under **Settings → Data Security → Database checks** (see *Database checks* below).
 
 **How you know it works.** **Data Security → Catalog** lists the stores with their personal data categories. The checklist item *Personal data discovery running* turns green. Stores Cy360 cannot read are shown as *not searched*, never as clean.
 
@@ -140,7 +142,7 @@ Cy360 can only prove what reaches it. These nine steps decide how much of your D
 - Log every request in **Rights Requests**, including ones that arrive by email or phone.
 - Verify the person's identity before acting.
 - On access and erasure requests, run the **Data Security search** with the identifiers you have.
-- Complete each task in your systems, then run the verification search after an erasure.
+- Complete each task in your systems. Mark records you must keep under Rule 8(3) as **Hold** with their erasure date. Then run the verification search after an erasure.
 - Keep nominations up to date.
 
 **How you know it works.** Requests closed on time, overdue requests and verified erasures appear on the Overview and in the report.
@@ -177,35 +179,47 @@ Cy360 connects to databases read-only and never changes or deletes your data. Fo
 - flags databases holding personal data that are publicly reachable, unencrypted or not logging access, and raises an incident for the serious cases;
 - shows who can read them, and finds copies of the same data in other stores;
 - compares them with the Processing Register;
-- searches them for one person's data during an access or erasure request, and again to verify an erasure.
+- searches them for one person's data during an access or erasure request, and again to verify an erasure;
+- counts rows kept past their retention period, and people who withdrew consent but are still in a table used for that purpose (see below).
 
-## Current limits, and what to do about them
+Every one of these checks is a read-only count or sample. Deleting data stays with your own systems; Cy360 tells you what needs deleting and checks that it was.
 
-Some DPDP duties depend on knowledge only your own systems have. This is what Cy360 does today and what you should do alongside it.
+## Database checks: retention, withdrawn consent and one person's data
+
+Cy360 doesn't manage your databases, so it needs two facts that only you know about each important table: which column says how old a row is, and which column holds the customer id. You declare them once under **Settings → Data Security → Database checks**. For each table you give:
+
+- the **age column**: a date or timestamp such as last login, last order, created or account closed;
+- the **retention period** in days, the same as for the matching activity in the Processing Register;
+- the **customer-id column**: the id your website or app sends with each consent, or the email or mobile number;
+- the **consent purposes** the table is used for, for example *Marketing* for a mailing-list table.
+
+Every check is a `SELECT COUNT(*)` in the same read-only session Data Security already uses. Cy360 never reads rows one by one and never changes anything. For private databases, the in-environment scanner (version 1.2.0 or later) runs the check inside your network and sends back only the count. On large tables, index the columns you name, or a check may time out; a timed-out check is reported as such, never as zero.
 
 ### Retention periods inside databases
 
-**Today.** Cy360 compares the age of files with the retention you declared, using their last-modified date, and flags files kept too long. Database columns have no age, so this comparison is not made for rows in a database.
+**What Cy360 does.** Every day it counts the rows whose age column is older than the retention period. If there are any, it raises an incident (*rows kept past retention*) that resolves itself when the count drops to zero. **Check now** runs the check at once.
 
-**What to do.** Keep the retention period for each activity in the Processing Register, and run a scheduled deletion job in each database. Base it on a timestamp you already keep (last order, last login, account closure), and use the declared period. If you are a large e-commerce platform (two crore or more registered users in India), an online gaming intermediary (fifty lakh or more) or a social media intermediary (two crore or more), the Third Schedule requires erasure three years after a user's last activity, with a notice at least 48 hours before. Build that into the same job. Record the job as a security measure on the activity.
+**What you do.** Run a scheduled deletion or anonymisation job in the database that removes those rows, keeping only what Rule 8(3) or another law requires (see below). The incident tells you when the job isn't keeping up. If you are a large e-commerce platform (two crore or more registered users in India), an online gaming intermediary (fifty lakh or more) or a social media intermediary (two crore or more), the Third Schedule requires erasure three years after a user's last activity, with a notice at least 48 hours before. Declare the last-activity column with 1095 days, and have your job send the 48-hour notice before it deletes.
 
 ### Linking a withdrawal to the data
 
-**Today.** Cy360 records withdrawals, publishes them on the change feed, and checks that your systems read the feed. It cannot see inside your databases whether a person's data is still being used for the withdrawn purpose.
+**What Cy360 does.** Privacy Operations knows who withdrew consent for which purpose. For each table declared with a customer-id column and purposes, it collects the people whose latest consent for one of those purposes is a withdrawal. Data Security counts how many of them are still in the table. Any found raise a high-severity incident, and the DPDP answer *processing stops on withdrawal* drops to partial until a later check finds none. The results are under **Privacy Operations → Consent & Notices → Data checks**. Checks run daily; **Check now** runs them at once.
 
-**What to do.** Read the feed in every system, as in step 2. Keep the consent status next to the customer record in your own database, so your applications check it before sending marketing or sharing data. Periodically compare your marketing lists with the ledger: `POST /api/privacy/public/consent/state` (API key) returns the current consent for each purpose for a customer id.
+**What you do.** Make the system that owns the table read the consent change feed (step 2) and remove or suppress those people for the purpose. A person's id is sent only for this check: Cy360 keeps it sealed and wipes it once the check has run. People whose erasure has been completed are covered by the erasure verification search instead.
 
 ### Searching for one person's data
 
-**Today.** The search reads catalogued personal-data files (up to 500 per store) and database columns classified as personal data (up to 100,000 rows each). Stores that need the in-environment scanner, or that have content scanning turned off, are listed as *not searched*. A store where a limit was reached is listed as *partly searched*.
+**What Cy360 does.** In databases, the search now looks the person up exactly. It counts the rows whose personal-data columns, or the declared customer-id column, equal the common ways the identifier is written (for a mobile number: with and without +91, with spaces). This covers the whole table through its index, not a sample. Private databases are searched by the in-environment scanner; until it answers, the search shows *waiting for the in-environment scanner*. If no scanner picks the search up within 24 hours, the database is listed as *not searched*. To repeat the lookup during verification, the identifiers are kept sealed for 90 days, then wiped. They are never shown or logged.
 
-**What to do.** For every store listed as *not searched* or *partly searched*, search it yourself with your own tools and record the result on the request's tasks. For your largest customer tables, a lookup on the customer id or email column is the fastest and most reliable search. Keep the customer id as the person's identifier in the consent calls, so one id finds them everywhere.
+**What you do.** Keep the in-environment scanner running and up to date. Index the email, mobile and customer-id columns of large tables. For any store still listed as *not searched* or *partly searched* (for example a file share without content scanning), search it yourself and record the result on the request's tasks.
 
 ### Keeping data and logs for at least one year (Rule 8(3))
 
-**Today.** Rule 8(3) says that personal data, traffic data and processing logs must be kept for at least one year from the processing, even after a person deletes their account or withdraws consent, and then erased. Cy360 keeps its own logs and evidence for a year at the DPDP retention setting. Erasure tasks don't yet show which records must be held back.
+**What the law says.** Personal data, traffic data and processing logs must be kept for at least one year from the processing, even after a person deletes their account or withdraws consent, and then erased.
 
-**What to do.** When you erase on request, remove the data from active use straight away. Records you must keep under Rule 8(3), such as order confirmations, payment events and access logs, go to restricted storage that only security and legal staff can read, with a deletion date one year after the processing. Note the deletion date on the request's erasure task. The verification search may still find the person in that restricted store; record it as the Rule 8(3) hold.
+**What Cy360 does.** On an erasure request, each erase task can be marked **Hold** instead of Done, with an erasure date (by default a year from today). Held tasks don't stop you completing the request. The verification search reports copies in a held store as *held*, not as a failure. **Rights Requests → Retention holds** lists every hold and its date. When a date passes without the records being confirmed erased, the hold shows red, the DPDP erasure answer drops to partial, and an incident is raised until you click **Records erased**.
+
+**What you do.** Move held records (order confirmations, payment events, access logs) out of active use into storage only security and legal staff can read. Delete them on the hold date, then confirm in Retention holds.
 
 ## Checklist
 
@@ -218,4 +232,5 @@ Some DPDP duties depend on knowledge only your own systems have. This is what Cy
 - Personal Data Breach case type used for every personal-data incident.
 - Parent and guardian verification sent with children's consent.
 - 365-day retention; monthly dashboard review; quarterly report.
-- Database retention jobs, withdrawal checks, manual searches for *not searched* stores, and Rule 8(3) holds run on your side.
+- Important tables declared under Database checks (age column, retention, customer-id column, purposes), with indexes on large tables.
+- Your own deletion jobs keep the retention incidents at zero; systems remove people who withdrew; Rule 8(3) holds erased on their date and confirmed.
