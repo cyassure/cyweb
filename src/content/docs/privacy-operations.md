@@ -4,6 +4,8 @@
 
 Privacy Operations is an Enterprise add-on module. It works with **Governance & Compliance** (the Processing Register says what you process and where) and **Data Security** (DSPM finds a person's data across your stores and checks it is gone after an erasure).
 
+For the end-to-end picture — how data and consent flow, what to connect for the full benefit, and what your own systems still do — see the [DPDP Compliance Guide](/docs/dpdp-guide).
+
 The section has five pages: **Overview**, **Rights Requests**, **Consent & Notices**, **Breach Intimation** and **Settings**.
 
 ## Overview

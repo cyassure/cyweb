@@ -29,6 +29,7 @@ import endpointDefence from "@/content/docs/endpoint-defence.md?raw";
 import aiSecurity from "@/content/docs/ai-security.md?raw";
 import grc from "@/content/docs/governance-and-compliance.md?raw";
 import privacyOps from "@/content/docs/privacy-operations.md?raw";
+import dpdpGuide from "@/content/docs/dpdp-guide.md?raw";
 import cases from "@/content/docs/case-management.md?raw";
 import marketplace from "@/content/docs/marketplace.md?raw";
 import integrationSetup from "@/content/docs/integration-setup.md?raw";
@@ -118,6 +119,9 @@ export const docs: DocEntry[] = [
   { slug: "privacy-operations", category: "User guide", icon: UserCheck, content: privacyOps,
     title: "Privacy Operations",
     description: "DPDP notices, consent, rights requests, grievances, Consent Managers and breach intimation." },
+  { slug: "dpdp-guide", category: "User guide", icon: UserCheck, content: dpdpGuide,
+    title: "DPDP Compliance Guide",
+    description: "How data and consent flow, what to set up for the full benefit, and what your own systems still do." },
   { slug: "case-management", category: "User guide", icon: Folder, content: cases,
     title: "Case Management",
     description: "Tracked investigations with comments, IOCs, evidence, checklists and SLA metrics." },
