@@ -39,9 +39,34 @@ Every grant, withdrawal and notice delivered, per purpose and channel, recorded 
 - **Children (under 18)** need verifiable parental consent — DigiLocker, a virtual token or an already-verified account — and are never given a tracking or advertising purpose.
 - **A person with a lawful guardian** needs a verified guardian order (Rule 11).
 
-### Children's pages
+### Website scan
 
-List the pages of your websites that are directed at children. Each is scanned daily (or *Scan now*) for advertising and behavioural trackers: **BREACH** means an ad or behavioural tracker loads; **REVIEW** means analytics or a tag manager. The scan reads the page's HTML; a tracker added later by a tag manager is shown as the tag manager.
+Add your websites under **Consent & Notices → Website scan** — the URL, an optional label, an optional notice URL, and **Directed at children** for pages meant for children. Each website is scanned daily (or *Scan* / *Scan all now*) for what a visitor can see of your DPDP obligations:
+
+| Check | Law |
+|---|---|
+| Served over HTTPS | s.8(5), Rule 6 |
+| A privacy notice is linked and can be read | s.5, Rule 3 |
+| The notice cites the DPDP Act, not only the old SPDI Rules | DPDP Act 2023, Rules 2025 |
+| A grievance officer / DPO with email, phone and a response time of at most 90 days | s.8(9)-(10), s.13, Rules 9 and 14 |
+| How to withdraw consent | s.5(1)(ii), s.6(4) |
+| Access, correction, erasure, grievance and nomination rights | s.11-14 |
+| How to complain to the Data Protection Board | s.5(1)(iii) |
+| Itemised personal data and purposes | s.5(1)(i), s.6(1), Rule 3(b) |
+| Retention periods and erasure | s.8(7)-(8), Rule 8 |
+| Children: age 18 and verifiable parental consent | s.9, Rule 10 |
+| A consent tool when trackers are present, and no tracker loading before consent | s.4, 6, 7 |
+| A notice link or consent box on every form that collects personal data | s.5(1), s.6(1), Rule 3 |
+| The notice in an Indian language | s.5(3) |
+| No advertising or behavioural tracker (pages directed at children only) | s.9(3) |
+
+Each website gets a score out of 100 — 80 and above is low risk, 50 to 79 medium, below 50 high. **Details** lists every check with what was found, how to fix it and the law.
+
+**Incidents.** Each failed check is raised as an incident in **Security Operations → Incidents**, with the fix in its summary, and resolves itself when a later scan passes. If the notice itself is missing you get one incident, not one per notice check. Removing a website resolves its incidents. Every scan is also kept in CyDataLake.
+
+**What the scan can and can't see.** It reads the HTML your server returns and does not run JavaScript. If your website is built as a JavaScript app, the scan searches the site's own script files for the notice link and trackers; checks it can't read show as **UNKNOWN** and are left out of the score. If your notice page is also rendered by JavaScript, set the website's **notice URL** to a page that serves the notice text. The text checks look for the required content; they are not a legal review.
+
+For pages directed at children the tracker result is also shown: **BREACH** means an ad or behavioural tracker loads; **REVIEW** means analytics or a tag manager.
 
 ### Consent Managers
 
@@ -82,7 +107,7 @@ The Board takes them on its own platform; mark each step done in Cy360. In **Cas
 
 ## Keeping GRC up to date
 
-What you do in Privacy Operations counts towards your DPDP assessment in **Governance & Compliance → Assessments → DPDP**. You don't need to fill in those questions twice — Privacy Operations answers the ones it can show evidence for: notices, proof of consent, honouring withdrawals, Consent Managers, how people reach you with requests, requests and grievances answered on time, your privacy contact, children's and guardians' consent, children's pages, verified erasures and breach notifications.
+What you do in Privacy Operations counts towards your DPDP assessment in **Governance & Compliance → Assessments → DPDP**. You don't need to fill in those questions twice — Privacy Operations answers the ones it can show evidence for: notices, proof of consent, honouring withdrawals, Consent Managers, how people reach you with requests, requests and grievances answered on time, your privacy contact, children's and guardians' consent, children's pages (from the website scan), verified erasures and breach notifications.
 
 **Automatic updates every 6 hours.** Your assessment is refreshed on its own four times a day. A change you make now — a new contact, a published notice, a closed request, a breach step marked done — shows up in GRC within 6 hours at most.
 
@@ -97,6 +122,6 @@ Good to know:
 
 ## Reports and dashboards
 
-**Reports → Privacy Operations Report** summarises requests against their deadlines, verified erasures, consent, notices, children's pages, Consent Managers, breaches and the DPDP assessment score. On **Dashboard → Custom Dashboard**, *Start from template → DPDP Compliance* gives a ready-made DPDP dashboard.
+**Reports → Privacy Operations Report** summarises requests against their deadlines, verified erasures, consent, notices, website DPDP readiness, children's pages, Consent Managers, breaches and the DPDP assessment score. On **Dashboard → Custom Dashboard**, *Start from template → DPDP Compliance* gives a ready-made DPDP dashboard.
 
 The Processing Register (Governance & Compliance) adds the DPDP pieces: the s.7 ground for each legitimate use, the annual DPIA for a Significant Data Fiduciary, countries restricted for transfers under s.16, and the s.17 exemption register.
