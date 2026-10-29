@@ -1,3 +1,15 @@
+## v1.0.112 -- 2026-10-29
+
+### New Features
+
+  - privacy): DPDP/GDPR privacy notice (English + Hindi), rights form, retention purge
+
+### Improvements
+
+  - docs(privacy): Website scan — DPDP readiness checks, scoring and incidents
+
+---
+
 ## v1.0.111 -- 2026-10-29
 
 ### Improvements
