@@ -1,3 +1,11 @@
+## v1.0.114 -- 2026-10-29
+
+### Improvements
+
+  - docs(dpdp): database checks, consent-to-data checks, exact person search, Rule 8(3) holds
+
+---
+
 ## v1.0.113 -- 2026-10-29
 
 ### Improvements
