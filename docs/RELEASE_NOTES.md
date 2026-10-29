@@ -1,3 +1,11 @@
+## v1.0.111 -- 2026-10-29
+
+### Improvements
+
+  - docs(privacy): Keeping GRC up to date — 6-hour updates and Sync to GRC
+
+---
+
 ## v1.0.110 -- 2026-10-28
 
 ### Improvements
