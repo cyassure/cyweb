@@ -8,6 +8,7 @@ export const registrationSchema = z.object({
   role: z.string().trim().max(200).optional().or(z.literal("")),
   city: z.string().trim().max(200).optional().or(z.literal("")),
   country: z.string().trim().max(200).optional().or(z.literal("")),
+  consent: z.literal(true),
 });
 
 export type RegistrationInput = z.infer<typeof registrationSchema>;

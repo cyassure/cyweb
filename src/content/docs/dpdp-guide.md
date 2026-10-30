@@ -104,13 +104,18 @@ Cy360 can only prove what reaches it. These nine steps decide how much of your D
 **Why it matters.** Anything Cy360 can't see can't be checked, searched for a person's data, or included in the Processing Register reconciliation.
 
 **What to do.**
-- **Cloud storage:** add your AWS, Azure and Google Cloud accounts in **Marketplace → Cloud Asset Inventory**.
+- **Cloud storage:** add your AWS, Azure and Google Cloud accounts in **Marketplace → Cloud Asset Inventory**, then install **Amazon S3**, **Azure Blob Storage** and **Google Cloud Storage** from **Marketplace → Data Security**. These use the same accounts, so there is nothing to fill in, but buckets aren't scanned until you install them.
 - **Microsoft 365 and Google Drive, Box, Dropbox:** add them from **Marketplace → Data Security** or Shared files.
-- **Databases:** in **Marketplace → Data Security**, install the item for your engine (**PostgreSQL**, **MySQL / MariaDB**, **SQL Server / Azure SQL**, **Snowflake** or **BigQuery**). Each item has the SQL to create a read-only account. If Cy360 can reach the database, choose network *Public*. If not, choose *Private* and run the in-environment scanner, a container in your own network: register it under **Data Security → Settings → Scanners**. The scanner keeps the database password on your side and sends back only detector counts and salted hashes.
+- **Databases:** in **Marketplace → Data Security**, install the item for your engine (**PostgreSQL**, **MySQL / MariaDB**, **SQL Server / Azure SQL**, **Snowflake**, **BigQuery** or **Cloudflare D1**). Each item has the SQL to create a read-only account. If Cy360 can reach the database, choose network *Public*. If not, choose *Private* and run the in-environment scanner, a container in your own network: register it under **Data Security → Settings → Scanners**. The scanner keeps the database password on your side and sends back only detector counts and salted hashes.
 - **File servers and NAS:** add them as file shares, usually through the in-environment scanner.
+- **Cloudflare:** install **Cloudflare D1** for databases, with an API token that has only the D1 Read permission, and **Cloudflare R2** for buckets, with an Object Read only token limited to those buckets. Use network *Public*. Cloudflare doesn't report whether an R2 bucket is public, whether it logs access, or whether it keeps versions, so these show as unknown. Check public access yourself in the Cloudflare dashboard.
 - Leave **content scanning** on for stores holding personal data.
 
-Then declare your important tables under **Settings → Data Security → Database checks** (see *Database checks* below).
+Database, file share, Cloudflare and SaaS connectors are installed from Marketplace, so Cy360 needs to reach CyAssure's catalog the first time you add one. Installed connectors keep working if it can't. Microsoft 365 and Google Workspace credentials are saved through their Marketplace items, and SaaS Posture uses those same credentials.
+
+You don't need to name your tables for scanning. Once content scanning is on, Cy360 finds every table it can read and samples its text columns, up to **Max objects sampled per store** (200 by default, where one column counts as one object). Each scan starts from the same columns, so a store with more columns than the limit keeps missing the same ones. If a database has more, raise the limit.
+
+Then declare your important tables under **Settings → Data Security → Database checks** (see *Database checks* below). Declaring adds the retention and consent checks, and scanning works without it.
 
 **How you know it works.** **Data Security → Catalog** lists the stores with their personal data categories. The checklist item *Personal data discovery running* turns green. Stores Cy360 cannot read are shown as *not searched*, never as clean.
 
@@ -200,6 +205,8 @@ Every check is a `SELECT COUNT(*)` in the same read-only session Data Security a
 **What Cy360 does.** Every day it counts the rows whose age column is older than the retention period. If there are any, it raises an incident (*rows kept past retention*) that resolves itself when the count drops to zero. **Check now** runs the check at once.
 
 **What you do.** Run a scheduled deletion or anonymisation job in the database that removes those rows, keeping only what Rule 8(3) or another law requires (see below). The incident tells you when the job isn't keeping up. If you are a large e-commerce platform (two crore or more registered users in India), an online gaming intermediary (fifty lakh or more) or a social media intermediary (two crore or more), the Third Schedule requires erasure three years after a user's last activity, with a notice at least 48 hours before. Declare the last-activity column with 1095 days, and have your job send the 48-hour notice before it deletes.
+
+**A table with more than one retention period.** A check has one period per table. If different rows have different periods, create a view for each group of rows and declare each view as its own check. On Cloudflare D1 the schema is `main`, and age columns can hold dates or epoch seconds or milliseconds. Add a day to each period if your deletion job runs daily, so rows waiting for tonight's run don't raise an incident.
 
 ### Linking a withdrawal to the data
 

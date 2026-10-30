@@ -1,4 +1,5 @@
 import { purgeExpired } from "./retention";
+import { syncConsent } from "./consent";
 import { registrationSchema, contactSchema } from "./validate";
 import { upsertRegistration, getByVerifyToken, markVerified } from "./db";
 import { sendVerificationEmail, sendContactEmail } from "./email";
@@ -70,7 +71,7 @@ async function handleContact(request: Request, env: Env): Promise<Response> {
   return json({ status: "sent" }, 202);
 }
 
-async function handleVerify(env: Env, url: URL): Promise<Response> {
+async function handleVerify(env: Env, url: URL, ctx: ExecutionContext): Promise<Response> {
   const token = url.searchParams.get("token");
   if (!token) return redirect(`${url.origin}/download?verified=0`);
 
@@ -80,9 +81,18 @@ async function handleVerify(env: Env, url: URL): Promise<Response> {
   }
 
   await markVerified(env.DB, row.email);
+  ctx.waitUntil(logConsentSync(env));
   const cookie = await createSessionCookie(env.SESSION_SECRET, row.email, row.name);
 
   return redirect(`${url.origin}/download?verified=1`, { "Set-Cookie": cookie });
+}
+
+async function logConsentSync(env: Env): Promise<void> {
+  try {
+    console.log("consent ledger sync", JSON.stringify(await syncConsent(env.DB, env, Date.now())));
+  } catch (err) {
+    console.error("consent ledger sync failed", err);
+  }
 }
 
 async function handleSession(request: Request, env: Env): Promise<Response> {
@@ -92,7 +102,7 @@ async function handleSession(request: Request, env: Env): Promise<Response> {
 }
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const url = new URL(request.url);
 
     if (url.pathname.startsWith("/media/")) {
@@ -105,7 +115,7 @@ export default {
       return handleContact(request, env);
     }
     if (url.pathname === "/api/verify" && request.method === "GET") {
-      return handleVerify(env, url);
+      return handleVerify(env, url, ctx);
     }
     if (url.pathname === "/api/session" && request.method === "GET") {
       return handleSession(request, env);
@@ -116,5 +126,6 @@ export default {
     ctx.waitUntil(
       purgeExpired(env.DB, Date.now()).then((r) => console.log("registration retention purge", JSON.stringify(r))),
     );
+    ctx.waitUntil(logConsentSync(env));
   },
 } satisfies ExportedHandler<Env>;

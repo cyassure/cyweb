@@ -4,6 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import * as z from "zod";
 import { Mail, ShieldCheck, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import PrivacyNote from "@/components/PrivacyNote";
@@ -16,6 +17,7 @@ const formSchema = z.object({
   role: z.string().optional(),
   city: z.string().optional(),
   country: z.string().optional(),
+  consent: z.boolean().refine(Boolean, "Please confirm you agree so we can process your details"),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -37,7 +39,7 @@ interface RegistrationFormProps {
 const RegistrationForm = ({ onSubmitted }: RegistrationFormProps) => {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: { name: "", email: "", company: "", phone: "", role: "", city: "", country: "" },
+    defaultValues: { name: "", email: "", company: "", phone: "", role: "", city: "", country: "", consent: false },
   });
 
   const mutation = useMutation({
@@ -152,6 +154,25 @@ const RegistrationForm = ({ onSubmitted }: RegistrationFormProps) => {
         </div>
 
         <PrivacyNote purpose="We use these details to confirm your email, unlock the download and support your licence." />
+
+        <FormField
+          control={form.control}
+          name="consent"
+          render={({ field }) => (
+            <FormItem>
+              <div className="flex items-start gap-3">
+                <FormControl>
+                  <Checkbox checked={field.value} onCheckedChange={(v) => field.onChange(v === true)} />
+                </FormControl>
+                <FormLabel className="text-sm font-normal leading-snug">
+                  I agree to CyAssure using these details to confirm my email, unlock the download and support my
+                  licence. I can withdraw this consent at any time.
+                </FormLabel>
+              </div>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
         <Button type="submit" className="w-full gap-2 sm:w-auto" disabled={mutation.isPending}>
           <Send className="h-4 w-4" /> {mutation.isPending ? "Sending..." : "Register & continue"}

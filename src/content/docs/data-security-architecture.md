@@ -13,7 +13,7 @@ One detection engine runs on every route your data can take: **email, AI tools, 
 | Source | Covered by | What is scanned |
 |---|---|---|
 | Cloud drives and storage | DSPM | SharePoint, OneDrive, Google Drive, Box, Dropbox, Amazon S3, Azure Blob, Google Cloud Storage |
-| Databases | DSPM | PostgreSQL, MySQL, SQL Server, Snowflake, BigQuery |
+| Databases | DSPM | PostgreSQL, MySQL, SQL Server, Snowflake, BigQuery, Cloudflare D1 |
 | File shares | DSPM | Windows (SMB) shares |
 | Laptops and servers | CyEDR | Scheduled scan of files already on the device |
 

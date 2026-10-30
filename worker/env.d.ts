@@ -8,4 +8,9 @@ interface Env {
   MS_GRAPH_CLIENT_SECRET: string;
   /** Mailbox to send verification emails from, e.g. "downloads@cyassure.eu". */
   MS_GRAPH_SENDER: string;
+  /** Cy360 consent ledger (worker/consent.ts). All four, or nothing is sent. */
+  CY360_PRIVACY_URL?: string;
+  CY360_PRIVACY_KEY?: string;
+  CY360_NOTICE_ID?: string;
+  CY360_PURPOSE_ID?: string;
 }
