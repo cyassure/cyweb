@@ -1,3 +1,11 @@
+## v1.0.115 -- 2026-10-30
+
+### New Features
+
+  - dpdp): record download consent and check each retention rule
+
+---
+
 ## v1.0.114 -- 2026-10-29
 
 ### Improvements
