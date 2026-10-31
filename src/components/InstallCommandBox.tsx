@@ -3,14 +3,16 @@ import { Copy, Check } from "lucide-react";
 
 interface InstallCommandBoxProps {
   version: string;
+  registrationId?: string;
 }
 
 const INSTALLER_REPO = "cyassure/cy360-install";
 
-const InstallCommandBox = ({ version }: InstallCommandBoxProps) => {
+const InstallCommandBox = ({ version, registrationId }: InstallCommandBoxProps) => {
   const [copied, setCopied] = useState(false);
 
   const versionFlag = version === "latest" ? "" : ` --version ${version}`;
+  const registrationFlag = registrationId ? ` --registration-id ${registrationId}` : "";
   // Download-then-run against a real file, not `curl | bash` and not
   // `bash <(curl ...)` either — both were tried and both are broken:
   //   - `curl | bash`: the installer's own interactive prompts (base domain,
@@ -25,7 +27,7 @@ const InstallCommandBox = ({ version }: InstallCommandBoxProps) => {
   // `-o file && sudo bash file` sidesteps both: bash reads a real path with
   // no fd-inheritance dependency, and the real terminal stays on stdin the
   // whole time since bash never consumes the script through it.
-  const command = `curl -fsSL https://raw.githubusercontent.com/${INSTALLER_REPO}/main/install.sh -o cyassure-setup.sh && sudo bash cyassure-setup.sh${versionFlag}`;
+  const command = `curl -fsSL https://raw.githubusercontent.com/${INSTALLER_REPO}/main/install.sh -o cyassure-setup.sh && sudo bash cyassure-setup.sh${versionFlag}${registrationFlag}`;
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(command);

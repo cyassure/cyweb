@@ -20,7 +20,7 @@ const DownloadSection = () => {
   const [version, setVersion] = useState("latest");
   const [pendingEmail, setPendingEmail] = useState<string | null>(null);
   const [searchParams] = useSearchParams();
-  const { verified, isLoading } = useDownloadSession({ pollForVerification: pendingEmail !== null });
+  const { verified, registrationId, isLoading } = useDownloadSession({ pollForVerification: pendingEmail !== null });
 
   useEffect(() => {
     if (searchParams.get("verified") === "1") {
@@ -76,7 +76,7 @@ const DownloadSection = () => {
               <p className="mb-3 mt-8 text-xs font-medium uppercase tracking-wider text-muted-foreground">
                 2. Run this on your server
               </p>
-              <InstallCommandBox version={version} />
+              <InstallCommandBox version={version} registrationId={registrationId} />
               <p className="mt-3 text-xs text-muted-foreground/70">
                 This runs the same installer script published in our GitHub repo — read it before you run it.
               </p>

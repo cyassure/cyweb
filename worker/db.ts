@@ -86,6 +86,27 @@ export async function getByVerifyToken(db: D1Database, token: string): Promise<R
   return row ?? null;
 }
 
+export async function getVerifiedRegistrationId(db: D1Database, email: string): Promise<string | null> {
+  const row = await db
+    .prepare("SELECT id FROM registrations WHERE email = ?1 AND verified_at IS NOT NULL")
+    .bind(email)
+    .first<{ id: string }>();
+  return row?.id ?? null;
+}
+
+export async function getVerifiedContacts(
+  db: D1Database,
+  ids: string[],
+): Promise<{ id: string; name: string; email: string }[]> {
+  if (!ids.length) return [];
+  const placeholders = ids.map((_, i) => `?${i + 1}`).join(", ");
+  const { results } = await db
+    .prepare(`SELECT id, name, email FROM registrations WHERE verified_at IS NOT NULL AND id IN (${placeholders})`)
+    .bind(...ids)
+    .all<{ id: string; name: string; email: string }>();
+  return results;
+}
+
 export async function markVerified(db: D1Database, email: string): Promise<void> {
   await db
     .prepare("UPDATE registrations SET verified_at = ?1 WHERE email = ?2")

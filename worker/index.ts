@@ -1,10 +1,11 @@
 import { purgeExpired } from "./retention";
 import { syncConsent } from "./consent";
 import { registrationSchema, contactSchema } from "./validate";
-import { upsertRegistration, getByVerifyToken, markVerified } from "./db";
+import { upsertRegistration, getByVerifyToken, getVerifiedRegistrationId, markVerified } from "./db";
 import { sendVerificationEmail, sendContactEmail } from "./email";
 import { createSessionCookie, readSession } from "./session";
 import { handleMedia } from "./media";
+import { handleFleetLookup } from "./fleetLookup";
 
 function json(data: unknown, status = 200): Response {
   return new Response(JSON.stringify(data), {
@@ -98,7 +99,15 @@ async function logConsentSync(env: Env): Promise<void> {
 async function handleSession(request: Request, env: Env): Promise<Response> {
   const session = await readSession(env.SESSION_SECRET, request.headers.get("Cookie"));
   if (!session) return json({ verified: false });
-  return json({ verified: true, name: session.name, email: session.email });
+  // The download stays unlocked if this lookup fails: the command just goes
+  // out without --registration-id, and Fleet Monitor shows no contact for it.
+  let registrationId: string | null = null;
+  try {
+    registrationId = await getVerifiedRegistrationId(env.DB, session.email);
+  } catch (err) {
+    console.error("registration id lookup failed", err);
+  }
+  return json({ verified: true, name: session.name, email: session.email, registrationId });
 }
 
 export default {
@@ -119,6 +128,9 @@ export default {
     }
     if (url.pathname === "/api/session" && request.method === "GET") {
       return handleSession(request, env);
+    }
+    if (url.pathname === "/api/internal/registrations/lookup" && request.method === "POST") {
+      return handleFleetLookup(request, env);
     }
     return json({ error: "not_found" }, 404);
   },

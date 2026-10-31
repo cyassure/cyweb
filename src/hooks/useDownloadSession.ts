@@ -4,6 +4,7 @@ interface SessionResponse {
   verified: boolean;
   name?: string;
   email?: string;
+  registrationId?: string | null;
 }
 
 async function fetchSession(): Promise<SessionResponse> {
@@ -29,6 +30,7 @@ export function useDownloadSession({ pollForVerification = false }: UseDownloadS
   return {
     verified: query.data?.verified ?? false,
     name: query.data?.name,
+    registrationId: query.data?.registrationId ?? undefined,
     isLoading: query.isLoading,
     refetch: query.refetch,
   };

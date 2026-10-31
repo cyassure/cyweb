@@ -13,4 +13,6 @@ interface Env {
   CY360_PRIVACY_KEY?: string;
   CY360_NOTICE_ID?: string;
   CY360_PURPOSE_ID?: string;
+  /** Shared with CyAdmin for /api/internal/registrations/lookup. Unset = that route returns 404. */
+  FLEET_LOOKUP_SECRET?: string;
 }
