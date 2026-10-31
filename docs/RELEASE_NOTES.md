@@ -1,3 +1,11 @@
+## v1.0.116 -- 2026-10-31
+
+### New Features
+
+  - download): tie install commands to the download registration
+
+---
+
 ## v1.0.115 -- 2026-10-30
 
 ### New Features
